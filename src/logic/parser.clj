@@ -13,31 +13,39 @@
      negation = <'('?> <'!'> exp <')'?>
      symbol = <'('?> #'[A-Za-z]' <')'?>"))
 
-; removes all spaces from formula
-(defn strip-spaces [formula]
+(defn strip-spaces
+  "Eliminates all spaces from a given string."
+  [formula]
   (cstr/replace formula " " ""))
 
-; add outer parenthesis if needed
-(defn clear-brackets [formula]
+(defn clear-brackets 
+  "If no outer brackets are contained in the formula but the should, it adds them."
+  [formula]
   (if (and (= (first formula) \() (= (last formula) \)))
     formula
     (str "(" formula ")")))
 
-; call parser
-(defn parse [formula]
+(defn parse 
+  "Parses a formula and returns an ast. Does some other convenient stuff
+  (takes care of spaces and parenthesis)."
+  [formula]
   (-> formula strip-spaces clear-brackets logic-parser first))
 
-; helpers to write simple code
 (declare convert-ast)
 
-(defn op1 [ast]
+(defn op1 
+  "Gets the first operand of an ast tree."
+  [ast]
   (convert-ast (first (rest ast))))
 
-(defn op2 [ast]
+(defn op2 
+  "Gets the second operand of an ast tree."
+  [ast]
   (convert-ast (first (rest (rest ast)))))
 
-; convert ast to executable clojure code
-(defn convert-ast [ast]
+(defn convert-ast 
+  "Converts an ast to executable clojure code."
+  [ast]
   (case (first ast)
     :symbol (keyword (first (rest ast)))
     :negation `(not ~(op1 ast))

@@ -4,26 +4,30 @@
         [logic.parser]
         [clojure.math.combinatorics :only (selections)]))
 
-; make false to "f" and true to "t"
-(defn abbrev-bool [value]
+(defn abbrev-bool 
+  "Replaces 'true' with 'T' and 'false' with 'F' for better reading of a truth table."
+  [value]
   (cstr/replace (cstr/replace value "true" "T") "false" "F"))
 
-; SIDE EFFECT
-; print truth table
-(defn print-tt [symbols assign-map formula original-formula]
+(defn print-tt 
+  "Prints a truth table in a nice format."
+  [symbols assign-map formula original-formula]
+
   ; print header
   (println "Truth table for formula:" (clear-brackets (strip-spaces original-formula)))
   (doseq [sym symbols]
     (print (cstr/replace sym ":" "") ""))
   (print \u03A6 \newline )
 
+  ; print the combinations and results
   (doseq [s assign-map]
     (doseq [sym symbols]
       (print (abbrev-bool (sym  s)) ""))
     (print (abbrev-bool (eval-formula formula s)) \newline)))
 
-; takes a human-readable formula and prints the truth-table
-(defn truth-table [formula]
+(defn truth-table 
+  "Takes a human-readable formula, parses it and prints a truth table."
+  [formula]
   (let [ast (parse formula)]
     (let [clj-code (convert-ast ast)]
       (let [symbols (find-symbols ast (sorted-set))]
