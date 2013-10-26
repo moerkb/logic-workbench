@@ -9,3 +9,4 @@
   :main ^:skip-aot logic.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
+
