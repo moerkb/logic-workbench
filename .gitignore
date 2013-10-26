@@ -7,3 +7,19 @@ pom.xml.asc
 *.class
 /.lein-*
 /.nrepl-port
+
+# Mac OS 
+.DS_Store
+.AppleDouble
+.LSoverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temp files
+*~
