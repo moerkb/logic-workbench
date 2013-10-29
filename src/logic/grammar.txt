@@ -1,7 +1,16 @@
-<exp> = symbol | <'('> (equiv | impl | andexp | orexp) <')'> | negation
-     orexp = exp <'|'> exp
-     andexp = exp <'&'> exp
-     impl = exp <'->'> exp
-     equiv = exp <'<->'> exp
-     negation = <'('?> <'!'> exp <')'?>
-     symbol = <'('?> #'[A-Za-z]' <')'?>
+(* entry point *)
+<S> = not
+
+(* atoms *)
+atom			= (letter|special) (letter|special|digit)*
+<letter> 		= #'[A-Za-zÄÖÜäöüß]'
+<special> 		= #'[\_\{\}\.\\]'			(* _ { } . \ *)
+<digit> 		= #'[0-9]'
+     
+(* constants *)     
+<constants> 	= true|false
+true 			= <("True"|"T"|"1")>  
+false 			= <("False"|"F"|"0")>
+
+(* unary operators *)
+not				= <("not"|"!")> atom

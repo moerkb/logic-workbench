@@ -4,8 +4,7 @@
 
 ; define parser
 (def logic-parser
-  (insta/parser
-    "src/logic/grammar.txt"))
+  (insta/parser "src/logic/grammar.txt"))
 
 (defn strip-spaces
   "Eliminates all spaces from a given string."
