@@ -9,7 +9,7 @@
 (defn nor 
   "Logical negated or (!(phi | psi))"
   [phi psi]
-  (not (and phi psi)))
+  (not (or phi psi)))
 
 (defn impl 
   "Logical implication (phi -> psi)"
@@ -26,12 +26,12 @@
   [phi psi]
   (and (impl phi psi) (impl psi phi)))
 
-(defn if 
+(defn rimpl
   "Reverted logical implication (phi <- psi)"
   [phi psi]
   (impl psi phi))
 
-(defn nif 
+(defn nrimpl 
   "Negated reverted logical implication (!(phi <- psi))"
   [phi psi]
   (nimpl psi phi))
