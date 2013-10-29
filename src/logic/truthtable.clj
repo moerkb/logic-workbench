@@ -1,8 +1,6 @@
-(ns logic.truthtable
+(ns logic.util
   (:require [clojure.string :as cstr])
-  (:use [logic.evaluator]
-        [logic.parser]
-        [clojure.math.combinatorics :only (selections)]))
+  (:use [clojure.math.combinatorics :only (selections)]))
 
 (defn abbrev-bool 
   "Replaces 'true' with 'T' and 'false' with 'F' for better reading of a truth table."

@@ -1,4 +1,4 @@
-(ns logic.parser
+(ns logic.util
   (:require [instaparse.core :as insta]
             [clojure.string :as cstr]))
 
@@ -45,6 +45,6 @@
     :negation `(not ~(op1 ast))
     :andexp `(and ~(op1 ast) ~(op2 ast))
     :orexp `(or ~(op1 ast) ~(op2 ast))
-    :impl `(logic.basicfunctions/impl ~(op1 ast) ~(op2 ast))
-    :equiv `(logic.basicfunctions/equiv ~(op1 ast) ~(op2 ast))
+    :impl `(impl ~(op1 ast) ~(op2 ast))
+    :equiv `(equiv ~(op1 ast) ~(op2 ast))
     ))

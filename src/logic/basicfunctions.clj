@@ -1,4 +1,4 @@
-(ns logic.basicfunctions)
+(ns logic.util)
 
 ; other logical functions (nand, impl, etc.)
 (defn nand 

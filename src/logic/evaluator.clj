@@ -1,7 +1,6 @@
-(ns logic.evaluator
+(ns logic.util
   (:require [clojure.string :as cstr])
-  (:use [clojure.set]
-        [logic.basicfunctions]))
+  (:use [clojure.set]))
 
 (defn find-symbols 
   "Takes an ast as arbitrary collection and returns all keyword symbol that have no semantic yet (etc. :a, :B).
