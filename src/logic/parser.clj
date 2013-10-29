@@ -5,13 +5,7 @@
 ; define parser
 (def logic-parser
   (insta/parser
-    "<exp> = symbol | <'('> (equiv | impl | andexp | orexp) <')'> | negation
-     orexp = exp <'|'> exp
-     andexp = exp <'&'> exp
-     impl = exp <'->'> exp
-     equiv = exp <'<->'> exp
-     negation = <'('?> <'!'> exp <')'?>
-     symbol = <'('?> #'[A-Za-z]' <')'?>"))
+    "src/logic/grammar.txt"))
 
 (defn strip-spaces
   "Eliminates all spaces from a given string."

@@ -1,0 +1,7 @@
+<exp> = symbol | <'('> (equiv | impl | andexp | orexp) <')'> | negation
+     orexp = exp <'|'> exp
+     andexp = exp <'&'> exp
+     impl = exp <'->'> exp
+     equiv = exp <'<->'> exp
+     negation = <'('?> <'!'> exp <')'?>
+     symbol = <'('?> #'[A-Za-z]' <')'?>
