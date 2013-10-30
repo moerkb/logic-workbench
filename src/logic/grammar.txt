@@ -1,16 +1,71 @@
 (* entry point *)
-<S> = not
+<S> = expr
 
 (* atoms *)
 atom			= (letter|special) (letter|special|digit)*
-<letter> 		= #'[A-Za-zÄÖÜäöüß]'
-<special> 		= #'[\_\{\}\.\\]'			(* _ { } . \ *)
+<letter>		= #'[A-Za-zÄÖÜäöü]'
+<special> 		= #'[\_\{\}\.\\]'	(* _ { } . \ *)
 <digit> 		= #'[0-9]'
-     
+<exceptions>	= "xor"|"iff"|"nimpl"|"impl"|"nif"|"if"|
+				  "nor"|"or"|"nand"|"and"|
+				  "true"|"True"|
+				  "false"|"False"
+
+(* token *)
+XOR 			= "xor"|"^"
+EQUIV 			= "iff"|"<->"
+NIMPL 			= "nimpl"
+IMPL 			= "impl"|"->"
+NIF 			= "nif"
+IF  			= "if"|"<-"
+NOR 			= "nor"|"!|"
+OR	 			= "or"|"|"
+NAND 			= "nand"|"!&"
+AND 			= "and"|"&"
+NOT				= "not"|"!"
+
 (* constants *)     
-<constants> 	= true|false
-true 			= <("True"|"T"|"1")>  
-false 			= <("False"|"F"|"0")>
+<constant> 		= true|false
+true 			= <("True"|"true"|"T"|"t"|"1")>  
+false 			= <("False"|"false"|"F"|"f"|"0")>
 
 (* unary operators *)
-not				= <("not"|"!")> atom
+not				= <NOT> unexpr
+
+(* binary operators *)
+(* precedence, ascending order
+		OP			ASSOC	
+		equiv, xor	left
+		impl, nimpl	right
+		if, nif		right
+		or, nor		left
+		and, nand	left
+*)
+
+<expr>			= equiv_xor
+
+<equiv_xor>		= xor | equiv | impl_nimpl
+equiv			= equiv_xor <EQUIV> impl_nimpl 
+xor 			= equiv_xor <XOR> impl_nimpl 
+
+<impl_nimpl>	= nimpl | impl | if_nif
+impl			= if_nif <IMPL> impl_nimpl
+nimpl			= if_nif <NIMPL> impl_nimpl
+
+<if_nif>		= if | nif | or_nor
+if				= or_nor <IF> if_nif
+nif				= or_nor <NIF> if_nif
+
+<or_nor>		= or / nor / and_nand
+or				= or_nor <OR> and_nand
+nor				= or_nor <NOR> and_nand
+
+<and_nand>		= and | nand | unexpr
+and				= and_nand <AND> unexpr
+nand			= and_nand <NAND> unexpr
+
+<unexpr>		= not | subexpr
+
+<subexpr>		= atom | constant |
+				  <'('> expr <')'> |
+				  <'['> expr <']'>
