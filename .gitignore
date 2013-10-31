@@ -24,3 +24,6 @@ $RECYCLE.BIN/
 # Temp files
 *~
 /bin
+
+# Eclipse
+.settings

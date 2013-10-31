@@ -4,3 +4,5 @@
       "evaluator"
       "parser"
       "truthtable")
+
+(def debug true)

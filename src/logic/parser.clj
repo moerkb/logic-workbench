@@ -6,6 +6,12 @@
 (def logic-parser
   (insta/parser "src/logic/grammar.txt"))
 
+(defn logic-parse [exp]
+  (let [ast (insta/parses logic-parser exp)]
+    (do
+      (if debug (println (count ast)))
+      (first (first ast)))))
+
 (defn strip-spaces
   "Eliminates all spaces from a given string."
   [formula]
