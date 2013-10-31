@@ -2,6 +2,7 @@
   (:require [clojure.string :as cstr])
   (:use [clojure.set]))
 
+; TODO rewrite for symbols
 (defn find-symbols 
   "Takes an ast as arbitrary collection and returns all keyword symbol that have no semantic yet (etc. :a, :B).
   Second parameter must be a set."
@@ -13,7 +14,7 @@
     ))
 
 (defn eval-formula 
-  "Takes a formula in clojure code and evaluates it with the given substitution map. 
-  The last must be of the shape {:a true :b false}"
-  [formula smap]
-  (eval `(let ~smap ~formula)))
+  "Takes a formula in clojure code and evaluates it with the given substitution vector. 
+  The last must be of the shape [:a true :b false]"
+  [formula val-assignment]
+  (eval `(let ~val-assignment ~formula)))

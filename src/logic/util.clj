@@ -5,4 +5,5 @@
 (load "basicfunctions"
       "evaluator"
       "parser"
+      "transform"
       "truthtable")
