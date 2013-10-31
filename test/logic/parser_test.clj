@@ -49,7 +49,7 @@
 )
 
 (deftest complext-multiple-test
-  (= 
-    [:xor [:impl [:not [:atom "A"]] [:false]] [:nand [:atom "ABC"] [:equiv [:false] [:atom "p" "_" "0" "0" "1"]]]]
-    (logic-parse "!A -> f xor ABC nand [f <-> p_001]"))
+  (is (= 
+        [:xor [:impl [:not [:atom "A"]] [:false]] [:nand [:atom "A" "B" "C"] [:equiv [:false] [:atom "p" "_" "0" "0" "1"]]]]
+        (logic-parse "!A -> f xor ABC nand [f <-> p_001]")))
 )
