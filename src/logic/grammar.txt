@@ -68,6 +68,6 @@ nand			= and_nand <NAND> unexpr
 
 <unexpr>		= not | subexpr
 
-<subexpr>		= atom | constant |
-				  <LPAREN> expr <RPAREN> |
+<subexpr>		= constant / atom /
+				  <LPAREN> expr <RPAREN> /
 				  <LBRACK> expr <RBRACK>
