@@ -16,5 +16,4 @@
   "Takes a formula in clojure code and evaluates it with the given substitution map. 
   The last must be of the shape {:a true :b false}"
   [formula smap]
-  (eval
-    (clojure.walk/prewalk-replace smap formula)))
+  (eval `(let ~smap ~formula)))

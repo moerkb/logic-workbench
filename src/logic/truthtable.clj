@@ -12,7 +12,7 @@
   [symbols assign-map formula original-formula]
 
   ; print header
-  (println "Truth table for formula:" (clear-brackets (strip-spaces original-formula)))
+  (println "Truth table for formula:" original-formula)
   (doseq [sym symbols]
     (print (cstr/replace sym ":" "") ""))
   (print \u03A6 \newline )
@@ -26,11 +26,13 @@
 (defn truth-table 
   "Takes a human-readable formula, parses it and prints a truth table."
   [formula]
-  (let [ast (parse formula),
-        clj-code (convert-ast ast),
-        symbols (find-symbols ast (sorted-set)),
-        allcomb (selections [true false] (count symbols)),
-        assign-map (for [comb allcomb]
-                             (zipmap symbols comb))]
+  (let [ast (logic-parse formula)
+        clj-code (convert-ast ast)
+        symbols (find-symbols ast (sorted-set))
+        allcomb (selections [true false] (count symbols))
+        assign-map (vec (for [comb allcomb]
+                                 (interleave symbols comb)))
+        ]
             (print-tt symbols assign-map clj-code formula)
           ))
+

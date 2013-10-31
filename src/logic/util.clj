@@ -1,8 +1,8 @@
 (ns logic.util)
 
+(def debug true)
+
 (load "basicfunctions"
       "evaluator"
       "parser"
       "truthtable")
-
-(def debug true)
