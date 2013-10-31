@@ -2,7 +2,7 @@
 <S> = expr
 
 (* literals *)
-atom			= (letter|special) (letter|special|digit)*
+atom			= <spc> ((letter|special) (letter|special|digit)*) <spc>
 <letter>		= #"[A-Za-zÄÖÜäöü]"
 <special> 		= #"[\_\{\}\.\\]"	(* _ { } . \ *)
 <digit> 		= #"[0-9]"
@@ -21,8 +21,10 @@ NAND 			= <spc> ("nand"|"!&") <spc>
 AND 			= <spc> ("and"|"&") <spc>
 NOT				= <spc> ("not"|"!") <spc>
 
-LPAREN			= <spc> ("("|"[") <spc>
-RPAREN			= <spc> (")"|"]") <spc>
+LPAREN			= <spc> "(" <spc>
+RPAREN			= <spc> ")" <spc>
+LBRACK			= <spc> "[" <spc>
+RBRACK			= <spc> "]" <spc>
 
 (* constants *)     
 <constant> 		= <spc> (true|false) <spc>
@@ -67,4 +69,5 @@ nand			= and_nand <NAND> unexpr
 <unexpr>		= not | subexpr
 
 <subexpr>		= atom | constant |
-				  <LPAREN> expr <RPAREN>
+				  <LPAREN> expr <RPAREN> |
+				  <LBRACK> expr <RBRACK>
