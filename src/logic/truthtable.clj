@@ -35,7 +35,7 @@
 
     ; print original formula
     (println "Truth table for formula:" formula)
-    (println var-spaces)
+
     ; print header
 	  (doseq [sym symbols]
 	    (print (name sym) ""))
