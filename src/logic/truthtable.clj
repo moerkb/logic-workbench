@@ -30,7 +30,6 @@
 
   (let [symbols (ttable :symbols)
         table (ttable :table)
-        ;var-spaces (conj (vec (map (comp dec count name) symbols)) 0)]
         var-spaces (-> (comp dec count name) (map symbols) vec (conj 0))]
 
     ; print original formula
