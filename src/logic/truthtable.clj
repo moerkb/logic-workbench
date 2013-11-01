@@ -1,14 +1,13 @@
 (ns logic.util)
 
 (defn ast-to-truth-table
-  "Takes an instaparse-generated ast and generates the truth table for it.
+  "Takes clojure code and generates the truth table for it.
    Output format (truth table is a relation):
    [:symbols [A B] \"vector of all formula variables, ex. \"A & B\"\"
     :table [[true true true] [true false false]...] \"list of lists representing a row\"
    ]"
-  [ast]
-  (let [symbols (find-symbols ast)
-        clj-code (transform-ast ast)
+  [clj-code]
+  (let [symbols (find-variables clj-code)
         allcomb (selections [true false] (count symbols))
         assign-map (for [comb allcomb]
                             (vec (interleave symbols comb)))]
@@ -47,7 +46,7 @@
   [formula]
   (let [ast (logic-parse formula)
         clj-code (transform-ast ast)
-        symbols (find-symbols ast)
+        symbols (find-variables clj-code)
         allcomb (selections [true false] (count symbols))
         assign-map (for [comb allcomb]
                             (vec (interleave symbols comb)))
