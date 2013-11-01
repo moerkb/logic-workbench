@@ -16,3 +16,8 @@
    :false (fn [] false)
    :true  (fn [] true)
    })
+
+(defn transform-ast
+  "Takes an ast as produced by instaparse and transforms it into evaluatable clojure code."
+  [ast]
+  (insta/transform transform-map ast))

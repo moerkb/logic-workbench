@@ -1,6 +1,4 @@
-(ns logic.util
-  (:require [instaparse.core :as insta]
-            [clojure.string :as cstr]))
+(ns logic.util)
 
 ; define parser
 (def logic-parser
