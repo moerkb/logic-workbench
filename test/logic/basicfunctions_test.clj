@@ -6,13 +6,31 @@
     (is (= false (nand true true)))
     (is (= true (nand true false)))
     (is (= true (nand false true)))
-    (is (= true (nand false false))))
+    (is (= true (nand false false)))
+    
+    (is (= false (nand true true true)))
+    (is (= true (nand true true false)))
+    (is (= true (nand true false true)))
+    (is (= true (nand true false false)))
+    (is (= true (nand false true true)))
+    (is (= true (nand false true false)))
+    (is (= true (nand false false true)))
+    (is (= true (nand false false false))))
 
 (deftest nor-test
     (is (= false (nor true true)))
     (is (= false (nor true false)))
     (is (= false (nor false true)))
-    (is (= true (nor false false))))
+    (is (= true (nor false false)))
+    
+    (is (= false (nor true true true)))
+    (is (= false (nor true true false)))
+    (is (= false (nor true false true)))
+    (is (= false (nor true false false)))
+    (is (= false (nor false true true)))
+    (is (= false (nor false true false)))
+    (is (= false (nor false false true)))
+    (is (= true (nor false false false))))
 
 (deftest impl-test
     (is (= true (impl true true)))
@@ -30,7 +48,16 @@
     (is (= true (equiv true true)))
     (is (= false (equiv true false)))
     (is (= false (equiv false true)))
-    (is (= true (equiv false false))))
+    (is (= true (equiv false false)))
+    
+    (is (= true (equiv true true true)))
+    (is (= false (equiv true true false)))
+    (is (= false (equiv true false true)))
+    (is (= false (equiv true false false)))
+    (is (= false (equiv false true true)))
+    (is (= false (equiv false true false)))
+    (is (= false (equiv false false true)))
+    (is (= true (equiv false false false))))
 
 (deftest rimpl-test
     (is (= true (rimpl true true)))
