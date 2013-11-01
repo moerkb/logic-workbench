@@ -1,11 +1,7 @@
-(ns logic.util
-  (:require [clojure.string :as cstr])
-  (:use [clojure.set]))
+(ns logic.util)
 
-; TODO rewrite for symbols
 (defn find-symbols 
-  "Takes an ast as arbitrary collection and returns all keyword symbol that have no semantic yet (etc. :a, :B).
-  Second parameter must be a set."
+  "Takes an ast as produced by isntaparse and returns all variables."
   [ast symbol-set]
   (case (first ast)
     :symbol (conj symbol-set (keyword (first (rest ast))))

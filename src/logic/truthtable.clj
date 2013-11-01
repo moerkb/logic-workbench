@@ -1,6 +1,4 @@
-(ns logic.util
-  (:require [clojure.string :as cstr])
-  (:use [clojure.math.combinatorics :only (selections)]))
+(ns logic.util)
 
 (defn abbrev-bool 
   "Replaces 'true' with 'T' and 'false' with 'F' for better reading of a truth table."
@@ -27,7 +25,7 @@
   "Takes a human-readable formula, parses it and prints a truth table."
   [formula]
   (let [ast (logic-parse formula)
-        clj-code (convert-ast ast)
+        clj-code (transform-ast ast)
         symbols (find-symbols ast (sorted-set))
         allcomb (selections [true false] (count symbols))
         assign-map (vec (for [comb allcomb]
