@@ -16,20 +16,21 @@
   (print \u03A6 \newline )
 
   ; print the combinations and results
-  (doseq [s assign-map]
-    (doseq [sym symbols]
-      (print (abbrev-bool (sym  s)) ""))
-    (print (abbrev-bool (eval-formula formula s)) \newline)))
+  (doseq [curr-valuation assign-map]
+    (let [curr-val-map (apply hash-map curr-valuation)]
+	    (doseq [sym symbols]
+	      (print (abbrev-bool (sym curr-val-map)) ""))
+	    (print (abbrev-bool (eval-formula formula curr-valuation)) \newline))))
 
 (defn truth-table 
   "Takes a human-readable formula, parses it and prints a truth table."
   [formula]
   (let [ast (logic-parse formula)
         clj-code (transform-ast ast)
-        symbols (find-symbols ast (sorted-set))
+        symbols (find-symbols ast)
         allcomb (selections [true false] (count symbols))
-        assign-map (vec (for [comb allcomb]
-                                 (interleave symbols comb)))
+        assign-map (for [comb allcomb]
+                            (vec (interleave symbols comb)))
         ]
             (print-tt symbols assign-map clj-code formula)
           ))
