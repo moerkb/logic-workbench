@@ -1,56 +1,11 @@
-(ns logic.parser
-  (:require [instaparse.core :as insta]
-            [clojure.string :as cstr]))
+(ns logic.util)
 
 ; define parser
 (def logic-parser
-  (insta/parser
-    "<exp> = symbol | <'('> (equiv | impl | andexp | orexp) <')'> | negation
-     orexp = exp <'|'> exp
-     andexp = exp <'&'> exp
-     impl = exp <'->'> exp
-     equiv = exp <'<->'> exp
-     negation = <'('?> <'!'> exp <')'?>
-     symbol = <'('?> #'[A-Za-z]' <')'?>"))
+  (insta/parser "src/logic/grammar.txt"))
 
-(defn strip-spaces
-  "Eliminates all spaces from a given string."
-  [formula]
-  (cstr/replace formula " " ""))
-
-(defn clear-brackets 
-  "If no outer brackets are contained in the formula but the should, it adds them."
-  [formula]
-  (if (and (= (first formula) \() (= (last formula) \)))
-    formula
-    (str "(" formula ")")))
-
-(defn parse 
-  "Parses a formula and returns an ast. Does some other convenient stuff
-  (takes care of spaces and parenthesis)."
-  [formula]
-  (-> formula strip-spaces clear-brackets logic-parser first))
-
-(declare convert-ast)
-
-(defn op1 
-  "Gets the first operand of an ast tree."
-  [ast]
-  (convert-ast (first (rest ast))))
-
-(defn op2 
-  "Gets the second operand of an ast tree."
-  [ast]
-  (convert-ast (first (rest (rest ast)))))
-
-(defn convert-ast 
-  "Converts an ast to executable clojure code."
-  [ast]
-  (case (first ast)
-    :symbol (keyword (first (rest ast)))
-    :negation `(not ~(op1 ast))
-    :andexp `(and ~(op1 ast) ~(op2 ast))
-    :orexp `(or ~(op1 ast) ~(op2 ast))
-    :impl `(logic.basicfunctions/impl ~(op1 ast) ~(op2 ast))
-    :equiv `(logic.basicfunctions/equiv ~(op1 ast) ~(op2 ast))
-    ))
+(defn logic-parse [formula]
+  (let [ast (insta/parses logic-parser formula)]
+    (do
+      (if debug (println "INFO: Number of possible asts:" (count ast)))
+      (first (first ast)))))
