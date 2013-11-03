@@ -5,8 +5,9 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [instaparse "1.2.4"]
-                 [org.clojure/math.combinatorics "0.0.4"]]
-  :main ^:skip-aot logic.core
+                 [org.clojure/math.combinatorics "0.0.4"]
+                 [rhizome "0.1.9"]]
+  :main ^:skip-aot logic.util
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
 
