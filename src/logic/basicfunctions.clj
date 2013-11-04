@@ -29,6 +29,11 @@
    ([x & next]
      (if x false (apply nor next))))
 
+; ??
+(defmacro nand1
+     [& more]
+     `(not (and ~@more)))
+
 ;;; macro ;;;
 (defmacro nor
   "Logical negated or (!(phi | psi))"
@@ -38,10 +43,21 @@
     `(let [nor# ~x]
        (if nor# false (nor ~@next)))))
 
+(defmacro nor1
+     [& more]
+     `(not (or ~@more)))
+
 (defn impl 
   "Logical implication (phi -> psi)"
   [phi psi]
   (or (not phi) psi))
+
+; besser als Makro, q wird nicht ausgewertet, wenn p false ist
+(defmacro impl1
+  [p q]
+  `(if (not ~p) 
+     true
+     ~q))
 
 (defn nimpl 
   "Logical negated implication (!(phi -> psi))"
@@ -63,11 +79,10 @@
    ([] true)
    ([x] true)
    ([x y]
-     `(let [equiv1# ~x, equiv2# ~y]
-        (if (= equiv1# equiv2#) true false)))
-   ([x y & next]
-     `(let [equiv1# ~x, equiv2# ~y]
-        (if (= equiv1# equiv2#) (equiv equiv2# ~@next) false))))
+     `(= ~x ~y))
+   ([x y & more]
+     `(let [y# ~y]
+        (if (= ~x  y#) (equiv y# ~@more) false))))
 
 (defn rimpl
   "Reverted logical implication (phi <- psi)"
