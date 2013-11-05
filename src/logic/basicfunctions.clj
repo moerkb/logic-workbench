@@ -85,12 +85,12 @@
         (if (= ~x  y#) (equiv y# ~@more) false))))
 
 (defn rimpl
-  "Reverted logical implication (phi <- psi)"
+  "Converse logical implication (phi <- psi)"
   [phi psi]
   (impl psi phi))
 
 (defn nrimpl 
-  "Negated reverted logical implication (!(phi <- psi))"
+  "Negated converse logical implication (!(phi <- psi))"
   [phi psi]
   (nimpl psi phi))
 

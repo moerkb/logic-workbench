@@ -2,13 +2,23 @@
 
 (def reserved-symbols 
   #{"and" "nand" "or" "nor" "impl" "nimpl" "rimpl" "nrimpl" "equiv" "xor" "true" "false" "not"})
+  
+(defn- stringify-symbol
+  "Takes a symbol or a boolean and makes a simple string out of it.
+   Needed because a symbol needs the name function applied and a 
+   boolean the str function.
+   ((str and) would give the full qualified name)"
+  [s]
+  (if (= (class s) java.lang.Boolean)
+    (str s)
+    (name s)))
 
 (defn find-variables
   "Takes a formula in clojure code as produced by instaparse/transform and returns all variables."
   [formula]
-  (apply sorted-set (remove nil?  
-                 (for [sym (flatten formula)] 
-                    (when (not (contains? reserved-symbols (name sym))) sym)))))
+  (apply sorted-set (filter 
+                      #(not (contains? reserved-symbols (stringify-symbol %1))) 
+                      (flatten formula))))
 
 (defn eval-formula 
   "Takes a formula in clojure code and evaluates it with the given substitution vector. 
