@@ -1,0 +1,13 @@
+Notes
+
+- Im MPA gibt es einen Makro-Mechanismus, mit dem man "Funktionen" einbinden kann.
+  Wie kann man das in der neuen Version nachbauen?
+  Idee: 
+  1. Die Grammatik muss erweitert werden und zusätzlich zu einer Formel auch
+  include-Anweisung erkennen können: etwa include("neue-funcs.clj")
+  2. In einer Formel darf man Funktionen verwenden, etwa so:
+  my-fn(expr, expr, expr) was übersetzt wird zu (my-fn expr expr), wobei 
+  die Implementierung von my-fn als Funktion oder Makro in "neue-funcs.clj" 
+  zu finden ist.
+  
+  Geht das so?
