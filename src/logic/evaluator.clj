@@ -3,7 +3,7 @@
 (def reserved-symbols 
   #{"and" "nand" "or" "nor" "impl" "nimpl" "rimpl" "nrimpl" "equiv" "xor" "true" "false" "not"})
   
-(defn- stringify-symbol
+(defn stringify-symbol
   "Takes a symbol or a boolean and makes a simple string out of it.
    Needed because a symbol needs the name function applied and a 
    boolean the str function.
