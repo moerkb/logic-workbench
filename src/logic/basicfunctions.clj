@@ -2,78 +2,28 @@
 
 ; other logical functions (nand, impl, etc.)
 
-;;;;; NAND ;;;;;;
-;;; function ;;;
-#_(defn nand
-  "Logical negated and (!(phi & psi))"
-  ([] false)
-  ([x] (not x))
-  ([x & next]
-   (if x (apply nand next) true)))
-
-;;; macro ;;;
 (defmacro nand
-  "Logical negated and (!(phi & psi))"
-  ([] false)
-  ([x] (not x))
-  ([x & next]
-    `(let [nand# ~x]
-       (if nand# (nand ~@next) true))))
-
-;;;;; NOR ;;;;;
-;;; functon ;;;
-#_(defn nor
-  "Logical negated or (!(phi | psi))"
-   ([] true)
-   ([x] (not x))
-   ([x & next]
-     (if x false (apply nor next))))
-
-; ??
-(defmacro nand1
+  "Logical negated and"
      [& more]
      `(not (and ~@more)))
 
-;;; macro ;;;
 (defmacro nor
-  "Logical negated or (!(phi | psi))"
-  ([] true)
-  ([x] (not x))
-  ([x & next]
-    `(let [nor# ~x]
-       (if nor# false (nor ~@next)))))
-
-(defmacro nor1
+  "Logical negated ore"
      [& more]
      `(not (or ~@more)))
 
-(defn impl 
+(defmacro impl
   "Logical implication (phi -> psi)"
   [phi psi]
-  (or (not phi) psi))
-
-; besser als Makro, q wird nicht ausgewertet, wenn p false ist
-(defmacro impl1
-  [p q]
-  `(if (not ~p) 
+  `(if (not ~phi) 
      true
-     ~q))
+     ~psi))
 
-(defn nimpl 
+(defmacro nimpl 
   "Logical negated implication (!(phi -> psi))"
   [phi psi]
-  (not (impl phi psi)))
+  `(not (impl ~phi ~psi)))
 
-;;;;; EQUIV ;;;;;
-;;; function ;;;
-#_(defn equiv
-  "Logical equivalence (phi <-> psi)"
-   ([] true)
-   ([x] true)
-   ([x & more]
-     (if (= x (first more)) (apply equiv more) false)))
-
-;;; macro ;;;
 (defmacro equiv
    "Logical equivalence (phi <-> psi)"
    ([] true)
@@ -84,17 +34,18 @@
      `(let [y# ~y]
         (if (= ~x  y#) (equiv y# ~@more) false))))
 
-(defn rimpl
+(defmacro rimpl
   "Converse logical implication (phi <- psi)"
   [phi psi]
-  (impl psi phi))
+  `(impl ~psi ~phi))
 
-(defn nrimpl 
+(defmacro nrimpl 
   "Negated converse logical implication (!(phi <- psi))"
   [phi psi]
-  (nimpl psi phi))
+  `(nimpl ~psi ~phi))
 
-(defn xor
+(defmacro xor
   "Logical exclusive or"
   [phi psi]
-  (and (or phi psi) (not (and phi psi))))
+  `(let [phi# ~phi, psi# ~psi]
+     (and (or phi# psi#) (not (and phi# psi#)))))
