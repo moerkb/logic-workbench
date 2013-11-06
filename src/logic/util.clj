@@ -14,4 +14,5 @@
       "evaluator"
       "parser"
       "transform"
-      "truthtable")
+      "truthtable"
+      "cnf")
