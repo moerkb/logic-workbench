@@ -11,7 +11,7 @@
 	     (and A (or !B C))
 	    )"
 	[formula]
-	(when (and (not= (class formula) java.lang.Boolean) (not (symbol? formula))) 
+	(when (and (not (boolean? formula)) (not (symbol? formula))) 
     (concat
       (list formula)
       (all-subformulas (second formula))
@@ -25,7 +25,7 @@
    all yet defined variables in that formula recursively. Used by make-variables."
   [formula rev-map]
   ; if not on last level
-  (if (and (not= (class formula) java.lang.Boolean) (not (symbol? formula)))
+  (if (and (not (boolean? formula)) (not (symbol? formula)))
     ; then
     (if (contains? rev-map formula)
       ; then: substitute

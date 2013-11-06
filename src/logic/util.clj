@@ -5,6 +5,11 @@
 
 (def debug true)
 
+(defn boolean?
+  "True if the parameter is of the type Boolean, false otherwise"
+  [x]
+  (= (class x) java.lang.Boolean))
+
 (load "basicfunctions"
       "evaluator"
       "parser"
