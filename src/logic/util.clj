@@ -15,8 +15,14 @@
 (def n-ary-symbols
   #{"and" "nand" "or" "nor" "equiv"})
 
+(defn boolean?
+  "True if the parameter is of the type Boolean, false otherwise"
+  [x]
+  (= (class x) java.lang.Boolean))
+
 (load "basicfunctions"
       "evaluator"
       "parser"
       "transform"
-      "truthtable")
+      "truthtable"
+      "cnf")

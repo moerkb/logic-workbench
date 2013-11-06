@@ -6,7 +6,7 @@
    boolean the str function.
    ((str and) would give the full qualified name)"
   [s]
-  (if (= (class s) java.lang.Boolean)
+  (if (boolean? s)
     (str s)
     (name s)))
 
