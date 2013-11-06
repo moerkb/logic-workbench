@@ -1,7 +1,4 @@
 (ns logic.util)
-
-(def reserved-symbols 
-  #{"and" "nand" "or" "nor" "impl" "nimpl" "rimpl" "nrimpl" "equiv" "xor" "true" "false" "not"})
   
 (defn stringify-symbol
   "Takes a symbol or a boolean and makes a simple string out of it.

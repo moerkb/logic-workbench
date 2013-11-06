@@ -21,3 +21,18 @@
   "Takes an ast as produced by instaparse and transforms it into evaluatable clojure code."
   [ast]
   (insta/transform transform-map ast))
+
+(declare flatten-ast-instern)
+
+(defn flatten-ast
+  "Needs a transformed ast and flats n-ary operations"
+  [ast]
+  (if (or (boolean? ast) (symbol? ast))
+    ast
+    (apply flatten-ast-intern ast)))
+
+(defn- flatten-ast-intern
+  ([x] x)
+  ([o x] `(~o ~(flatten-ast x)))
+  )
+  
