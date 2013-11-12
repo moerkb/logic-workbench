@@ -57,5 +57,10 @@
   "Takes a human-readable formula, parses it and prints a truth table."
   [formula]
   (print-tt formula (code-to-truth-table (transform-ast (logic-parse formula)))))
+
+(defn tt
+  "Prints truth table of fml given on Clojure"
+  [fml]
+  (print-tt "phi" (code-to-truth-table fml)))
       
 

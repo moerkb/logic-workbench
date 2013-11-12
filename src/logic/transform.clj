@@ -23,6 +23,7 @@
   (insta/transform transform-map ast))
   
 (declare flatten-ast)
+(declare make-flat)
 
 (defn- flatten-ast-intern
   ([o x] 
