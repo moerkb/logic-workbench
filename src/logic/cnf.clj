@@ -81,7 +81,45 @@
 	       :else formula)
 	     )))
 
-(defn transform-cnf 
-  "Takes a formula in clojure code and produces the cnf of it"
+(defn distr
+  "Takes two nnf formulas and applies the distribution for 'formula-1 or formula-2'"
+  [formula-1 formula-2]
+  (cond
+    ;f-1 has the form (and f-11 f-12)
+    ; -> apply (and (distr f-11 f-2) (distr f-12 f-2))
+    (and 
+      (not (literal? formula-1))
+      (= "and" (-> formula-1 first name)))
+    
+    `(and ~@(map #(distr % formula-2) (rest formula-1)))
+    
+    ;f-2 has the form (and f-21 f-22)
+    ; -> apply (and (distr f-1 f-21) (distr f-1 f-22))
+    (and 
+      (not (literal? formula-2))
+      (= "and" (-> formula-2 first name)))
+    
+    `(and ~@(map #(distr formula-1 %) (rest formula-2)))
+    
+    :else
+    `(or ~formula-1 ~formula-2)
+))
+    
+(defn cnf 
+  "Takes a nnf formula and produces the conjunctive normal form of it."
   [formula]
-  (-> formula impl-free nnf))
+  (cond
+    ;formula is literal -> return formula
+    (literal? formula)
+    formula
+    
+    ;formula has the form 'f1 and f2' -> (and (cnf f1) (cnf f2))
+    (= "and" (-> formula first name))
+    
+    `(and ~@(map cnf (rest formula)))
+    
+    ;formula has the form 'f1 or f2' -> (distr (cnf f1) (cnf f2))
+    (= "or" (-> formula first name))
+    
+    (apply distr ~@(map cnf (rest formula)))
+))
