@@ -81,6 +81,8 @@
 	       :else formula)
 	     )))
 
+; TODO make this function possible for arbitrary number of arguments
+
 (defn distr
   "Takes two nnf formulas and applies the distribution for 'formula-1 or formula-2'"
   [formula-1 formula-2]
@@ -121,5 +123,13 @@
     ;formula has the form 'f1 or f2' -> (distr (cnf f1) (cnf f2))
     (= "or" (-> formula first name))
     
-    (apply distr ~@(map cnf (rest formula)))
+    (apply distr (map cnf (rest formula)))
+    
+    :else
+    formula
 ))
+
+(defn transform-cnf
+  "Takes a formula in clojure code and produces the conjunctive normal form of it."
+  [formula]
+  (-> formula impl-free nnf cnf))
