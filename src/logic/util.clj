@@ -5,6 +5,8 @@
 
 (def debug true)
 
+(def tseitin-prefix "t_")
+
 (load "basicfunctions"
       "tools"
       "evaluator"
