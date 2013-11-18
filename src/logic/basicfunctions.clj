@@ -15,9 +15,7 @@
 (defmacro impl
   "Logical implication (phi -> psi)"
   [phi psi]
-  `(if (not ~phi) 
-     true
-     ~psi))
+  `(or (not ~phi) ~psi))
 
 (defmacro nimpl 
   "Logical negated implication (!(phi -> psi))"
