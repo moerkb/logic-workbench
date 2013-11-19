@@ -11,6 +11,3 @@ Notes
   zu finden ist.
   
   Geht das so?
-  
-- Inwiefern kann man bzw. macht es Sinn, die Funktion 'distr' für beliebig viele
-  Argumente zu erweitern?

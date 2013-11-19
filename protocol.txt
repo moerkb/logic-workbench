@@ -1,0 +1,29 @@
+PROTOCOL
+
+This file contains notes on what has been done and what needs to be done. It also 
+holds important things to remember.
+
+OPEN TASKS
+
+- No reader macros in unit tests?
+- refactor basicfunctions such that no more namepaces are produced in the substitutions
+- remove binary? function (tools.clj)
+- fix macro equiv
+- flatten a tree from (and a (and b c)) to (and a b c)  (clojure.walk)
+- extend grammar (!-> should be nimpl)
+
+- tseitin tranformation
+- dimacs format generator
+- SAT4J wrapper
+- distinguish between "human formula" ("A and B") and clojure code (and a b) automatically
+- visualize formula tree graphically (instaparse/visualize) 
+
+QUESTIONS
+
+- "A <-> B <-> C" produce different truth tables for human-readable input and clojure code
+  and both are incorrect
+  
+NOTES
+
+- Basicfunctions must not be changed from macros to functions as cnf transformation
+  would not work anymore (works with macroexpand).
