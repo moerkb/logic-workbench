@@ -63,10 +63,8 @@
 	       :else formula)
 	     )))
 
-; TODO make this function possible for arbitrary number of arguments
-
-(defn distr
-  "Takes two nnf formulas and applies the distribution for 'formula-1 or formula-2'"
+(defn- distr-bin
+  "Takes (exactly) two formulas and applies the distribution."
   [formula-1 formula-2]
   (cond
     ;f-1 has the form (and f-11 f-12)
@@ -88,7 +86,12 @@
     :else
     (list 'or formula-1 formula-2)
 ))
-    
+  
+(defn distr
+  "Takes nnf formulas and applies the distribution to it."
+  ([f] f)
+  ([f & more] (distr-bin f (apply distr more))))
+
 (defn cnf 
   "Takes a nnf formula and produces the conjunctive normal form of it."
   [formula]
