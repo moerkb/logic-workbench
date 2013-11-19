@@ -2,15 +2,18 @@
 
 ; other logical functions (nand, impl, etc.)
 
+; IMPORTANT
+; These must stay macros and must not be changed to functions!
+
 (defmacro nand
-  "Logical negated and"
-     [& more]
-     `(not (and ~@more)))
+   "Logical negated and"
+	 [x & more]
+	 `(not (and ~@more)))
 
 (defmacro nor
   "Logical negated ore"
-     [& more]
-     `(not (or ~@more)))
+  [& more]
+  `(not (or ~@more)))
 
 (defmacro impl
   "Logical implication (phi -> psi)"
@@ -27,10 +30,9 @@
    ([] true)
    ([x] true)
    ([x y]
-     `(= ~x ~y))
+     `(and (impl ~x ~y) (impl ~y ~x)))
    ([x y & more]
-     `(let [y# ~y]
-        (if (= ~x  y#) (equiv y# ~@more) false))))
+     `(equiv (equiv ~x ~y) (equiv ~more))))
 
 (defmacro rimpl
   "Converse logical implication (phi <- psi)"
@@ -45,5 +47,4 @@
 (defmacro xor
   "Logical exclusive or"
   [phi psi]
-  `(let [phi# ~phi, psi# ~psi]
-     (and (or phi# psi#) (not (and phi# psi#)))))
+  `(not (equiv phi psi)))
