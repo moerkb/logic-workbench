@@ -47,7 +47,11 @@
 	  ; print the combinations and results
     (doseq [row table]
       (doseq [[elem spc] (map list row var-spaces)]
-        (print (abbrev-bool (str elem)) (if (> spc 0) (format (str "%" spc "s") " ") ""))
+        (print 
+          (abbrev-bool (str elem)) 
+          (if (> spc 0) 
+            (format (str "%" spc "s") " ") 
+            ""))
       )
       (print \newline)
     )
@@ -56,11 +60,11 @@
 (defn truth-table 
   "Takes a human-readable formula, parses it and prints a truth table."
   [formula]
-  (print-tt formula (code-to-truth-table (transform-ast (logic-parse formula)))))
+  (print-tt formula (-> formula logic-parse transform-ast code-to-truth-table)))
 
 (defn tt
   "Prints truth table of fml given on Clojure"
-  [fml]
-  (print-tt "phi" (code-to-truth-table fml)))
+  [formula]
+  (print-tt "phi" (code-to-truth-table formula)))
       
 
