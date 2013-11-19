@@ -63,6 +63,8 @@
 	       :else formula)
 	     )))
 
+(declare distr)
+
 (defn- distr-bin
   "Takes (exactly) two formulas and applies the distribution."
   [formula-1 formula-2]
