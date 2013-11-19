@@ -28,11 +28,10 @@
 (defmacro equiv
    "Logical equivalence (phi <-> psi)"
    ([] true)
-   ([x] true)
-   ([x y]
-     `(and (impl ~x ~y) (impl ~y ~x)))
-   ([x y & more]
-     `(equiv (equiv ~x ~y) (equiv ~more))))
+   ([x] x)
+   ([x & more]
+     `(and (impl ~x (equiv ~@more)) (impl (equiv ~@more) ~x)))
+)
 
 (defmacro rimpl
   "Converse logical implication (phi <- psi)"

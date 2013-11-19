@@ -8,7 +8,6 @@ OPEN TASKS
 - No reader macros in unit tests?
 - refactor basicfunctions such that no more namepaces are produced in the substitutions
 - remove binary? function (tools.clj)
-- fix macro equiv
 - flatten a tree from (and a (and b c)) to (and a b c)  (clojure.walk)
 - extend grammar (!-> should be nimpl)
 
@@ -20,8 +19,7 @@ OPEN TASKS
 
 QUESTIONS
 
-- "A <-> B <-> C" produce different truth tables for human-readable input and clojure code
-  and both are incorrect
+- "A <-> B <-> C" is different from WolframAlpha?
   
 NOTES
 
