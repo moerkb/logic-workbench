@@ -18,13 +18,6 @@
     (not (contains? n-ary-symbols (name x))))
     (not (= (name x) "not")))
 
-; TODO consistence for binary and unary functions
-
-(defn unary?
-  "True if x is a unary operator only (that is only 'not')"
-  [x]
-  (= (name x) "not"))
-
 (defn literal?
   "True if x is a constant (true/false) or an atom"
   [x]
