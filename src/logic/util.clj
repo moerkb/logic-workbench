@@ -8,8 +8,8 @@
 
 (def tseitin-prefix "t_")
 
-(load "basicfunctions"
-      "tools"
+(load "tools"
+      "basicfunctions"
       "evaluator"
       "parser"
       "transform"
@@ -20,4 +20,4 @@
 ;(def ast-atom (transform-ast (logic-parse "diesIstEinAtom")))
 ;(def ast-unary (transform-ast (logic-parse "!neinNein")))
 ;(def ast-binary (transform-ast (logic-parse "a -> b -> true")))
-;(def ast-n-ary (transform-ast (logic-parse "a & b & true")))
+;(def ast-n-ary (transform-ast (logic-parse "a & b & c")))

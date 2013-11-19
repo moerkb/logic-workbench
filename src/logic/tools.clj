@@ -18,6 +18,10 @@
     (not (contains? n-ary-symbols x)))
     (not= 'x not))
 
+(defn n-ary?
+  [x]
+  (contains? n-ary-symbols x))
+
 (defn literal?
   "True if x is a constant (true/false) or an atom"
   [x]
