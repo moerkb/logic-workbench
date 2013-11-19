@@ -6,9 +6,9 @@
 ; These must stay macros and must not be changed to functions!
 
 (defmacro nand
-   "Logical negated and"
-	 [x & more]
-	 `(not (and ~@more)))
+  "Logical negated and"
+  [more]
+  `(not (and ~@more)))
 
 (defmacro nor
   "Logical negated ore"
