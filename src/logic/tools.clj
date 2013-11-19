@@ -24,3 +24,7 @@
   (or 
     (boolean? x) 
     (and (symbol? x) (not (contains? reserved-symbols x)))))
+
+(defn negate-all
+  [& more]
+  (map #(list 'not %) more))

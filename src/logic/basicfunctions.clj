@@ -14,37 +14,38 @@
 (defmacro nor
   "Logical negated ore"
   [& more]
-  `(not (or ~@more)))
+  (list 'not 
+        (apply list 'or more)))
 
 (defmacro impl
   "Logical implication (phi -> psi)"
   [phi psi]
-  `(or (not ~phi) ~psi))
+  (list 'or 
+        (list 'not phi) psi))
 
 (defmacro nimpl 
   "Logical negated implication (!(phi -> psi))"
   [phi psi]
-  `(not (impl ~phi ~psi)))
+  (list 'not 
+        (list 'impl phi psi)))
 
 (defmacro equiv
    "Logical equivalence (phi <-> psi)"
-   ([] true)
-   ([x] x)
-   ([x & more]
-     `(and (impl ~x (equiv ~@more)) (impl (equiv ~@more) ~x)))
-)
+   [& more]
+   (list 'or (apply list 'and more) (apply list 'and (apply negate-all more))))
 
 (defmacro rimpl
   "Converse logical implication (phi <- psi)"
   [phi psi]
-  `(impl ~psi ~phi))
+  (list 'impl psi phi))
 
 (defmacro nrimpl 
   "Negated converse logical implication (!(phi <- psi))"
   [phi psi]
-  `(nimpl ~psi ~phi))
+  (list 'nimpl psi phi))
 
 (defmacro xor
   "Logical exclusive or"
   [phi psi]
-  `(not (equiv phi psi)))
+  (list 'not
+        (list 'equiv phi psi)))
