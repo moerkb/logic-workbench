@@ -7,8 +7,9 @@
 
 (defmacro nand
   "Logical negated and"
-  [more]
-  `(not (and ~@more)))
+  [& more]
+  (list 'not 
+    (apply list 'and more)))
 
 (defmacro nor
   "Logical negated ore"
