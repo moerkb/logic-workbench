@@ -15,7 +15,7 @@
   [formula]
   (apply sorted-set (filter 
                       #(not (contains? reserved-symbols (stringify-symbol %1))) 
-                      (flatten formula))))
+                      (flatten (list formula)))))
 
 (defn eval-formula 
   "Takes a formula in clojure code and evaluates it with the given substitution vector. 
