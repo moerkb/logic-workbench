@@ -22,16 +22,27 @@
   [ast]
   (insta/transform transform-map ast))
 
+(defn- flat-filter
+  [o l]
+  (if (coll? l)
+    (= o (first l))
+    false))
+
 (defn- flat
   [ast]
+  (let [o (first ast) a (rest ast) ; operators and arguments
+        flat (map #(rest %) (filter (partial flat-filter o) a))
+        not-flat (filter (partial (complement flat-filter) o) a)]
+      (apply concat  `((~o) ~@flat ~not-flat))))
+
+(defn- flat-ast
+  [ast]
   (if (and
-        (list? ast)
+        (coll? ast)
         (n-ary? (first ast)))
-    (do
-      (println :can-maybe-flat (rest ast))
-      ast) ; TODO
+    (flat ast)
     ast))
   
 (defn flatten-ast
   [ast]
-  (postwalk flat ast))
+  (postwalk flat-ast ast))
