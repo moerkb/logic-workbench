@@ -22,35 +22,27 @@
   [ast]
   (insta/transform transform-map ast))
 
-(defn- bar
+(defn- flat-filter
   [o l]
-  (if (list? l)
+  (if (coll? l)
     (= o (first l))
     false))
 
-(defn- foo
-  [ast]
-  (let [o (first ast) a (rest ast)] ; operator and arguments
-    (let [flat (map #(rest %) (filter (partial bar o) a))
-          not-flat (filter (partial (complement bar) o) a)]
-      (println :ast ast)
-      (println :flat flat)
-      (println :not-flat not-flat)
-      (println (apply concat  `((~o) ~@flat ~not-flat))))
-      ast))
-    
-  
-
 (defn- flat
   [ast]
+  (let [o (first ast) a (rest ast) ; operators and arguments
+        flat (map #(rest %) (filter (partial flat-filter o) a))
+        not-flat (filter (partial (complement flat-filter) o) a)]
+      (apply concat  `((~o) ~@flat ~not-flat))))
+
+(defn- flat-ast
+  [ast]
   (if (and
-        (list? ast)
+        (coll? ast)
         (n-ary? (first ast)))
-    (do
-      (println :can-maybe-flat (rest ast))
-      (foo ast)) ; TODO
+    (flat ast)
     ast))
   
 (defn flatten-ast
   [ast]
-  (postwalk flat ast))
+  (postwalk flat-ast ast))
