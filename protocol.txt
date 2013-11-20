@@ -5,7 +5,6 @@ holds important things to remember.
 
 OPEN TASKS
 
-- rename rimpl to cimpl
 - refactor basicfunctions such that no more namepaces are produced in the substitutions
 - remove binary? function (tools.clj)
 - flatten a tree from (and a (and b c)) to (and a b c)  (clojure.walk)
