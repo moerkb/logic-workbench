@@ -96,6 +96,13 @@
     false
     (kof 1 coll)))
 
+; Generating symbols from other symbols
+
+(defn sconcat
+  "(sconcat symbol1 symbol2) -> symbol
+   returns a symbol named 'symbol1.symbol2'"
+  [symbol1 symbol2]
+  (symbol (str (name symbol1) (name symbol2))))
 ; TODO: Tests
 
 
