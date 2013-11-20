@@ -1,7 +1,7 @@
 (ns logic.util)
 
 (def reserved-symbols 
-  #{'and 'nand 'or 'nor 'impl 'nimpl 'rimpl 'nrimpl 'equiv 'xor 'true 'false 'not})
+  #{'and 'nand 'or 'nor 'impl 'nimpl 'cimpl 'ncimpl 'equiv 'xor 'true 'false 'not})
 
 (def n-ary-symbols
   #{'and 'nand 'or 'nor 'equiv})

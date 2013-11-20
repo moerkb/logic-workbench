@@ -1,48 +1,74 @@
 (ns logic.util)
 
-(defn- tseit-sub
-  "Substitution function for tseitin-tranform postwalk."
-  [node]
-  (if (list? node)
-    (let [gen (gensym tseitin-prefix)]
-      (case (first node)
-        not (let [a (second node)] 
-			        (list 'and 
-				        (list 'or 
-				          (list 'not gen)
-				          (list 'not (second node)))
-				        (list 'or
-				          gen
-				          (second node))))
-        
-        and (let [[_ a b] node]
-              (list 'and
-                (list 'or (list 'not gen) a)
-                (list 'or (list 'not gen) b)
-                (list 'or gen (list 'not a) (list 'not b))))
-        
-        or (let [[_ a b] node]
-             (list 'and
-               (list 'or gen (list 'not a))
-               (list 'or gen (list 'not b))
-               (list 'or (list 'not gen) a b)))
-        
-        impl (let [[_ a b] node]
-               (list 'and
-                 (list 'or gen a)
-                 (list 'or gen (list 'not b))
-                 (list 'or (list 'not gen) (list 'not a) b)))
-        
-        (str "tseit-sub not implemented for: " (first node))))
+; TODO make this function for multiple arguments
+; TODO make this function for all operators
 
-    node)
-)
+(defn- tseitin-cnf
+  "Takes a formula with tseitin symbols, the tseitin symbol for this formula
+   and substitutes the formula with cnf.
+   Currently binary only!"
+  [formula tsym]
+  (if (literal? formula)
+    formula
+    (let [[op a] formula]
+      (if (= op 'not)
+        (list 'and
+          (list 'or
+            (list 'not tsym)
+            (list 'not a)))
+      
+        (let [b (nth formula 2)]
+          (case op
+            and (list 'and
+                  (list 'or (list 'not tsym) a)
+                  (list 'or (list 'not tsym) b)
+                  (list 'or tsym (list 'not a) (list 'not b)))
+          
+            nand (list 'nand
+                   (list 'or (list 'not tsym) (list 'not a) (list 'not b))
+                   (list 'or tsym a)
+                   (list 'or tsym b))
+            
+            or (list 'and
+                 (list 'or tsym (list 'not a))
+                 (list 'or tsym (list 'not b))
+                 (list 'or (list 'not tsym) (list 'not a) b))
+            
+            nor (list 'and
+                  (list 'or tsym a b)
+                  (list 'or (list 'not tsym) (list 'not a))
+                  (list 'or (list 'not tsym) (list 'not b)))
+          
+            impl (list 'and
+                   (list 'or tsym a)
+                   (list 'or tsym (list 'not b))
+                   (list 'or (list 'not tsym) (list 'not a) b))
+          
+            ;default
+            (println "Tseitin-CNF not implemented for" op)))))))
 
-;(-> "p1 or (p1 and (p3 -> p4))" logic-parse transform-ast tseitin-transform)
-(-> "!A and !(B or C)" logic-parse transform-ast tseitin-transform)
+(defn- generate-tseitin-symbols
+  "Recursive function for tseitin conversion to generate the new symbols."
+  [formula tmap]
+    (if (literal? formula)
+      [formula tmap]
+      (let [rem-retvals (map #(generate-tseitin-symbols % tmap) (rest formula))
+            new-sym (gensym tseitin-prefix)
+            new-formula (tseitin-cnf 
+                          (apply list (first formula) (map first rem-retvals))
+                          new-sym)
+            new-tmap (reduce merge (map second rem-retvals))
+            ]
+
+        [new-sym (conj new-tmap [new-sym new-formula])]
+      )))
 
 (defn tseitin-transform
   "Takes a formula in clojure code and applies the tseitin transformation to it."
   [formula]
-  (postwalk tseit-sub formula)
+  (let [gen-list (generate-tseitin-symbols formula {})]
+    (apply list 'and
+      (first gen-list)
+      (vals (second gen-list)))
+  )
 )
