@@ -2,50 +2,50 @@
 
 ; other logical functions (nand, impl, etc.)
 
+; IMPORTANT
+; These must stay macros and must not be changed to functions!
+
 (defmacro nand
   "Logical negated and"
-     [& more]
-     `(not (and ~@more)))
+  [& more]
+  (list 'not 
+    (apply list 'and more)))
 
 (defmacro nor
   "Logical negated ore"
-     [& more]
-     `(not (or ~@more)))
+  [& more]
+  (list 'not 
+        (apply list 'or more)))
 
 (defmacro impl
   "Logical implication (phi -> psi)"
   [phi psi]
-  `(if (not ~phi) 
-     true
-     ~psi))
+  (list 'or 
+        (list 'not phi) psi))
 
 (defmacro nimpl 
   "Logical negated implication (!(phi -> psi))"
   [phi psi]
-  `(not (impl ~phi ~psi)))
+  (list 'not 
+        (list 'impl phi psi)))
 
 (defmacro equiv
    "Logical equivalence (phi <-> psi)"
-   ([] true)
-   ([x] true)
-   ([x y]
-     `(= ~x ~y))
-   ([x y & more]
-     `(let [y# ~y]
-        (if (= ~x  y#) (equiv y# ~@more) false))))
+   [& more]
+   (list 'or (apply list 'and more) (apply list 'and (apply negate-all more))))
 
 (defmacro rimpl
   "Converse logical implication (phi <- psi)"
   [phi psi]
-  `(impl ~psi ~phi))
+  (list 'impl psi phi))
 
 (defmacro nrimpl 
   "Negated converse logical implication (!(phi <- psi))"
   [phi psi]
-  `(nimpl ~psi ~phi))
+  (list 'nimpl psi phi))
 
 (defmacro xor
   "Logical exclusive or"
   [phi psi]
-  `(let [phi# ~phi, psi# ~psi]
-     (and (or phi# psi#) (not (and phi# psi#)))))
+  (list 'not
+        (list 'equiv phi psi)))

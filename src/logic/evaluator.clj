@@ -14,8 +14,8 @@
   "Takes a formula in clojure code as produced by instaparse/transform and returns all variables."
   [formula]
   (apply sorted-set (filter 
-                      #(not (contains? reserved-symbols (stringify-symbol %1))) 
-                      (flatten formula))))
+                      #(not (contains? reserved-symbols %1)) 
+                      (flatten (list formula)))))
 
 (defn eval-formula 
   "Takes a formula in clojure code and evaluates it with the given substitution vector. 

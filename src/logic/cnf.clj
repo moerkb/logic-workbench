@@ -1,7 +1,5 @@
 (ns logic.util)
 
-; TODO impl expands to macro (if (not A) true B) - should that be?
-
 (defn impl-free 
   "Take a formula in clojure code and substitutes all subformulas that only 
    not, and, or are used"
@@ -11,27 +9,18 @@
     formula
 
     ;else proceed with recursion
-	  (let [op (first formula)
-	        name-op (name op)]
-      (if (or
-            (= name-op "and")
-            (= name-op "or")
-            (= name-op "not"))
+	  (let [op (first formula)]
+      (if (contains? #{'and 'or 'not} op)
         
         ;then do not expand and macros, but proceed recursivley
-        (concat
-          (list op)
-            (for [elem (rest formula)]
-              (impl-free elem)
-            ))
+        (apply list op (map #(impl-free %) (rest formula)))
         
         ;else expand one macro and proceed recursively
         (let [expform (macroexpand-1 formula)]
-          (concat
-            (list (first expform))
-            (for [elem (rest expform)]
-              (impl-free elem)
-            )))))))
+          (apply list
+            (first expform)
+            (map #(impl-free %) (rest expform))))
+))))
   
 (defn nnf
   "Takes an impl-free formula and produces the negation normal form, that is
@@ -42,71 +31,69 @@
 	   formula
 	   
 	   ;else
-	   (let [op (first formula)
-	         name-op (name op)]
+	   (let [op (first formula)]
 	     (cond
-	       ;(not (not formula)) -> (nnf formula)
-	       (and 
-	         (= name-op "not")
-	         (not (literal? (-> formula second)))
-	         (= "not" (-> formula second first name)))
-
-	       (nnf (-> formula second second))
-	     
          ;(and a b) -> (and (nnf a) (nnf b))  
          ;same for or, but for arbitrary number or params
-         (or 
-           (= name-op "and")
-           (= name-op "or"))
+         (contains? #{'and 'or} op)
          
-         (concat 
-           (list op) 
-           (for [elem (rest formula)]
-             (nnf elem)))
+         (apply list op (map #(nnf %) (rest formula)))
         
+         ;do nothing but return (made here and not in each of the following test)
+         (or 
+           (not= op 'not)
+           (literal? (second formula)))
+         
+         formula
+        
+	       ;(not (not formula)) -> (nnf formula)
+	       (= 'not (first (second formula)))
+
+	       (nnf (second (second formula)))
+	     
          ;(not (and a b)) -> (nnf (or (not a) (not b)))
          ;same for or, arbitrary number of params
-         (and
-           (= name-op "not")
-           (not (literal? (-> formula second)))
-	         (not= "not" (-> formula second first name)))
+         (not= 'not (first (second formula)))
          
-         (let [sec-op (-> formula second first name)]
-	         (nnf `(              
-                    ~(if (= sec-op "and")
-                       `or
-                       `and)
-                    ~@(map (fn [e] `(not ~e)) (-> formula second rest)))))
-         
+         (let [sec-op (first (second formula))]
+	         (nnf (apply list              
+		              (if (= sec-op 'and) 'or 'and)
+		              (map #(list 'not %) (rest (second formula))))))
+		     
 	       :else formula)
 	     )))
 
-; TODO make this function possible for arbitrary number of arguments
+(declare distr)
 
-(defn distr
-  "Takes two nnf formulas and applies the distribution for 'formula-1 or formula-2'"
+(defn- distr-bin
+  "Takes (exactly) two formulas and applies the distribution."
   [formula-1 formula-2]
   (cond
     ;f-1 has the form (and f-11 f-12)
     ; -> apply (and (distr f-11 f-2) (distr f-12 f-2))
     (and 
       (not (literal? formula-1))
-      (= "and" (-> formula-1 first name)))
+      (= 'and (first formula-1)))
     
-    `(and ~@(map #(distr % formula-2) (rest formula-1)))
+    (apply list 'and (map #(distr % formula-2) (rest formula-1)))
     
     ;f-2 has the form (and f-21 f-22)
     ; -> apply (and (distr f-1 f-21) (distr f-1 f-22))
     (and 
       (not (literal? formula-2))
-      (= "and" (-> formula-2 first name)))
+      (= 'and (first formula-2)))
     
-    `(and ~@(map #(distr formula-1 %) (rest formula-2)))
+    (apply list 'and (map #(distr formula-1 %) (rest formula-2)))
     
     :else
-    `(or ~formula-1 ~formula-2)
+    (list 'or formula-1 formula-2)
 ))
-    
+  
+(defn distr
+  "Takes nnf formulas and applies the distribution to it."
+  ([f] f)
+  ([f & more] (distr-bin f (apply distr more))))
+
 (defn cnf 
   "Takes a nnf formula and produces the conjunctive normal form of it."
   [formula]
@@ -116,12 +103,12 @@
     formula
     
     ;formula has the form 'f1 and f2' -> (and (cnf f1) (cnf f2))
-    (= "and" (-> formula first name))
+    (= 'and (first formula))
     
-    `(and ~@(map cnf (rest formula)))
+    (apply list 'and (map cnf (rest formula)))
     
     ;formula has the form 'f1 or f2' -> (distr (cnf f1) (cnf f2))
-    (= "or" (-> formula first name))
+    (= 'or (first formula))
     
     (apply distr (map cnf (rest formula)))
     
