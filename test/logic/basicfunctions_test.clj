@@ -59,17 +59,17 @@
     (is (= false (equiv false false true)))
     (is (= true (equiv false false false))))
 
-(deftest rimpl-test
-    (is (= true (rimpl true true)))
-    (is (= true (rimpl true false)))
-    (is (= false (rimpl false true)))
-    (is (= true (rimpl false false))))
+(deftest cimpl-test
+    (is (= true (cimpl true true)))
+    (is (= true (cimpl true false)))
+    (is (= false (cimpl false true)))
+    (is (= true (cimpl false false))))
 
-(deftest nrimpl-test
-    (is (= false (nrimpl true true)))
-    (is (= false (nrimpl true false)))
-    (is (= true (nrimpl false true)))
-    (is (= false (nrimpl false false))))
+(deftest ncimpl-test
+    (is (= false (ncimpl true true)))
+    (is (= false (ncimpl true false)))
+    (is (= true (ncimpl false true)))
+    (is (= false (ncimpl false false))))
 
 (deftest xor-test
     (is (= false (xor true true)))
