@@ -9,7 +9,8 @@ OPEN TASKS
 - remove binary? function (tools.clj)
 - flatten a tree from (and a (and b c)) to (and a b c)  (clojure.walk)
 - extend grammar (!-> should be nimpl)
-- tseitin tranformation - cnf production
+- make tseitin-cnf applicable for more than two arguments
+- make tseitin-cnf applicable for all ops
 
 - dimacs format generator
 - SAT4J wrapper
