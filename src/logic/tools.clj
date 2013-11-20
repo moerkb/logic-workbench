@@ -11,13 +11,6 @@
   [x]
   (= (class x) java.lang.Boolean))
 
-(defn binary?
-  "True if x is a binary operator only, so not a unary or n-ary one."
-  [x]
-  (and
-    (not (contains? n-ary-symbols x)))
-    (not= 'x not))
-
 (defn n-ary?
   [x]
   (contains? n-ary-symbols x))

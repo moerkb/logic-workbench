@@ -1,8 +1,5 @@
 (ns logic.util)
 
-; TODO make this function for multiple arguments
-; TODO make this function for all operators
-
 (defn- tseitin-cnf
   "Takes a formula with tseitin symbols, the tseitin symbol for this formula
    and substitutes the formula with cnf.
