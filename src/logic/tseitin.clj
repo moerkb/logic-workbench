@@ -24,10 +24,20 @@
                   (list 'or (list 'not tsym) b)
                   (list 'or tsym (list 'not a) (list 'not b)))
           
+            nand (list 'nand
+                   (list 'or (list 'not tsym) (list 'not a) (list 'not b))
+                   (list 'or tsym a)
+                   (list 'or tsym b))
+            
             or (list 'and
                  (list 'or tsym (list 'not a))
                  (list 'or tsym (list 'not b))
                  (list 'or (list 'not tsym) (list 'not a) b))
+            
+            nor (list 'and
+                  (list 'or tsym a b)
+                  (list 'or (list 'not tsym) (list 'not a))
+                  (list 'or (list 'not tsym) (list 'not b)))
           
             impl (list 'and
                    (list 'or tsym a)
