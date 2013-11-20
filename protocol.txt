@@ -5,12 +5,13 @@ holds important things to remember.
 
 OPEN TASKS
 
+- rename rimpl to cimpl
 - refactor basicfunctions such that no more namepaces are produced in the substitutions
 - remove binary? function (tools.clj)
 - flatten a tree from (and a (and b c)) to (and a b c)  (clojure.walk)
 - extend grammar (!-> should be nimpl)
+- tseitin tranformation - cnf production
 
-- tseitin tranformation
 - dimacs format generator
 - SAT4J wrapper
 - distinguish between "human formula" ("A and B") and clojure code (and a b) automatically
@@ -19,8 +20,26 @@ OPEN TASKS
 QUESTIONS
 
 - "A <-> B <-> C" is different from WolframAlpha?
+- equiv produces dnf?
+- difference sequence/collection
   
 NOTES
 
 - Basicfunctions must not be changed from macros to functions as cnf transformation
   would not work anymore (works with macroexpand).
+- Queens problem for (n = 2) (must be false for all):
+	(a1 -> (!b1 and !a2 and !b2))
+	and 
+	(a2 -> (!b1 and !b2 and !a1))
+	and
+	(b1 -> (!a1 and !a2 and !b2))
+	and
+	(b2 -> (!a1 and !a2 and !b1))
+	and
+	(a1 or b1)
+	and
+	(a2 or b2)
+	and
+	(a1 or a2)
+	and
+	(b1 or b2)

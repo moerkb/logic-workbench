@@ -1,48 +1,27 @@
 (ns logic.util)
 
-(defn- tseit-sub
-  "Substitution function for tseitin-tranform postwalk."
-  [node]
-  (if (list? node)
-    (let [gen (gensym tseitin-prefix)]
-      (case (first node)
-        not (let [a (second node)] 
-			        (list 'and 
-				        (list 'or 
-				          (list 'not gen)
-				          (list 'not (second node)))
-				        (list 'or
-				          gen
-				          (second node))))
-        
-        and (let [[_ a b] node]
-              (list 'and
-                (list 'or (list 'not gen) a)
-                (list 'or (list 'not gen) b)
-                (list 'or gen (list 'not a) (list 'not b))))
-        
-        or (let [[_ a b] node]
-             (list 'and
-               (list 'or gen (list 'not a))
-               (list 'or gen (list 'not b))
-               (list 'or (list 'not gen) a b)))
-        
-        impl (let [[_ a b] node]
-               (list 'and
-                 (list 'or gen a)
-                 (list 'or gen (list 'not b))
-                 (list 'or (list 'not gen) (list 'not a) b)))
-        
-        (str "tseit-sub not implemented for: " (first node))))
+(defn- generate-tseitin-symbols
+  "Recursive function for tseitin conversion to generate the new symbols."
+  [formula tmap]
+    (if (literal? formula)
+      [formula tmap]
+      (let [rem-retvals (map #(generate-tseitin-symbols % tmap) (rest formula))
+            new-formula (apply list (first formula) (map first rem-retvals))
+            new-tmap (reduce merge (map second rem-retvals))
+            new-sym (gensym tseitin-prefix)]
 
-    node)
-)
-
-;(-> "p1 or (p1 and (p3 -> p4))" logic-parse transform-ast tseitin-transform)
-(-> "!A and !(B or C)" logic-parse transform-ast tseitin-transform)
+        [new-sym (conj new-tmap [new-sym new-formula])]
+      )))
+                      
 
 (defn tseitin-transform
   "Takes a formula in clojure code and applies the tseitin transformation to it."
   [formula]
-  (postwalk tseit-sub formula)
+  (let [gen-list (generate-tseitin-symbols formula {})]
+    (apply list 'and
+      (first gen-list)
+      (map
+        #(list 'equiv (first %) (second %))
+        (second gen-list)))
+  )
 )
