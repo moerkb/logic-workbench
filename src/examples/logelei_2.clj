@@ -40,27 +40,27 @@ stop
 (defn tiere-ein-geraeusch []
   (list 'and (map ein-geraeusch 
                   '(fiedertiger, beutelaffen, tentakelläufer, 
-                    ohrhörner, rüsselratten, naagekühe))))
+                    ohrhörner, rüsselratten, nagekühe))))
                                  
 (def fml
   (list 'and
         (tiere-ein-geraeusch)
-        (impl 'fiedertiger-surren  'beutelaffen-miauen)
-        (impl 'fiedertiger-miauen  'tentakelläufer-zischen)
-        (impl 'fiedertiger-kratzen 'beutelaffen-oinken)
-        (impl 'fiedertiger-zischen 'ohrhörner-kratzen)
-        (impl 'fiedertiger-pfeifen 'rüsselratten-miauen)
-        (impl 'fiedertiger-oinken  'tentakelläufer-pfeifen)
-        (impl 'ohrhörner-miauen    'tentakelläufer-kratzen)
-        (impl 'beutelaffen-miauen  'fiedertiger-kratzen)
-        (impl 'rüsselratten-surren 'ohrhörner-zischen)
-        (impl 'nagekühe-miauen     'ohrhörner-pfeifen)
-        (impl 'beutelaffen-oinken  'fiedertiger-kratzen)
-        (impl 'ohrhörner-surren    'tentakelläufer-kratzen)
-        (impl 'beutelaffen-surren  'nagekühe-zischen)
-        (impl 'nagekühe-surren     'fiedertiger-kratzen)
-        (impl 'rüsselratten-miauen 'ohrhörner-surren)
-        (impl 'beutelaffen-oinken  'ohrhörner-surren) 
+        '(impl fiedertiger-surren  beutelaffen-miauen)
+        '(impl fiedertiger-miauen  tentakelläufer-zischen)
+        '(impl fiedertiger-kratzen beutelaffen-oinken)
+        '(impl fiedertiger-zischen ohrhörner-kratzen)
+        '(impl fiedertiger-pfeifen rüsselratten-miauen)
+        '(impl fiedertiger-oinken  tentakelläufer-pfeifen)
+        '(impl ohrhörner-miauen    tentakelläufer-kratzen)
+        '(impl beutelaffen-miauen  fiedertiger-kratzen)
+        '(impl rüsselratten-surren ohrhörner-zischen)
+        '(impl nagekühe-miauen     ohrhörner-pfeifen)
+        '(impl beutelaffen-oinken  fiedertiger-kratzen)
+        '(impl ohrhörner-surren    tentakelläufer-kratzen)
+        '(impl beutelaffen-surren  nagekühe-zischen)
+        '(impl nagekühe-surren     fiedertiger-kratzen)
+        '(impl rüsselratten-miauen ohrhörner-surren)
+        '(impl beutelaffen-oinken  ohrhörner-surren) 
         ))
 
         
