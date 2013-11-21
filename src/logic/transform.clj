@@ -58,3 +58,8 @@
    (and (and a b) c) => (and a b c)"
   [ast]
   (postwalk flat-ast ast))
+
+(defn create-ast
+  "Parses a formula and transforms it to an ast."
+  [formula]
+  (-> formula logic-parse transform-ast))
