@@ -60,9 +60,7 @@
   {:pre [(<= 1 k (count coll))]}
   (if (= (count coll) k)
     (cons 'and (seq coll))
-    (let [clauses 
-           (for [s (combinations coll (inc (- (count coll) k)))]
-             (cons 'or s))]
+    (let [clauses (map #(cons 'or %)(combinations coll (inc (- (count coll) k))))]
        (if (> (count clauses) 1)
          (cons 'and clauses)
          (first clauses)))))
@@ -75,7 +73,7 @@
   {:pre [(<= 0 k (dec (count coll)))]}
   (if (= k 0)
     (cons 'and (map #(list 'not %) coll))
-    (cons 'and
+    (cons 'and 
           (for [s (combinations coll (inc k))]
             (cons 'or (map #(list 'not %) s))))))
 
@@ -98,10 +96,10 @@
 
 ; Generating symbols from other symbols
 
-(defn sconcat
-  "(sconcat symbol1 symbol2) -> symbol
-   returns a symbol named 'symbol1-symbol2'"
-  [symbol1 symbol2]
-  (symbol (str (name symbol1) "-" (name symbol2))))
+(defn combine-syms
+  "(combine & syms) -> symbol
+   returns a symbol named 'sym1-sym2...'"
+  [& syms]
+  (symbol (cstr/join "-" (map name syms))))
 
 

@@ -116,5 +116,6 @@
          (max-kof 1 '(a b c))))
   (is (= '(or (not a) (not b) (not c) (max-kof 2 '(a b c))))))
 
-(deftest sconcat-test
-  (is (= 'a-b (sconcat 'a 'b))))
+(deftest combine-syms-test
+  (is (= 'a-b (combine-syms 'a 'b)))
+  (is (= 'a-b-c (combine-syms 'a 'b 'c))))
