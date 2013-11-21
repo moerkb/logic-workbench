@@ -7,7 +7,6 @@ OPEN TASKS
 
 - extend grammar (!-> should be nimpl)
 - tseitin tests
-- impl-free does not free nimpl in (a nif b)
 
 - dimacs format generator
 - SAT4J wrapper
