@@ -23,12 +23,17 @@
   (insta/transform transform-map ast))
 
 (defn- flat-filter
+  "Private function to filter if the sub sub ast is flattable.
+   Returns true if the operator of the sub [o] ast the same like the sub sub ast.
+   False otherwise."
   [o l]
   (if (coll? l)
     (= o (first l))
     false))
 
 (defn- flat
+  "Private functin to flat a flattenable sub ast with a depth of one level.
+   This function does not check if the operator is n-ary!"
   [ast]
   (let [o (first ast) a (rest ast) ; operators and arguments
         flat (map #(rest %) (filter (partial flat-filter o) a))
@@ -36,6 +41,10 @@
       (apply concat  `((~o) ~@flat ~not-flat))))
 
 (defn- flat-ast
+  "Private function to flat the deepest sub ast that is not flatted now if it is possible,
+   else it returns the original sub ast.
+   It should be used to flat a complete ast bottum up.
+   e.g. (postwalk flat-ast ast)"
   [ast]
   (if (and
         (coll? ast)
@@ -44,5 +53,8 @@
     ast))
   
 (defn flatten-ast
+  "Flats the transformed ast.
+   Nested binary functions will be transformed to one n-ary function when it is possible.
+   (and (and a b) c) => (and a b c)"
   [ast]
   (postwalk flat-ast ast))
