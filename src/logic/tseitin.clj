@@ -7,39 +7,68 @@
   [formula tsym]
   (if (literal? formula)
     formula
-    (let [[op a] formula]
+    (let [[op a] formula
+          t tsym
+          nt (list 'not t)
+          na (list 'not a)]
       (if (= op 'not)
         (list 'and
-          (list 'or
-            (list 'not tsym)
-            (list 'not a)))
+          (list 'or nt na))
       
-        (let [b (nth formula 2)]
+        (let [b (nth formula 2)
+              nb (list 'not b)]
           (case op
             and (list 'and
-                  (list 'or (list 'not tsym) a)
-                  (list 'or (list 'not tsym) b)
-                  (list 'or tsym (list 'not a) (list 'not b)))
+                  (list 'or nt a)
+                  (list 'or nt b)
+                  (list 'or t na nb))
           
             nand (list 'nand
-                   (list 'or (list 'not tsym) (list 'not a) (list 'not b))
-                   (list 'or tsym a)
-                   (list 'or tsym b))
+                   (list 'or t a)
+                   (list 'or t b)
+                   (list 'or nt na nb))
             
             or (list 'and
-                 (list 'or tsym (list 'not a))
-                 (list 'or tsym (list 'not b))
-                 (list 'or (list 'not tsym) (list 'not a) b))
+                 (list 'or t na)
+                 (list 'or t nb)
+                 (list 'or nt a b))
             
             nor (list 'and
-                  (list 'or tsym a b)
-                  (list 'or (list 'not tsym) (list 'not a))
-                  (list 'or (list 'not tsym) (list 'not b)))
+                  (list 'or nt na)
+                  (list 'or nt nb)
+                  (list 'or t a b))
           
             impl (list 'and
-                   (list 'or tsym a)
-                   (list 'or tsym (list 'not b))
-                   (list 'or (list 'not tsym) (list 'not a) b))
+                   (list 'or t a)
+                   (list 'or t nb)
+                   (list 'or nt na b))
+            
+            nimpl (list 'and
+                    (list 'or nt a)
+                    (list 'or nt nb)
+                    (list 'or t na b))
+            
+            cimpl (list 'and
+                    (list 'or t na)
+                    (list 'or t b)
+                    (list 'or nt a nb))
+            
+            ncimpl (list 'and
+                     (list 'or nt na)
+                     (list 'or nt b)
+                     (list 'or t a nb))
+            
+            equiv (list 'and
+                    (list 'or nt a nb)
+                    (list 'or nt na b)
+                    (list 'or t na nb)
+                    (list 'or t a b))
+            
+            xor (list 'and
+                  (list 'or t na b)
+                  (list 'or t a nb)
+                  (list 'or nt a b)
+                  (list 'or nt na nb))
           
             ;default
             (println "Tseitin-CNF not implemented for" op)))))))

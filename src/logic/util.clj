@@ -12,4 +12,5 @@
       "parser"
       "transform"
       "truthtable"
-      "cnf")
+      "cnf"
+      "tseitin")

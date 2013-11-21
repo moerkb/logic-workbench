@@ -6,8 +6,8 @@ holds important things to remember.
 OPEN TASKS
 
 - extend grammar (!-> should be nimpl)
-- make tseitin-cnf applicable for more than two arguments
-- make tseitin-cnf applicable for all ops
+- tseitin tests
+- impl-free does not free nimpl in (a nif b)
 
 - dimacs format generator
 - SAT4J wrapper
@@ -16,6 +16,7 @@ OPEN TASKS
 
 QUESTIONS
 
+- tseitin cnfs n-ary?
 - "A <-> B <-> C" is different from WolframAlpha?
 - equiv produces dnf?
 - difference sequence/collection
