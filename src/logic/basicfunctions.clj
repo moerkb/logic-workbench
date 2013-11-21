@@ -38,12 +38,14 @@
 (defmacro cimpl
   "Converse logical implication (phi <- psi)"
   [phi psi]
-  (list 'impl psi phi))
+  (list 'or
+    (list 'not psi) phi))
 
 (defmacro ncimpl 
   "Negated converse logical implication (!(phi <- psi))"
   [phi psi]
-  (list 'nimpl psi phi))
+  (list 'not
+    (list 'cimpl phi psi)))
 
 (defmacro xor
   "Logical exclusive or"
