@@ -51,3 +51,17 @@
   "Parses a formula and transforms it to an ast."
   [formula]
   (-> formula logic-parse transform-ast))
+
+; test flatten-ast
+(def fml1 '(equiv (equiv a b) c))
+(def fml2 (flatten-ast fml1))
+(tt (list 'equiv fml1 fml2))
+
+(def fml3 '(nand (nand a b) c))
+(def fml4 (flatten-ast fml3))
+(tt (list 'equiv fml3 fml4))
+
+(def fml5 '(nor (nor a b) c))
+(def fml6 (flatten-ast fml5))
+(tt (list 'equiv fml5 fml6))
+; Fazit: nur and und or sind "flat"
