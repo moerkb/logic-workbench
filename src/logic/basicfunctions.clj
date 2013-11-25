@@ -95,7 +95,7 @@
     (list 'and (min-kof k coll) (max-kof k coll))))
 
 (defn oneof
-  "oneof k coll) -> cfml expressing that
+  "(oneof k coll) -> cfml expressing that
    exactly 1 symbol in coll ist true."
   [coll]
   (if (empty? coll)

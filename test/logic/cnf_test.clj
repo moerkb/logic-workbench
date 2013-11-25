@@ -1,8 +1,7 @@
 (ns logic.parser-test
   (:require [clojure.test :refer :all]
             [logic.util :refer :all]
-            [instaparse.core :as insta])
-  (:use [clojure.walk :only (macroexpand-all)]))
+            [instaparse.core :as insta]))
 
 (deftest transform-cnf-test
 	(is (= 
