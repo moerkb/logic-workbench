@@ -17,8 +17,6 @@ OPEN TASKS
 QUESTIONS
 
 - tseitin cnfs n-ary?
-- "A <-> B <-> C" is different from WolframAlpha?
-- equiv produces dnf?
   
 NOTES
 
