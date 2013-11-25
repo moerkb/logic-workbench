@@ -7,6 +7,7 @@ OPEN TASKS
 
 - extend grammar (!-> should be nimpl)
 - tseitin tests
+- write protocol
 
 - dimacs format generator
 - SAT4J wrapper
@@ -18,7 +19,6 @@ QUESTIONS
 - tseitin cnfs n-ary?
 - "A <-> B <-> C" is different from WolframAlpha?
 - equiv produces dnf?
-- difference sequence/collection
   
 NOTES
 
