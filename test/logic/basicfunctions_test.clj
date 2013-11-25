@@ -85,7 +85,7 @@
     (is (= true (cimpl false false))))
 
 (deftest cimpl-test'
-  (is (= '(impl b a) (macroexpand-1 '(cimpl a b)))))
+  (is (= '(or (not b) a) (macroexpand-1 '(cimpl a b)))))
 
 (deftest ncimpl-test
     (is (= false (ncimpl true true)))
@@ -94,7 +94,7 @@
     (is (= false (ncimpl false false))))
 
 (deftest ncimpl-test'
-  (is (= '(nimpl b a) (macroexpand-1 '(ncimpl a b)))))
+  (is (= '(not (cimpl a b)) (macroexpand-1 '(ncimpl a b)))))
 
 (deftest xor-test
     (is (= false (xor true true)))
@@ -104,6 +104,19 @@
 
 (deftest xor-test'
   (is (= '(not (equiv a b)) (macroexpand-1 '(xor a b)))))
+
+(deftest ite-test
+  (is (= true  (ite true  true  true)))
+  (is (= true  (ite true  true  false)))
+  (is (= false (ite true  false true)))
+  (is (= false (ite true  false false)))
+  (is (= true  (ite false true  true)))
+  (is (= false (ite false true  false)))
+  (is (= true  (ite false false true)))
+  (is (= false (ite false false false))))
+
+(deftest ite-test'
+  (is (= '(or (and i t) (and (not i) e) (macroexpand-1 '(ite i t e))))))
 
 (deftest min-kof-test
   (is (= '(or a b c) (min-kof 1 '(a b c))))
