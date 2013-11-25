@@ -53,6 +53,12 @@
   (list 'not
         (list 'equiv phi psi)))
 
+(defmacro ite
+  "Logical if-then-else"
+  [i t e]
+  (list 'or (list 'and i t)
+            (list 'and (list 'not i) e))) 
+
 ; Further useful functions
 
 (defn min-kof 
