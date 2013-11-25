@@ -259,14 +259,11 @@ stop
 ; x = x owns the mule
 
 (def phi6
-  '(and
-     (or a b c)
-     (or (not a) (not b))
-     (or (not a) (not c))
-     (or (not b) (not c)) ; exactly one of #{a b c}
+  (list 'and
+     (oneof '[a b c])
      #_(xor c (not a))      ; a and c make the same proposition
-     (xor (not c) a)
-     (xor c (not a))))
+     '(xor (not c) a)
+     '(xor c (not a))))
 
 (tt phi6)
 
@@ -289,7 +286,7 @@ stop
 
 (def phi7
   '(impl
-     (and (not c) (if m c))
+     (and (not c) (cimpl m c))
      (not m)))
 
 (tt phi7)
