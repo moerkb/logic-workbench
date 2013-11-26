@@ -5,19 +5,18 @@ holds important things to remember.
 
 OPEN TASKS
 
-- transform.clj
-    l. 38: o/a -> op/args
-    help function in let?
 - write protocol (markdown see instaparse)
-- options for truth table: show satisfying/unsatisfying only
 - remove tautologies from cnf
-- dimacs format generator
+- tt limit for 'code-to-truth-table'
 - SAT4J wrapper
 - distinguish between "human formula" ("A and B") and clojure code (and a b) automatically
 - visualize formula tree graphically (instaparse/visualize) 
 - comparison project, core.logic, kodkod (alloy) (e.g. Sudoku)
 
 QUESTIONS
+
+- How to test tseitin tranformation with generated symbols?
+- Is it a good idea to remove tautologies from cnf?
 
 NOTES
 

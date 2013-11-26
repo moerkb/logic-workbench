@@ -13,4 +13,5 @@
       "transform"
       "truthtable"
       "cnf"
-      "tseitin")
+      "tseitin"
+      "dimacs")

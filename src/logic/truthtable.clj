@@ -30,8 +30,9 @@
   (cstr/replace (cstr/replace value "true" "T") "false" "F"))
 
 (defn- print-tt 
-  "Prints a truth table (given as relation) in a nice format."
-  [formula ttable]
+  "Prints a truth table (given as relation) in a nice format. If show-truth is set to
+   false, it will not show rows where the result is true; analog for show-false."
+  [formula ttable show-truth show-false]
 
   (let [symbols (ttable :symbols)
         table (ttable :table)
@@ -45,29 +46,40 @@
     ; print header
 	  (doseq [sym (replace {:result "\u03A6"} symbols)]
 	    (print (name sym) ""))
-	  (print \newline )
+	  (print \newline)
 	
 	  ; print the combinations and results
     (doseq [row table]
-      (doseq [[elem spc] (map list row var-spaces)]
-        (print 
-          (abbrev-bool (str elem)) 
-          (if (> spc 0) 
-            (format (str "%" spc "s") " ") 
-            ""))
-      )
-      (print \newline)
-    )
-  ))
+      (when (or
+ 			        (and show-truth show-false)
+	   	        (and show-truth (last row))
+              (and show-false (not (last row))))
+	      (doseq [[elem spc] (map list row var-spaces)]
+	        (print 
+	          (abbrev-bool (str elem)) 
+	          (if (> spc 0) 
+	            (format (str "%" spc "s") " ") 
+	            "")))
+	      
+	      (print \newline)))))
 
 (defn truth-table 
   "Takes a human-readable formula, parses it and prints a truth table."
-  [formula]
-  (print-tt formula (-> formula logic-parse transform-ast code-to-truth-table)))
+  [formula & {:keys [show] :or {show :all}}]
+  {:pre [(contains? #{:all :true-only :false-only} show)]}
+  (let [bool-args (case show
+                    :all [true true]
+                    :true-only [true false]
+                    :false-only [false true])]
+                    
+    (apply print-tt formula 
+           (-> formula logic-parse transform-ast code-to-truth-table)
+           bool-args)))
 
 (defn tt
   "Prints truth table of fml given on Clojure"
-  [formula]
+  [formula & {:keys [show] :or {show :all}}]
+  {:pre [(contains? #{:all :true-only :false-only} show)]}
   (print-tt "phi" (code-to-truth-table formula)))
       
 
