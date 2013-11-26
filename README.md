@@ -93,14 +93,14 @@ In case you need to do it manually, the parsing is done with `logic-parse` and t
 
 The atoms for a formula are either booleans or variables. 
 
-A *variable* begins with a letter or a special char, and continues with either of them or a digit. A letter may consist of the characters `[A-Za-zÄäÖöÜü]`, and a special char is one of `[{}.\_]`.
+A *variable* begins with a letter or a special char, and continues with either of them or a digit. A letter may consist of the characters `A-Z a-z Ä ä Ö ö Ü ü`, and a special char is one of `{}.\_`.
 
 The *boolean constants* can be written like this:
 
 + true: `True, true, T, t, 1`
 + false: `False, false, F, f, `
 
-All formulas can be grouped with a matching pair of parenthesis ('(', ')') or brackets ('[', ']').
+All formulas can be grouped with a matching pair of parenthesis `( )` or brackets `[ ]`.
 
 If more arguments than two are connected with a binary operator (there are no n-ary operators here), they are nested corresponding to their associativity:
 
@@ -113,17 +113,17 @@ This is the syntax for binary functions, descending order of precedence:
 
 | Function | Symbols | Associativity |
 |----------|---------|---------------|
-| not | '!', 'not' | - |
-| and | '&', 'and' | left |
-| not and | '!&', 'nand' | left |
-| or | '|', 'or' | left |
-| not or | '!|', 'nor' | left |
-| from/if/converted implication | '<-', 'if' | right |
-| not from/if/conv. impl. | '!<-', 'nif' | right |
-| implication | '->', 'impl' | right |
-| not implication | '!->', 'nimpl' | right |
-| equivalent | '<->', 'iff' | left |
-| exclusive or | '^', 'xor' | left |
+| not | !, not | - |
+| and | &, and | left |
+| not and | !&, nand | left |
+| or | \|, or | left |
+| not or | !\|, nor | left |
+| from/if/converted implication | <-, if | right |
+| not from/if/conv. impl. | !<-, nif | right |
+| implication | ->, impl | right |
+| not implication | !->, nimpl | right |
+| equivalent | <->, iff | left |
+| exclusive or | ^, xor | left |
 
 #### Clojure code
 
