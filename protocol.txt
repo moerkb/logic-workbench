@@ -10,7 +10,6 @@ OPEN TASKS
     help function in let?
 - extend grammar (!-> should be nimpl)
 - write protocol (markdown see instaparse)
-- options for truth table: show satisfying/unsatisfying only
 - remove tautologies from cnf
 - dimacs format generator
 - SAT4J wrapper
@@ -19,6 +18,8 @@ OPEN TASKS
 - comparison project, core.logic, kodkod (alloy) (e.g. Sudoku)
 
 QUESTIONS
+
+- How to test tseitin tranformation with generated symbols?
 
 NOTES
 
