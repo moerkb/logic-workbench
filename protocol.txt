@@ -7,6 +7,7 @@ OPEN TASKS
 
 - write protocol (markdown see instaparse)
 - remove tautologies from cnf
+- tt limit for 'code-to-truth-table'
 - SAT4J wrapper
 - distinguish between "human formula" ("A and B") and clojure code (and a b) automatically
 - visualize formula tree graphically (instaparse/visualize) 
