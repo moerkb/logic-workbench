@@ -8,18 +8,21 @@
     :table [[true true true] [true false false]...] \"list of lists representing a row\"
    }"
   [clj-code]
-  (let [symbols (find-variables clj-code)
-        allcomb (selections [true false] (count symbols))
-        assign-map (for [comb allcomb]
-                            (vec (interleave symbols comb)))]
-    {:symbols (conj (vec symbols) :result)
-     :formula clj-code
-     :table (vec (for [curr-valuation assign-map]
-					    (let [curr-val-map (apply hash-map curr-valuation)]
-						      (conj (vec (for [sym symbols] 
-                               (sym curr-val-map)))
-                    (eval-formula clj-code curr-valuation))
-						   )))}))
+  (let [symbols (find-variables clj-code)]
+    (if (> (count symbols) 10)
+      (throw (IllegalArgumentException. "This formula has more than 10 variables, which exceeds the limit. The truth table would consist of more than 1024 rows anyway, so you might want to use the SAT solver anyway."))
+	    
+	    (let [allcomb (selections [true false] (count symbols))
+	          assign-map (for [comb allcomb]
+	                          (vec (interleave symbols comb)))]
+	    {:symbols (conj (vec symbols) :result)
+	     :formula clj-code
+	     :table (vec (for [curr-valuation assign-map]
+						    (let [curr-val-map (apply hash-map curr-valuation)]
+							      (conj (vec (for [sym symbols] 
+	                               (sym curr-val-map)))
+	                    (eval-formula clj-code curr-valuation))
+							   )))}))))
 
 (defn abbrev-bool 
   "Replaces 'true' with 'T' and 'false' with 'F' for better reading of a truth table."

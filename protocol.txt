@@ -12,7 +12,6 @@ OPEN TASKS
 - tseitin tests
 - write protocol (markdown see instaparse)
 - options for truth table: show satisfying/unsatisfying only
-- limit amount of atoms for truth table (e.g. to 16)
 - remove tautologies from cnf
 - dimacs format generator
 - SAT4J wrapper
@@ -24,6 +23,7 @@ QUESTIONS
 
 NOTES
 
+- Printing a truth table is reasonable only for a number of vars up to 12, limiting to 10
 - David Nolen, 'Architecture of core.logic'
 - only 'and' and 'or' are n-ary, all other operators binary
 - Basicfunctions must not be changed from macros to functions as cnf transformation
