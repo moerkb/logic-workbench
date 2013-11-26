@@ -15,6 +15,7 @@ OPEN TASKS
 QUESTIONS
 
 - How to test tseitin tranformation with generated symbols?
+- Is it a good idea to remove tautologies from cnf?
 
 NOTES
 
