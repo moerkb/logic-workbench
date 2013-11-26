@@ -22,34 +22,17 @@
   [ast]
   (insta/transform transform-map ast))
 
-(defn- flat-filter
-  "Private function to filter if the sub sub ast is flattable.
-   Returns true if the operator of the sub [o] ast the same like the sub sub ast.
-   False otherwise."
-  [o l]
-  (if (coll? l)
-    (= o (first l))
-    false))
-
-(defn- flat
-  "Private functin to flat a flattenable sub ast with a depth of one level.
-   This function does not check if the operator is n-ary!"
-  [ast]
-  (let [o (first ast) a (rest ast) ; operators and arguments
-        flat (map #(rest %) (filter (partial flat-filter o) a))
-        not-flat (filter (partial (complement flat-filter) o) a)]
-      (apply concat  `((~o) ~@flat ~not-flat))))
-
-(defn- flat-ast
-  "Private function to flat the deepest sub ast that is not flatted now if it is possible,
-   else it returns the original sub ast.
-   It should be used to flat a complete ast bottum up.
-   e.g. (postwalk flat-ast ast)"
+(defn- flatten-subast
+  "Private functin to flat a flattenable sub ast with a depth of one level."
   [ast]
   (if (and
         (coll? ast)
         (n-ary? (first ast)))
-    (flat ast)
+    (let [op (first ast) args (rest ast)
+          flat-filter (fn [op arg] (if (coll? arg) (= op (first arg)) false))
+          flat (map #(rest %) (filter (partial flat-filter op) args))
+          not-flat (filter (partial (complement flat-filter) op) args)]
+        (apply concat  `((~op) ~@flat ~not-flat)))
     ast))
   
 (defn flatten-ast
@@ -57,25 +40,9 @@
    Nested binary functions will be transformed to one n-ary function when it is possible.
    (and (and a b) c) => (and a b c)"
   [ast]
-  (postwalk flat-ast ast))
+  (postwalk flatten-subast ast))
 
 (defn create-ast
   "Parses a formula and transforms it to an ast."
   [formula]
   (-> formula logic-parse transform-ast))
-
-#_(
-; test flatten-ast
-(def fml1 '(equiv (equiv a b) c))
-(def fml2 (flatten-ast fml1))
-(tt (list 'equiv fml1 fml2))
-
-(def fml3 '(nand (nand a b) c))
-(def fml4 (flatten-ast fml3))
-(tt (list 'equiv fml3 fml4))
-
-(def fml5 '(nor (nor a b) c))
-(def fml6 (flatten-ast fml5))
-(tt (list 'equiv fml5 fml6))
-; Fazit: nur and und or sind "flat"
-)
