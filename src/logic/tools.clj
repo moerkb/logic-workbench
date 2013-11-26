@@ -4,7 +4,7 @@
   #{'and 'nand 'or 'nor 'impl 'nimpl 'cimpl 'ncimpl 'equiv 'xor 'true 'false 'not})
 
 (def n-ary-symbols
-  #{'and 'nand 'or 'nor 'equiv})
+  #{'and 'or})
 
 (defn boolean?
   "True if the parameter is of the type Boolean, false otherwise"
@@ -21,7 +21,3 @@
   (or 
     (boolean? x) 
     (and (symbol? x) (not (contains? reserved-symbols x)))))
-
-(defn negate-all
-  [& more]
-  (map #(list 'not %) more))
