@@ -148,16 +148,15 @@ For `and, or, not` the standard clojure macros are used; all other logical funct
 |------------------|------------|-------|-----------------------------|
 | negation | not | unary | (see clj code) |
 | and | and | n-ary | (see clj code) |
-| negated and | nand | binary | ```clj 
-                                    (not (and a b))``` |
+| negated and | nand | binary | `(not (and a b))` |
 | or | or | n-ary | (see clj code |
-| negated or | nor | binary | (not (or a b)) |
-| implication | impl | binary | (or (not a) b) |
-| negated implication | nimpl | binary | (not (impl a b)) |
-| from, if, converted implication | cimpl | binary | (or (not b) a) |
-| negated from, if, cimpl | ncimpl | binary | (not (cimpl a b)) |
-| equivalent | equiv | binary | (or (and a b) (and (not a) (not b))) |
-| exclusive or | xor | binary | (not (equiv a b)) |
+| negated or | nor | binary | `(not (or a b))` |
+| implication | impl | binary | `(or (not a) b)` |
+| negated implication | nimpl | binary | `(not (impl a b))` |
+| from, if, converted implication | cimpl | binary | `(or (not b) a)` |
+| negated from, if, cimpl | ncimpl | binary | `(not (cimpl a b))` |
+| equivalent | equiv | binary | `(or (and a b) (and (not a) (not b)))` |
+| exclusive or | xor | binary | `(not (equiv a b))` |
 
 ### Flattening formulas
 
