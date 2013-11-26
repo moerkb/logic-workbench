@@ -116,8 +116,8 @@ This is the syntax for binary functions, descending order of precedence:
 | not | !, not | - |
 | and | &, and | left |
 | not and | !&, nand | left |
-| or | \|, or | left |
-| not or | !\|, nor | left |
+| or | ``|``, or | left |
+| not or | ``!|``, nor | left |
 | from/if/converted implication | <-, if | right |
 | not from/if/conv. impl. | !<-, nif | right |
 | implication | ->, impl | right |
