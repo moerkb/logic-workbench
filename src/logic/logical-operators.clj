@@ -6,15 +6,15 @@
 
 (defmacro nand
   "Logical negated and"
-  [& more]
+  [phi psi]
   (list 'not 
-    (apply list 'and more)))
+    (list 'and phi psi)))
 
 (defmacro nor
   "Logical negated or"
-  [& more]
+  [phi psi]
   (list 'not 
-        (apply list 'or more)))
+        (list 'or phi psi)))
 
 (defmacro impl
   "Logical implication (phi -> psi)"
@@ -30,10 +30,10 @@
 
 (defmacro equiv
    "Logical equivalence (phi <-> psi)"
-   [& more]
-   (list 'or (apply list 'and more) (apply list 'and (apply negate-all more))))
-
-; TODO: negate-all has dependency to tools.clj
+   [phi psi]
+   (list 'and
+         (list 'impl phi psi)
+         (list 'impl psi phi)))
 
 (defmacro cimpl
   "Converse logical implication (phi <- psi)"

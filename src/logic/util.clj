@@ -7,7 +7,7 @@
 (def tseitin-prefix "t_")
 
 (load "tools"
-      "basicfunctions"
+      "logical-operators"
       "evaluator"
       "parser"
       "transform"

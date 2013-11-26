@@ -5,14 +5,12 @@ holds important things to remember.
 
 OPEN TASKS
 
-- flatten and/or only
 - transform.clj
     l. 38: o/a -> op/args
     help function in let?
 - extend grammar (!-> should be nimpl)
 - tseitin tests
 - write protocol (markdown see instaparse)
-- change name basicfunctions -> e.g. logical operators
 - options for truth table: show satisfying/unsatisfying only
 - limit amount of atoms for truth table (e.g. to 16)
 - remove tautologies from cnf
