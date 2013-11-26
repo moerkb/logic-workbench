@@ -15,6 +15,7 @@ OPEN TASKS
 - change name basicfunctions -> e.g. logical operators
 - options for truth table: show satisfying/unsatisfying only
 - limit amount of atoms for truth table (e.g. to 16)
+- remove tautologies from cnf
 - tseitin:
 	flatten final and
 	and/or n-ary
