@@ -13,7 +13,6 @@
 	      (-> "(A and B) or C" logic-parse transform-ast transform-cnf)))
 	  
 	(is (=
-       ; TODO shall be flattened later
-	     '(and A (and B (and D E))))
-	      (-> "A and (B and (D and E))" logic-parse transform-ast transform-cnf))
+	     '(and D E B A)
+	      (-> "A and (B and (D and E))" logic-parse transform-ast transform-cnf)))
 )

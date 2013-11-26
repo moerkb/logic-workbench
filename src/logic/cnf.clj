@@ -119,4 +119,4 @@
 (defn transform-cnf
   "Takes a formula in clojure code and produces the conjunctive normal form of it."
   [formula]
-  (-> formula impl-free nnf cnf))
+  (-> formula impl-free nnf cnf flatten-ast))

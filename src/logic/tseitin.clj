@@ -10,7 +10,8 @@
     (let [[op a] formula
           t tsym
           nt (list 'not t)
-          na (list 'not a)]
+          na (list 'not a)
+          args (rest formula)]
       (if (= op 'not)
         (list 'and
           (list 'or nt na))
@@ -18,20 +19,18 @@
         (let [b (nth formula 2)
               nb (list 'not b)]
           (case op
-            and (list 'and
-                  (list 'or nt a)
-                  (list 'or nt b)
-                  (list 'or t na nb))
+            and (apply list 'and
+                  (apply list 'or t (map #(list 'not %) args))
+                  (map #(list 'or (list 'not t) %) args))
           
             nand (list 'nand
                    (list 'or t a)
                    (list 'or t b)
                    (list 'or nt na nb))
             
-            or (list 'and
-                 (list 'or t na)
-                 (list 'or t nb)
-                 (list 'or nt a b))
+            or (apply list 'and
+                  (apply list 'or (list 'not t) args)
+                  (map #(list 'or t (list 'not %)) args))
             
             nor (list 'and
                   (list 'or nt na)
@@ -93,8 +92,8 @@
   "Takes a formula in clojure code and applies the tseitin transformation to it."
   [formula]
   (let [gen-list (generate-tseitin-symbols formula {})]
-    (apply list 'and
-      (first gen-list)
-      (vals (second gen-list)))
+    (flatten-ast (apply list 'and
+                   (first gen-list)
+                   (vals (second gen-list))))
   )
 )
