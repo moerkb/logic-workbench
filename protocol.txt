@@ -17,6 +17,10 @@ QUESTIONS
 
 - How to test tseitin tranformation with generated symbols?
 - Is it a good idea to remove tautologies from cnf?
+- Remove tautologies from
+	(and (or a (not a))) => (and) ???
+	(or a (not a)) => ???
+- What is a good cnf?
 
 NOTES
 

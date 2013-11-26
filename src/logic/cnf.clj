@@ -117,22 +117,38 @@
 ))
 
 (defn tautology?
-  "Returns true if the formula is alway right, else false.
-   pre-con: operator must be or"
+  "Returns true if the formula is alway right, else false."
   [formula]
-  {:pre [(= 'or (first formula))]}
-  (let [args (rest formula)
-        atoms (filter #(literal? %) args)
-        negated-atoms (filter #(not (literal? %)) args)]
-    (some #(= (first %) (second %)) (for [a atoms, n negated-atoms] (list a (second n))))))
+  {:pre [(or (literal? formula) (= 'or (first formula)))]}
+  (if (coll? formula)
+    (let [args (rest formula)
+          atoms (filter #(literal? %) args)
+          negated-atoms (filter #(not (literal? %)) args)]
+      (some #(= (first %) (second %)) (for [a atoms, n negated-atoms] (list a (second n)))))
+    false))
   
 
 (defn remove-tautologies
   "Takes a cnf formula and produce cnf without tautologies"
   [ast]
-  (let [op (first ast) args (rest ast)
-        args-without-tautologies (filter (complement tautology?) args)]
-    `(~op ~@args-without-tautologies)))
+  (cond
+    ; cnf is a literal (e.g. a, true)
+    (literal? ast)
+    ast
+    
+    ; normal cnf: (and (or ...) (or ...) ...)
+    (= 'and (first ast))
+    (let [op (first ast) args (rest ast)
+          args-without-tautologies (filter (complement tautology?) args)]
+      `(~op ~@args-without-tautologies))
+    
+    ; cnf with only one or; (or ...)
+    (= 'or (first ast))
+    (if (tautology? ast) '(and) ast)
+    
+    ; a form that I not saw ;)
+    :else
+    (throw (IllegalArgumentException. "This form is not supported (jet)"))))
     
   
 
