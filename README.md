@@ -117,7 +117,7 @@ This is the syntax for binary functions, descending order of precedence:
 | and | &, and | left |
 | not and | !&, nand | left |
 | or | &#124;, or | left |
-| not or | &#124;, nor | left |
+| not or | !&#124;, nor | left |
 | from/if/converted implication | <-, if | right |
 | not from/if/conv. impl. | !<-, nif | right |
 | implication | ->, impl | right |
@@ -127,7 +127,50 @@ This is the syntax for binary functions, descending order of precedence:
 
 #### Clojure code
 
-...to be continued.
+The second type of formulas would be what human-readable code transforms to: direct clojure code. A few examples:
+
+```clj
+(and A B)
+(or A B)
+(or A B C D E)
+(impl C (equiv (not A) B))
+```
+
+Be aware that these forms - of course - need to be quoted:
+
+```clj
+(fancy-function '(and (or a b) c))
+```
+
+For `and, or, not` the standard clojure macros are used; all other logical functions are new macros, that expand to either `and, or, not`, or a combination of them. Here is the complete list:
+
+| Logical function | Macro name | Arity | Expands to (called (f a b)) |
+|------------------|------------|-------|-----------------------------|
+| negation | not | unary | (see clj code) |
+| and | and | n-ary | (see clj code) |
+| negated and | nand | binary | (not (and a b)) |
+| or | or | n-ary | (see clj code |
+| negated or | nor | binary | (not (or a b)) |
+| implication | impl | binary | (or (not a) b) |
+| negated implication | nimpl | binary | (not (impl a b)) |
+| from/if/converted implication | cimpl | binary | (or (not b) a) |
+| negated from/if/cimpl | ncimpl | binary | (not (cimpl a b)) |
+| equivalent | equiv | binary | (or (and a b) (and (not a) (not b))) |
+| exclusive or | xor | binary | (not (equiv a b)) |
+
+### Flattening formulas
+
+### Truth tables
+
+### CNF transformation
+
+### Tseitin transformation
+
+### Dimacs file format transformation
+
+### SAT solving
+
+not implemented yet
 
 ## License
 
