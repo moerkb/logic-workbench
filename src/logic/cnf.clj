@@ -116,6 +116,26 @@
     formula
 ))
 
+(defn tautology?
+  "Returns true if the formula is alway right, else false.
+   pre-con: operator must be or"
+  [formula]
+  {:pre [(= 'or (first formula))]}
+  (let [args (rest formula)
+        atoms (filter #(literal? %) args)
+        negated-atoms (filter #(not (literal? %)) args)]
+    (some #(= (first %) (second %)) (for [a atoms, n negated-atoms] (list a (second n))))))
+  
+
+(defn remove-tautologies
+  "Takes a cnf formula and produce cnf without tautologies"
+  [ast]
+  (let [op (first ast) args (rest ast)
+        args-without-tautologies (filter (complement tautology?) args)]
+    `(~op ~@args-without-tautologies)))
+    
+  
+
 (defn transform-cnf
   "Takes a formula in clojure code and produces the conjunctive normal form of it."
   [formula]
