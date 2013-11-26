@@ -148,7 +148,8 @@ For `and, or, not` the standard clojure macros are used; all other logical funct
 |------------------|------------|-------|-----------------------------|
 | negation | not | unary | (see clj code) |
 | and | and | n-ary | (see clj code) |
-| negated and | nand | binary | ```clj (not (and a b))``` |
+| negated and | nand | binary | ```clj 
+                                    (not (and a b))``` |
 | or | or | n-ary | (see clj code |
 | negated or | nor | binary | (not (or a b)) |
 | implication | impl | binary | (or (not a) b) |
