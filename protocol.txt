@@ -5,9 +5,6 @@ holds important things to remember.
 
 OPEN TASKS
 
-- transform.clj
-    l. 38: o/a -> op/args
-    help function in let?
 - write protocol (markdown see instaparse)
 - remove tautologies from cnf
 - dimacs format generator
