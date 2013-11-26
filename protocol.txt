@@ -8,7 +8,6 @@ OPEN TASKS
 - transform.clj
     l. 38: o/a -> op/args
     help function in let?
-- extend grammar (!-> should be nimpl)
 - tseitin tests
 - write protocol (markdown see instaparse)
 - options for truth table: show satisfying/unsatisfying only

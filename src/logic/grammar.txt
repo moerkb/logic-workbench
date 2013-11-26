@@ -11,9 +11,9 @@ atom			= <spc> ((letter|special) (letter|special|digit)*) <spc>
 (* token *)
 XOR 			= <spc> ("xor"|"^") <spc>
 EQUIV 			= <spc> ("iff"|"<->") <spc>
-NIMPL 			= <spc> ("nimpl") <spc>
+NIMPL 			= <spc> ("nimpl"|"!->") <spc>
 IMPL 			= <spc> ("impl"|"->") <spc>
-NIF 			= <spc> ("nif") <spc>
+NIF 			= <spc> ("nif"|"!<-") <spc>
 IF  			= <spc> ("if"|"<-") <spc>
 NOR 			= <spc> ("nor"|"!|") <spc>
 OR	 			= <spc> ("or"|"|") <spc>
