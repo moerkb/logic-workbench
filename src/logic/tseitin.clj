@@ -93,8 +93,8 @@
   "Takes a formula in clojure code and applies the tseitin transformation to it."
   [formula]
   (let [gen-list (generate-tseitin-symbols formula {})]
-    (apply list 'and
-      (first gen-list)
-      (vals (second gen-list)))
+    (flatten-ast (apply list 'and
+                   (first gen-list)
+                   (vals (second gen-list))))
   )
 )
