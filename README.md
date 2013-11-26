@@ -160,6 +160,15 @@ For `and, or, not` the standard clojure macros are used; all other logical funct
 
 ### Flattening formulas
 
+While the functions `and` and `or` (and only they) have an arbitrary arity, it might be useful to 'flatten' a formula, like this:
+
+```clj
+> (flatten-ast '(and (and A B) C))
+(and A B C)
+```
+
+The function `flatten-ast` recursively flattens nested forms of n-ary functions.
+
 ### Truth tables
 
 ### CNF transformation
