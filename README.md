@@ -171,11 +171,149 @@ The function `flatten-ast` recursively flattens nested forms of n-ary functions.
 
 ### Truth tables
 
+TODO: code-to-truth-table
+
+The function to print a truth table is `tt` for a clojure formula, and `truth-table` for a human-readable one:
+
+```clj
+> (tt '(impl A B))
+
+Truth table for formula: phi
+Parsed clojure code: (impl A B)
+A B Φ 
+T T T      
+T F F      
+F T T      
+F F T      
+nil
+
+> (truth-table "A -> B")
+
+Truth table for formula: A -> B
+Parsed clojure code: (impl A B)
+A B Φ 
+T T T      
+T F F      
+F T T      
+F F T      
+nil
+```
+
+Both functions can handle up to 10 variables and accept the keyword `:show`, that can be either `:all`, `:true-only` or `:false-only`, so it shows only rows where the result is true, false or all. The default value is `:all`.
+
+```clj
+> (truth-table "A <-> B" :show :all)
+
+Truth table for formula: A <-> B
+Parsed clojure code: (equiv A B)
+A B Φ 
+T T T      
+T F F      
+F T F      
+F F T      
+nil
+
+> (truth-table "A <-> B" :show :true-only)
+
+Truth table for formula: A <-> B
+Parsed clojure code: (equiv A B)
+A B Φ 
+T T T      
+F F T      
+nil
+
+> (truth-table "A <-> B" :show :false-only)
+
+Truth table for formula: A <-> B
+Parsed clojure code: (equiv A B)
+A B Φ 
+T F F      
+F T F      
+nil
+```
+
 ### CNF transformation
+
+The function `transform-cnf` takes a formula in clojure code and produces the conjunctive normal form of it:
+
+```clj
+> (transform-cnf '(or A (and B (impl C D))))
+
+(and (or A B) (or (not C) D A))
+```
+
+It sequentially calls the following functions:
+
++ `impl-free` removes all composed macros such that only `and`, `or` and `not` appear in the formula afterwards.
++ `nnf` takes an impl-free formula and produces the negation normal form. That means only atoms are negated, but not formulas with subformulas (`(or (not A) (not B))` is nnf, while `(not (and A B))` is not). It also removes double negations (`(not (not A))` becomes `A`).
++ `cnf` takes an impl-free nnf formula and finally produces the cnf. It uses the function `distr`, which can apply the distributive form to change an 'and formula' to an 'or formula'.
++ `flatten-ast` removes nested functions of the same type.
+
+So the above function call `(transform-cnf '(or A (and B (impl C D))))` would stepwise do this:
+
+```clj
+> (impl-free '(or A (and B (impl C D))))
+
+(or A (and B (or (not C) D)))
+
+> (nnf (impl-free '(or A (and B (impl C D)))))
+
+(or A (and B (or (not C) D)))  ; does nothing in this case
+
+> (cnf (nnf (impl-free '(or A (and B (impl C D))))))
+
+(and (or A B) (or A (or (not C) D)))
+
+> (flatten-ast (cnf (nnf (impl-free '(or A (and B (impl C D)))))))
+
+(and (or A B) (or (not C) D A))
+```
 
 ### Tseitin transformation
 
+Just like `transform-cnf`, the function `tseitin-transform` creates a cnf, but with linear complexity by using the tseitin transformation:
+
+```clj
+> (tseitin-transform '(or A (and B (impl C D))))
+
+(and 
+    (or (not t_2851) A t_2852) 
+    (or t_2851 (not A)) 
+    (or t_2851 (not t_2852)) 
+    (or t_2853 C) 
+    (or t_2853 (not D)) 
+    (or (not t_2853) (not C) D) 
+    (or t_2852 (not B) (not t_2853)) 
+    (or (not t_2852) B) 
+    (or (not t_2852) t_2853) 
+    t_2851)
+```
+
+It is recommended, to use the tseitin-transformation for at least larger formulas, when using the sat solver.
+
 ### Dimacs file format transformation
+
+When having a formula in cnf (either by using `transform-cnf` or `tseitin-transform`), the function `generate-dimcas` takes this formula, and produces a string representing this formula in the dimacs file format. This is needed by most sat solvers.
+
+```clj
+> (println (create-dimacs (tseitin-transform '(or A (and B (impl C D))))))
+c dimacs file for the logic formula
+c (and (or (not t_2935) ...  (shortened to keep it readable)
+c 
+p cnf 7 10
+-5 1 6 0
+5 -1 0
+5 -6 0
+7 3 0
+7 -4 0
+-7 -3 4 0
+6 -2 -7 0
+-6 2 0
+-6 7 0
+5 0
+
+nil
+```
 
 ### SAT solving
 

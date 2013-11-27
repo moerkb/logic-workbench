@@ -15,7 +15,7 @@
       (map #(str (apply str (map (fn [atom] (if (literal? atom)
 				                                      (str (subs atom) " ")
 				                                      (str "-" (subs (second atom)) " "))) 
-                             (rest %)))
+                             (if (literal? %) (list %) (rest %))))
                  0
                  \newline) 
            (rest formula))
