@@ -149,7 +149,7 @@ For `and, or, not` the standard clojure macros are used; all other logical funct
 | negation | not | unary | (see clj code) |
 | and | and | n-ary | (see clj code) |
 | negated and | nand | binary | `(not (and a b))` |
-| or | or | n-ary | (see clj code |
+| or | or | n-ary | (see clj code) |
 | negated or | nor | binary | `(not (or a b))` |
 | implication | impl | binary | `(or (not a) b)` |
 | negated implication | nimpl | binary | `(not (impl a b))` |
@@ -289,16 +289,18 @@ Just like `transform-cnf`, the function `tseitin-transform` creates a cnf, but w
     t_2851)
 ```
 
-It is recommended, to use the tseitin-transformation for at least larger formulas, when using the sat solver.
+It is recommended, to use the tseitin-transformation for at least larger formulas, when using the sat solver. It uses the `gensym` function with the value of `tseitin-prefix` (defined in util.clj) as its prefix. 
 
 ### Dimacs file format transformation
 
 When having a formula in cnf (either by using `transform-cnf` or `tseitin-transform`), the function `generate-dimcas` takes this formula, and produces a string representing this formula in the dimacs file format. This is needed by most sat solvers.
 
 ```clj
+; println is only used to show \n as an actual new line.
 > (println (create-dimacs (tseitin-transform '(or A (and B (impl C D))))))
+
 c dimacs file for the logic formula
-c (and (or (not t_2935) ...  (shortened to keep it readable)
+c (and (or (not t_2935) ...  ; (shortened to keep it readable)
 c 
 p cnf 7 10
 -5 1 6 0
