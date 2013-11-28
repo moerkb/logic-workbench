@@ -201,6 +201,13 @@ The function can produce truth tables where only rows with the result true (or f
  :formula (equiv A B), 
  :lines :true-only, 
  :table ([true true true] [false false true])}
+ 
+> (code-to-truth-table '(equiv A B) :lines :false-only)
+
+{:symbols [A B :result], 
+ :formula (equiv A B), 
+ :lines :false-only, 
+ :table ([true false false] [false true false])}
 ```
 
 The function to print a truth table without producing the truth table relation before (automatically done) is `tt` for a clojure formula, and `truth-table` for a human-readable one:
