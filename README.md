@@ -94,7 +94,7 @@ In case you need to do it manually, the parsing is done with `logic-parse` and t
 
 The atoms for a formula are either booleans or variables. 
 
-A *variable* begins with a letter or a special char, and continues with either of them or a digit. A letter may consist of the characters `A-Z a-z Ä ä Ö ö Ü ü`, and a special char is one of `{}.\_`.
+A *variable* begins with a letter or a special char, and continues with either of them or a digit. A letter may consist of the characters `A-Z a-z Ä ä Ö ö Ü ü`, and a special char is one of `{}.\ _`.
 
 The *boolean constants* can be written like this:
 
@@ -340,7 +340,7 @@ When having a formula in cnf (either by using `transform-cnf` or `tseitin-transf
 > (println (create-dimacs (tseitin-transform '(or A (and B (impl C D))))))
 
 c dimacs file for the logic formula
-c (and (or (not t_2935) ...  ; (shortened to keep it readable)
+c (and (or (not t_2935) ...  ; (shortened to keep it readable here)
 c 
 p cnf 7 10
 -5 1 6 0
@@ -354,7 +354,6 @@ p cnf 7 10
 -6 7 0
 5 0
 
-nil
 ```
 
 ### SAT solving
