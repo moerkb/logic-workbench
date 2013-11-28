@@ -48,6 +48,7 @@ As a first example, you might try:
 
 Truth table for formula: A and B
 Parsed clojure code: (and A B)
+Showing lines: all
 A B Φ 
 T T T      
 T F F      
@@ -171,9 +172,38 @@ The function `flatten-ast` recursively flattens nested forms of n-ary functions.
 
 ### Truth tables
 
-TODO: code-to-truth-table
+A truth table itself is a list of vectors repesenting a relation. However, it is embedded in a hash map that contains some other information. The name of the function is `code-to-truth-table`, and accepts a formula in clojure code.
 
-The function to print a truth table is `tt` for a clojure formula, and `truth-table` for a human-readable one:
+```clj
+> (code-to-truth-table '(equiv A B))
+
+{:symbols [A B :result], 
+ :formula (equiv A B), 
+ :lines :all, 
+ :table ([true true true] [true false false] [false true false] [false false true])}
+```
+
+The keys are defined like this:
+
+| Key | Example | Description |
+|-----|---------|-------------|
+| `:symbols` | `[A B :result]` | The name of the variables of the formula. The order is the same as they appear in `:table`. `:result` holds the value for the valuation (so it can be matched in the order of `:table`). |
+| `:formula` | `(equiv A B)` | The formula this truth table is made for (always a clojure formula). |
+| `:lines` | `:all` | One of `:all`, `:true-only` or `:false-only`. If not `:all`, only lines are contained where the result is true (or false correspondingly). See below. |
+| `:table` | `([true false false])` | The actual truth table; a list of vectors, which represent the rows of the table. The order of the values correspond to the one of `:symbols`. |
+
+The function can produce truth tables where only rows with the result true (or false) can be shown. This is done with the parameter `:lines` that accepts `:all` (default), `:true-only` or `:false-only`:
+
+ ```clj
+> (code-to-truth-table '(equiv A B) :lines :true-only)
+
+{:symbols [A B :result], 
+ :formula (equiv A B), 
+ :lines :true-only, 
+ :table ([true true true] [false false true])}
+```
+
+The function to print a truth table without producing the truth table relation before (automatically done) is `tt` for a clojure formula, and `truth-table` for a human-readable one:
 
 ```clj
 > (tt '(impl A B))
@@ -199,13 +229,14 @@ F F T
 nil
 ```
 
-Both functions can handle up to 10 variables and accept the keyword `:show`, that can be either `:all`, `:true-only` or `:false-only`, so it shows only rows where the result is true, false or all. The default value is `:all`.
+Both functions can handle up to 10 variables and accept the keyword `:lines` as the function `code-to-truth-table` does (it is a straight forward of the parameter):
 
 ```clj
-> (truth-table "A <-> B" :show :all)
+> (truth-table "A <-> B" :lines :all)
 
 Truth table for formula: A <-> B
 Parsed clojure code: (equiv A B)
+Showing lines: all
 A B Φ 
 T T T      
 T F F      
@@ -213,19 +244,21 @@ F T F
 F F T      
 nil
 
-> (truth-table "A <-> B" :show :true-only)
+> (truth-table "A <-> B" :lines :true-only)
 
 Truth table for formula: A <-> B
 Parsed clojure code: (equiv A B)
+Showing lines: true only
 A B Φ 
 T T T      
 F F T      
 nil
 
-> (truth-table "A <-> B" :show :false-only)
+> (truth-table "A <-> B" :lines :false-only)
 
 Truth table for formula: A <-> B
 Parsed clojure code: (equiv A B)
+Showing lines: false only
 A B Φ 
 T F F      
 F T F      
