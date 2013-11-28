@@ -13,6 +13,15 @@ This repository holds the work of a research project of the Technische Hochschul
 + 'Flattening' functions `and` and `or` (e.g. `(and A (and B C))` becomes `(and A B C)`).
 + Creating the dimacs file format for a cnf formula.
 
+Planned features:
+
++ SAT solving (SAT4J and naive DPLL implementation)
++ GUI
++ Loading a formula in a REPL, modifiying it there and returning to program.
++ Visualizing parse trees (probably with rhizome/graphviz)
++ Generating tex code for formulas, truth tables, etc.
++ Other fancy stuff we have not figured out yet.
+
 ## Dependencies
 
 The logical workbench is developed and testes with Clojure 1.3.0, but it might work with earlier versions as well.
@@ -114,17 +123,17 @@ This is the syntax for binary functions, descending order of precedence:
 
 | Function | Symbols | Associativity |
 |----------|---------|---------------|
-| not | !, not | - |
-| and | &, and | left |
-| not and | !&, nand | left |
-| or | &#124;, or | left |
-| not or | !&#124;, nor | left |
-| from, if, converted implication | <-, if | right |
-| not from, if, conv. impl. | !<-, nif | right |
-| implication | ->, impl | right |
-| not implication | !->, nimpl | right |
-| equivalent | <->, iff | left |
-| exclusive or | ^, xor | left |
+| not | `!`, `not` | - |
+| and | `&`, `and` | left |
+| not and | `!&`, `nand` | left |
+| or | `&#124;`, `or` | left |
+| not or | `!&#124;`, `nor` | left |
+| from, if, converted implication | `<-`, `if` | right |
+| not from, if, conv. impl. | `!<-`, `nif` | right |
+| implication | `->`, `impl` | right |
+| not implication | `!->`, `nimpl` | right |
+| equivalent | `<->`, `iff` | left |
+| exclusive or | `^`, `xor` | left |
 
 #### Clojure code
 
