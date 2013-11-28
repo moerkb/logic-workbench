@@ -99,7 +99,7 @@ A *variable* begins with a letter or a special char, and continues with either o
 The *boolean constants* can be written like this:
 
 + true: `True, true, T, t, 1`
-+ false: `False, false, F, f, `
++ false: `False, false, F, f, 0`
 
 All formulas can be grouped with a matching pair of parenthesis `( )` or brackets `[ ]`.
 
