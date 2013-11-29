@@ -9,19 +9,23 @@
 (defn sat4j-solve
   [dimacs-map]
   (let [solver (SolverFactory/newDefault)
+        clauses (:clauses dimacs-map)
         MAXVAR (:num-vars dimacs-map)
-        NBCLAUSES (:num-clauses)]
+        NBCLAUSES (:num-clauses dimacs-map)]
     (.newVar solver MAXVAR)
     (.setExpectedNumberOfClauses solver NBCLAUSES)
 
-    (let [clauses (:clauses dimacs-map)]
-      (map #(.addClause solver (VecInt. (int-array %))) clauses))
+    (loop [c clauses]
+      (if (first c)
+        (let [n (first c)
+              clause (subvec n 0 (dec (count n)))]
+          (.addClause solver (VecInt. (int-array clause)))
+          (recur (rest c)))))
 
     (if (.isSatisfiable solver)
       (do
         (println "Satisfiable!")
-        (.decode (DimacsReader. solver) (.model solver))
-        )
+        (.decode (DimacsReader. solver) (.model solver)))
       (println "Unsatisfiable!"))))
 
 (defn sat-solve
