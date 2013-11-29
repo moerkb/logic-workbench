@@ -14,4 +14,5 @@
       "truthtable"
       "cnf"
       "tseitin"
-      "dimacs")
+      "dimacs"
+      "sat-solve")
