@@ -346,7 +346,7 @@ It is recommended, to use the tseitin transformation for at least larger formula
 
 ### Dimacs file format transformation
 
-When having a formula in cnf (either by using `transform-cnf` or `transform-tseitin`), the function `generate-dimcas` takes this formula, and produces a string representing this formula in the dimacs file format. This is needed by most sat solvers.
+When having a formula in cnf (either by using `transform-cnf` or `transform-tseitin`), the function `generate-dimacs` takes this formula, and produces a string representing this formula in the dimacs file format. This is needed by most sat solvers.
 
 ```clj
 ; println is only used to show \n as an actual new line.
