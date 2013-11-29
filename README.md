@@ -389,10 +389,10 @@ It returns a hash map, containing the following information:
 
 | Key | Example | Description |
 |-----|---------|-------------|
-| :formula | `(and (or a b) (or b c))` | The original cnf formula, these dimacs clauses are for. |
-| :num-vars | `3` | The total number of different variables in the formula. |
-| :num-clauses | `2` | The total number of clauses in the cnf formula. |
-| :clauses | `[[3 1 -2 0] [3 0]]` | The actual clauses as a vector of vectors. The trailing zero in each 'row' is included. |
+| `:formula` | `(and (or a b) (or b c))` | The original cnf formula, these dimacs clauses are for. |
+| `:num-vars` | `3` | The total number of different variables in the formula. |
+| `:num-clauses` | `2` | The total number of clauses in the cnf formula. |
+| `:clauses` | `[[3 1 -2 0] [3 0]]` | The actual clauses as a vector of vectors. The trailing zero in each 'row' is included. |
 
 ### SAT solving
 
