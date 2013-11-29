@@ -369,6 +369,31 @@ p cnf 7 10
 
 ```
 
+It is also possible to just receive the clauses as lists via `generate-dimacs-clauses`:
+
+```clj
+> (generate-dimacs-clauses (transform-tseitin '(equiv a b)))
+
+{:formula (and (or (not t_3337) a (not b)) ; ... (shortend here), 
+ :num-vars 3, 
+ :num-clauses 5, 
+ :clauses [
+ 		   [-3 1 -2 0] 
+ 		   [-3 -1 2 0] 
+ 		   [3 -1 -2 0] 
+ 		   [3 1 2 0] 
+ 		   [3 0]]}
+```
+
+It returns a hash map, containing the following information:
+
+| Key | Example | Description |
+|-----|---------|-------------|
+| :formula | `(and (or a b) (or b c))` | The original cnf formula, these dimacs clauses are for. |
+| :num-vars | `3` | The total number of different variables in the formula. |
+| :num-clauses | `2` | The total number of clauses in the cnf formula. |
+| :clauses | `[[3 1 -2 0] [3 0]]` | The actual clauses as a vector of vectors. The trailing zero in each 'row' is included. |
+
 ### SAT solving
 
 not implemented yet
