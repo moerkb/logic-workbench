@@ -26,7 +26,7 @@ Planned features:
 
 The logical workbench is developed and testes with Clojure 1.3.0, but it might work with earlier versions as well.
 
-Besides, it need the following libraries:
+Besides, it needs the following libraries:
 
 + [instaparse](https://github.com/Engelberg/instaparse)
 + [math.combinatorics](https://github.com/clojure/math.combinatorics)
@@ -46,7 +46,7 @@ But the source files in your classpath and require or use the namespace 'logic.u
 ; or
 (use [logic.util])
 ```
-All important functions are defined in this namespaces. In case you might wonder: the name is 'util' and not 'core' to prevent confusion with 'core.logic'.
+All important functions are defined in this namespaces. In case you wonder: the name is 'util' and not 'core' to prevent confusion with 'core.logic'.
 
 ### A simple example
 
@@ -126,8 +126,8 @@ This is the syntax for binary functions, descending order of precedence:
 | not | `!`, `not` | - |
 | and | `&`, `and` | left |
 | not and | `!&`, `nand` | left |
-| or | &#124;, `or` | left |
-| not or | !&#124;, `nor` | left |
+| or | <code> &#124; </code>, `or` | left |
+| not or | <code> !&#124; </code>, `nor` | left |
 | from, if, converted implication | `<-`, `if` | right |
 | not from, if, conv. impl. | `!<-`, `nif` | right |
 | implication | `->`, `impl` | right |

@@ -16,7 +16,7 @@ OPEN TASKS
 QUESTIONS
 
 - How to test tseitin tranformation with generated symbols?
-- Is it a good idea to remove tautologies from cnf?
+- Is it a good idea to remove tautologies from cnf? (runtime: remove or leave to sat solver?)
 - Remove tautologies from
 	(and (or a (not a))) => (and) ???
 	(or a (not a)) => ???
