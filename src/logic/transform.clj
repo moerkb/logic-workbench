@@ -42,7 +42,7 @@
   [ast]
   (postwalk flatten-subast ast))
 
-(defn create-ast
+(defn clojure-formula
   "Parses a formula and transforms it to an ast."
   [formula]
   (-> formula logic-parse transform-ast))

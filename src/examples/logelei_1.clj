@@ -22,7 +22,7 @@ stop
              (equiv b (not c))
              (equiv c (and (not a) (not b)))))
 
-(tt phi1)
+(truth-table phi1)
 
 ;; phi::Kuckucksuhren
 ;
@@ -70,7 +70,7 @@ stop
         (equiv k6 (impl (not k7) k2))
         (equiv k7 (impl (not k3) k5))))
 
-(tt phi2)
+(truth-table phi2)
 
 ;phi::Lausbuben
 ;
@@ -128,7 +128,7 @@ stop
      (equiv rolf (not torsten))
      (equiv torsten (not klaus))))
 
-(tt phi3)
+(truth-table phi3)
 
 
 ; phi::Unsen
@@ -183,7 +183,7 @@ stop
      (equiv i (impl (not h) b))
      (equiv k (impl (not e) (xor i a)))))
      
- (tt phi4)           
+ (truth-table phi4)           
 
 ; phi::Philosophen
 ; /*
@@ -234,7 +234,7 @@ stop
      (equiv (max (xor elke chris)))
      (equiv (lu (xor (not hol) elke)))))
 
-(tt phi5)
+(truth-table phi5)
 
 ; phi::Mule
 
@@ -265,7 +265,7 @@ stop
      '(xor (not c) a)
      '(xor c (not a))))
 
-(tt phi6)
+(truth-table phi6)
 
 ; result:
 ; B owns the mule
@@ -289,7 +289,7 @@ stop
      (and (not c) (cimpl m c))
      (not m)))
 
-(tt phi7)
+(truth-table phi7)
 
 ; result: yes
 
@@ -317,6 +317,6 @@ stop
        (not w))
      (equiv m h)))
 
-(tt phi8)
+(truth-table phi8)
 
 ; result: yes

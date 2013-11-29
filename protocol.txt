@@ -5,9 +5,8 @@ holds important things to remember.
 
 OPEN TASKS
 
-- write protocol (markdown see instaparse)
-- remove tautologies from cnf
-- tt limit for 'code-to-truth-table'
+- remove tautologies from cnf (?)
+
 - SAT4J wrapper
 - distinguish between "human formula" ("A and B") and clojure code (and a b) automatically
 - visualize formula tree graphically (instaparse/visualize) 
@@ -16,11 +15,11 @@ OPEN TASKS
 QUESTIONS
 
 - How to test tseitin tranformation with generated symbols?
-- Is it a good idea to remove tautologies from cnf?
+- Is it a good idea to remove tautologies from cnf? (runtime: remove or leave to sat solver?)
 - Remove tautologies from
 	(and (or a (not a))) => (and) ???
 	(or a (not a)) => ???
-- What is a good cnf?
+- (transform-cnf '(or A B)) produces (or A B) => hot fix or mistake in algorithm?
 
 NOTES
 
@@ -30,7 +29,7 @@ NOTES
 - Basicfunctions must not be changed from macros to functions as cnf transformation
   would not work anymore (works with macroexpand).
 - RSyntaxRichTextArea
-- MPA: no own macro processo
+- MPA: no own macro processor
   idea: 
     Input "human" code 
     -> Clj-Button 
