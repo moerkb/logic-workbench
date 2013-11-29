@@ -1,6 +1,6 @@
 (ns logic.util)
 
-(defn code-to-truth-table
+(defn generate-truth-table
   "Takes clojure code and generates the truth table for it.
    Output format (truth table is a relation):
 
@@ -75,16 +75,16 @@
       
       (print \newline))))
 
-(defn truth-table 
+(defn truth-table-parse 
   "Takes a human-readable formula, parses it and prints a truth table.
-   :lines parameter is forwared to the same named of code-to-truth-table."
+   :lines parameter is forwared to the same named of generate-truth-table."
   [formula & {:keys [lines] :or {lines :all}}]
   (print-tt formula 
-            (-> formula logic-parse transform-ast (code-to-truth-table :lines lines))))
+            (-> formula logic-parse transform-ast (generate-truth-table :lines lines))))
 
-(defn tt
-  "Prints truth table of formula in clojure code. :lines parameter is forwared to the same named of code-to-truth-table."
+(defn truth-table
+  "Prints truth table of formula in clojure code. :lines parameter is forwared to the same named of generate-truth-table."
   [formula & {:keys [lines] :or {lines :all}}]
-  (print-tt "phi" (code-to-truth-table formula :lines lines)))
+  (print-tt "phi" (generate-truth-table formula :lines lines)))
       
 

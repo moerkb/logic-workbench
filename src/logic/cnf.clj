@@ -95,7 +95,8 @@
   ([f & more] (distr-bin f (apply distr more))))
 
 (defn cnf 
-  "Takes a nnf formula and produces the conjunctive normal form of it."
+  "Takes a nnf formula and produces the conjunctive normal form of it. If the formula is not
+   impl-free and nnf, you better use transform-cnf, which pipes these functions."
   [formula]
   (cond
     ;formula is literal -> return formula

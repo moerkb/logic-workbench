@@ -53,7 +53,7 @@ All important functions are defined in this namespaces. In case you wonder: the 
 As a first example, you might try:
 
 ```clj
-> (truth-table "A and B")
+> (truth-table-parse "A and B")
 
 Truth table for formula: A and B
 Parsed clojure code: (and A B)
@@ -66,13 +66,13 @@ F F F
 nil
 ```
 
-The function `truth-table` takes a formula and prints the truth table for it.
+The function `truth-table-parse` takes a formula and prints the truth table for it.
 
 ### The two type of formulas: human-readable and clojure code
 
 There are two different types of formulas that can be handled with this library, and it is important to keep track of it.
 
-All functions (like cnf transformation, for example) basically work with the second type (clojure code), but all 'big' ones will also have a wrapper that automatically parses a human-readable formula and invokes the function on it.
+All functions (like cnf transformation, for example) basically work with the second type (clojure code), but some exist with the postfix '-parse', which automatically parse a human-readable formula and invokes the function on it (e.g. truth-table-parse).
 
 #### Human-readable formulas
 
@@ -85,10 +85,11 @@ A & B
 !(A <-> (B <- !C) nor D
 ```
 
-Such a formula can be transformed into clojure code with the function `create-ast` like this:
+Such a formula can be transformed into clojure code with the function `clojure-formula` like this:
 
 ```clj
-> (create-ast "A and B")
+> (clojure-formula "A and B")
+
 (and A B)
 ```
 
@@ -96,6 +97,7 @@ In case you need to do it manually, the parsing is done with `logic-parse` and t
 
 ```clj
 > (transform-ast (logic-parse "A and B"))
+
 (and A B)
 ```
 
@@ -115,7 +117,8 @@ All formulas can be grouped with a matching pair of parenthesis `( )` or bracket
 If more arguments than two are connected with a binary operator (there are no n-ary operators here), they are nested corresponding to their associativity:
 
 ```clj
-> (create-ast "A and B and C")
+> (clojure-formula "A and B and C")
+
 (and (and A B) C)
 ```
 
@@ -174,6 +177,7 @@ While the functions `and` and `or` (and only they) have an arbitrary arity, it m
 
 ```clj
 > (flatten-ast '(and (and A B) C))
+
 (and A B C)
 ```
 
@@ -181,10 +185,10 @@ The function `flatten-ast` recursively flattens nested forms of n-ary functions.
 
 ### Truth tables
 
-A truth table itself is a list of vectors repesenting a relation. However, it is embedded in a hash map that contains some other information. The name of the function is `code-to-truth-table`, and accepts a formula in clojure code.
+A truth table itself is a list of vectors repesenting a relation. However, it is embedded in a hash map that contains some other information. The name of the function is `generate-truth-table`, and accepts a formula in clojure code.
 
 ```clj
-> (code-to-truth-table '(equiv A B))
+> (generate-truth-table '(equiv A B))
 
 {:symbols [A B :result], 
  :formula (equiv A B), 
@@ -204,14 +208,14 @@ The keys are defined like this:
 The function can produce truth tables where only rows with the result true (or false) can be shown. This is done with the parameter `:lines` that accepts `:all` (default), `:true-only` or `:false-only`:
 
  ```clj
-> (code-to-truth-table '(equiv A B) :lines :true-only)
+> (generate-truth-table '(equiv A B) :lines :true-only)
 
 {:symbols [A B :result], 
  :formula (equiv A B), 
  :lines :true-only, 
  :table ([true true true] [false false true])}
  
-> (code-to-truth-table '(equiv A B) :lines :false-only)
+> (generate-truth-table '(equiv A B) :lines :false-only)
 
 {:symbols [A B :result], 
  :formula (equiv A B), 
@@ -219,10 +223,10 @@ The function can produce truth tables where only rows with the result true (or f
  :table ([true false false] [false true false])}
 ```
 
-The function to print a truth table without producing the truth table relation before (automatically done) is `tt` for a clojure formula, and `truth-table` for a human-readable one:
+The function to print a truth table without producing the truth table relation before (automatically done) is `truth-table` for a clojure formula, and `truth-table-parse` for a human-readable one:
 
 ```clj
-> (tt '(impl A B))
+> (truth-table '(impl A B))
 
 Truth table for formula: phi
 Parsed clojure code: (impl A B)
@@ -233,7 +237,7 @@ F T T
 F F T      
 nil
 
-> (truth-table "A -> B")
+> (truth-table-parse "A -> B")
 
 Truth table for formula: A -> B
 Parsed clojure code: (impl A B)
@@ -245,10 +249,10 @@ F F T
 nil
 ```
 
-Both functions can handle up to 10 variables and accept the keyword `:lines` as the function `code-to-truth-table` does (it is a straight forward of the parameter):
+Both functions can handle up to 10 variables and accept the keyword `:lines` as the function `generate-truth-table` does (it is a straight forward of the parameter):
 
 ```clj
-> (truth-table "A <-> B" :lines :all)
+> (truth-table-parse "A <-> B" :lines :all)
 
 Truth table for formula: A <-> B
 Parsed clojure code: (equiv A B)
@@ -260,7 +264,7 @@ F T F
 F F T      
 nil
 
-> (truth-table "A <-> B" :lines :true-only)
+> (truth-table-parse "A <-> B" :lines :true-only)
 
 Truth table for formula: A <-> B
 Parsed clojure code: (equiv A B)
@@ -270,7 +274,7 @@ T T T
 F F T      
 nil
 
-> (truth-table "A <-> B" :lines :false-only)
+> (truth-table-parse "A <-> B" :lines :false-only)
 
 Truth table for formula: A <-> B
 Parsed clojure code: (equiv A B)
@@ -320,10 +324,10 @@ So the above function call `(transform-cnf '(or A (and B (impl C D))))` would st
 
 ### Tseitin transformation
 
-Just like `transform-cnf`, the function `tseitin-transform` creates a cnf, but with linear complexity by using the tseitin transformation:
+Just like `transform-cnf`, the function `transform-tseitin` creates a cnf, but with linear complexity by using the tseitin transformation:
 
 ```clj
-> (tseitin-transform '(or A (and B (impl C D))))
+> (transform-tseitin '(or A (and B (impl C D))))
 
 (and 
     (or (not t_2851) A t_2852) 
@@ -338,15 +342,15 @@ Just like `transform-cnf`, the function `tseitin-transform` creates a cnf, but w
     t_2851)
 ```
 
-It is recommended, to use the tseitin-transformation for at least larger formulas, when using the sat solver. It uses the `gensym` function with the value of `tseitin-prefix` (defined in util.clj) as its prefix. 
+It is recommended, to use the tseitin transformation for at least larger formulas, when using the sat solver. It uses the `gensym` function with the value of `tseitin-prefix` (defined in util.clj) as its prefix. 
 
 ### Dimacs file format transformation
 
-When having a formula in cnf (either by using `transform-cnf` or `tseitin-transform`), the function `generate-dimcas` takes this formula, and produces a string representing this formula in the dimacs file format. This is needed by most sat solvers.
+When having a formula in cnf (either by using `transform-cnf` or `transform-tseitin`), the function `generate-dimcas` takes this formula, and produces a string representing this formula in the dimacs file format. This is needed by most sat solvers.
 
 ```clj
 ; println is only used to show \n as an actual new line.
-> (println (create-dimacs (tseitin-transform '(or A (and B (impl C D))))))
+> (println (generate-dimacs (transform-tseitin '(or A (and B (impl C D))))))
 
 c dimacs file for the logic formula
 c (and (or (not t_2935) ...  ; (shortened to keep it readable here)

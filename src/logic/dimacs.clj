@@ -1,6 +1,6 @@
 (ns logic.util)
 
-(defn create-dimacs
+(defn generate-dimacs
   "Takes a cnf formula in clojure code and produces the output as for the dimacs file format."
   [formula]
   (let [vars (find-variables formula)
@@ -24,4 +24,4 @@
 (defn write-dimacs
   "Taks a cnf formula in cloure code, produces the dimacs format and writes to given file name."
   [formula filename]
-  (spit filename (create-dimacs formula)))
+  (spit filename (generate-dimacs formula)))

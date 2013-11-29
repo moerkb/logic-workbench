@@ -88,7 +88,7 @@
         [new-sym (conj new-tmap [new-sym new-formula])]
       )))
 
-(defn tseitin-transform
+(defn transform-tseitin
   "Takes a formula in clojure code and applies the tseitin transformation to it."
   [formula]
   (let [gen-list (generate-tseitin-symbols formula {})]

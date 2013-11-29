@@ -5,7 +5,6 @@ holds important things to remember.
 
 OPEN TASKS
 
-- rename functions consistently
 - remove tautologies from cnf (?)
 
 - SAT4J wrapper
