@@ -6,6 +6,7 @@ holds important things to remember.
 OPEN TASKS
 
 - remove tautologies from cnf (?)
+- tseitin substitution map to dimacs?
 
 - SAT4J wrapper
 - distinguish between "human formula" ("A and B") and clojure code (and a b) automatically
@@ -14,6 +15,7 @@ OPEN TASKS
 
 QUESTIONS
 
+- zeros with dimacs - when to add?
 - How to test tseitin tranformation with generated symbols?
 - Is it a good idea to remove tautologies from cnf? (runtime: remove or leave to sat solver?)
 - Remove tautologies from
