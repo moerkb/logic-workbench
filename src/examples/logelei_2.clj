@@ -64,3 +64,7 @@ stop
         ))
 
         
+(-> fml
+    transform-tseitin 
+    generate-dimacs-clauses
+    sat-solve)
