@@ -38,12 +38,12 @@ stop
               '(surren miauen kratzen zischen pfeifen oinken))))
 
 (defn tiere-ein-geraeusch []
-  (list 'and (map ein-geraeusch 
-                  '(fiedertiger, beutelaffen, tentakelläufer, 
-                    ohrhörner, rüsselratten, nagekühe))))
+  (apply list 'and (map ein-geraeusch 
+                        '(fiedertiger, beutelaffen, tentakelläufer, 
+                          ohrhörner, rüsselratten, nagekühe))))
                                  
 (def fml
-  (list 'and
+  (apply list 'and
         (tiere-ein-geraeusch)
         '(impl fiedertiger-surren  beutelaffen-miauen)
         '(impl fiedertiger-miauen  tentakelläufer-zischen)
