@@ -12,12 +12,13 @@
           nt (list 'not t)
           na (list 'not a)
           args (rest formula)]
+      
       (if (= op 'not)
         (list 'and
           (list 'or nt na))
-      
-        (let [b (nth formula 2)
-              nb (list 'not b)]
+ 
+        (let [b (when (> (count formula) 2) (nth formula 2))
+              nb (when (not (nil? b)) (list 'not b))]
           (case op
             and (apply list 'and
                   (apply list 'or t (map #(list 'not %) args))
@@ -75,9 +76,10 @@
 (defn- generate-tseitin-symbols
   "Recursive function for tseitin conversion to generate the new symbols."
   [formula tmap]
+  (println formula)
     (if (literal? formula)
       [formula tmap]
-      (let [rem-retvals (map #(generate-tseitin-symbols % tmap) (rest formula))
+      (let [rem-retvals (map #(generate-tseitin-symbols % tmap) (if (seq? formula) (rest formula) formula))
             new-sym (gensym tseitin-prefix)
             new-formula (tseitin-cnf 
                           (apply list (first formula) (map first rem-retvals))

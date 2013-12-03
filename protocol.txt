@@ -5,19 +5,27 @@ holds important things to remember.
 
 OPEN TASKS
 
-- remove tautologies from cnf (?)
-- tseitin substitution map to dimacs?
+- logelei-2 bug (index out of bounds, unary and in tseitin-cnf!)
+
+- remove tautologies from cnf (open)
+- produce correct dimacs for (or a b)
+- tseitin symbols: increment over all symbols (atom)
+- var name substitution map to dimacs
+- remove tseitin symboles
 - remove trailing spaces after zeros from dimacs file
+- dimacs clauses: sets (unique elements)
+- sat result: vector/set of literals (pos 0: satisfiable or not?)
+- tseitin transform unit tests
 
 - SAT4J wrapper
-- distinguish between "human formula" ("A and B") and clojure code (and a b) automatically
 - visualize formula tree graphically (instaparse/visualize) 
-- comparison project, core.logic, kodkod (alloy) (e.g. Sudoku)
+- comparison project to: core.logic, kodkod (alloy) (e.g. Sudoku)
+- resolution (alternative to sat solving)
+- natural deduction
 
 QUESTIONS
 
-- zeros with dimacs - when to add?
-- How to test tseitin tranformation with generated symbols?
+- zeros with dimacs - when to add? - when producing file, not before
 - Is it a good idea to remove tautologies from cnf? (runtime: remove or leave to sat solver?)
 - Remove tautologies from
 	(and (or a (not a))) => (and) ???

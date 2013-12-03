@@ -10,12 +10,11 @@
     {:formula formula
      :num-vars num-vars
      :num-clauses num-clauses
-     :clauses (vec (map #(conj (apply vector 
-                                      (map (fn [atom] (if (literal? atom)
-				                                       (subs atom)
-				                                       (- (subs (second atom))))) 
-                                           (if (literal? %) (list %) (rest %)))) 
-                                 0)
+     :clauses (vec (map #(apply vector 
+                                (map (fn [atom] (if (literal? atom)
+				                                 (subs atom)
+				                                 (- (subs (second atom))))) 
+                                     (if (literal? %) (list %) (rest %)))) 
                         (rest formula)))}))
 
 (defn generate-dimacs
