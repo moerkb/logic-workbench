@@ -76,19 +76,18 @@
 (defn- generate-tseitin-symbols
   "Recursive function for tseitin conversion to generate the new symbols."
   [formula tmap]
-  (println formula)
-    (if (literal? formula)
-      [formula tmap]
-      (let [rem-retvals (map #(generate-tseitin-symbols % tmap) (if (seq? formula) (rest formula) formula))
-            new-sym (gensym tseitin-prefix)
-            new-formula (tseitin-cnf 
-                          (apply list (first formula) (map first rem-retvals))
-                          new-sym)
-            new-tmap (reduce merge (map second rem-retvals))
-            ]
+  (if (literal? formula)
+    [formula tmap]
+    (let [rem-retvals (map #(generate-tseitin-symbols % tmap) (if (seq? formula) (rest formula) formula))
+          new-sym (gensym tseitin-prefix)
+          new-formula (tseitin-cnf 
+                        (apply list (first formula) (map first rem-retvals))
+                        new-sym)
+          new-tmap (reduce merge (map second rem-retvals))
+          ]
 
-        [new-sym (conj new-tmap [new-sym new-formula])]
-      )))
+      [new-sym (conj new-tmap [new-sym new-formula])]
+    )))
 
 (defn transform-tseitin
   "Takes a formula in clojure code and applies the tseitin transformation to it."

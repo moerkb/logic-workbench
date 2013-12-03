@@ -43,7 +43,7 @@ stop
                           ohrhörner, rüsselratten, nagekühe))))
                                  
 (def fml
-  (apply list 'and
+  (list 'and
         (tiere-ein-geraeusch)
         '(impl fiedertiger-surren  beutelaffen-miauen)
         '(impl fiedertiger-miauen  tentakelläufer-zischen)
