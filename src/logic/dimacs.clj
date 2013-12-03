@@ -31,7 +31,7 @@
       "p cnf " num-vars " " num-clauses \newline
       (apply str (map #(str (apply str (map (fn [elem] (str elem " "))
                                             %))
-                            \newline)
+                            0 \newline)
                       clauses)))))
   
 (defn write-dimacs
