@@ -17,15 +17,18 @@
     (.setExpectedNumberOfClauses solver NBCLAUSES)
 
     (doall (map
-             #(.addClause solver (VecInt. (int-array (subvec % 0 (dec (count %))))))
+             #(.addClause solver (VecInt. (int-array %)))
              clauses))
 
-    (if (.isSatisfiable solver)
-      (do
-        (println "Satisfiable!")
-        (.decode reader (.model solver)))
-      (println "Unsatisfiable!"))))
+    (when (.isSatisfiable solver)
+      (.decode reader (.model solver)))))
 
 (defn sat-solve
+  "Returns one result as vector. The vector is epmty if the formula is unsatisfiable."
   [dimacs-map]
-  (sat4j-solve dimacs-map))
+  (let [res-str (sat4j-solve dimacs-map)]
+    (if (nil? res-str)
+              []
+              (vec (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" ")))))))
+        
+    

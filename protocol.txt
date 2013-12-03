@@ -5,6 +5,8 @@ holds important things to remember.
 
 OPEN TASKS
 
+- dimacs error: (generate-dimacs-clauses (transform-cnf '(and a (not a)))) => {:formula (and a (not a)), :num-vars 1, :num-clauses 2, :clauses [[1] [1]]}
+                                                                                                                                                     ^ -> -1
 - logelei-2 bug (index out of bounds, unary and in tseitin-cnf!)
 
 - remove tautologies from cnf (open)
