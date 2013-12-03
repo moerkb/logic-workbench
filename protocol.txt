@@ -5,7 +5,6 @@ holds important things to remember.
 
 OPEN TASKS
 
-- remove tautologies from cnf (open)
 - tseitin symbols: increment over all symbols (atom)
 - var name substitution map to dimacs
 - remove tseitin symboles
@@ -20,12 +19,7 @@ OPEN TASKS
 
 QUESTIONS
 
-- zeros with dimacs - when to add? - when producing file, not before
-- Is it a good idea to remove tautologies from cnf? (runtime: remove or leave to sat solver?)
-- Remove tautologies from
-	(and (or a (not a))) => (and) ???
-	(or a (not a)) => ???
-- (transform-cnf '(or A B)) produces (or A B) => hot fix or mistake in algorithm?
+- Is it a good idea to remove tautologies from cnf? (remove with function or leave to sat solver?)
 
 NOTES
 
