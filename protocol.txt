@@ -5,6 +5,9 @@ holds important things to remember.
 
 OPEN TASKS
 
+- dimacs error: (generate-dimacs-clauses (transform-cnf '(and a (not a)))) => {:formula (and a (not a)), :num-vars 1, :num-clauses 2, :clauses [[1 0] [1 0]]}
+                                                                                                                                                       ^ -> -1
+
 - remove tautologies from cnf (?)
 - tseitin substitution map to dimacs?
 - remove trailing spaces after zeros from dimacs file

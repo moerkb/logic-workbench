@@ -27,5 +27,11 @@
       (println "Unsatisfiable!"))))
 
 (defn sat-solve
+  "Returns one result as vector. The vector is epmty if the formula is unsatisfiable."
   [dimacs-map]
-  (sat4j-solve dimacs-map))
+  (let [res-str (sat4j-solve dimacs-map)]
+    (if (nil? res-str)
+              []
+              (vec (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" ")))))))
+        
+    
