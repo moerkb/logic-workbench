@@ -2,7 +2,8 @@
   (:require [instaparse.core :as insta]
             [clojure.string :as cstr])
   (:use     [clojure.math.combinatorics :only (selections combinations)]
-            [clojure.walk :only (postwalk)]))
+            [clojure.walk :only (postwalk)]
+            [clojure.set :only (union)]))
 
 (def tseitin-prefix "t_")
 

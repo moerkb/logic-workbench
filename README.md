@@ -325,24 +325,39 @@ So the above function call `(transform-cnf '(or A (and B (impl C D))))` would st
 ### Tseitin transformation
 
 Just like `transform-cnf`, the function `transform-tseitin` creates a cnf, but with linear complexity by using the tseitin transformation:
+It is recommended, to use the tseitin transformation for at least larger formulas, when using the sat solver. It uses the `gensym` function with the value of `tseitin-prefix` (defined in util.clj) as its prefix. 
 
 ```clj
 > (transform-tseitin '(or A (and B (impl C D))))
 
-(and 
-    (or (not t_2851) A t_2852) 
-    (or t_2851 (not A)) 
-    (or t_2851 (not t_2852)) 
-    (or t_2853 C) 
-    (or t_2853 (not D)) 
-    (or (not t_2853) (not C) D) 
-    (or t_2852 (not B) (not t_2853)) 
-    (or (not t_2852) B) 
-    (or (not t_2852) t_2853) 
-    t_2851)
+{:formula (or A (and B (impl C D))), 
+ :subs {t_1 (and (or (not t_1) t_2 t_3) (or t_1 (not t_2)) (or t_1 (not t_3))), 
+        t_4 B, 
+        t_5 (and (or t_5 t_6) (or t_5 (not t_7)) (or (not t_5) (not t_6) t_7)), 
+        t_7 D, 
+        t_6 C, 
+        t_3 (and (or t_3 (not t_4) (not t_5)) (or (not t_3) t_4) (or (not t_3) t_5)), 
+        t_2 A}, 
+ :lits #{t_2 t_6 t_7 t_4}, 
+ :tseitin-formula (and (or (not t_1) t_2 t_3) 
+                       (or t_1 (not t_2)) 
+                       (or t_1 (not t_3)) 
+                       (or t_5 t_6) 
+                       (or t_5 (not t_7)) 
+                       (or (not t_5) (not t_6) t_7) 
+                       (or t_3 (not t_4) (not t_5)) 
+                       (or (not t_3) t_4) 
+                       (or (not t_3) t_5) t_1)}
 ```
 
-It is recommended, to use the tseitin transformation for at least larger formulas, when using the sat solver. It uses the `gensym` function with the value of `tseitin-prefix` (defined in util.clj) as its prefix. 
+The returned map has the following content:
+
+| Key | Example | Description |
+|-----|---------|-------------|
+| :formula | `(or A (and B (impl C D)))` | The original formula |
+| :subs | `{t_1 A, t_2 B, t_3 (and ...)` | A substitution for the tseitin symbols. |
+| :lits | `{t_1 t_2}` | A set of all tseitin symbols that are literals. |
+| :tseitin-formula | `(and (or t_1 t_2) ...)` | The final tseitin formula. |
 
 ### Dimacs file format transformation
 
@@ -372,13 +387,13 @@ p cnf 7 10
 It is also possible to just receive the clauses as lists via `generate-dimacs-clauses`:
 
 ```clj
-> (generate-dimacs-clauses (transform-tseitin '(equiv a b)))
+> (generate-dimacs-clauses (:tseitin-formula (transform-tseitin '(equiv a b))))
 
-{:formula (and (or (not t_2894) a (not b)) (or (not t_2894) (not a) b) (or t_2894 (not a) (not b)) (or t_2894 a b) t_2894), 
+{:formula (and (or (not t_1) t_2 ; ... shortened here, 
  :num-vars 3, 
  :num-clauses 5, 
- :clauses #{#{3} #{1 -2 -3} #{-1 -3 2} #{-1 -2 3} #{1 2 3}}, 
- :subs {1 a, 2 b, 3 t_2894}}
+ :clauses #{#{1} #{-1 2 -3} #{-1 -2 3} #{1 -2 -3} #{1 2 3}}, 
+ :subs {1 t_1, 2 t_2, 3 t_3}}
 ```
 
 It returns a hash map, containing the following information:
