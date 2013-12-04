@@ -44,6 +44,6 @@
     (if (nil? res-str)
               [0]
               (vec (cons 1 (let [numvec  (vec (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" "))))
-                                 substitutions (apply hash-map (flatten (map (fn [[k v]] [k v (Integer. (str "-" k)) (symbol (str "not(" v ")"))]) (:subs dimacs-test))))]
+                                 substitutions (apply hash-map (flatten (map (fn [[k v]] [k v (Integer. (str "-" k)) (symbol (str "(not " v ")"))]) (:subs dimacs-map))))]
                              (println substitutions)
                              (replace substitutions numvec)))))))

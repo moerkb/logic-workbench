@@ -108,3 +108,18 @@
      :tseitin-formula (flatten-ast (apply list 'and
                                      (first gen-list)
                                      (filter #(not ((nth gen-list 2) (rev-subs %))) (vals (second gen-list)))))}))
+
+(defn retransform-tseitin
+  "Takes a map as produced by transform-tseitin and a solver result and removes all tseitin
+   variables and resubstitutes the symbols to the original ones."
+  [result tmap]
+  (let [formula (tmap :formula)
+        subs (tmap :subs)
+        lits (tmap :lits)
+        res (zipmap 
+             (filter #(contains? lits %) (map #(symbol (str tseitin-prefix %)) (map inc (range))))
+             (filter #(contains? lits %) (map #(if (literal? %) 
+                                                  (subs %)
+                                                  (subs (second %))) (rest result))))]
+    (println (rest result))))
+    
