@@ -5,7 +5,6 @@ holds important things to remember.
 
 OPEN TASKS
 
-- remove tseitin symboles
 - sat result: vector/set of literals (pos 0: satisfiable or not?)
 	- solve-dimacs
 	- solve-formula
