@@ -6,7 +6,6 @@ holds important things to remember.
 OPEN TASKS
 
 - tseitin symbols: increment over all symbols (atom)
-- var name substitution map to dimacs
 - remove tseitin symboles
 - sat result: vector/set of literals (pos 0: satisfiable or not?)
 - tseitin transform unit tests

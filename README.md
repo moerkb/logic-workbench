@@ -374,15 +374,11 @@ It is also possible to just receive the clauses as lists via `generate-dimacs-cl
 ```clj
 > (generate-dimacs-clauses (transform-tseitin '(equiv a b)))
 
-{:formula (and (or (not t_3337) a (not b)) ; ... (shortend here), 
+{:formula (and (or (not t_2894) a (not b)) (or (not t_2894) (not a) b) (or t_2894 (not a) (not b)) (or t_2894 a b) t_2894), 
  :num-vars 3, 
  :num-clauses 5, 
- :clauses [
- 		   [-3 1 -2 0] 
- 		   [-3 -1 2 0] 
- 		   [3 -1 -2 0] 
- 		   [3 1 2 0] 
- 		   [3 0]]}
+ :clauses #{#{3} #{1 -2 -3} #{-1 -3 2} #{-1 -2 3} #{1 2 3}}, 
+ :subs {1 a, 2 b, 3 t_2894}}
 ```
 
 It returns a hash map, containing the following information:
@@ -392,7 +388,8 @@ It returns a hash map, containing the following information:
 | `:formula` | `(and (or a b) (or b c))` | The original cnf formula, these dimacs clauses are for. |
 | `:num-vars` | `3` | The total number of different variables in the formula. |
 | `:num-clauses` | `2` | The total number of clauses in the cnf formula. |
-| `:clauses` | `[[3 1 -2 0] [3 0]]` | The actual clauses as a vector of vectors. The trailing zero in each 'row' is included. |
+| `:clauses` | `#{#{3} #{1 -2 -3}}` | The actual clauses as a set of sets. |
+| `:subs` | `{1 a, 3 t_2894}` | A map containing all substitutions (number to actual symbol) |
 
 ### SAT solving
 

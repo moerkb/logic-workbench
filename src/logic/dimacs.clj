@@ -21,7 +21,8 @@
     {:formula formula
      :num-vars num-vars
      :num-clauses (count clauses)
-     :clauses clauses}))
+     :clauses clauses
+     :subs (zipmap (vals subs) (keys subs))}))
 
 (defn generate-dimacs
   "Takes a cnf formula in clojure code and produces the output as for the dimacs file format."
