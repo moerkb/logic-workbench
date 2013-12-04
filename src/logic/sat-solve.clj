@@ -32,9 +32,9 @@
   (let [res-str (sat4j-solve dimacs-map)]
     (if (nil? res-str)
               [0]
-              (cons 1 (vec (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" "))))))))
+              (vec (cons 1 (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" "))))))))
 
-(defn sat-sovle
+(defn sat-solve
   "Returns one result as vector with litereals.
    The first number is 0 or 1:
    0: the formula is unsatisfiable
@@ -43,5 +43,7 @@
   (let [res-str (sat4j-solve dimacs-map)]
     (if (nil? res-str)
               [0]
-              (let [numvec  (vec (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" "))))]
-                
+              (vec (cons 1 (let [numvec  (vec (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" "))))
+                                 substitutions (apply hash-map (flatten (map (fn [[k v]] [k v (Integer. (str "-" k)) (symbol (str "not(" v ")"))]) (:subs dimacs-test))))]
+                             (println substitutions)
+                             (replace substitutions numvec)))))))
