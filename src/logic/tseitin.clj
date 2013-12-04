@@ -116,10 +116,8 @@
   (let [formula (tmap :formula)
         subs (tmap :subs)
         lits (tmap :lits)
-        res (zipmap 
-             (filter #(contains? lits %) (map #(symbol (str tseitin-prefix %)) (map inc (range))))
-             (filter #(contains? lits %) (map #(if (literal? %) 
-                                                  (subs %)
-                                                  (subs (second %))) (rest result))))]
-    (println (rest result))))
+        lit-syms (map literal? 
+                      (filter #(contains? lits (if (literal? %) % (second %))) (rest result)))
+        orig-subs (zipmap (replace subs (sort lits)) lit-syms)]
+    orig-subs))
     
