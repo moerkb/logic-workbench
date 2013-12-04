@@ -23,12 +23,25 @@
     (when (.isSatisfiable solver)
       (.decode reader (.model solver)))))
 
-(defn sat-solve
-  "Returns one result as vector. The vector is epmty if the formula is unsatisfiable."
+(defn sat-solve-dimacs
+  "Returns one result as vector like the dimace clauses in the dimacs-map.
+   The first number is 0 or 1:
+   0: the formula is unsatisfiable
+   1: the formula is satisfiable"
   [dimacs-map]
   (let [res-str (sat4j-solve dimacs-map)]
     (if (nil? res-str)
-              []
-              (vec (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" ")))))))
-        
-    
+              [0]
+              (cons 1 (vec (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" "))))))))
+
+(defn sat-sovle
+  "Returns one result as vector with litereals.
+   The first number is 0 or 1:
+   0: the formula is unsatisfiable
+   1: the formula is satisfiable"
+  [dimacs-map]
+  (let [res-str (sat4j-solve dimacs-map)]
+    (if (nil? res-str)
+              [0]
+              (let [numvec  (vec (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" "))))]
+                
