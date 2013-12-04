@@ -53,4 +53,4 @@
                                        (if (= (first x) :clauses)
                                          [:clauses (conj (second x) (set (subvec dimacs-result-vector 1)))]
                                          x))
-                                     dimacs-test))))
+                                     dimacs-map))))
