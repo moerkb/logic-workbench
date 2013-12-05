@@ -63,8 +63,11 @@ stop
         '(impl beutelaffen-oinken  ohrhörner-surren) 
         ))
 
-        
-(-> fml
-    transform-tseitin 
-    generate-dimacs-clauses
+(let [tseit (transform-tseitin fml)
+      result (-> (:tseitin-formula tseit) generate-dimacs-clauses sat-solve)]
+  (retransform-tseitin result tseit))
+
+#_(-> fml
+     transform-tseitin 
+     generate-dimacs-clauses
     sat-solve)

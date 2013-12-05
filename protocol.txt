@@ -5,9 +5,9 @@ holds important things to remember.
 
 OPEN TASKS
 
-- tseitin symbols: increment over all symbols (atom)
-- remove tseitin symboles
 - sat result: vector/set of literals (pos 0: satisfiable or not?)
+	- solve-dimacs
+	- solve-formula
 - tseitin transform unit tests
 
 - SAT4J wrapper

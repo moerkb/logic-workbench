@@ -45,3 +45,13 @@
   "Taks a cnf formula in cloure code, produces the dimacs format and writes to given file name."
   [formula filename]
   (spit filename (generate-dimacs formula)))
+
+(defn add-negated-dimacs-result
+  "Takes the dimacs-map and the result vector and add the negated result to the dimacs-map as new clause to find other results."
+  [dimacs-map dimacs-result-vector]
+  (let [neg-res (set (vec (map unchecked-negate (subvec dimacs-result-vector 1))))]
+    (apply hash-map (apply concat (map (fn [x]
+                                         (if (= (first x) :clauses)
+                                           [:clauses (conj (second x) neg-res)]
+                                           x))
+                                       dimacs-map)))))
