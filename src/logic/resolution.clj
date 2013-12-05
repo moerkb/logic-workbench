@@ -2,7 +2,6 @@
  (:require [clojure.math.combinatorics :as combo])
  (:require [clojure.set :as set]))
 
-; how to handle clauses that are trivially true?
 (defn clause 
   "Returns a clause of the distinct non-zero integers in coll,
    nil if the clause is trivially true."
@@ -15,6 +14,7 @@
           nil
           (recur (next in) (conj! result l)))))))
 
+; examples
 (clause '(-1 2 -3 -6))
 (clause (filter pos? (range 6)))
 (clause [1 2 3 -1])
@@ -28,18 +28,21 @@
   [cl-coll]
   (set cl-coll))
 
+; example
 (cl-set [(clause [1 2]) (clause [-1 2]) (clause [1 -2]) (clause [-1 -2])])
 
-; what about resolvents that are trivially true?
 (defn resolvents
-  "Returns the set of the resolvents of the clauses"
+  "Returns the set of the resolvents of the clauses,
+   ignoring tautologies, i.e. with tautlogy elimination."
   ([c1 c2]
-    (cl-set (map #(set (concat (disj c1 %) (disj c2 (- %)))) 
-                 (filter #(contains? c2 (- %)) c1))))
+    (cl-set (filter #(not (nil? %))
+                 (map #(clause (concat (disj c1 %) (disj c2 (- %)))) 
+                     (filter #(contains? c2 (- %)) c1)))))
   ([c1 c2 & more]
     (let [pairs (combo/combinations (cons c1 (cons c2 more)) 2)]
       (reduce set/union (map #(resolvents (first %) (second %)) pairs)))))
 
+; examples
 (resolvents (clause [1]) (clause [2 -1]))
 (resolvents (clause [1 -2]) (clause [2 -1]))
 (resolvents (clause [1]) (clause [-1]))
