@@ -27,6 +27,7 @@
   "Returns the set of the distinct elements in the collection of clauses"
   [cl-coll]
   (set cl-coll))
+; better using a transient -> persistent! pattern?
 
 ; example
 (cl-set [(clause [1 2]) (clause [-1 2]) (clause [1 -2]) (clause [-1 -2])])
