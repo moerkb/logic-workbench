@@ -14,7 +14,7 @@ OPEN TASKS
   (or p (and (not p) q))) 	-> solver -> result p: false, q: false
   check tseitin transformation!
   
-- tseitin transformation: subs inconsistent, subformulas not needed - only substitutions for literals
+- How do true/false constants behave in transform and solve functions?
 - dimacs: remove tautologies (clauses - resolution.clj)
 - conjunct generation of clauses (dimacs - resolution); constructor for clauses
 - (transform-cnf '(or p q)) 	=> (and (or p q)); not in generate-dimacs

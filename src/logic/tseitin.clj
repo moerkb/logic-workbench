@@ -74,40 +74,64 @@
             (println "Tseitin-CNF not implemented for" op)))))))
 
 (defn- generate-tseitin-symbols
-  "Recursive function for tseitin conversion to generate the new symbols."
-  [formula tmap lit-set z]
-  (if (literal? formula)
-    (if (contains? tmap formula)  ; symbol is already in the hash map    
-      [(tmap formula) tmap lit-set]
-      
-      (let [new-sym (symbol (str tseitin-prefix (swap! z inc)))
-            new-tmap (assoc tmap new-sym formula)]
-        [new-sym new-tmap (conj lit-set new-sym)]))
-    
-    (let [rem-retvals (map #(generate-tseitin-symbols % tmap lit-set z) (if (seq? formula) (rest formula) formula))
-          new-sym (symbol (str tseitin-prefix (swap! z inc)))
-          new-formula (tseitin-cnf 
-                        (apply list (first formula) (map first rem-retvals))
-                        new-sym)
-          new-tmap (reduce merge (map second rem-retvals))
-          new-lit-set (reduce union (map #(nth % 2) rem-retvals))]
+  "Generate tseitin symbols for all subformulas and literals."
+  [formula]
+  (let [lits (find-variables formula)
+        z (atom 0)
+        tmap (atom (apply merge (map 
+                                  #(hash-map (symbol (str tseitin-prefix (swap! z inc))) %) 
+                                  lits))) 
+        ]
+    (gen-tseit-rec formula z tmap)))
 
-      [new-sym 
-       (conj new-tmap [new-sym new-formula]) 
-       new-lit-set]
-    )))
+(defn- gen-tseit-rec
+  "Recursive helper function for generate-tseitin-symbols."
+  [f z t]
+  (if (literal? f)
+    t
+    (let [rec-syms (for [f' (rest f)]
+                     (gen-tseit-rec f' z t))]
+      (swap! t #(conj % 
+                  {(symbol (str tseitin-prefix (swap! z inc)))
+                   (apply list (first f) rec-syms)})))))
+  
+#_(defn foo  
+   (if (literal? formula)
+     (do 
+       (println formula "in" tmap "=" (contains? tmap formula))
+     (if (contains? tmap formula)  ; symbol is already in the hash map    
+       [(tmap formula) tmap lit-set]
+      
+       (let [new-sym (symbol (str tseitin-prefix (swap! z inc)))
+             new-tmap (assoc tmap new-sym formula)]
+         [new-sym new-tmap (conj lit-set new-sym)])))
+    
+     (let [rem-retvals (map #(generate-tseitin-symbols % tmap lit-set z) (rest formula))
+           new-sym (symbol (str tseitin-prefix (swap! z inc)))
+           new-formula (tseitin-cnf 
+                         (apply list (first formula) (map first rem-retvals))
+                         new-sym)
+           new-tmap (reduce merge (map second rem-retvals))
+           new-lit-set (reduce union (map #(nth % 2) rem-retvals))]
+
+       [new-sym 
+        (conj new-tmap [new-sym new-formula]) 
+        new-lit-set]
+     )))
 
 (defn transform-tseitin
   "Takes a formula in clojure code and applies the tseitin transformation to it."
   [formula]
   (let [gen-list (generate-tseitin-symbols formula {} #{} (atom 0))
-        rev-subs (zipmap (vals (second gen-list)) (keys (second gen-list)))]
+        subs-keys (keys (second gen-list))
+        rev-subs (zipmap (vals (second gen-list)) subs-keys)
+        lit-list (nth gen-list 2)]
     {:formula formula
-     :subs (second gen-list)
-     :lits (nth gen-list 2)
+     :lits (zipmap (sort lit-list)
+                   (sort (map #(% (second gen-list)) (filter #(contains? lit-list %) subs-keys))))
      :tseitin-formula (flatten-ast (apply list 'and
                                      (first gen-list)
-                                     (filter #(not ((nth gen-list 2) (rev-subs %))) (vals (second gen-list)))))}))
+                                     (filter #(not (lit-list (rev-subs %))) (vals (second gen-list)))))}))
 
 (defn retransform-tseitin
   "Takes a map as produced by transform-tseitin and a solver result and removes all tseitin
