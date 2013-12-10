@@ -8,7 +8,20 @@ OPEN TASKS
 - sat result: vector/set of literals (pos 0: satisfiable or not?)
 	- solve-dimacs
 	- solve-formula
-- tseitin transform unit tests
+- UNIT TESTS!
+
+- (and p (or p q) r) 		-> creates 4 tseitin symbols for literals
+  (or p (and (not p) q))) 	-> solver -> result p: false, q: false
+  check tseitin transformation!
+  
+- tseitin transformation: subs inconsistent, subformulas not needed - only substitutions for literals
+- dimacs: remove tautologies (clauses - resolution.clj)
+- conjunct generation of clauses (dimacs - resolution); constructor for clauses
+- (transform-cnf '(or p q)) 	=> (and (or p q)); not in generate-dimacs
+  (transform-cnf '(and a b c)) 	=> (and (or a) (or b) (or c))
+- (and) = true
+  (and (or)) = false/nil
+  -> abort trivial, generate no dimacs, etc.
 
 - SAT4J wrapper
 - visualize formula tree graphically (instaparse/visualize) 
@@ -18,10 +31,14 @@ OPEN TASKS
 
 QUESTIONS
 
-- Is it a good idea to remove tautologies from cnf? (remove with function or leave to sat solver?)
-
 NOTES
 
+- MPA: mpf-files - logic samples (use macro processor and recode in clojure)
+	Logelei 2
+	Sudoku
+	Coloring
+- SAT solve competitions (www.satcompetitions.org)
+- Is it a good idea to remove tautologies from cnf? Yes.
 - Printing a truth table is reasonable only for a number of vars up to 12, limiting to 10
 - David Nolen, 'Architecture of core.logic'
 - only 'and' and 'or' are n-ary, all other operators binary
