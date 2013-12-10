@@ -5,9 +5,6 @@ holds important things to remember.
 
 OPEN TASKS
 
-- sat result: vector/set of literals (pos 0: satisfiable or not?)
-	- solve-dimacs
-	- solve-formula
 - UNIT TESTS!
 
 - (and p (or p q) r) 		-> creates 4 tseitin symbols for literals
@@ -23,7 +20,6 @@ OPEN TASKS
   (and (or)) = false/nil
   -> abort trivial, generate no dimacs, etc.
 
-- SAT4J wrapper
 - visualize formula tree graphically (instaparse/visualize) 
 - comparison project to: core.logic, kodkod (alloy) (e.g. Sudoku)
 - resolution (alternative to sat solving)
