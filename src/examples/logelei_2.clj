@@ -69,4 +69,10 @@ stop
     (retransform-tseitin result tseit)))
 
 (filter literal? solution)
-; Ergebnis kontrollieren
+; eigenartiges Ergebnis
+
+; Ergebnis kontrollieren:
+
+(def evals ['beutelaffen-kratzen false 'fiedertiger-pfeifen false 'fiedertiger-surren false 'fiedertiger-zischen true 'nagekühe-kratzen false 'nagekühe-miauen false 'nagekühe-oinken false 'nagekühe-pfeifen false 'nagekühe-surren false 'nagekühe-zischen true 'ohrhörner-kratzen true 'beutelaffen-miauen false 'ohrhörner-miauen false 'ohrhörner-oinken false 'ohrhörner-pfeifen false 'ohrhörner-surren false 'ohrhörner-zischen false 'rüsselratten-kratzen true 'rüsselratten-miauen false 'rüsselratten-oinken false 'rüsselratten-pfeifen false 'rüsselratten-surren false 'beutelaffen-oinken false 'rüsselratten-zischen false 'tentakelläufer-kratzen true 'tentakelläufer-miauen false 'tentakelläufer-oinken false 'tentakelläufer-pfeifen false 'tentakelläufer-surren false 'tentakelläufer-zischen false 'beutelaffen-pfeifen false 'beutelaffen-surren true 'beutelaffen-zischen false 'fiedertiger-kratzen false 'fiedertiger-miauen false 'fiedertiger-oinken false])
+(eval-formula fml evals)
+; true
