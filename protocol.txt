@@ -7,10 +7,6 @@ OPEN TASKS
 
 - UNIT TESTS!
 
-- (and p (or p q) r) 		-> creates 4 tseitin symbols for literals
-  (or p (and (not p) q))) 	-> solver -> result p: false, q: false
-  check tseitin transformation!
-  
 - How do true/false constants behave in transform and solve functions?
 - dimacs: remove tautologies (clauses - resolution.clj)
 - conjunct generation of clauses (dimacs - resolution); constructor for clauses

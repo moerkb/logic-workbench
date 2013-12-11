@@ -63,22 +63,10 @@ stop
         '(impl beutelaffen-oinken  ohrhörner-surren) 
         ))
 
-fml
-
-(def fml '(or p (and (not p) q)))
-(truth-table fml)
-
 (def solution
-(let [tseit (transform-tseitin fml)
-      result (-> (:tseitin-formula tseit) generate-dimacs-clauses sat-solve)]
-  (retransform-tseitin result tseit)))
+  (let [tseit (transform-tseitin fml)
+        result (-> (:tseitin-formula tseit) generate-dimacs-clauses sat-solve)]
+    (retransform-tseitin result tseit)))
 
-(sort solution)
-; Ergebnis ist falsch
-
-(transform-tseitin fml)
-
-#_(-> fml
-     transform-tseitin 
-     generate-dimacs-clauses
-    sat-solve)
+(filter literal? solution)
+; Ergebnis kontrollieren
