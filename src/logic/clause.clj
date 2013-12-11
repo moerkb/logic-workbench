@@ -4,10 +4,12 @@
   "Returns a clause of the distinct non-zero integers in coll,
    nil if the clause is trivially true."
   [coll]
-  (loop [in coll result (transient #{})]
+  (loop [in coll
+         result (transient #{})]
     (if (empty? in)
       (persistent! result)
-      (let [l (first in) l' (- l)]
+      (let [l (first in)
+            l' (- l)]
         (if (= (result l') l')  ; contains? does not work with transient set, see CLJ-700
           nil
           (recur (next in) (conj! result l)))))))

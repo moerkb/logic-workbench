@@ -8,10 +8,6 @@ OPEN TASKS
 - UNIT TESTS!
 
 - How do true/false constants behave in transform and solve functions?
-- dimacs: remove tautologies (clauses - resolution.clj)
-- conjunct generation of clauses (dimacs - resolution); constructor for clauses
-- (transform-cnf '(or p q)) 	=> (and (or p q)); not in generate-dimacs
-  (transform-cnf '(and a b c)) 	=> (and (or a) (or b) (or c))
 - (and) = true
   (and (or)) = false/nil
   -> abort trivial, generate no dimacs, etc.
