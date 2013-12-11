@@ -113,6 +113,11 @@
     
     (apply distr (map cnf (rest formula)))
     
+    
+    (= 'not (first formula))
+    
+    (list 'and (list 'or formula))
+    
     :else
     formula
 ))

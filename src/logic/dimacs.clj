@@ -3,21 +3,15 @@
 (defn generate-dimacs-clauses
   "Takes a cnf clojure code formula and generates the dimacs clauses for it."
   [formula]
-  (let [and-formula (if (= 'or (first formula)) 
-                        (list 'and formula)
-                        formula)
-        vars (find-variables and-formula)
-	      subs (zipmap vars (map inc (range)))
-	      num-vars (count vars)
-	      clauses (set (map #(cond 
-                           (literal? %) #{(subs %)}
-                           (= 'not (first %)) #{(- (subs (second %)))}
-                           :else (set 
-                                   (map (fn [atom] (if (literal? atom)
-				                                    (subs atom)
-				                                    (- (subs (second atom))))) 
-                                        (if (literal? %) (list %) (rest %))))) 
-                        (rest and-formula)))]
+  (let [vars (find-variables formula)
+        subs (zipmap vars (map inc (range)))
+        num-vars (count vars)
+        substitutions (apply hash-map (apply concat (map 
+                                                      (fn [[v k]] [v k (list 'not v) (Integer. (str "-" k))])
+                                                      subs)))
+	      clauses (cl-set (map clause (map
+                                     #(replace substitutions %)
+                                     (map rest (rest formula)))))]
     {:formula formula
      :num-vars num-vars
      :num-clauses (count clauses)
