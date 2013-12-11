@@ -15,5 +15,7 @@
       "truthtable"
       "cnf"
       "tseitin"
+      "clause"
       "dimacs"
-      "sat-solve")
+      "sat-solve"
+      "resolution")

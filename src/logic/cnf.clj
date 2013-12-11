@@ -101,7 +101,7 @@
   (cond
     ;formula is literal -> return formula
     (literal? formula)
-    formula
+    (list 'and (list 'or formula))
     
     ;formula has the form 'f1 and f2' -> (and (cnf f1) (cnf f2))
     (= 'and (first formula))
@@ -150,8 +150,6 @@
     ; a form that I not saw ;)
     :else
     (throw (IllegalArgumentException. "This form is not supported (jet)"))))
-    
-  
 
 (defn transform-cnf
   "Takes a formula in clojure code and produces the conjunctive normal form of it."
