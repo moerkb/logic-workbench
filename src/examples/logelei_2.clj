@@ -65,7 +65,7 @@ stop
 
 (def solution
   (let [tseit (transform-tseitin fml)
-        result (-> (:tseitin-formula tseit) generate-dimacs-clauses sat-solve)]
+        result (-> (tseit :tseitin-formula) generate-dimacs-clauses sat-solve)]
     (retransform-tseitin result tseit)))
 
 (filter literal? solution)

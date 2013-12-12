@@ -114,7 +114,7 @@
     {:formula formula
      :lits (apply merge (map (fn [l] {l (l rev-subs)}) lit-list)) 
      :tseitin-formula (flatten-ast (apply list 'and
-                                     (symbol (str tseitin-prefix @z))
+                                     (list 'or (symbol (str tseitin-prefix @z)))
                                      (filter #(not (contains? lit-list %)) (vals gen-map))))}))
 
 (defn retransform-tseitin
