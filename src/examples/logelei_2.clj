@@ -32,19 +32,29 @@ stop
 
 ; Welches Tier macht welches Geräusch?
 
+(def tiere '(fiedertiger, beutelaffen, tentakelläufer, ohrhörner, rüsselratten, nagekühe))
+(def geraeusche '(surren miauen kratzen zischen pfeifen oinken))
+
 (defn ein-geraeusch
   [tier]
-  (oneof (map #(combine-syms tier %)
-              '(surren miauen kratzen zischen pfeifen oinken))))
+  (oneof (map #(combine-syms tier %) geraeusche)))
 
 (defn tiere-ein-geraeusch []
-  (apply list 'and (map ein-geraeusch 
-                        '(fiedertiger, beutelaffen, tentakelläufer, 
-                          ohrhörner, rüsselratten, nagekühe))))
+  (apply list 'and (map ein-geraeusch tiere)))
+
+(defn ein-tier
+  [geraeusch]
+  (oneof (map #(combine-syms % geraeusch) tiere)))
+
+(ein-tier 'zischen)
                                  
+(defn geraeusche-ein-tier []
+  (apply list 'and (map ein-tier geraeusche)))
+
 (def fml
   (list 'and
         (tiere-ein-geraeusch)
+        (geraeusche-ein-tier)
         '(impl fiedertiger-surren  beutelaffen-miauen)
         '(impl fiedertiger-miauen  tentakelläufer-zischen)
         '(impl fiedertiger-kratzen beutelaffen-oinken)
@@ -63,16 +73,54 @@ stop
         '(impl beutelaffen-oinken  ohrhörner-surren) 
         ))
 
+
+
 (def solution
   (let [tseit (transform-tseitin fml)
         result (-> (tseit :tseitin-formula) generate-dimacs-clauses sat-solve)]
     (retransform-tseitin result tseit)))
 
+solution
+
 (filter literal? solution)
-; eigenartiges Ergebnis
 
 ; Ergebnis kontrollieren:
 
-(def evals ['beutelaffen-kratzen false 'fiedertiger-pfeifen false 'fiedertiger-surren false 'fiedertiger-zischen true 'nagekühe-kratzen false 'nagekühe-miauen false 'nagekühe-oinken false 'nagekühe-pfeifen false 'nagekühe-surren false 'nagekühe-zischen true 'ohrhörner-kratzen true 'beutelaffen-miauen false 'ohrhörner-miauen false 'ohrhörner-oinken false 'ohrhörner-pfeifen false 'ohrhörner-surren false 'ohrhörner-zischen false 'rüsselratten-kratzen true 'rüsselratten-miauen false 'rüsselratten-oinken false 'rüsselratten-pfeifen false 'rüsselratten-surren false 'beutelaffen-oinken false 'rüsselratten-zischen false 'tentakelläufer-kratzen true 'tentakelläufer-miauen false 'tentakelläufer-oinken false 'tentakelläufer-pfeifen false 'tentakelläufer-surren false 'tentakelläufer-zischen false 'beutelaffen-pfeifen false 'beutelaffen-surren true 'beutelaffen-zischen false 'fiedertiger-kratzen false 'fiedertiger-miauen false 'fiedertiger-oinken false])
+(def evals ['beutelaffen-kratzen false 
+            'beutelaffen-pfeifen false 
+            'beutelaffen-surren false 
+            'beutelaffen-zischen true 
+            'beutelaffen-miauen false 
+            'beutelaffen-oinken false 
+            'nagekühe-kratzen false 
+            'nagekühe-miauen false 
+            'nagekühe-oinken true 
+            'nagekühe-pfeifen false 
+            'nagekühe-surren false 
+            'nagekühe-zischen false 
+            'ohrhörner-kratzen false 
+            'ohrhörner-miauen false 
+            'ohrhörner-oinken false 
+            'ohrhörner-pfeifen false 
+            'ohrhörner-surren true 
+            'ohrhörner-zischen false 
+            'rüsselratten-kratzen false 
+            'rüsselratten-miauen true 
+            'rüsselratten-oinken false 
+            'rüsselratten-pfeifen false 
+            'rüsselratten-surren false 
+            'rüsselratten-zischen false 
+            'tentakelläufer-kratzen true 
+            'tentakelläufer-miauen false 
+            'tentakelläufer-oinken false 
+            'tentakelläufer-pfeifen false 
+            'tentakelläufer-surren false 
+            'tentakelläufer-zischen false 
+            'fiedertiger-pfeifen true 
+            'fiedertiger-surren false 
+            'fiedertiger-zischen false 
+            'fiedertiger-kratzen false 
+            'fiedertiger-miauen false 
+            'fiedertiger-oinken false])
 (eval-formula fml evals)
 ; true
