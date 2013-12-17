@@ -11,6 +11,17 @@ OPEN TASKS
 - (and) = true
   (and (or)) = false/nil
   -> abort trivial, generate no dimacs, etc.
+  
+- Kein Vergleich von Subformeln in tmap - neues Tseitinsymbol für jede Subformel
+- Nicht vorher alle Symbole rausfischen
+
+- MPA-Parser nehmen, Visitor produziert Output identisch zu Instaparse
+    (TransientVector direkt -> PersistentVector)
+
+- Grammatik: Whitesspaces tesweise entfernen
+- Zeilen entfernen und Laufzeiten überprüfen
+- Minimalgrammatik für Sudoku-Regeln
+- Laufzeit angeben (mit Vergleich)
 
 - visualize formula tree graphically (instaparse/visualize) 
 - comparison project to: core.logic, kodkod (alloy) (e.g. Sudoku)
@@ -21,6 +32,13 @@ QUESTIONS
 
 NOTES
 
+- Projekt-Idee:
+	SAT-Wrapper (Wrapper um SAT4J, Dokumentation) 
+	(Video: Distilling Java Libraries, Zach Tellman)
+	Mutable-Java mit Persistent-Wrapper
+- Forschungsfeld: Softwaretechnik FP
+	Abhängigkeiten über Namensräume
+	
 - MPA: mpf-files - logic samples (use macro processor and recode in clojure)
 	Logelei 2
 	Sudoku
