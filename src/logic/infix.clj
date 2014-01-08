@@ -16,20 +16,20 @@
 (defn prefix->infix 
   "Transforms formula in prefix to string in infix"
   [expr]
-  (let [transform (fn p->i [e]
-                    (cond
-                      (= e true)  "T"
-                      (= e false) "F"
-                      (symbol? e) (name e)
-                      (list? e)
-                        (if (= (first e) 'not)
-                          (apply str (infix-op 'not) (p->i (second e)))
-                          (str "(" (apply str (interpose (infix-op (first e))
-                                                         (map p->i (rest e)))) ")"))))
-        infix-expr (transform expr)]
+  (let [tf (fn p->i [e]
+             (cond
+               (= e true)  "T"
+               (= e false) "F"
+               (symbol? e) (name e)
+               (list? e)
+                 (if (= (first e) 'not)
+                   (apply str (infix-op 'not) (p->i (second e)))
+                   (str "(" (apply str (interpose (infix-op (first e))
+                                                  (map p->i (rest e)))) ")"))))
+        infix-expr (tf expr)]
     (if (= (first infix-expr) \()
-    (subs infix-expr 1 (dec (.length infix-expr)))
-    infix-expr)))
+      (subs infix-expr 1 (dec (.length infix-expr)))
+      infix-expr)))
 
 
 (def exp1 true)
