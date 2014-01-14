@@ -12,7 +12,6 @@ OPEN TASKS
   (and (or)) = false/nil
   -> abort trivial, generate no dimacs, etc.
   
-- Kein Vergleich von Subformeln in tmap - neues Tseitinsymbol für jede Subformel
 - Nicht vorher alle Symbole rausfischen
 
 - MPA-Parser nehmen, Visitor produziert Output identisch zu Instaparse
