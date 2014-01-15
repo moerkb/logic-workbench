@@ -35,4 +35,4 @@ stop
 (parse or-parser "c1&!(c2|!c3)&(c4&!c5)")
 (run or-parser "(((((c1)))))")
 
-(time (run or-parser sudoku))
+(time (parse-data or-parser rules))
