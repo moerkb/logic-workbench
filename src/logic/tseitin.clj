@@ -77,7 +77,9 @@
   "Recursive helper function for generate-tseitin-symbols."
   [f z t]
   (if (literal? f)
-    t
+    (swap! t #(conj %
+                {(symbol (str tseitin-prefix (swap! z inc)))
+                 f}))
     (let [rec-syms (doall (for [f' (rest f)]
                             (gen-tseit-rec f' z t)))]
       (swap! t #(conj % 
@@ -88,9 +90,7 @@
   "Generate tseitin symbols for all subformulas and literals."
   [formula z]
   (let [lits (find-variables formula)
-        tmap (atom (apply merge (map 
-                                  #(hash-map (symbol (str tseitin-prefix (swap! z inc))) %) 
-                                  lits)))
+        tmap (atom (hash-map))
         _ (gen-tseit-rec formula z tmap)
         rev-tmap (zipmap (vals @tmap) (keys @tmap))
         ]
