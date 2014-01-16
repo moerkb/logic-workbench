@@ -1,6 +1,7 @@
 (ns logic.util
   (:require [instaparse.core :as insta]
-            [clojure.string :as cstr])
+            [clojure.string :as cstr]
+            [mpa.cst.parser.parser :as mpaParser])
   (:use     [clojure.math.combinatorics :only (selections combinations)]
             [clojure.walk :only (postwalk)]
             [clojure.set :only (union)]))
@@ -19,3 +20,5 @@
       "dimacs"
       "sat-solve"
       "resolution")
+
+(def javaCCparse mpaParser/javaCCparse) ; only an ugly helper to use javaCCparse by using logic.util

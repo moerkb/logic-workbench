@@ -29,7 +29,7 @@
                  23 'xor)]
         (list op (cst2list (.jjtGetChild cst 0)) (cst2list (.jjtGetChild cst 1))))))
 
-(defn parse
+(defn javaCCparse
   [formula]
   (MpaParser/ReInit (StringReader. formula))
   (let [cst (MpaParser/Start)]
