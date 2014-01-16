@@ -30,6 +30,9 @@ stop
 
 (filter #(not (seq? %)) (rest solved)) ; only all true variables
 
+; We think that is what the mpa does
+(do (time (-> rules javaCCparse transform-tseitin :tseitin-formula generate-dimacs-clauses sat-solve)) nil) ; TODO: time analysis
+
 (do 
   (time (-> parsed transform-ast flatten-ast generate-dimacs-clauses sat-solve))
   nil)
