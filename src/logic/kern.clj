@@ -1,14 +1,14 @@
 (ns logic.kern
-  (:use [blancas.kern core expr]))
-
-stop
+  (:use [blancas.kern core expr]
+        [blancas.kern.lexer basic]))
 
 #_(
-  pseudocode grammar
+  minimal sudoku pseudocode grammar
   
   or     := and "|" and
   and    := unexp "&" unexp
   unexp  := "!"? exp
+  
   exp    := atom | "(" or ")"
   
   atom   := "c" digit*
@@ -16,23 +16,45 @@ stop
 
 (declare or-parser)
 
-(def atom-parser (<+> letter (many1 digit)))
-(def atom (<$> symbol atom-parser))
+(def special-chars (one-of* "_{}\\."))
+(def ident-parser (<+>
+                    (<|>
+                      letter
+                      special-chars)
+                    (many (<|>
+                            letter
+                            special-chars
+                            digit))))
 
-(def exp (<|> atom (<< (>> (one-of* "(") or-parser) (one-of* ")"))))
+(def ident (<$> symbol ident-parser))
 
-(def not-sym (>> (token* "!") (return #(list 'not %))))
+(def exp (<|> 
+           ident
+           (<< (>> (one-of* "(") or-parser) (one-of* ")"))
+           (<< (>> (one-of* "[") or-parser) (one-of* "]"))))
+
+(def not-sym (>> 
+               (many white-space)
+               (token "!" "not") 
+               (return #(list 'not %))))
+
 (def unexp (prefix1 exp not-sym))
 
-(def and-sym (>> (token* "&") (return #(list 'and %1 %2))))
+(def and-sym (>>
+               (many white-space)
+               (token "&" "and")
+               (return #(list 'and %1 %2))))
 (def and-parser (chainl1 unexp and-sym))
 
-(def or-sym (>> (token* "|") (return #(list 'or %1 %2))))
+(def or-sym (>> 
+              (many white-space)
+              (token "|" "or") 
+              (return #(list 'or %1 %2))))
 (def or-parser (chainl1 and-parser or-sym))
 
 
 ; examples
-(parse or-parser "c1&!(c2|!c3)&(c4&!c5)")
-(run or-parser "(((((c1)))))")
+(run or-parser "a and ! [b & !c]")
+;(run or-parser "(((((c1)))))")
 
-(time (parse-data or-parser rules))
+;(time (parse-data or-parser rules))
