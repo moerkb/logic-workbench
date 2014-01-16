@@ -2,11 +2,8 @@
 <S> = expr
 
 (* literals *)
-atom			= <spc> ((letter|special) (letter|special|digit)*) <spc>
-<letter>		= #"[A-Za-zÄÖÜäöü]"
-<special> 		= #"[\_\{\}\.\\]"	(* _ { } . \ *)
-<digit> 		= #"[0-9]"
-<spc>			= #"\s*"				  
+atom			= #"\s*[A-Za-zÄÖÜäöü\_\{\}\.\\][A-Za-z0-9ÄÖÜäöü\_\{\}\.\\]*\s*"
+<spc>			= #"\s*"
 
 (* token *)
 XOR 			= <spc> ("xor"|"^") <spc>
