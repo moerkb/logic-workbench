@@ -13,11 +13,10 @@ OPEN TASKS
   -> abort trivial, generate no dimacs, etc.
 
 - cnf much faster than tseitin
+- tseitin: flatten-ast should only run over the first level, not recursively
 
 - visualize formula tree graphically (instaparse/visualize) 
-- comparison project to: core.logic, kodkod (alloy) (e.g. Sudoku)
-- resolution (alternative to sat solving)
-- natural deduction
+- compare project to: core.logic, kodkod (alloy) (e.g. Sudoku)
 
 QUESTIONS
 
