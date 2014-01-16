@@ -11,16 +11,8 @@ OPEN TASKS
 - (and) = true
   (and (or)) = false/nil
   -> abort trivial, generate no dimacs, etc.
-  
-- Nicht vorher alle Symbole rausfischen
 
-- MPA-Parser nehmen, Visitor produziert Output identisch zu Instaparse
-    (TransientVector direkt -> PersistentVector)
-
-- Grammatik: Whitesspaces tesweise entfernen
-- Zeilen entfernen und Laufzeiten überprüfen
-- Minimalgrammatik für Sudoku-Regeln
-- Laufzeit angeben (mit Vergleich)
+- cnf much faster than tseitin
 
 - visualize formula tree graphically (instaparse/visualize) 
 - comparison project to: core.logic, kodkod (alloy) (e.g. Sudoku)
