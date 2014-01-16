@@ -123,7 +123,7 @@
         cln-res (filter #(contains? 
                            (set (vals (:lits tmap))) 
                            (if (literal? %) % (second %))) 
-                 (rest result))]
+                 result)]
     (map #(if (literal? %) 
             (get subs %)
             (list 'not (get subs (second %)))) 

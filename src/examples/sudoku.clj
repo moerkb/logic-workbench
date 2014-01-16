@@ -26,7 +26,9 @@ stop
 
 (time (def solved (sat-solve dmacs)))
 
-solved
+(time (def solved (sat-solve-formula rules))) ; full circle with javaCC parser
+
+(filter #(not (seq? %)) (rest solved)) ; only all true variables
 
 (do 
   (time (-> parsed transform-ast flatten-ast generate-dimacs-clauses sat-solve))
