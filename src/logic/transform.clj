@@ -22,13 +22,14 @@
   [ast]
   (insta/transform transform-map ast))
 
-(defn- flatten-subast
-  "Private functin to flat a flattenable sub ast with a depth of one level."
+(defn flatten-subast
+  "Private function to flat a flattenable sub ast with a depth of one level."
   [ast]
   (if (and
         (coll? ast)
         (n-ary? (first ast)))
-    (let [op (first ast) args (rest ast)
+    (let [op (first ast) 
+          args (rest ast)
           flat-filter (fn [op arg] (if (coll? arg) (= op (first arg)) false))
           flat (map #(rest %) (filter (partial flat-filter op) args))
           not-flat (filter (partial (complement flat-filter) op) args)]

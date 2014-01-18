@@ -12,9 +12,6 @@ OPEN TASKS
   (and (or)) = false/nil
   -> abort trivial, generate no dimacs, etc.
 
-- cnf much faster than tseitin
-- tseitin: flatten-ast should only run over the first level, not recursively
-
 - visualize formula tree graphically (instaparse/visualize) 
 - compare project to: core.logic, kodkod (alloy) (e.g. Sudoku)
 

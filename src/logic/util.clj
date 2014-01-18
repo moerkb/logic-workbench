@@ -1,7 +1,8 @@
 (ns logic.util
   (:require [instaparse.core :as insta]
             [clojure.string :as cstr]
-            [mpa.cst.parser.parser :as mpaParser])
+            [mpa.cst.parser.parser :as mpaParser]
+            [clojure.repl :refer :all])
   (:use     [clojure.math.combinatorics :only (selections combinations)]
             [clojure.walk :only (postwalk)]
             [clojure.set :only (union)]))

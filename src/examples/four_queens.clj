@@ -92,10 +92,12 @@ stop
 
 (do (time (transform-tseitin parsed)) nil)
 
+(:tseitin-formula (transform-tseitin parsed))
+
 (do (time (transform-cnf parsed)) nil)
 
 ; performance test
-(def extreme (reduce #(str %1 "&" %2) (repeat 100 rules)))
+(def extreme (reduce #(str %1 "&" %2) (repeat 30 rules)))
 (time (def extreme-parsed (javaCCparse extreme)))
 
 (do (time (transform-tseitin extreme-parsed)) nil)

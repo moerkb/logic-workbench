@@ -110,9 +110,9 @@
         lit-list (set (filter literal? (vals gen-map)))]
     {:formula formula
      :lits (apply merge (map (fn [l] {l (l rev-subs)}) lit-list)) 
-     :tseitin-formula (flatten-ast (apply list 'and
-                                     (list 'or (symbol (str tseitin-prefix @z)))
-                                     (filter (complement literal?) (vals gen-map))))}))
+     :tseitin-formula (flatten-subast (apply list 'and
+                                        (list 'or (symbol (str tseitin-prefix @z)))
+                                        (filter (complement literal?) (vals gen-map))))}))
 
 (defn retransform-tseitin
   "Takes a map as produced by transform-tseitin and a solver result and removes all tseitin
