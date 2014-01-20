@@ -1,6 +1,6 @@
 (ns logic.kern
   (:use [blancas.kern core expr]
-        [blancas.kern.lexer basic]))
+        [blancas.kern.lexer java-style]))
 
 #_(
   minimal sudoku pseudocode grammar
@@ -34,27 +34,24 @@
            (<< (>> (one-of* "[") or-parser) (one-of* "]"))))
 
 (def not-sym (>> 
-               (many white-space)
                (token "!" "not") 
                (return #(list 'not %))))
 
 (def unexp (prefix1 exp not-sym))
 
 (def and-sym (>>
-               (many white-space)
                (token "&" "and")
                (return #(list 'and %1 %2))))
 (def and-parser (chainl1 unexp and-sym))
 
 (def or-sym (>> 
-              (many white-space)
-              (token "|" "or") 
+              (token "|" "or")
               (return #(list 'or %1 %2))))
 (def or-parser (chainl1 and-parser or-sym))
 
 
 ; examples
-(run or-parser "a and ! [b & !c]")
+(run or-parser "a & b | c")
 ;(run or-parser "(((((c1)))))")
 
 ;(time (parse-data or-parser rules))

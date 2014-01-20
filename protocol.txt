@@ -12,6 +12,20 @@ OPEN TASKS
   (and (or)) = false/nil
   -> abort trivial, generate no dimacs, etc.
 
+- Comparison
+	Parser:
+	Instaparse full grammar
+	  "		   slim grammar
+	Kern	   full
+	  "		   slim
+	JavaCC	   full
+	
+	Samples:
+	Sudoku rules
+	1/2 Sudoku rules
+	queens problem (4, 8)
+	map coloring USA
+
 - visualize formula tree graphically (instaparse/visualize) 
 - compare project to: core.logic, kodkod (alloy) (e.g. Sudoku)
 
