@@ -31,12 +31,12 @@ stop
 ;(filter #(not (seq? %)) (rest solved)) ; only all true variables
 
 (time (def parsed (javaCCparse rules))) ; 0.5 sec
-(time (def tseitin (transform-tseitin parsed))) ; 2 sec
+(time (def tseitin (transform-tseitin parsed))) ; 0.7 sec
 (time (def dmacs (generate-dimacs-clauses (:tseitin-formula tseitin)))) ; 2 sec
 (time (def solved (sat-solve dmacs))) ; 0.5 sec
-(time (def result (doall (retransform-tseitin (rest solved) tseitin)))) ; 10 sec
+(time (def result (doall (retransform-tseitin (rest solved) tseitin)))) ; 0.02 sec
 
-(time (def result (doall (sat-solve-formula rules)))) ; 15 sec
+(time (def result (doall (sat-solve-formula rules)))) ; 4 sec
 
 ;(do 
 ;  (time (-> parsed transform-ast flatten-ast generate-dimacs-clauses sat-solve))

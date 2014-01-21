@@ -119,12 +119,13 @@
    variables and resubstitutes the symbols to the original ones."
   [result tmap]
   (let [subs (zipmap (vals (:lits tmap)) (keys (:lits tmap)))
-        cln-res (filter #(contains? 
-                           (set (vals (:lits tmap))) 
-                           (if (literal? %) % (second %))) 
+        lits (set (vals (:lits tmap)))
+        cln-res (filter #(contains?
+                           lits
+                           (if (literal? %) % (second %)))
                  result)]
-    (map #(if (literal? %) 
-            (get subs %)
-            (list 'not (get subs (second %)))) 
+    (map #(if (seq? %) 
+            (list 'not (get subs (second %)))
+            (get subs %))
       cln-res)))
     
