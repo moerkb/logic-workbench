@@ -1,5 +1,6 @@
 (ns examples.sudoku
-  (:require [logic.util :refer :all]))
+  (:require [logic.util :refer :all]
+    [logic.kern :refer (kern-parse)]))
 
 stop
 
@@ -37,6 +38,8 @@ stop
 (time (def result (doall (retransform-tseitin (rest solved) tseitin)))) ; 0.02 sec
 
 (time (def result (doall (sat-solve-formula rules)))) ; 4 sec
+
+(time (def kerned (kern-parse rules)))
 
 ;(do 
 ;  (time (-> parsed transform-ast flatten-ast generate-dimacs-clauses sat-solve))

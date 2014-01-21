@@ -128,5 +128,15 @@
 
 (def start-parser xor-parser)
 
+; call function
+(defn kern-parse [parse-string]
+  "Takes a formula and parses it to clojure code with the kern parser."
+  (let [res (parse-data start-parser parse-string)]
+    (if (:ok res)
+      (:value res)
+      (do
+        (println "An error occurred while parsing.")
+        false))))
+
 ; examples
-(parse-data start-parser "a xor !(c !<- (false !-> b))")
+;(parse-data start-parser "a xor !(c !<- (false !-> b))")
