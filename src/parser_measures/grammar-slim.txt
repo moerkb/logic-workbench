@@ -1,0 +1,28 @@
+(* entry point *)
+<S> = or_nor
+
+(* literals *)
+atom			= #"[a-z][0-9]*"
+
+(* token *)
+OR	 			= "|"
+AND 			= "&"
+NOT				= "!"
+
+LPAREN			= "("
+RPAREN			= ")"
+
+(* unary operators *)
+not				= <NOT> unexpr
+
+(* binary operators *)
+<or_nor>		= or | and_nand
+or				= or_nor <OR> and_nand
+
+<and_nand>		= and | unexpr
+and				= and_nand <AND> unexpr
+
+<unexpr>		= not | subexpr
+
+<subexpr>		= atom /
+				  <LPAREN> or_nor <RPAREN>

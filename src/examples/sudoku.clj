@@ -1,6 +1,5 @@
 (ns examples.sudoku
-  (:require [logic.util :refer :all]
-    [logic.kern :refer (kern-parse)]))
+  (:require [logic.util :refer :all]))
 
 stop
 

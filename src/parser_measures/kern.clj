@@ -1,6 +1,5 @@
-(ns logic.kern
+(ns parser_measures.kern
   (:require 
-    [clojure.repl :refer :all]
     [blancas.kern [core :refer :all] [expr :refer :all]]
     [blancas.kern.lexer :as lex]))
 
