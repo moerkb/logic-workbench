@@ -110,4 +110,8 @@
   [& syms]
   (symbol (cstr/join "-" (map name syms))))
 
-
+(defn combine-syms_
+  "(combine & syms) -> symbol
+   returns a symbol named 'sym1-sym2...'"
+  [& syms]
+  (symbol (cstr/join "_" (map name syms))))

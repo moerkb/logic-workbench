@@ -45,5 +45,8 @@
 
 stop
 
+(formula-parse-test 'formula-usa false)
 (formula-parse-test 'formula-4-queens false)
 (formula-parse-test 'formula-8-queens true)
+(formula-parse-test 'formula-half-sudoku true)
+(formula-parse-test 'formula-sudoku true)
