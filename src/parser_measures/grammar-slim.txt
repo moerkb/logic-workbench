@@ -2,27 +2,19 @@
 <S> = or_nor
 
 (* literals *)
-atom			= #"[a-z][0-9]*"
-
-(* token *)
-OR	 			= "|"
-AND 			= "&"
-NOT				= "!"
-
-LPAREN			= "("
-RPAREN			= ")"
+atom			= #"[a-z][a-z0-9_]*"
 
 (* unary operators *)
-not				= <NOT> unexpr
+not				= <"!"> unexpr
 
 (* binary operators *)
 <or_nor>		= or | and_nand
-or				= or_nor <OR> and_nand
+or				= or_nor <"|"> and_nand
 
 <and_nand>		= and | unexpr
-and				= and_nand <AND> unexpr
+and				= and_nand <"&"> unexpr
 
 <unexpr>		= not | subexpr
 
 <subexpr>		= atom /
-				  <LPAREN> or_nor <RPAREN>
+				  <"("> or_nor <")">
