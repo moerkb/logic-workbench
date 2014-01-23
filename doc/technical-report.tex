@@ -1,0 +1,61 @@
+\documentclass[ngerman,a4paper,abstracton,open=right,twoside=false,toc=listofnumbered]{scrreprt}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\geometry{a4paper, top=20mm, bottom=40mm, left=40mm, right=25mm, footskip=20mm}
+
+\title{Leistungsvergleich von Clojure--Parsern}
+\subtitle{Technischer Bericht zum Masterprojekt\
+Technische Hochschule Mittelhessen}
+\author{Daniel Kirsten, Markus Bader}
+\date{\today}
+\begin{document}
+
+\maketitle
+\newpage
+\begin{abstract}
+
+Im Rahmen des Masterprojekts im Wintersemester 2013/2014 haben die Autoren ein
+Programm zum Anwenden von Logikfunktionen (z. B. Wahrheitstafeln,
+Tseitin--Transformation, SAT--Solving) entworfen und mittels der
+Programmiersprache Clojure implementiert. Unter anderem wird ein Parser zum
+Umwandeln von logischen Formeln in eine Clojure--Datenstruktur benötigt.
+
+Zu diesem Zweck wurde ein Parser mittels der Bilbiothek Instaparse erzeugt,
+jedoch viel dessen signifkant längere Laufzeit gegenüber einem
+JavaCC--Vergleichsparser auf. 
+
+In diesem technischen Bericht, welcher zugleich die Abschlussdokumentation zum
+Projekt darstellt, werden die Laufzeiten von fünf Parsern verglichen: Instaparse
+und Kern, jeweils mit einer vollständigen und einer minimierten Grammatik, sowie
+der JavaCC--Referenzparser.
+
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+
+\chapter{Einführung}
+\section{Der MPA}
+\section{Logical Workbench}
+\section{Die Parser--Bibliotheken}
+\subsection{Instaparse}
+\subsection{Kern}
+\subsection{JavaCC}
+
+\chapter{Versuchsaufbau}
+\section{Allgemeine Aspekte}
+\section{Grammatiken}
+\section{Formeln}
+\section{Messungen}
+
+\chapter{Bewertung}
+
+\appendix
+\listoffigures % Abbildungsverzeichnis
+
+\end{document}
