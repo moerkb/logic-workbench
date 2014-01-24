@@ -58,4 +58,42 @@ der JavaCC--Referenzparser.
 \appendix
 \listoffigures % Abbildungsverzeichnis
 
+\chapter{Messergebnisse}
+\begin{table}[h]
+	\rotatebox{90}{
+		\begin{tabular}{|l|r|r|r|r|}
+			\hline
+			\textbf{USA} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} \\ \hline
+			javacc  & 208 & 217 & 206 & 196 \\ \hline
+			kern, slim   & 610 & 814 & 832 & 859 \\ \hline
+			kern, full   & 673 & 665 & 670 & 719 \\ \hline
+			instaparse, slim   & 595 & 593 & 584 & 607 \\ \hline
+			instaparse, full   & 4094 & 3652 & 3649 & 3607 \\ \hline
+			\textbf{4 Damen} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+			javacc  & 10 & 9 & 10 & 8 \\ \hline
+			kern, full   & 199 & 199 & 191 & 190 \\ \hline
+			instaparse, full   & 118 & 110 & 107 & 110 \\ \hline
+			\textbf{8 Damen} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+			javacc  & 92 & 94 & 94 & 72 \\ \hline
+			kern, slim   & 285 & 276 & 292 & 296 \\ \hline
+			kern, full   & 645 & 624 & 567 & 649 \\ \hline
+			instaparse, slim   & 298 & 369 & 345 & 291 \\ \hline
+			instaparse, full   & 2351 & 2223 & 2249 & 2277 \\ \hline
+			\textbf{Halbes Sudoku} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+			javacc  & 472 & 483 & 580 & 489 \\ \hline
+			kern, slim   & 1657 & 1606 & 1628 & 1714 \\ \hline
+			kern, full   & 3580 & 3473 & 3557 & 3741 \\ \hline
+			instaparse, slim   & 5151 & 4708 & 5085 & 4941 \\ \hline
+			\textbf{Sudoku} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+			javacc  & 695 & 1182 & 1028 & 1044 \\ \hline
+			kern, slim   & 3051 & 2941 & 3014 & 3198 \\ \hline
+			kern, full   & 6977 & 6631 & 6777 & 7279 \\ \hline
+			instaparse, slim   & 19072 & 18782 & 18530 & 18439 \\ \hline
+		\end{tabular}
+	}
+		\label{Messergebnisse}
+		\caption{Ergebnisse der Messreihen, alle Angaben in Millisekunden}
+\end{table}
+
+
 \end{document}
