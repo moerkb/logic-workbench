@@ -59,40 +59,51 @@ der JavaCC--Referenzparser.
 \listoffigures % Abbildungsverzeichnis
 
 \chapter{Messergebnisse}
-\begin{table}[h]
-	\rotatebox{90}{
-		\begin{tabular}{|l|r|r|r|r|}
-			\hline
-			\textbf{USA} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} \\ \hline
-			javacc  & 208 & 217 & 206 & 196 \\ \hline
-			kern, slim   & 610 & 814 & 832 & 859 \\ \hline
-			kern, full   & 673 & 665 & 670 & 719 \\ \hline
-			instaparse, slim   & 595 & 593 & 584 & 607 \\ \hline
-			instaparse, full   & 4094 & 3652 & 3649 & 3607 \\ \hline
-			\textbf{4 Damen} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
-			javacc  & 10 & 9 & 10 & 8 \\ \hline
-			kern, full   & 199 & 199 & 191 & 190 \\ \hline
-			instaparse, full   & 118 & 110 & 107 & 110 \\ \hline
-			\textbf{8 Damen} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
-			javacc  & 92 & 94 & 94 & 72 \\ \hline
-			kern, slim   & 285 & 276 & 292 & 296 \\ \hline
-			kern, full   & 645 & 624 & 567 & 649 \\ \hline
-			instaparse, slim   & 298 & 369 & 345 & 291 \\ \hline
-			instaparse, full   & 2351 & 2223 & 2249 & 2277 \\ \hline
-			\textbf{Halbes Sudoku} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
-			javacc  & 472 & 483 & 580 & 489 \\ \hline
-			kern, slim   & 1657 & 1606 & 1628 & 1714 \\ \hline
-			kern, full   & 3580 & 3473 & 3557 & 3741 \\ \hline
-			instaparse, slim   & 5151 & 4708 & 5085 & 4941 \\ \hline
-			\textbf{Sudoku} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
-			javacc  & 695 & 1182 & 1028 & 1044 \\ \hline
-			kern, slim   & 3051 & 2941 & 3014 & 3198 \\ \hline
-			kern, full   & 6977 & 6631 & 6777 & 7279 \\ \hline
-			instaparse, slim   & 19072 & 18782 & 18530 & 18439 \\ \hline
-		\end{tabular}
-	}
+\begin{table}[!h]
+	\resizebox{!}{\textwidth}{
+		\rotatebox{90}{
+			\begin{tabular}{|l|r|r|r|r|r|r|r|r|r|r|r|}
+				\hline
+				\textbf{USA} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \textbf{Mittel} \\ \hline
+				javacc  & 208 & 217 & 206 & 196 & 179 & 205 & 210 & 212 & 197 & 215 & 204 \\ \hline
+				kern, slim   & 610 & 814 & 832 & 859 & 618 & 593 & 596 & 791 & 851 & 613 & 718 \\ \hline
+				kern, full   & 673 & 665 & 670 & 719 & 658 & 639 & 673 & 660 & 627 & 652 & 664 \\ \hline
+				instaparse, slim   & 595 & 593 & 584 & 607 & 998 & 590 & 553 & 609 & 572 & 592 & 629 \\ \hline
+				instaparse, full   & 4094 & 3652 & 3649 & 3607 & 3798 & 4386 & 4141 & 3759 & 3769 & 4040 & 3890 \\ \hline
+				\textbf{4 Damen} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+				javacc  & 10 & 9 & 10 & 8 & 7 & 15 & 11 & 9 & 15 & 10 & 10 \\ \hline
+				kern, full   & 199 & 199 & 191 & 190 & 187 & 186 & 54 & 194 & 201 & 196 & 180 \\ \hline
+				instaparse, slim   & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & (38) \\ \hline
+				instaparse, full   & 118 & 110 & 107 & 110 & 108 & 121 & 108 & 109 & 112 & 108 & 111 \\ \hline
+				\textbf{8 Damen} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+				javacc  & 92 & 94 & 94 & 72 & 90 & 104 & 93 & 98 & 88 & 109 & 93 \\ \hline
+				kern, slim   & 285 & 276 & 292 & 296 & 275 & 279 & 371 & 286 & 287 & 287 & 293 \\ \hline
+				kern, full   & 645 & 624 & 567 & 649 & 570 & 563 & 468 & 551 & 638 & 626 & 590 \\ \hline
+				instaparse, slim   & 298 & 369 & 345 & 291 & 366 & 376 & 348 & 355 & 368 & 419 & 354 \\ \hline
+				instaparse, full   & 2351 & 2223 & 2249 & 2277 & 2330 & 2306 & 2730 & 2328 & 2238 & 1975 & 2301 \\ \hline
+				\textbf{Viertel Sudoku} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+				javacc  & 629 & 379 & 393 & 375 & 380 & 375 & 659 & 651 & 383 & 384 & 461 \\ \hline
+				kern, slim   & 1274 & 1290 & 1251 & 1292 & 1245 & 1262 & 1345 & 1289 & 1287 & 1283 & 1282 \\ \hline
+				kern, full   & 1720 & 1686 & 1676 & 1792 & 1617 & 1714 & 1707 & 1710 & 1745 & 1670 & 1704 \\ \hline
+				instaparse, slim   & 2102 & 2434 & 3939 & 2322 & 3655 & 2566 & 2096 & 2017 & 3506 & 3686 & 2832 \\ \hline
+				instaparse, full   & 31108 & 28401 & 21306 & 21629 & 21233 & 20991 & 28230 & 28365 & 29472 & 24725 & 25546 \\ \hline
+				\textbf{Halbes Sudoku} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+				javacc  & 472 & 483 & 580 & 489 & 626 & 552 & 419 & 570 & 443 & 609 & 524 \\ \hline
+				kern, slim   & 1657 & 1606 & 1628 & 1714 & 1646 & 1616 & 1706 & 1659 & 1604 & 1591 & 1643 \\ \hline
+				kern, full   & 3580 & 3473 & 3557 & 3741 & 3589 & 3484 & 3735 & 3651 & 3513 & 3535 & 3586 \\ \hline
+				instaparse, slim   & 5151 & 4708 & 5085 & 4941 & 5714 & 4698 & 4196 & 4913 & 5270 & 6938 & 5161 \\ \hline
+				instaparse, full   & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & (63184) \\ \hline
+				\textbf{Sudoku} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+				javacc  & 695 & 1182 & 1028 & 1044 & 1091 & 670 & 720 & 1101 & 1031 & 1067 & 963 \\ \hline
+				kern, slim   & 3051 & 2941 & 3014 & 3198 & 2996 & 2991 & 3141 & 3064 & 2967 & 2982 & 3035 \\ \hline
+				kern, full   & 6977 & 6631 & 6777 & 7279 & 6806 & 6669 & 7165 & 7054 & 6726 & 6852 & 6894 \\ \hline
+				instaparse, slim   & 19072 & 18782 & 18530 & 18439 & 17480 & 19001 & 19870 & 18148 & 18547 & 15740 & 18361 \\ \hline
+				instaparse, full   & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & (325998) \\ \hline
+				\end{tabular}
+			}
+		}
 		\label{Messergebnisse}
-		\caption{Ergebnisse der Messreihen, alle Angaben in Millisekunden}
+		\caption{Ergebnisse der Messreihen, alle Angaben in Millisekunden. Ergebnisse in Klammern sind errechnet.}
 \end{table}
 
 
