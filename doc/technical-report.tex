@@ -6,6 +6,7 @@
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
+\usepackage{listings}
 \geometry{a4paper, top=20mm, bottom=40mm, left=40mm, right=25mm, footskip=20mm}
 
 \title{Leistungsvergleich von Clojure--Parsern}
@@ -14,25 +15,19 @@ Technische Hochschule Mittelhessen}
 \author{Daniel Kirsten, Markus Bader}
 \date{\today}
 \begin{document}
+\lstset{
+	language=Lisp,
+	breaklines=true}
 
 \maketitle
 \newpage
 \begin{abstract}
 
-Im Rahmen des Masterprojekts im Wintersemester 2013/2014 haben die Autoren ein
-Programm zum Anwenden von Logikfunktionen (z. B. Wahrheitstafeln,
-Tseitin--Transformation, SAT--Solving) entworfen und mittels der
-Programmiersprache Clojure implementiert. Unter anderem wird ein Parser zum
-Umwandeln von logischen Formeln in eine Clojure--Datenstruktur benötigt.
+Im Rahmen des Masterprojekts im Wintersemester 2013/2014 haben die Autoren ein Programm zum Anwenden von Logikfunktionen (z. B. Wahrheitstafeln, Tseitin--Transformation, SAT--Solving) entworfen und mittels der Programmiersprache Clojure implementiert. Unter anderem wird ein Parser zum Umwandeln von logischen Formeln in eine Clojure--Datenstruktur benötigt.
 
-Zu diesem Zweck wurde ein Parser mittels der Bilbiothek Instaparse erzeugt,
-jedoch viel dessen signifkant längere Laufzeit gegenüber einem
-JavaCC--Vergleichsparser auf. 
+Zu diesem Zweck wurde ein Parser mittels der Bilbiothek Instaparse erzeugt, jedoch viel dessen signifkant längere Laufzeit gegenüber einem JavaCC--Vergleichsparser auf.
 
-In diesem technischen Bericht, welcher zugleich die Abschlussdokumentation zum
-Projekt darstellt, werden die Laufzeiten von fünf Parsern verglichen: Instaparse
-und Kern, jeweils mit einer vollständigen und einer minimierten Grammatik, sowie
-der JavaCC--Referenzparser.
+In diesem technischen Bericht, welcher zugleich die Abschlussdokumentation zum Projekt darstellt, werden die Laufzeiten von fünf Parsern verglichen: Instaparse und Kern, jeweils mit einer vollständigen und einer minimierten Grammatik, sowie der JavaCC--Referenzparser.
 
 \end{abstract}
 \newpage
@@ -40,12 +35,69 @@ der JavaCC--Referenzparser.
 \newpage
 
 \chapter{Einführung}
-\section{Der MPA}
+
+Bevor auf die eigentlichen Messungen eingegangen wird, sollen zunächst diverse Hintergrundinformationen zu dem Projekt sowie den Parser--Bibliotheken gegeben werden.
+
+\section{MPA}
+
+Der \emph{MNI Proposition Analyzer (MPA)} ist ein im Institut für Softwarearchitektur (ISA) des Fachbereichs Mathematik, Naturwissenschaften und Informatik (MNI) an der Technischen Hochschule Mittelhessen (THM) entwickeltes Programm, um übliche Berechnungen im Bereich der Aussagenlogik anzuwenden. Zu den Features gehören u. a.:
+
+\begin{itemize}
+	\item Parsen von Formeln
+	\item Ausgeben einer Wahrheitstabelle
+	\item Produktion der konjunktiven und disjunktiven Normalform (CNF, DNF)
+	\item Anwenden der Tseitin--Transformation
+	\item Überprüfen der Erfüllbarkeit einer Formel mittels eines externen SAT--Solver (z. B. SAT4J)
+	\item Pretty--print--Funktionen z. B. für Tex.
+	\item Anwenden eines externen, M4--kompatiblen Makroprozessors
+\end{itemize}
+
+Die Funktionen können über Kommandozeile oder eine GUI angesprochen werden. Das Programm wird in der Lehre an der THM eingesetzt und ist unter der GPL quelloffen verfügbar.
+
 \section{Logical Workbench}
+
+Innerhalb des Masterprojektes der Autoren unter Leitung des bereits für den MPA verantwortlichen Prof. Dr. B. Renz wird ein Programm mit identischen oder ähnlichen Funktionen des MPA entwickelt. Unter dem Projektnamen \emph{Logical Workbench (LW)} wird im Gegensatz zu Java jedoch die Programmiersprache \emph{Clojure} verwendet.
+
+Clojure ist ein LISP, welches zu Java--Bytecode kompiliert und somit auf der JVM arbeitet. Als Besonderheit ist die einfache Verwendung von Java--Code (etwa Klassen) zu nennen, wodurch auch ein von JavaCC generierter Parser--Code benutzt werden kann (siehe Abschnitt \ref{JavaCC}).
+
+Zum Zeitpunkt des Verfassens dieses Textes sind die Kernfunktionen implementiert; im Einzelnen:
+
+\begin{itemize}
+	\item Parsen von Formeln
+	\item Ausgeben einer Wahrheitstabelle
+	\item Produktion der CNF (mittels direktem Algorithmus oder Tseitin--Transformation)  % TODO: "direkter Algorithmus"
+	\item Generieren des Dimacs--Formats und Aufrufen von SAT4J
+\end{itemize}
+
+Ein Makroprozessor wurde nicht eingebunden, da Clojure selbst über ein mächtiges Makrosystem verfügt. Im weiteren Verlauf des Projektes sind die Implementierung einer dem MPA ähnlichen GUI und ein System zum Anwenden der natürlichen Deduktion geplant. Der Code des Projektes ist unter TODO einsehbar.
+
+\section{Das Problem: Parser--Laufzeiten}
+
+Zu der wesentlichen Kernfunktionalität der LW gehört das Parsen von Formeln, so dass eine Clojure--Liste entsteht, also beispielsweise der String \glqq\lstinline|A -> !(A & B)|\grqq zu \lstinline|(impl A (not (and A B)))| geparst wird. Die vollständige Referenzgrammatik des MPA findet sich in Anhang TODO, zusammen mit den zu produzierenden Clojure--Strukturen.
+
+Zunächst wurde zur allgemeinen Zufriedenheit die Bibliothek \emph{Instaparse} verwendet. Bei einem Test mit einer großen Formel (Sudoku--Regeln) wurde jedoch eine im Vergleich mit dem Referenzparser sehr viel höhere Laufzeit festgestellt, wenn der mit Instaparse generierte Parser nicht vorher durch einen Stackoverflow abgebrochen wurde. So brauchte dieser in einem Testdurchlauf mehrere Minuten, wogegen der Referenzparser des MPA diese Aufgabe in etwa zwei Sekunden vollbrachte.
+
+Aus diesem Grunde wurden zunächst die Ursachen für die stark wachsende Laufzeit des Instaparse--Parsers eruiert und anschließend eine Vergleichsmessung zwischen verschiedenen Parsern und Grammatiken durchgeführt.
+
 \section{Die Parser--Bibliotheken}
+
+In diesem Abschnitt sollen die für den Vergleich benutzten Parser--Bibliotheken nicht nur vorgesellt werden, auch ihre Anwendung, Konzepte und Eigenheiten werden in Kürze umrissen.
+
 \subsection{Instaparse}
+
+Die von Mark Engelberg entwickelte Bibliothek \emph{Instaparse} gehört zur Gruppe der Parser--Generatoren, d. h. es wird eine Grammatik angegeben, aus der dann ein Programm generiert wird, welches eine Zeichenkette gemäß der Grammatik parsen kann. Da ein Clojure--Programm zur Laufzeit übersetzt werden kann, ist zur Verwendung des generierten Programms kein weiterer Kompilier--Zwischenschritt notwendig, wie etwa bei JavaCC.
+
+Instaparse ist komplett in Clojure geschrieben und wurde deswegen und aufgrund der Simplizität zunächst als Parser für die LW gewählt. So sehen die Schritte zur Entwicklung eines Parsers beispielhaft so aus:
+
+\begin{enumerate}
+	\item In einem Clojure--String oder einer externen Text--Datei wird eine Grammatik spezifiziert.
+	\item Diese Grammatik wird als Argument einer Funktion \glqq parse\grqq verwendet, welche den Parser zurückgibt, z. B. \lstinline|(def logic-parser (insta/parser ``src/logic/grammar.txt''))|.
+	\item Mit diesem Parser kann ein String geparst werden, z. B. erzeugt \lstinline|(logic-parser ``A & B'')| einen abstrakten Syntaxbaum (AST) \lstinline|[:and [:atom ``A''] [:atom ``B'']]|. Als Ausgabeformat stehen dabei hiccup oder enlive zur Verfügung.
+	\item Die Funktion \glqq transform\grqq nimmt einen AST und eine Hash--Map zur Substitution an und kann den Parsebaum somit umwandeln. Aus obigem AST wird somit etwa \lstinline|(and A B)|.
+\end{enumerate}
+
 \subsection{Kern}
-\subsection{JavaCC}
+\subsection{JavaCC}\label{JavaCC}
 
 \chapter{Versuchsaufbau}
 \section{Allgemeine Aspekte}
