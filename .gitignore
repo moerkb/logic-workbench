@@ -27,3 +27,13 @@ $RECYCLE.BIN/
 
 # Eclipse
 .settings
+
+# Tex
+/doc/*.aux
+/doc/*.lof
+/doc/*.log
+/doc/*.out
+/doc/*.toc
+/doc/*.fdb_latexmk
+/doc/*.fls
+/doc/*.pdf
