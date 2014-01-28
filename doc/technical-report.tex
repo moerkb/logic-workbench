@@ -1,4 +1,4 @@
-\documentclass[ngerman,a4paper,abstracton,open=right,twoside=false,toc=listofnumbered]{scrreprt}
+\documentclass[ngerman,a4paper,abstracton,open=right,twoside=false,toc=listofnumbered,bibtotocnumbered]{scrreprt}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -40,7 +40,9 @@ Bevor auf die eigentlichen Messungen eingegangen wird, sollen zunächst diverse 
 
 \section{MPA}
 
-Der \emph{MNI Proposition Analyzer (MPA)} ist ein im Institut für Softwarearchitektur (ISA) des Fachbereichs Mathematik, Naturwissenschaften und Informatik (MNI) an der Technischen Hochschule Mittelhessen (THM) entwickeltes Programm, um übliche Berechnungen im Bereich der Aussagenlogik anzuwenden. Zu den Features gehören u. a.:
+Der \emph{MNI Proposition Analyzer (MPA)} ist ein im Institut für Softwarearchitektur (ISA) des Fachbereichs Mathematik, Naturwissenschaften und Informatik (MNI) an der Technischen Hochschule Mittelhessen (THM) entwickeltes Programm, um übliche Berechnungen im Bereich der Aussagenlogik anzuwenden. \cite{mpa}
+
+Zu den Features gehören u. a.:
 
 \begin{itemize}
 	\item Parsen von Formeln
@@ -65,15 +67,15 @@ Zum Zeitpunkt des Verfassens dieses Textes sind die Kernfunktionen implementiert
 \begin{itemize}
 	\item Parsen von Formeln
 	\item Ausgeben einer Wahrheitstabelle
-	\item Produktion der CNF (mittels direktem Algorithmus oder Tseitin--Transformation)  % TODO: "direkter Algorithmus"
+	\item Produktion der CNF (mittels trivialem Algorithmus oder Tseitin--Transformation)
 	\item Generieren des Dimacs--Formats und Aufrufen von SAT4J
 \end{itemize}
 
-Ein Makroprozessor wurde nicht eingebunden, da Clojure selbst über ein mächtiges Makrosystem verfügt. Im weiteren Verlauf des Projektes sind die Implementierung einer dem MPA ähnlichen GUI und ein System zum Anwenden der natürlichen Deduktion geplant. Der Code des Projektes ist unter TODO einsehbar.
+Ein Makroprozessor wurde nicht eingebunden, da Clojure selbst über ein mächtiges Makrosystem verfügt. Im weiteren Verlauf des Projektes sind die Implementierung einer dem MPA ähnlichen GUI und ein System zum Anwenden der natürlichen Deduktion geplant. Der Code des Projektes ist unter \cite{lw} einsehbar.
 
 \section{Das Problem: Parser--Laufzeiten}
 
-Zu der wesentlichen Kernfunktionalität der LW gehört das Parsen von Formeln, so dass eine Clojure--Liste entsteht, also beispielsweise der String \glqq\lstinline|A -> !(A & B)|\grqq zu \lstinline|(impl A (not (and A B)))| geparst wird. Die vollständige Referenzgrammatik des MPA findet sich in Anhang TODO, zusammen mit den zu produzierenden Clojure--Strukturen.
+Zu der wesentlichen Kernfunktionalität der LW gehört das Parsen von Formeln, so dass eine Clojure--Liste entsteht, also beispielsweise der String \glqq\lstinline|A -> !(A & B)|\grqq zu \lstinline|(impl A (not (and A B)))| geparst wird. Die vollständige Referenzgrammatik des MPA findet sich in Anhang \ref{refgrammatik}.
 
 Zunächst wurde zur allgemeinen Zufriedenheit die Bibliothek \emph{Instaparse} verwendet. Bei einem Test mit einer großen Formel (Sudoku--Regeln) wurde jedoch eine im Vergleich mit dem Referenzparser sehr viel höhere Laufzeit festgestellt, wenn der mit Instaparse generierte Parser nicht vorher durch einen Stackoverflow abgebrochen wurde. So brauchte dieser in einem Testdurchlauf mehrere Minuten, wogegen der Referenzparser des MPA diese Aufgabe in etwa zwei Sekunden vollbrachte.
 
@@ -85,7 +87,7 @@ In diesem Abschnitt sollen die für den Vergleich benutzten Parser--Bibliotheken
 
 \subsection{Instaparse}
 
-Die von Mark Engelberg entwickelte Bibliothek \emph{Instaparse} gehört zur Gruppe der Parser--Generatoren, d. h. es wird eine Grammatik angegeben, aus der dann ein Programm generiert wird, welches eine Zeichenkette gemäß der Grammatik parsen kann. Da ein Clojure--Programm zur Laufzeit übersetzt werden kann, ist zur Verwendung des generierten Programms kein weiterer Kompilier--Zwischenschritt notwendig, wie etwa bei JavaCC.
+Die von Mark Engelberg entwickelte Bibliothek \emph{Instaparse} gehört zur Gruppe der Parser--Generatoren, d. h. es wird eine Grammatik angegeben, aus der dann ein Programm generiert wird, welches eine Zeichenkette gemäß der Grammatik parsen kann. Da ein Clojure--Programm zur Laufzeit übersetzt werden kann, ist zur Verwendung des generierten Programms kein weiterer Kompilier--Zwischenschritt notwendig, wie etwa bei JavaCC. \cite{instaparse}
 
 Instaparse ist komplett in Clojure geschrieben und wurde deswegen und aufgrund der Simplizität zunächst als Parser für die LW gewählt. So sehen die Schritte zur Entwicklung eines Parsers beispielhaft so aus:
 
@@ -102,11 +104,15 @@ Im Gegensatz zu JavaCC und Instaparse gehören mit \emph{Kern} geschriebene Pars
 
 Im Gegensatz zu Instaparse verfügt es dabei über einen dedizierten Lexer, welcher sich nahtlos in die Parsergrammatik einfügt. Dies sorgt einerseits für kompakten Code, kann andererseits aber auch verwirren. So sind \lstinline|token*| und \lstinline|token_| Parser--Funktionen, \lstinline|token| jedoch eine Funktion des Lexers und verlangt einen solchen korrekt eingebunden und eingestellt. Dafür erhöht der Lexer die Komfortabilität, da z. B. die für einen Identifier erlaubten Zeichen als einfacher regulärer Ausdruck angegeben werde können und sich der Benutzer daraufhin nicht mehr um Leerzeichen kümmern muss.
 
-Das Äquivalent zur benötigten Grammatik kann in Anhang TODO eingesehen werden. Zu Beachten ist, dass der Autor selber aussagt, dass seine Bibliothek nicht performant ist. % TODO Verweis auf Zitat
+Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} eingesehen werden. Zu Beachten ist, dass der Autor selber aussagt, dass seine Bibliothek nicht performant ist. 
+
+\begin{quote}
+	``Kern's design isn't well-suited for achieving very high performance.'' \cite{kern}
+\end{quote}
 
 \subsection{JavaCC}\label{JavaCC}
 
-Wie Instaparse gehört \emph{JavaCC} zur Gruppe der Parser--Generatoren. Es ist jedoch eine Java--Bibliothek und schon weitaus länger in Entwicklung, so dass es ausgereifter ist. 
+Wie Instaparse gehört \emph{JavaCC} zur Gruppe der Parser--Generatoren. Es ist jedoch eine Java--Bibliothek und schon weitaus länger in Entwicklung, so dass es ausgereifter ist. \cite{javacc}
 
 JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Types \glqq Knoten\grqq (Node) und kann unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LW verwendeten Clojure--Listen zu produzieren, wird mittels einer Funktion rekursiv durch den AST traversiert und die neue Struktur aus den Java--Klassen erzeugt.
 
@@ -128,12 +134,12 @@ Da einige Parser ihren Zustand des letzten Aufrufes speichern können, ist bei m
 
 \section{Grammatiken}
 
-Als Referenz der zu enthaltenden Regeln dient die Parse--Grammatik des MPA (siehe Anhang TODO). Es wurden ähnliche Definitionen für Instaparse und Kern vorgenommen und sie produzieren zumindest für die Testformeln das gleiche Ergebnis. Diese Grammatiken werden im Folgenden \emph{volle Grammatiken} genannt.
+Als Referenz der zu enthaltenden Regeln dient die Parse--Grammatik des MPA (siehe Anhang \ref{refgrammatik}). Es wurden ähnliche Definitionen für Instaparse und Kern vorgenommen und sie produzieren zumindest für die Testformeln das gleiche Ergebnis. Diese Grammatiken werden im Folgenden \emph{volle Grammatiken} genannt.
 
 Um jedoch das Wachstum der Laufzeit durch Hinzufügen von weiteren Regeln messen zu können, wurde für Kern und Instaparse jeweils eine weitere Grammatik definiert. Diese kann nur Formeln verarbeiten, welche enhalten:
 
 \begin{itemize}
-	\item Binäroperatoren \glqq and\grqq und \glqq or\grqq durch die Zeichen \glqq \&\grqq bzw. \glqq \|\grqq
+	\item Binäroperatoren \glqq and\grqq und \glqq or\grqq durch die Zeichen \glqq \&\grqq bzw. \glqq |\grqq
 	\item Unäroperator \glqq not\grqq durch das Zeichen \glqq !\grqq
 	\item Klammerung mit runden Klammern
 	\item Atome, beginnend mit Unterstrich oder Kleinbuchstaben, fortführend mit Unterstrich, Kleinbuchstaben oder ganze Zahlen
@@ -148,9 +154,37 @@ Leerzeichen sind dabei nicht erlaubt. Diese Art von Grammatiken wird ab jetzt \e
 \section{Instaparse--Wachstum}
 
 \appendix
-\listoffigures % Abbildungsverzeichnis
 
-\chapter{Messergebnisse}
+\begin{thebibliography}{7}
+	\bibitem[LW]{lw}
+		Quellcode des Projektes auf Github, 
+		\url{https://github.com/moerkb/logical-workbench}
+
+	\bibitem[KERN]{kern}
+		Armando Blancas,
+		Projektseite der Bibliothek Kern, 
+		\url{https://github.com/blancas/kern}
+
+	\bibitem[INSTA]{instaparse}
+		Mark Engelberg,
+		Projektseite der Bibliothek Instaparse,
+		\url{https://github.com/Engelberg/instaparse}
+
+	\bibitem[JAVACC]{javacc}
+		Java Compiler Compiler,
+		\url{https://javacc.java.net}
+
+	\bibitem[MPA]{mpa}
+		Prof. Dr. B. Renz,
+		Projektseite des MPA,
+		\url{http://homepages.thm.de/~hg11260/mpa.html}
+\end{thebibliography}
+
+\listoffigures % Abbildungsverzeichnis
+\listoftables
+
+\chapter{Sonstiges}
+\section{Messergebnisse}
 \begin{table}[!h]
 	\resizebox{!}{\textwidth}{
 		\rotatebox{90}{
@@ -198,5 +232,42 @@ Leerzeichen sind dabei nicht erlaubt. Diese Art von Grammatiken wird ab jetzt \e
 		\caption{Ergebnisse der Messreihen, alle Angaben in Millisekunden. Ergebnisse in Klammern sind errechnet.}
 \end{table}
 
+\newpage
+\section{Referenzgrammatik}\label{refgrammatik}
+
+Das folgende Listing stammt aus der Hilfe--Datei des MPA. \cite{mpa}
+
+\begin{verbatim}	
+Proposition	::=	Atom | Const
+| "(" UnOp Proposition ")"
+| "(" Proposition BinOp Proposition ")"
+Atom	::=	([letter]|"_"|"\"|"{"|"}")([letter]|[digit]|"_"|"\"|"{"|"}")*
+Const	::=	("T"|"1"|"True"|"F"|"0"|"False")
+UnOp	::=	("!"|"not")
+BinOp	::=	see Section below
+\end{verbatim}
+
+Formeln können mit runden ( (\dots) ) oder eckigen Klammern ( [\dots] ) zusammengefasst werden. Kommentare sind mit (//\dots) zeilenweise oder durch (/*\dots */) blockweise möglich.
+
+Die binären Operatoren \glqq BinOp\grqq sind wie folgt organisiert:
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Beschreibung} & \textbf{Syntax} & \textbf{Assoziativität} \\
+		\hline
+		Und & \&, and & links \\ \hline
+		Nicht--Und & !\&, nand & links \\ \hline
+		Oder & |, or & links \\ \hline
+		Nicht--Oder & !|, nor & links \\ \hline
+		Rechtsimplikation & <-, if & rechts \\ \hline
+		negierte Rechtsimplikation & nif & rechts \\ \hline
+		Implikation & ->, impl & rechts \\ \hline
+		negierte Implikation & nimpl & rechts \\ \hline
+		Äquivalenz & <->, iff & links \\ \hline
+		exklusives Oder & \textasciicircum, xor & links \\ \hline
+	\end{tabular}
+	\caption{Binäroperatoren mit Syntax und Assoziativität, absteigend sortiert nach Präzedenz}
+\end{table}
 
 \end{document}
