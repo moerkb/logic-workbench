@@ -33,6 +33,7 @@ $RECYCLE.BIN/
 /doc/*.lof
 /doc/*.lot
 /doc/*.log
+/doc/*.lot
 /doc/*.out
 /doc/*.toc
 /doc/*.fdb_latexmk

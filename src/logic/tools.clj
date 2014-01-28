@@ -49,6 +49,7 @@
   (let [p-fml (javaCCparse fml)
         [cnt-op cnt-var] (count-rec p-fml [0 0])]
     
+    (println "Number of characters:" (count fml))
     (println "Number of operators:" cnt-op)
     (println "Number of variables:" cnt-var)))
 
