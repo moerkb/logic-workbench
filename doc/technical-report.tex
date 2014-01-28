@@ -265,7 +265,7 @@ Es ist festgestellt worden, dass die Grammatik gut konstruiert wurde und die eno
 Das angenommene Beispiel waren die vollen Sudokuregeln. Diese sind mit Hilfe von insgesammt 168075 Zeichen (Character) beschrieben. Die reine Geschwindigkeit des Lesens wurde mit Hilfe einer einfachen Grammatik geprüft.
 
 \begin{lstlisting}
-	S = #'a'+
+  S = #'a'+
 \end{lstlisting}
 
 Mit dieser Grammatik konnten 168075 Zeichen --- in diesem Fall 168075 \glqq{}a\grqq{} --- innerhalb einer Sekunde geparst werden. Hieraus geht hervor, dass ein starkes Ansteigen der Parse--Zeit eher mit der einem Anstieg der Komplexität der Grammatik zusammenhängt.
@@ -275,28 +275,28 @@ Es wurde an dieser Stelle angenommen, dass die Zeit linear zur Komplexität stei
 Um diese Annahme zu überprüfen, wurde sich mit der vollen Grammatik schrittweise an die die größe der Sudoku--Regeln herangetastet. Hierfür wurde eine Hilfsfunktion definiert.
 
 \begin{lstlisting}
-	(defn ^:dynamic produce [n]
-		(cond
-			(zero? n) "c1"
-			:else (str "(" (produce (dec n)) ")" "&" "(" (produce (dec n)) ")")))
+  (defn ^:dynamic produce [n]
+    (cond
+      (zero? n) "c1"
+      :else (str "(" (produce (dec n)) ")" "&" "(" (produce (dec n)) ")")))
 
-	(def produce (memoize produce))
+  (def produce (memoize produce))
 \end{lstlisting}
 
 \begin{lstlisting}
-	=> (produce 1)
-	"(c1)&(c1)"
-	=> (produce 2)
-	"((c1)&(c1))&((c1)&(c1))"
+  => (produce 1)
+  "(c1)&(c1)"
+  => (produce 2)
+  "((c1)&(c1))&((c1)&(c1))"
 \end{lstlisting}
 
 Diese Funktion produziert also eine Ausgabe, die immer etwa doppelt so groß wird, wenn man das Argument um eins erhöht.
 
 \begin{lstlisting}
-	=> (count (produce 14))
-	114683
-	=> (count (produce 15))
-	229371
+  => (count (produce 14))
+  114683
+  => (count (produce 15))
+  229371
 \end{lstlisting}
 
 Wir wollen also einen String parsen, der mit der Länge in etwa zwischen den Ausgaben von \lstinline|(produce 14)| und \lstinline|(produce 15)| liegt.
@@ -304,34 +304,36 @@ Wir wollen also einen String parsen, der mit der Länge in etwa zwischen den Aus
 Nun betrachten wir, wie lange es dauert, die jeweilst doppelt so langen Zeichenketten zu parsen.
 
 \begin{lstlisting}
-	=> (time (def x (formula-parser (produce 5))))
-	"Elapsed time: 55.882633 msecs"
+  => (time (def x (formula-parser (produce 5))))
+  "Elapsed time: 55.882633 msecs"
 \end{lstlisting}
 
 \begin{lstlisting}
-	=> (time (def x (formula-parser (produce 6))))
-	"Elapsed time: 104.751713 msecs"
+  => (time (def x (formula-parser (produce 6))))
+  "Elapsed time: 104.751713 msecs"
 \end{lstlisting}
 
 \begin{lstlisting}
-	=> (time (def x (formula-parser (produce 7))))
-	"Elapsed time: 195.774887 msecs"
+  => (time (def x (formula-parser (produce 7))))
+  "Elapsed time: 195.774887 msecs"
 \end{lstlisting}
 
 \begin{lstlisting}
-	=> (time (def x (formula-parser (produce 8))))
-	"Elapsed time: 558.543622 msecs"
+  => (time (def x (formula-parser (produce 8))))
+  "Elapsed time: 558.543622 msecs"
 \end{lstlisting}
 
 \begin{lstlisting}
-	=> (time (def x (formula-parser (produce 9))))
-	"Elapsed time: 1284.250435 msecs"
+  => (time (def x (formula-parser (produce 9))))
+  "Elapsed time: 1284.250435 msecs"
 \end{lstlisting}
 
 \begin{lstlisting}
-	=> (time (def x (formula-parser (produce 10))))
-	"Elapsed time: 2007.042944 msecs"
+  => (time (def x (formula-parser (produce 10))))
+  "Elapsed time: 2007.042944 msecs"
 \end{lstlisting}
+
+% TODO Hier weiter arbeiten!!!
 
 \appendix
 
