@@ -32,6 +32,7 @@ $RECYCLE.BIN/
 /doc/*.aux
 /doc/*.lof
 /doc/*.log
+/doc/*.lot
 /doc/*.out
 /doc/*.toc
 /doc/*.fdb_latexmk
