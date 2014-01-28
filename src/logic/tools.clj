@@ -37,3 +37,28 @@
         (str "!" (clj-to-fml arg1))
         (str "(" (clj-to-fml arg1) (apply str (map #(str (reconvert-map op) (clj-to-fml %)) (rest (rest fml)))) ")"))) 
     fml))
+
+(defn- count-rec [f [cnt-op cnt-var]]
+  (cond 
+    (not (seq? f)) [cnt-op (inc cnt-var)]
+    (= (first f) 'not) (count-rec (second f) [(inc cnt-op) cnt-var])
+    :else (count-rec (nth f 2) (count-rec (second f) [(inc cnt-op) cnt-var]))
+    ))
+
+(defn count-vars-ops [fml]
+  (let [p-fml (javaCCparse fml)
+        [cnt-op cnt-var] (count-rec p-fml [0 0])]
+    
+    (println "Number of operators:" cnt-op)
+    (println "Number of variables:" cnt-var)))
+
+(comment
+	(require '[parser_measures.formulas :as forms])
+	
+	(count-vars-ops forms/formula-usa)
+	(count-vars-ops forms/formula-4-queens)
+	(count-vars-ops forms/formula-8-queens)
+	(count-vars-ops forms/formula-quarter-sudoku)
+	(count-vars-ops forms/formula-half-sudoku)
+	(count-vars-ops forms/formula-sudoku)
+)
