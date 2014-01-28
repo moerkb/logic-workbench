@@ -60,7 +60,7 @@ Die Funktionen können über Kommandozeile oder eine GUI angesprochen werden. Da
 
 Innerhalb des Masterprojektes der Autoren unter Leitung des bereits für den MPA verantwortlichen Prof. Dr. B. Renz wird ein Programm mit identischen oder ähnlichen Funktionen des MPA entwickelt. Unter dem Projektnamen \emph{Logical Workbench (LW)} wird im Gegensatz zu Java jedoch die Programmiersprache \emph{Clojure} verwendet.
 
-Clojure ist ein LISP, welches zu Java--Bytecode kompiliert und somit auf der JVM arbeitet. Als Besonderheit ist die einfache Verwendung von Java--Code (etwa Klassen) zu nennen, wodurch auch ein von JavaCC generierter Parser--Code benutzt werden kann (siehe Abschnitt \ref{JavaCC}).
+Clojure ist ein LISP, welches zu Java--Bytecode kompiliert wird und somit auf der JVM arbeitet. Als Besonderheit ist die einfache Verwendung von Java--Code (etwa Klassen) zu nennen, wodurch auch ein von JavaCC generierter Parser--Code benutzt werden kann (siehe Abschnitt \ref{JavaCC}).
 
 Zum Zeitpunkt des Verfassens dieses Textes sind die Kernfunktionen implementiert; im Einzelnen:
 
@@ -102,7 +102,7 @@ Instaparse ist komplett in Clojure geschrieben und wurde deswegen und aufgrund d
 
 Im Gegensatz zu JavaCC und Instaparse gehören mit \emph{Kern} geschriebene Parser zur Gruppe der Combinator--Parser. Dabei gibt es mehrere \glqq kleine\grqq Parser, also z. B. einen, der eine Konjunktion parst, und einen, der ein Atom parsen kann. Diese Einzelparser können dann mit sogenannten Kombinatoren miteinander verbunden werden, um einen größeren Parser zu erzeugen. Kern bietet eine Reihe von Funktionen, Makros und Datenstrukturen, um solche Combinator--Parser zu erzeugen, z.B. ChainL--Funktionen.
 
-Im Gegensatz zu Instaparse verfügt es dabei über einen dedizierten Lexer, welcher sich nahtlos in die Parsergrammatik einfügt. Dies sorgt einerseits für kompakten Code, kann andererseits aber auch verwirren. So sind \lstinline|token*| und \lstinline|token_| Parser--Funktionen, \lstinline|token| jedoch eine Funktion des Lexers und verlangt einen solchen korrekt eingebunden und eingestellt. Dafür erhöht der Lexer die Komfortabilität, da z. B. die für einen Identifier erlaubten Zeichen als einfacher regulärer Ausdruck angegeben werde können und sich der Benutzer daraufhin nicht mehr um Leerzeichen kümmern muss.
+Im Gegensatz zu Instaparse verfügt es dabei über einen dedizierten Lexer, welcher sich nahtlos in die Parsergrammatik einfügt. Dies sorgt einerseits für kompakten Code, kann andererseits aber auch verwirren. So sind \lstinline|token*| und \lstinline|token_| Parser--Funktionen, \lstinline|token| jedoch eine Funktion des Lexers und verlangt einen solchen korrekt eingebunden und eingestellt. Dafür erhöht der Lexer die Komfortabilität, da z. B. die für einen Identifier erlaubten Zeichen als einfacher regulärer Ausdruck angegeben werden können und sich der Benutzer daraufhin nicht mehr um Leerzeichen kümmern muss.
 
 Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} eingesehen werden. Zu Beachten ist, dass der Autor selber aussagt, dass seine Bibliothek nicht performant ist. 
 
@@ -114,7 +114,7 @@ Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} ein
 
 Wie Instaparse gehört \emph{JavaCC} zur Gruppe der Parser--Generatoren. Es ist jedoch eine Java--Bibliothek und schon weitaus länger in Entwicklung, so dass es ausgereifter ist. \cite{javacc}
 
-JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Types \glqq Knoten\grqq (Node) und kann unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LW verwendeten Clojure--Listen zu produzieren, wird mittels einer Funktion rekursiv durch den AST traversiert und die neue Struktur aus den Java--Klassen erzeugt.
+JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des JavaCC aus dem MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Types \glqq Knoten\grqq (Node) und kann unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LW verwendeten Clojure--Listen zu produzieren, wird mittels einer Funktion rekursiv durch den AST traversiert und die neue Struktur aus den Java--Klassen erzeugt.
 
 Die Bibliothek stellt ebenfalls einen Lexer bereit, jedoch kann dieser nicht optional verwendet werden, sondern es müssen alle Token durch diesen erkannt und an den Parser weitergegeben werden können. JavaCC wird produktiv eingesetzt.
 
@@ -126,11 +126,11 @@ Um die Ergebnisse der Laufzeitmessung vergleichbar und möglichst aussagekräfti
 
 \section{Allgemeine Aspekte}
 
-Die Messung wird mit der Methode \glqq time\grqq gemessen. Es zählt der Aufruf des Parsers und ggf. das Anwenden einer Transformationsfunktion (um aus einem AST Clojure--Listen zu machen), d. h. es wird immer mit der zu parsenden Formel aufgerufen und es wird letztendlich die Clojure--Datenstruktur durchgelaufen. Innerhalb der Zeitmessung wird nichts auf der Konsole ausgegeben (dies kann zusätzliche Zeit in Anspruch nehmen), noch sind sonstige Seiteneffekte zugelassen.
+Die Messung wird mit der Methode \glqq time\grqq gemessen. Es zählt der Aufruf des Parsers und ggf. das Anwenden einer Transformationsfunktion (um aus einem AST Clojure--Listen zu machen), d. h. es wird immer mit der zu parsenden Formel aufgerufen und es wird letztendlich die selbe Clojure--Datenstruktur erzeugt. Innerhalb der Zeitmessung wird weder auf der Konsole ausgegeben (dies kann zusätzliche Zeit in Anspruch nehmen), noch sind sonstige Seiteneffekte zugelassen.
 
-Sofern möglich, wird jeder Formel mit jedem Parser und jeder der für ihn definierten Grammatiken aufgerufen. Ist dies in einem besonderen Fall nicht möglich, so kann ein errechneter Wert angegeben werden, insofern er als solcher markiert wird. Jeder so mögliche Durchlauf wird zehn Mal durchgeführt und aus allen Ergebnissen das arithmetische Mittel gebildet.
+Sofern möglich, wird jede Formel mit jedem Parser und jeder der für ihn definierten Grammatiken aufgerufen. Ist dies in einem besonderen Fall nicht möglich, so kann ein errechneter Wert angegeben werden, insofern er als solcher markiert wird. Jeder so mögliche Durchlauf wird zehn Mal ausgeführt und von allen Ergebnissen das arithmetische Mittel gebildet.
 
-Da einige Parser ihren Zustand des letzten Aufrufes speichern können, ist bei mehreren gleichen Aufrufen hintereinander der erste Aufruf signifikant langsamer als die anderen. Aus diesem Grunde dürfen mit jeweils einem Parser keine zwei identischen Aufrufe direkt aufeinanderfolgend ausgeführt werden.
+Da einige Parser ihren Zustand des letzten Aufrufes speichern können, ist bei mehreren gleichen Aufrufen hintereinander der erste Aufruf signifikant langsamer als die anderen. Aus diesem Grunde dürfen mit jeweils einem Parser keine zwei identischen Aufrufe direkt aufeinanderfolgend ausgeführt werden. Hierfür wurde für jeden Messdurchlauf die REPL neu gestartet.
 
 \section{Grammatiken}
 
@@ -142,7 +142,7 @@ Um jedoch das Wachstum der Laufzeit durch Hinzufügen von weiteren Regeln messen
 	\item Binäroperatoren \glqq and\grqq und \glqq or\grqq durch die Zeichen \glqq \&\grqq bzw. \glqq |\grqq
 	\item Unäroperator \glqq not\grqq durch das Zeichen \glqq !\grqq
 	\item Klammerung mit runden Klammern
-	\item Atome, beginnend mit Unterstrich oder Kleinbuchstaben, fortführend mit Unterstrich, Kleinbuchstaben oder ganze Zahlen
+	\item Atome, beginnend mit einem Kleinbuchstaben, fortführend mit Unterstrich, Kleinbuchstaben oder ganze Zahlen
 \end{itemize}
 
 Leerzeichen sind dabei nicht erlaubt. Diese Art von Grammatiken wird ab jetzt \emph{minimale Grammatik} genannt.
