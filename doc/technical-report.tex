@@ -148,7 +148,45 @@ Um jedoch das Wachstum der Laufzeit durch Hinzufügen von weiteren Regeln messen
 Leerzeichen sind dabei nicht erlaubt. Diese Art von Grammatiken wird ab jetzt \emph{minimale Grammatik} genannt.
 
 \section{Formeln}
+
+Um aussagekräftige Messergebnisse zu erhalten, mussten repräsentative Formeln gefunden werden, welche unterschiedliche Eigenschaften haben:
+
+\begin{itemize}
+	\item verschiedene Größen (gemessen an Anzahl Variablen, Operatoren und Zeichen)
+	\item teilw. Einschränkung auf Basisoperatoren (Nicht, Und, Oder) für die minimalen Grammatiken
+	\item TODO
+\end{itemize}
+
+\begin{table}[h]
+	\begin{tabular}{|l|r|r|r|c|}
+		\hline
+		\textbf{Name} & \textbf{Anz. Var.} & \textbf{Anz. Op.} & \textbf{Anz. Zeichen} & \textbf{min. Grammatik} \\ \hline
+		Kartenf. USA & 1608 & 3019 & 16979 & ja \\ \hline
+		4--Damen & 200 & 215 & 711 & nein \\ \hline
+		8--Damen & 1520 & 2975 & 7487 & ja \\ \hline
+		$^1/_4$ Sudoku & 5832 & 11015 & 40103 & ja \\ \hline
+		$^1/_2$ Sudoku & 12393 & 24056 & 86102 & ja \\ \hline
+		Sudoku & 24057 & 47384 & 168074 & ja \\ \hline
+	\end{tabular}
+	\caption{Die zum Test verwendeten Formeln mit den Anzahlen der Variablen, Operatoren, Zeichen und ob die Formel mit einer minimalen Grammatik geparst werden kann.}
+\end{table}
+
 \section{Messungen}
+
+\begin{table}[h]
+	\begin{tabular}{|l|r|r|r|r|r|}
+		\hline
+		\textbf{Formel} & \textbf{Instaparse \emph{m}} & \textbf{Instaparse. \emph{v}} & \textbf{Kern \emph{m}} & \textbf{Kern \emph{v}} & \textbf{JavaCC} \\ \hline
+		\textbf{Kartenf. USA} & 629 & 3890 & 718 & 664 & 204 \\ \hline
+		\textbf{4--Damen} & - & 111 & - & 180 & 10 \\ \hline
+		\textbf{8--Damen} & 354 & 2301 & 293 & 590 & 93 \\ \hline
+		\textbf{$^1/_4$ Sudoku} & 2832 & 25546 & 1282 & 1704 & 461 \\ \hline
+		\textbf{$^1/_2$ Sudoku} & 5161 & \textbf{Fehler} & 1643 & 3586 & 524 \\ \hline
+		\textbf{Sudoku} & 18361 & \textbf{Fehler} & 3035 & 6894 & 963 \\ \hline 
+	\end{tabular}
+
+	\caption{Messergebnisse im Mittel in Millisekunden. \emph{m} und \emph{v} stehen für \glqq minimale\grqq und \glqq vollständige Grammatik\grqq.}
+\end{table}
 
 \chapter{Bewertung}
 \section{Instaparse--Wachstum}
@@ -251,7 +289,7 @@ Formeln können mit runden ( (\dots) ) oder eckigen Klammern ( [\dots] ) zusamme
 
 Die binären Operatoren \glqq BinOp\grqq sind wie folgt organisiert:
 
-\begin{table}[h!]
+\begin{table}[h]
 	\begin{tabular}{|l|l|l|}
 		\hline
 		\textbf{Beschreibung} & \textbf{Syntax} & \textbf{Assoziativität} \\
