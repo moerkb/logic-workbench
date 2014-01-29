@@ -378,7 +378,26 @@ Nun betrachten wir die Laufzeit, wenn die Zeichenkette auf die doppelte Länge w
   "Elapsed time: 2007.042944 msecs"
 \end{lstlisting}
 
-% TODO Hier weiter arbeiten!!!
+Wie man sehen kann, beansprucht das Parsen einer längeren Zeichenkette mehr Zeit. Wenn die Länge der zu parsende Zeichenkette verdoppelt wird, benötigt der Parser etwa doppelt so lange. Die Abweichungen können auf das Eingreifen der Garbage--Collection zurückgeführt werden.
+
+Hierbei ist erkennbar, dass Instaparse mit der hier benutzten Grammatik ein akzeptables Verhalten an den Tag legt. Es ist demzufolge nichts verkehrt an der genutzten Grammatik und die Zeit des Parsens wächs linear proportional zur Eingabegröße. Alles in allem eigentlich ein gutes Ergebnis. Der produzierte Parser hat kein abwegiges Wachstum wie etwa Exponentiel.
+
+Um die den Sudoku--Regeln gleichwertige Eingabegröße zu erreichen, müssen wir die hier vorhandene Formel aus \lstinline|(produce 10)| noch etwa fünf mal verdoppeln. Nach dieser Rechnung sollte der Parser also etwa eine Minute brauchen, um eine Formel der geforderten Eingabegröße zu Parsen.
+
+Theoretisch --- in der Praxis sieht das anders aus. Bei dem Versuch eine Formel von \lstinline|(produce 13)| fängt die Garbage--Collection an zu arbeiten und stört damit massiv den Ablauf. Durch dieses Verhalten verlängert sich die Zeit, die zum Parsen benötigt wird, ungemein. Wobei es in dieser Größenordnung der Eingabe schon teilweise zu Out-Of-Memory-Errors kommt.
+
+%\newpage %sonst ist der nächste Satz von den Punkten abgeschnitten
+
+An dieser Stelle können wir also schon einige Punkte festhalten:
+
+\begin{enumerate}
+	\item Im Idealfall braucht Instaparse mit der gegebenen Grammatik etwa eine Minute zum Parsen der gesamten Sudoku--Regeln. Da dies nicht für unseren Anwendungsfall praktikabel war, mussten wir uns nach anderen Möglichkeiten umsehen
+	\item Die Praxis zeigt, dass der limitierende Faktor der Arbeitsspeicher ist.
+\end{enumerate}
+
+Wir wollen uns nun dem Faktor Arbeitsspeicher widmen. Im Versuchsaufbau konnte mit 1 GB allokiertem Speicher bis zu einer Eingabegröße von \lstinline|(produce 12)| gearbeitet werden, bevor Probleme auftraten. Man kann annehmen, dass Instaparse die Formel für \lstinline|(produce 15)| innerhalb einer Minute parsen kann, wenn man 8 GB Arbeitsspeicher (dreimalige Verdopplung) dafür allokiert --- Diese Theorie wurde von Mark Engelnberg nicht getestet, da er seinen Angaben nach keine einfache Möglichkeit hatte, dies auszuprobieren.\\
+
+Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) nicht für unsere Anwendung geeignet ist. Das Programm soll ermöglichen, logische Formeln in akzeptabler Zeit zu Parsen. Zum Parsen einer Eingabegröße der Sudoku--Regeln kann man annehmen, dass etwa 8 GB Arbeitsspeicher auschließlich für die Verarbeitung zur Verfügung stehen müssten. Diese Größenordnung ist für die aktuellen Rechner (noch) unüblich. Aber selbst wenn man einen Rechner mit genügent Arbeitsspeicher hat, bräuchte dieser immerhin noch etwa eine Minute zum Parsen. Dies ist im Vergleich zu den hier betrachteten Alternativen ein riesiger Unterschied.
 
 \appendix
 
