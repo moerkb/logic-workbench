@@ -332,9 +332,12 @@ Hierbei ist erkennbar, dass Instaparse mit der hier benutzten Grammatik ein akze
 
 Um die den Sudoku--Regeln gleichwertige Eingabegröße zu erreichen, müssen wir die hier vorhandene Formel aus \lstinline|(produce 10)| noch etwa fünf mal verdoppeln. Nach dieser Rechnung sollte der Parser also etwa eine Minute brauchen, um eine Formel der geforderten Eingabegröße zu Parsen.
 
-Theoretisch --- in der Praxis sieht das anders aus. Bei dem Versuch eine Formel von \lstinline|(produce 13)| fängt die Garbage--Collection an zu arbeiten und stört damit massiv den Ablauf. Durch dieses Verhalten verlängert sich die Zeit, die zum Parsen benötigt wird, ungemein. Wobei es in dieser Größenordnung der Eingabe schon teilweise zu Out-Of-Memory-Errors kommt.\\
+Theoretisch --- in der Praxis sieht das anders aus. Bei dem Versuch eine Formel von \lstinline|(produce 13)| fängt die Garbage--Collection an zu arbeiten und stört damit massiv den Ablauf. Durch dieses Verhalten verlängert sich die Zeit, die zum Parsen benötigt wird, ungemein. Wobei es in dieser Größenordnung der Eingabe schon teilweise zu Out-Of-Memory-Errors kommt.
+
+%\newpage %sonst ist der nächste Satz von den Punkten abgeschnitten
 
 An dieser Stelle können wir also schon einige Punkte festhalten:
+
 \begin{enumerate}
 	\item Im Idealfall braucht Instaparse mit der gegebenen Grammatik etwa eine Minute zum Parsen der gesamten Sudoku--Regeln. Da dies nicht für unseren Anwendungsfall praktikabel war, mussten wir uns nach anderen Möglichkeiten umsehen
 	\item Die Praxis zeigt, dass der limitierende Faktor der Arbeitsspeicher ist.
