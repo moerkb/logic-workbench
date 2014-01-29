@@ -76,6 +76,7 @@ with-meta,with-open,with-out-str,with-precision,xml-seq,zero?,zipmap
 	basicstyle=\ttfamily,
 	keywordstyle=\bfseries\color{forkeywords},
 	showstringspaces=false,
+	frame=single,
 	breaklines=true}
 
 \title{Leistungsvergleich von Clojure--Parsern}
@@ -159,14 +160,14 @@ Instaparse ist komplett in Clojure geschrieben und wurde deswegen und aufgrund d
 
 \begin{enumerate}
 	\item In einem Clojure--String oder einer externen Text--Datei wird eine Grammatik spezifiziert.
-	\item Diese Grammatik wird als Argument einer Funktion \glqq parse\grqq verwendet, welche den Parser zurückgibt, z. B. \lstinline|(def logic-parser (insta/parser "src/logic/grammar.txt"))|.
+	\item Diese Grammatik wird als Argument einer Funktion \glqq{}parse\grqq{} verwendet, welche den Parser zurückgibt, z. B. \lstinline|(def logic-parser (insta/parser "src/logic/grammar.txt"))|.
 	\item Mit diesem Parser kann ein String geparst werden, z. B. erzeugt \lstinline|(logic-parser "A & B")| einen abstrakten Syntaxbaum (AST) \lstinline|[:and [:atom "A"] [:atom "B"]]|. Als Ausgabeformat stehen dabei hiccup oder enlive zur Verfügung.
-	\item Die Funktion \glqq transform\grqq nimmt einen AST und eine Hash--Map zur Substitution an und kann den Parsebaum somit umwandeln. Aus obigem AST wird somit etwa \lstinline|(and A B)|.
+	\item Die Funktion \glqq{}transform\grqq{} nimmt einen AST und eine Hash--Map zur Substitution an und kann den Parsebaum somit umwandeln. Aus obigem AST wird somit etwa \lstinline|(and A B)|.
 \end{enumerate}
 
 \subsection{Kern}
 
-Im Gegensatz zu JavaCC und Instaparse gehören mit \emph{Kern} geschriebene Parser zur Gruppe der Combinator--Parser. Dabei gibt es mehrere \glqq kleine\grqq Parser, also z. B. einen, der eine Konjunktion parst, und einen, der ein Atom parsen kann. Diese Einzelparser können dann mit sogenannten Kombinatoren miteinander verbunden werden, um einen größeren Parser zu erzeugen. Kern bietet eine Reihe von Funktionen, Makros und Datenstrukturen, um solche Combinator--Parser zu erzeugen, z.B. ChainL--Funktionen.
+Im Gegensatz zu JavaCC und Instaparse gehören mit \emph{Kern} geschriebene Parser zur Gruppe der Combinator--Parser. Dabei gibt es mehrere \glqq{}kleine\grqq{} Parser, also z. B. einen, der eine Konjunktion parst, und einen, der ein Atom parsen kann. Diese Einzelparser können dann mit sogenannten Kombinatoren miteinander verbunden werden, um einen größeren Parser zu erzeugen. Kern bietet eine Reihe von Funktionen, Makros und Datenstrukturen, um solche Combinator--Parser zu erzeugen, z.B. ChainL--Funktionen.
 
 Im Gegensatz zu Instaparse verfügt es dabei über einen dedizierten Lexer, welcher sich nahtlos in die Parsergrammatik einfügt. Dies sorgt einerseits für kompakten Code, kann andererseits aber auch verwirren. So sind \lstinline|token*| und \lstinline|token_| Parser--Funktionen, \lstinline|token| jedoch eine Funktion des Lexers und verlangt einen solchen korrekt eingebunden und eingestellt. Dafür erhöht der Lexer die Komfortabilität, da z. B. die für einen Identifier erlaubten Zeichen als einfacher regulärer Ausdruck angegeben werden können und sich der Benutzer daraufhin nicht mehr um Leerzeichen kümmern muss.
 
@@ -180,7 +181,7 @@ Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} ein
 
 Wie Instaparse gehört \emph{JavaCC} zur Gruppe der Parser--Generatoren. Es ist jedoch eine Java--Bibliothek und schon weitaus länger in Entwicklung, so dass es ausgereifter ist. \cite{javacc}
 
-JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des JavaCC aus dem MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Types \glqq Knoten\grqq (Node) und kann unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LW verwendeten Clojure--Listen zu produzieren, wird mittels einer Funktion rekursiv durch den AST traversiert und die neue Struktur aus den Java--Klassen erzeugt.
+JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des JavaCC aus dem MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Types \glqq{}Knoten\grqq{} (Node) und kann unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LW verwendeten Clojure--Listen zu produzieren, wird mittels einer Funktion rekursiv durch den AST traversiert und die neue Struktur aus den Java--Klassen erzeugt.
 
 Die Bibliothek stellt ebenfalls einen Lexer bereit, jedoch kann dieser nicht optional verwendet werden, sondern es müssen alle Token durch diesen erkannt und an den Parser weitergegeben werden können. JavaCC wird produktiv eingesetzt.
 
@@ -192,7 +193,7 @@ Um die Ergebnisse der Laufzeitmessung vergleichbar und möglichst aussagekräfti
 
 \section{Allgemeine Aspekte}
 
-Die Messung wird mit der Methode \glqq time\grqq gemessen. Es zählt der Aufruf des Parsers und Zum Thema der Geschwindigkeit des Instaparse--Parsers hat sich der Autor von Instaparse ggf. das Anwenden einer Transformationsfunktion (um aus einem AST Clojure--Listen z
+Die Messung wird mit der Methode \glqq{}time\grqq{} gemessen. Es zählt der Aufruf des Parsers und Zum Thema der Geschwindigkeit des Instaparse--Parsers hat sich der Autor von Instaparse ggf. das Anwenden einer Transformationsfunktion (um aus einem AST Clojure--Listen z
 u machen), d. h. es wird immer mit der zu parsenden Formel aufgerufen und es wird letztendlich die selbe Clojure--Datenstruktur erzeugt. Innerhalb der Zeitmessung wird weder auf der Konsole ausgegeben (dies kann zusätzliche Zeit in Anspruch nehmen), noch sind sonstige Seiteneffekte zugelassen.
 
 Sofern möglich, wird jede Formel mit jedem Parser und jeder der für ihn definierten Grammatiken aufgerufen. Ist dies in einem besonderen Fall nicht möglich, so kann ein errechneter Wert angegeben werden, insofern er als solcher markiert wird. Jeder so mögliche Durchlauf wird zehn Mal ausgeführt und von allen Ergebnissen das arithmetische Mittel gebildet.
@@ -206,8 +207,8 @@ Als Referenz der zu enthaltenden Regeln dient die Parse--Grammatik des MPA (sieh
 Um jedoch das Wachstum der Laufzeit durch Hinzufügen von weiteren Regeln messen zu können, wurde für Kern und Instaparse jeweils eine weitere Grammatik definiert. Diese kann nur Formeln verarbeiten, welche enhalten:
 
 \begin{itemize}
-	\item Binäroperatoren \glqq and\grqq und \glqq or\grqq durch die Zeichen \glqq \&\grqq bzw. \glqq |\grqq
-	\item Unäroperator \glqq not\grqq durch das Zeichen \glqq !\grqq
+	\item Binäroperatoren \glqq{}and\grqq{} und \glqq{}or\grqq{} durch die Zeichen \glqq{}\&\grqq{} bzw. \glqq{}|\grqq
+	\item Unäroperator \glqq{}not\grqq{} durch das Zeichen \glqq{}!\grqq
 	\item Klammerung mit runden Klammern
 	\item Atome, beginnend mit einem Kleinbuchstaben, fortführend mit Unterstrich, Kleinbuchstaben oder ganze Zahlen
 \end{itemize}
@@ -252,7 +253,7 @@ Um aussagekräftige Messergebnisse zu erhalten, mussten repräsentative Formeln 
 		\textbf{Sudoku} & 18361 & \textbf{Fehler} & 3035 & 6894 & 963 \\ \hline 
 	\end{tabular}
 
-	\caption{Messergebnisse im Mittel in Millisekunden. \emph{m} und \emph{v} stehen für \glqq minimale\grqq und \glqq vollständige Grammatik\grqq.}
+	\caption{Messergebnisse im Mittel in Millisekunden. \emph{m} und \emph{v} stehen für \glqq{}minimale\grqq{} und \glqq{}vollständige Grammatik\grqq.}
 \end{table}
 
 \chapter{Bewertung}
@@ -268,7 +269,7 @@ Das angenommene Beispiel waren die vollen Sudokuregeln. Diese sind mit Hilfe von
   S = #'a'+
 \end{lstlisting}
 
-Mit dieser Grammatik konnten 168075 Zeichen --- in diesem Fall 168075 \glqq a\grqq --- innerhalb einer Sekunde geparst werden. Hieraus geht hervor, dass ein starkes Ansteigen der Parse--Zeit eher mit der wachsenden Komplexität der Grammatik zusammenhängt.
+Mit dieser Grammatik konnten 168075 Zeichen --- in diesem Fall 168075 \glqq{}a\grqq{} --- innerhalb einer Sekunde geparst werden. Hieraus geht hervor, dass ein starkes Ansteigen der Parse--Zeit eher mit der wachsenden Komplexität der Grammatik zusammenhängt.
 
 Es wurde an dieser Stelle angenommen, dass die Zeit linear zur Komplexität steigt. Wenn also die Grammatik aus 60 Regeln besteht --- wie etwa die volle Grammatik des Parsers für die LW --- sollte das Parsen mit dieser Annahme etwa eine Minute dauern.
 
@@ -286,6 +287,7 @@ Um diese Annahme zu überprüfen, wurde eine Funktion \emph{produce} geschrieben
 \begin{lstlisting}
   => (produce 1)
   "(c1)&(c1)"
+
   => (produce 2)
   "((c1)&(c1))&((c1)&(c1))"
 \end{lstlisting}
@@ -295,6 +297,7 @@ Diese Funktion produziert also eine Ausgabe, die immer etwa doppelt so groß wir
 \begin{lstlisting}
   => (count (produce 14))
   114683
+
   => (count (produce 15))
   229371
 \end{lstlisting}
@@ -441,7 +444,7 @@ BinOp	::=	see Section below
 
 Formeln können mit runden ( (\dots) ) oder eckigen Klammern ( [\dots] ) zusammengefasst werden. Kommentare sind mit (//\dots) zeilenweise oder durch (/*\dots */) blockweise möglich.
 
-Die binären Operatoren \glqq BinOp\grqq sind wie folgt organisiert:
+Die binären Operatoren \glqq{}BinOp\grqq{} sind wie folgt organisiert:
 
 \begin{table}[h]
 	\begin{tabular}{|l|l|l|}
