@@ -258,21 +258,21 @@ Um aussagekräftige Messergebnisse zu erhalten, mussten repräsentative Formeln 
 \chapter{Bewertung}
 \section{Rechnung zum Instaparse--Wachstum}
 
-Zum Thema Geschwindigkeit des Instaparse--Parsers hat sich der Autor von Instaparse \emph{Mark Engelberg} in Google Groups zu unserer Problemstellung gemeldet. Seine Antwort wird in folgenden erläutert.
+Zur Geschwindigkeit von Instaparse hat sich dessen Autor \emph{Mark Engelberg} in der zugehörigen Google--Group zu unserer Problemstellung geäußert. Seine Antwort wird im Folgenden erläutert.
 
-Es ist festgestellt worden, dass die Grammatik gut konstruiert wurde und die enorm lange Parse--Zeit nicht von Unnötigkeiten in der Grammatik abhinge. Daher bemühte sich Mark Engelberg uns zu helfen, dem Problem auf den Grund zu gehen. Alle hier genannten Messergebnisse gehen auf die Angaben und damit auch den Computer --- von dem wir keine genauere Spezifikation haben --- von Mark Engelberg zurück. Daher können die Messergebnisse auf anderen Rechnern andere Werte einnehmen.
+Es ist festgestellt worden, dass die Grammatik gut konstruiert wurde und die enorm lange Parse--Zeit nicht von Mehrdeutigkeiten in der Grammatik abhinge. Daher bemühte sich Mark Engelberg uns zu helfen, dem Problem auf den Grund zu gehen. Alle hier genannten Messergebnisse gehen auf die Angaben und damit auch den Computer --- von dem wir keine genauere Spezifikation haben --- von Mark Engelberg zurück. Daher können die Messergebnisse auf anderen Rechnern abweichen.
 
-Das angenommene Beispiel waren die vollen Sudokuregeln. Diese sind mit Hilfe von insgesammt 168075 Zeichen (Character) beschrieben. Die reine Geschwindigkeit des Lesens wurde mit Hilfe einer einfachen Grammatik geprüft.
+Das angenommene Beispiel waren die vollen Sudokuregeln. Diese sind mit Hilfe von insgesammt 168075 Zeichen (Charactern) beschrieben. Die reine Geschwindigkeit des Lesens wurde duch eine minimale Grammatik geprüft.
 
 \begin{lstlisting}
   S = #'a'+
 \end{lstlisting}
 
-Mit dieser Grammatik konnten 168075 Zeichen --- in diesem Fall 168075 \glqq{}a\grqq{} --- innerhalb einer Sekunde geparst werden. Hieraus geht hervor, dass ein starkes Ansteigen der Parse--Zeit eher mit der einem Anstieg der Komplexität der Grammatik zusammenhängt.
+Mit dieser Grammatik konnten 168075 Zeichen --- in diesem Fall 168075 \glqq a\grqq --- innerhalb einer Sekunde geparst werden. Hieraus geht hervor, dass ein starkes Ansteigen der Parse--Zeit eher mit der wachsenden Komplexität der Grammatik zusammenhängt.
 
-Es wurde an dieser Stelle angenommen, dass die Zeit linear zur Komplexität steigt. Wenn also die Grammatik aus 60 Regeln besteht --- wie etwa volle Grammatik des Parsers für die LW --- sollte das Parsen mit dieser Annahme etwa eine Minute dauern.
+Es wurde an dieser Stelle angenommen, dass die Zeit linear zur Komplexität steigt. Wenn also die Grammatik aus 60 Regeln besteht --- wie etwa die volle Grammatik des Parsers für die LW --- sollte das Parsen mit dieser Annahme etwa eine Minute dauern.
 
-Um diese Annahme zu überprüfen, wurde sich mit der vollen Grammatik schrittweise an die die größe der Sudoku--Regeln herangetastet. Hierfür wurde eine Hilfsfunktion definiert.
+Um diese Annahme zu überprüfen, wurde eine Funktion \emph{produce} geschrieben, mit der verschieden große Formeln produziert werden können. Diese haben eine ähnliche Struktur wie die Sudoku--Regeln, wodurch die Laufzeiten des Parsers mit der vollen Grammatik schrittweise im Kleinen überprüft werden können:
 
 \begin{lstlisting}
   (defn ^:dynamic produce [n]
@@ -290,7 +290,7 @@ Um diese Annahme zu überprüfen, wurde sich mit der vollen Grammatik schrittwei
   "((c1)&(c1))&((c1)&(c1))"
 \end{lstlisting}
 
-Diese Funktion produziert also eine Ausgabe, die immer etwa doppelt so groß wird, wenn man das Argument um eins erhöht.
+Diese Funktion produziert also eine Ausgabe, die immer etwa doppelt so groß wird, wenn man das Argument um eins erhöht:
 
 \begin{lstlisting}
   => (count (produce 14))
@@ -299,36 +299,26 @@ Diese Funktion produziert also eine Ausgabe, die immer etwa doppelt so groß wir
   229371
 \end{lstlisting}
 
-Wir wollen also einen String parsen, der mit der Länge in etwa zwischen den Ausgaben von \lstinline|(produce 14)| und \lstinline|(produce 15)| liegt.
+Wir wollen also einen String parsen, der mit der ungefähren Länge zwischen den Ausgaben von \lstinline|(produce 14)| und \lstinline|(produce 15)| liegt.
 
-Nun betrachten wir, wie lange es dauert, die jeweilst doppelt so langen Zeichenketten zu parsen.
+Nun betrachten wir die Laufzeit, wenn die Zeichenkette auf die doppelte Länge wächst:
 
 \begin{lstlisting}
   => (time (def x (formula-parser (produce 5))))
   "Elapsed time: 55.882633 msecs"
-\end{lstlisting}
 
-\begin{lstlisting}
   => (time (def x (formula-parser (produce 6))))
   "Elapsed time: 104.751713 msecs"
-\end{lstlisting}
 
-\begin{lstlisting}
   => (time (def x (formula-parser (produce 7))))
   "Elapsed time: 195.774887 msecs"
-\end{lstlisting}
 
-\begin{lstlisting}
   => (time (def x (formula-parser (produce 8))))
   "Elapsed time: 558.543622 msecs"
-\end{lstlisting}
 
-\begin{lstlisting}
   => (time (def x (formula-parser (produce 9))))
   "Elapsed time: 1284.250435 msecs"
-\end{lstlisting}
 
-\begin{lstlisting}
   => (time (def x (formula-parser (produce 10))))
   "Elapsed time: 2007.042944 msecs"
 \end{lstlisting}
