@@ -471,8 +471,12 @@ Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) ni
 		\url{http://homepages.thm.de/~hg11260/mat/mpa-bsp.pdf}
 \end{thebibliography}
 
-\listoffigures % Abbildungsverzeichnis
+\clearpage
+\begingroup
+\let\clearpage\relax
+\listoffigures
 \listoftables
+\endgroup
 
 \chapter{Sonstiges}
 \section{Messergebnisse}
