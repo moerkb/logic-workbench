@@ -227,14 +227,6 @@ Um aussagekräftige Messergebnisse zu erhalten, mussten repräsentative Formeln 
 
 Da einige Formeln durch das MPA--Projekt bereits vorhanden waren, wurden eben solche gewählt. Sie sollen nun im Einzelnen vorgestellt und können unter \cite{lw-formeln} eingesehen werden. Tabelle \ref{formeln-zahlen} zeigt eine Übersicht der Formeln unter verschiedenen Maßen.
 
-\subsection{Kartenfärbung USA}
-
-Man stelle sich eine Landkarte der USA mit eingezeichneten Staatsgrenzen vor. Jeder Staat soll nun eingefärbt werden, wobei keine zwei angrenzenden Staaten dieselbe Farbe erhalten dürfen. Diese Aufgabe soll nun mit möglichst wenigen Farben gelöst werden.
-
-Erstellt man eine Formel, welche sämtliche Bedingungen enthält, so kann man das Problem mit einem SAT--Solver lösen. Zur Konstruktion der Formel sei auf \cite{mpa-logeleien} verwiesen.
-
-So kann z. B. gezeigt werden, dass sich eine Karte der USA nicht mit drei Farben kolorieren lässt, jedoch mit vier Farben. Um eine größere Formel zu erhalten, wurde die für vier Farben verwendet. Sie besteht ausschließlich aus den Basisoperatoren Konjunktion, Disjunktion und Negation und ist zudem eine \emph{konjunktive Normalform (KNF bzw. CNF)}.
-
 \subsection{Damenproblem}
 
 \begin{figure}[ht]
@@ -246,7 +238,15 @@ So kann z. B. gezeigt werden, dass sich eine Karte der USA nicht mit drei Farben
 
 Die Forderung lautet auf einem $n \times n$ großem Schachbrett $n$ Damen so zu platzieren, dass keine Dame eine andere in einem Zug schlagen kann. Abbildung \ref{four-queens} zeigt eine mögliche Lösung.
 
-Zum Testen wurden zwei verschiedene Formeln verwendet. Einerseits ist dies eine handgeschrieben Lösung für $n = 4$, welche Implikationen enthält und dadurch nicht mit minimalen Grammatiken geparst werden kann. Andererseits ist es eine Lösung für $n = 8$ welche mit Hilfe von eigens dafür geschriebenen Funktionen erzeugt wurde. Sie ist in CNF dargestellt.
+Zum Testen wurden zwei verschiedene Formeln verwendet. Einerseits ist dies eine handgeschrieben Lösung für $n = 4$, welche Implikationen enthält und dadurch nicht mit minimalen Grammatiken geparst werden kann. Andererseits ist es eine Lösung für $n = 8$ welche mit Hilfe von eigens dafür geschriebenen Funktionen erzeugt wurde. Sie besteht ausschließlich aus den Basisoperatoren Konjunktion, Disjunktion und Negation und ist zudem eine \emph{konjunktive Normalform (KNF bzw. CNF)}.
+
+\subsection{Kartenfärbung USA}
+
+Man stelle sich eine Landkarte der USA mit eingezeichneten Staatsgrenzen vor. Jeder Staat soll nun eingefärbt werden, wobei keine zwei angrenzenden Staaten dieselbe Farbe erhalten dürfen. Diese Aufgabe soll nun mit möglichst wenigen Farben gelöst werden.
+
+Erstellt man eine Formel, welche sämtliche Bedingungen enthält, so kann man das Problem mit einem SAT--Solver lösen. Zur Konstruktion der Formel sei auf \cite{mpa-logeleien} verwiesen.
+
+So kann z. B. gezeigt werden, dass sich eine Karte der USA nicht mit drei Farben kolorieren lässt, jedoch mit vier Farben. Um eine größere Formel zu erhalten, wurde die für vier Farben verwendet. Sie ist in CNF dargestellt.
 
 \subsection{Sudoku}
 
