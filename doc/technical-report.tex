@@ -307,9 +307,36 @@ Das Parsen der halben und der kompletten Sudoku--Regeln mittels der vollständig
 
 In diesem letzten Abschnitt sollen die erhaltenen Messergebnisse nun analysiert und bewertet werden.
 
-% TODO
+\section{Beobachtungen}
 
-\section{Rechnung zum Instaparse--Wachstum}
+Betrachtet man die Ergebnisse aus Tabelle \ref{messergebnisse-kurz}, so kann man folgende Beobachtungen machen:
+
+\begin{enumerate}
+	\item JavaCC benötigt immer und deutlich die wenigste Zeit.
+	\item Die Parser mit den vollständigen Grammatiken sind langsamer als die minimalen Grammatiken (Ausnahme: Kern, Kartenfärbung).
+	\item Ab einer bestimmten Größe ist der vollständige Kern--Parser schneller als Instaparse mit der Minimalgrammatik.
+	\item Die Kern--Parser sind im Allgemeinen schneller als die entsprechneden Instaparse--Produktionen.
+	\item Die Laufzeiten von Instaparse wachsen signifikant überproportional zur Größe der Formel.
+	\item Nur bei Instaparse treten bei großen Formeln Fehler (Stack Overflow) auf.
+\end{enumerate}
+
+Aus 1. folgt, dass der JavaCC--Parser letztendlich in LW eingesetzt wird. Punkt 2. entspricht den Erwartungen.
+
+Die Beobachtungen 3. und 4. weisen darauf hin, dass die Kern--Bibliothek allgemein performanter arbeitet als Instaparse. Es entseht die Frage, ob ein Combinator--Parser grundsätzlich schneller ist als der GLL--Algorithmus, mit dem Instaparse arbeitet \cite[Special Thanks]{instaparse}. Diese Untersuchung ist jedoch nicht Gegenstand dieses Berichts.
+
+Die letzten Punkte (5. und 6.) zeigen hinreichend, dass Instaparse nicht produktiv in LW eingesetzt werden kann. Die generierten Parser sind einfach unzulänglich.
+
+\section{Analyse des Wachstums}
+
+Zwischen den Messergebnissen lassen sich Verhältnisse herstellen, wodurch ein das Wachstum beschreibender Faktor näherungsweise errechnet werden kann. Dies soll in den folgenden Abschnitten geschehen. Für Instaparse gibt es dazu noch eine zusätlich Überlegung, welche vom Autor Mark Engelbert selber stammt. Diese soll mit den hier gemachten Beobachtungen verglichen werden.
+
+Allgemein ist zu beachten, dass die Garbage Collection der JVM eine Rolle spielt, da sie die Laufzeiten signifikant beeinflussen kann. Da die Bedingungen für alle Parser gleich sind und es stark davon abhängt, wie viel \glqq{}Garbage\grqq{} ein Programm produziert, wird dieser Faktor nicht näher betrachtet oder gar herausgerechnet.
+
+\subsection{Instaparse}
+
+%TODO
+
+\subsection{Engelberts Rechnung zum Instaparse--Wachstum}
 
 Zur Geschwindigkeit von Instaparse hat sich dessen Autor \emph{Mark Engelberg} in der zugehörigen Google--Group zu unserer Problemstellung geäußert. Seine Antwort wird im Folgenden erläutert. \cite{instaparse-google-group}
 
@@ -398,6 +425,11 @@ An dieser Stelle können wir also schon einige Punkte festhalten:
 Wir wollen uns nun dem Faktor Arbeitsspeicher widmen. Im Versuchsaufbau konnte mit 1 GB allokiertem Speicher bis zu einer Eingabegröße von \lstinline|(produce 12)| gearbeitet werden, bevor Probleme auftraten. Man kann annehmen, dass Instaparse die Formel für \lstinline|(produce 15)| innerhalb einer Minute parsen kann, wenn man 8 GB Arbeitsspeicher (dreimalige Verdopplung) dafür allokiert --- Diese Theorie wurde von Mark Engelnberg nicht getestet, da er seinen Angaben nach keine einfache Möglichkeit hatte, dies auszuprobieren.\\
 
 Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) nicht für unsere Anwendung geeignet ist. Das Programm soll ermöglichen, logische Formeln in akzeptabler Zeit zu Parsen. Zum Parsen einer Eingabegröße der Sudoku--Regeln kann man annehmen, dass etwa 8 GB Arbeitsspeicher auschließlich für die Verarbeitung zur Verfügung stehen müssten. Diese Größenordnung ist für die aktuellen Rechner (noch) unüblich. Aber selbst wenn man einen Rechner mit genügent Arbeitsspeicher hat, bräuchte dieser immerhin noch etwa eine Minute zum Parsen. Dies ist im Vergleich zu den hier betrachteten Alternativen ein riesiger Unterschied.
+
+\subsection{Kern}
+%TODO
+\subsection{JavaCC}
+%TODO
 
 \appendix
 
