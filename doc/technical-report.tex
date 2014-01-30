@@ -258,9 +258,9 @@ Gemäß Tabelle \ref{formeln-zahlen} wird deutlich, dass die entsprechende Forme
 	\begin{tabular}{|l|r|r|r|c|}
 		\hline
 		\textbf{Name} & \textbf{Anz. Var.} & \textbf{Anz. Op.} & \textbf{Anz. Zeichen} & \textbf{min. Grammatik} \\ \hline
-		Kartenf. USA & 1608 & 3019 & 16979 & ja \\ \hline
 		4--Damen & 200 & 215 & 711 & nein \\ \hline
 		8--Damen & 1520 & 2975 & 7487 & ja \\ \hline
+		Kartenf. USA & 1608 & 3019 & 16979 & ja \\ \hline
 		$^1/_4$ Sudoku & 5832 & 11015 & 40103 & ja \\ \hline
 		$^1/_2$ Sudoku & 12393 & 24056 & 86102 & ja \\ \hline
 		Sudoku & 24057 & 47384 & 168074 & ja \\ \hline
@@ -277,9 +277,9 @@ Gemäß oben genannten Vorgaben wurden nun die Messungen durchgeführt. Die gemi
 	\begin{tabular}{|l|r|r|r|r|r|}
 		\hline
 		\textbf{Formel} & \textbf{Instaparse \emph{m}} & \textbf{Instaparse. \emph{v}} & \textbf{Kern \emph{m}} & \textbf{Kern \emph{v}} & \textbf{JavaCC} \\ \hline
-		\textbf{Kartenf. USA} & 629 & 3890 & 718 & 664 & 204 \\ \hline
 		\textbf{4--Damen} & - & 111 & - & 180 & 10 \\ \hline
 		\textbf{8--Damen} & 354 & 2301 & 293 & 590 & 93 \\ \hline
+		\textbf{Kartenf. USA} & 629 & 3890 & 718 & 664 & 204 \\ \hline
 		\textbf{$^1/_4$ Sudoku} & 2832 & 25546 & 1282 & 1704 & 461 \\ \hline
 		\textbf{$^1/_2$ Sudoku} & 5161 & \textbf{Fehler} & 1643 & 3586 & 524 \\ \hline
 		\textbf{Sudoku} & 18361 & \textbf{Fehler} & 3035 & 6894 & 963 \\ \hline 
@@ -485,12 +485,6 @@ Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) ni
 		\rotatebox{90}{
 			\begin{tabular}{|l|r|r|r|r|r|r|r|r|r|r|r|}
 				\hline
-				\textbf{USA} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \textbf{Mittel} \\ \hline
-				javacc  & 208 & 217 & 206 & 196 & 179 & 205 & 210 & 212 & 197 & 215 & 204 \\ \hline
-				kern, minimal   & 610 & 814 & 832 & 859 & 618 & 593 & 596 & 791 & 851 & 613 & 718 \\ \hline
-				kern, voll   & 673 & 665 & 670 & 719 & 658 & 639 & 673 & 660 & 627 & 652 & 664 \\ \hline
-				instaparse, minimal   & 595 & 593 & 584 & 607 & 998 & 590 & 553 & 609 & 572 & 592 & 629 \\ \hline
-				instaparse, voll   & 4094 & 3652 & 3649 & 3607 & 3798 & 4386 & 4141 & 3759 & 3769 & 4040 & 3890 \\ \hline
 				\textbf{4 Damen} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
 				javacc  & 10 & 9 & 10 & 8 & 7 & 15 & 11 & 9 & 15 & 10 & 10 \\ \hline
 				kern, voll   & 199 & 199 & 191 & 190 & 187 & 186 & 54 & 194 & 201 & 196 & 180 \\ \hline
@@ -502,6 +496,12 @@ Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) ni
 				kern, voll   & 645 & 624 & 567 & 649 & 570 & 563 & 468 & 551 & 638 & 626 & 590 \\ \hline
 				instaparse, minimal   & 298 & 369 & 345 & 291 & 366 & 376 & 348 & 355 & 368 & 419 & 354 \\ \hline
 				instaparse, voll   & 2351 & 2223 & 2249 & 2277 & 2330 & 2306 & 2730 & 2328 & 2238 & 1975 & 2301 \\ \hline
+				\textbf{USA} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \textbf{Mittel} \\ \hline
+				javacc  & 208 & 217 & 206 & 196 & 179 & 205 & 210 & 212 & 197 & 215 & 204 \\ \hline
+				kern, minimal   & 610 & 814 & 832 & 859 & 618 & 593 & 596 & 791 & 851 & 613 & 718 \\ \hline
+				kern, voll   & 673 & 665 & 670 & 719 & 658 & 639 & 673 & 660 & 627 & 652 & 664 \\ \hline
+				instaparse, minimal   & 595 & 593 & 584 & 607 & 998 & 590 & 553 & 609 & 572 & 592 & 629 \\ \hline
+				instaparse, voll   & 4094 & 3652 & 3649 & 3607 & 3798 & 4386 & 4141 & 3759 & 3769 & 4040 & 3890 \\ \hline
 				\textbf{Viertel Sudoku} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
 				javacc  & 629 & 379 & 393 & 375 & 380 & 375 & 659 & 651 & 383 & 384 & 461 \\ \hline
 				kern, minimal   & 1274 & 1290 & 1251 & 1292 & 1245 & 1262 & 1345 & 1289 & 1287 & 1283 & 1282 \\ \hline
