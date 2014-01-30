@@ -332,10 +332,6 @@ Zwischen den Messergebnissen lassen sich Verhältnisse herstellen, wodurch ein d
 
 Allgemein ist zu beachten, dass die Garbage Collection der JVM eine Rolle spielt, da sie die Laufzeiten signifikant beeinflussen kann. Da die Bedingungen für alle Parser gleich sind und es stark davon abhängt, wie viel \glqq{}Garbage\grqq{} ein Programm produziert, wird dieser Faktor nicht näher betrachtet oder gar herausgerechnet.
 
-\subsection{Instaparse}
-
-%TODO
-
 \subsection{Engelberts Rechnung zum Instaparse--Wachstum}
 
 Zur Geschwindigkeit von Instaparse hat sich dessen Autor \emph{Mark Engelberg} in der zugehörigen Google--Group zu unserer Problemstellung geäußert. Seine Antwort wird im Folgenden erläutert. \cite{instaparse-google-group}
@@ -425,6 +421,34 @@ An dieser Stelle können wir also schon einige Punkte festhalten:
 Wir wollen uns nun dem Faktor Arbeitsspeicher widmen. Im Versuchsaufbau konnte mit 1 GB allokiertem Speicher bis zu einer Eingabegröße von \lstinline|(produce 12)| gearbeitet werden, bevor Probleme auftraten. Man kann annehmen, dass Instaparse die Formel für \lstinline|(produce 15)| innerhalb einer Minute parsen kann, wenn man 8 GB Arbeitsspeicher (dreimalige Verdopplung) dafür allokiert --- Diese Theorie wurde von Mark Engelnberg nicht getestet, da er seinen Angaben nach keine einfache Möglichkeit hatte, dies auszuprobieren.\\
 
 Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) nicht für unsere Anwendung geeignet ist. Das Programm soll ermöglichen, logische Formeln in akzeptabler Zeit zu Parsen. Zum Parsen einer Eingabegröße der Sudoku--Regeln kann man annehmen, dass etwa 8 GB Arbeitsspeicher auschließlich für die Verarbeitung zur Verfügung stehen müssten. Diese Größenordnung ist für die aktuellen Rechner (noch) unüblich. Aber selbst wenn man einen Rechner mit genügent Arbeitsspeicher hat, bräuchte dieser immerhin noch etwa eine Minute zum Parsen. Dies ist im Vergleich zu den hier betrachteten Alternativen ein riesiger Unterschied.
+
+\subsection{Das Verhältnis der gegebenen Formeln}
+
+Zu aller erst betrachten wird die Größe der Variablen. Bei dem 4-- und 8--Damen--Problem bestehen die Variablen aus zwei Zeichen. Für die Kartenfärbung werden im Schnitt 7,5 Zeichen pro Variable benötigt und für Sudoku drei.\\
+
+Operatoren bestehen im Normalfall aus einem Zeichen. Eine Ausnahme besteht hier bei dem 4--Damen--Problem. dieses enthält auch den Operator \lstinline|->|. Aus diesem Grund kann diese Formel auch nicht mit der Minimalgrammatik übersetzt werden.\\
+
+Nun wollen wir den Anstieg der Anzahl der jeweiligen Variablen, Operatoren und Zeichen betrachten.
+
+Angefangen mit dem 4--Damen--Problem benötigt diese 200 Variablen, 215 operatoren und insgesammt 711 Zeichen. Beim 8--Damen--Problem verzehnfacht sich etwa die Anzahl der Zeichen. Die Anzahl der Variablen ist hierbei um das 7,5--fache angestiegen und die Anzahl der Operatoren sogar um das 15--fache.
+
+Für die Kartenfärbung der USA benötigen wir etwa genauso viele Variablen und Operatoren wie für das 8--Damen--Problem. Da in diesem Fall jedoch die Variablen fast vielmal so lang sind, steight die Zeichenanzahl auf mehr als das Doppelte. Dieser verhältnis kann gentutzt werden, ob zu beobachten, ob die Parse--Zeit eher an der Anzahl der Zeichen oder eher an der Anzahl der Variablen und Operatoren hängt.
+
+Da die Länge der Variablen zwischen dem 8--Damen-Problem zu den Sudoku--Regeln weniger schwanken als bei der Kartenfärbung der USA, vergleichen wir die $^1/_4$ Sudoku--Regeln mit dem 8--Damen--Problem. Dabei vervierfacht sich fast die Anzahl der Variablen und Operatoren, wobei die Anzahl der Zeichen sich mehr als verfünffacht. Dieser unterschiedliche Anstieg von Variablen/Operatoren zu Zeichen kommt daher, dass die Sudokuregeln durch Klammerung starkt geschachtelt sind.
+
+Entsprechend der Abstufungen enthalten die $^1/_2$ Sudoku--Regeln doppelt so viele Variablen, Operatoren und Zeichen. Diese Verdopplung geschieht nocheinmal beim Schritt auf die follen Sudoku--Regeln.
+
+\subsection{Instaparse}
+
+Nun wollen wir das Wachstum der Parse--Zeit für den Instaparser im Zusammenhang mit der Eingabe betrachten.
+
+Für das 4--Damen--Problem braucht der \emph{Instaparse--Parser mit der vollen Grammatk (IPv)} 111 msec. Das diese Formel mit der Minimalgrammatik nicht parsbar war, liegt in diesem Fall keine Zeit für den \emph{Instaparse--Parser mit der minimalen Grammatk (IPm)} vor.
+
+Für das 8--Damen--Probmlem brauchte der IPm 354 msec und der IPv 2301 msec. Für dem IPv ist das mehr als die zwanzigfache Zeit. Dies fällt in etwa der Größenklasse vom Anstieg der Variablen und Zeichen.
+
+Der IPm braucht 629 msec und der IPv 3890 msec zum Parsen der Kartenfärbung der USA. In beiden Fällen ist das fast eine Verdopplung der Zeit. Da die Anzahl der Variablen und Operatoren gleich geblieben ist, kann man hier annehmen, dass sich das auf die Erhöhung der Zeichen auf etwas mehr als das Doppelte auf die Parse--Zeit auswirkte.
+
+%TODO
 
 \subsection{Kern}
 %TODO
