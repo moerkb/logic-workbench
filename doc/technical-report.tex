@@ -338,7 +338,7 @@ Zwischen den Messergebnissen lassen sich Verhältnisse herstellen, wodurch ein d
 
 Allgemein ist zu beachten, dass die Garbage Collection der JVM eine Rolle spielt, da sie die Laufzeiten signifikant beeinflussen kann. Da die Bedingungen für alle Parser gleich sind und es stark davon abhängt, wie viel \glqq{}Garbage\grqq{} ein Programm produziert, wird dieser Faktor nicht näher betrachtet oder gar herausgerechnet.
 
-\subsection{Engelberts Rechnung zum Instaparse--Wachstum}
+\subsection{Engelberts Rechnung zum Instaparse--Wachstum}\label{Engelberg}
 
 Zur Geschwindigkeit von Instaparse hat sich dessen Autor \emph{Mark Engelberg} in der zugehörigen Google--Group zu unserer Problemstellung geäußert. Seine Antwort wird im Folgenden erläutert. \cite{instaparse-google-group}
 
@@ -454,7 +454,13 @@ Für das 8--Damen--Probmlem brauchte der IPm 354 msec und der IPv 2301 msec. Fü
 
 Der IPm braucht 629 msec und der IPv 3890 msec zum Parsen der Kartenfärbung der USA. In beiden Fällen ist das fast eine Verdopplung der Zeit. Da die Anzahl der Variablen und Operatoren gleich geblieben ist, kann man hier annehmen, dass sich das auf die Erhöhung der Zeichen auf etwas mehr als das Doppelte auf die Parse--Zeit auswirkte.
 
-%TODO
+Für das Parsen der $^1/_4$ Sudoku--Regeln braucht der IPm 8 mal und der IPv etwa elf mal so lange wie für das 8--Damen--Problem. Man kann daher annehmen, dass das Parsen mit dem Instaparse--Parser durch die starke Verschachtelung durch Klammern die Parse--Zeit nach oben treibt. Hierbei ist der Unterschied zwischen der Erhöhung zwischen IPm und IPv daran liegen, dass die Klammerungs--Regel sehr weit unten in der Grammatik beschreiben ist, wobei die minimal Grammatik weniger Regeln hat, die bis zur Klammerungsregel geprüft werden müssen. Desweiteren ist annzunehmen, dass beim IPv die Garbage Collection einsetzt und sich dies auf die Zeit niederschlägt.
+
+Wie in der Beschreibung von Mark Engelberg \ref{Engelberg} angenommen und gezeigt wurde, hat sich die Parse--Zeit für IPm von der $^1/_4$ zur $^1/_2$ Sudoku--Regeln verdoppelt. Der IPv konnte die $^1/_2$ Sudoku--Regeln nicht mehr Parsen, da es dabei immer wieder zu Fehlern (\emph{OutOfMemory}) kam.
+
+Die benötigte Zeit vervierfacht sich fast zum Parsen der gesamten Sudokuregel. Hier ist zu erkennen, dass sich die Garbage Collection massiv auf die benötigte Zeit auswirkt.\\
+
+Nun betrachten wir das Zeitverhältnis zwischen IPm und IPv. Zu anfang lässt sich annehmen das der IPv etwa sechs mal länger braucht als der IPm. Beim Parsen der $^1/_4$ Sudoku--Regeln dauert es aber etwa zehn mal so lange. Wir nehmen also an, dass es sich um ein exponentielles Verhältnis ($x^n$) handelt. Hierbei konnte ermittelt werden, dass der Exponent ($^n$) bei etwa 1,293 liegt. Mit Hilfe diese Annahme wurden die theoretischen Werte für den IPv und den IPm errechnet.
 
 \subsection{Kern}
 %TODO
