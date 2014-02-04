@@ -432,7 +432,7 @@ Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) ni
 
 Zuallererst betrachten wir die Größe der Variablen. Bei dem 4-- und 8--Damen--Problem bestehen die Variablen aus zwei Zeichen. Für die Kartenfärbung werden im Schnitt 7,5 Zeichen pro Variable benötigt und für die Sudoku--Regeln drei.\\
 
-Operatoren als Symbole (also z. B. \glqq{}\&\grqq{} statt \glqq{}and\grqq{}) bestehen im Normalfall aus einem Zeichen. Eine Ausnahme besteht hier bei dem 4--Damen--Problem. Dieses enthält auch den Operator \lstinline|->|. Aus diesem Grund kann diese Formel auch nicht mit der Minimalgrammatik übersetzt werden.\\ % TODO Das hört sich so an, als könnte man 4-Damen nicht machen, weil der Operator zwei Zeichen hat, aber es liegt ja daran, dass es die Regeln in der Minimalgrammatik einfach nicht gibt?
+Operatoren als Symbole (also z. B. \glqq{}\&\grqq{} statt \glqq{}and\grqq{}) bestehen im Normalfall aus einem Zeichen. Eine Ausnahme besteht hier bei dem 4--Damen--Problem. Dieses enthält auch den Operator \lstinline|->|. Da dieses Zeichen nicht in der Minimalgrammatik vorhanden ist, kann diese Formel auch nicht mit den Parsern übersetzt werden, die diese Grammatik verwenden.\\
 
 Nun wollen wir den Anstieg der Anzahl der jeweiligen Variablen, Operatoren und Zeichen betrachten.
 
@@ -463,7 +463,11 @@ Die benötigte Zeit vervierfacht sich fast zum Parsen der gesamten Sudokuregel. 
 Nun betrachten wir das Zeitverhältnis zwischen IPm und IPv. Zu Anfang lässt sich annehmen, dass der IPv etwa sechsmal länger braucht als der IPm. Beim Parsen der $^1/_4$ Sudoku--Regeln dauert es aber etwa zehnmal so lange. Wir nehmen also an, dass es sich um ein exponentielles Verhältnis ($x^n$) handelt. Hierbei konnte ermittelt werden, dass der Exponent ($^n$) bei etwa 1,293 liegt. Mit Hilfe diese Annahme wurden die theoretischen Werte für den IPv und den IPm errechnet.
 
 \subsection{Kern}
+
+
+
 %TODO
+
 \subsection{JavaCC}
 %TODO
 
