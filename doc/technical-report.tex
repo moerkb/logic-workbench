@@ -199,12 +199,13 @@ Um die Ergebnisse der Laufzeitmessung vergleichbar und möglichst aussagekräfti
 
 \section{Allgemeine Aspekte}
 
-Die Messung wird mit der Methode \glqq{}time\grqq{} gemessen. Es zählt der Aufruf des Parsers und Zum Thema der Geschwindigkeit des Instaparse--Parsers hat sich der Autor von Instaparse ggf. das Anwenden einer Transformationsfunktion (um aus einem AST Clojure--Listen z
-u machen), d. h. es wird immer mit der zu parsenden Formel aufgerufen und es wird letztendlich die selbe Clojure--Datenstruktur erzeugt. Innerhalb der Zeitmessung wird weder auf der Konsole ausgegeben (dies kann zusätzliche Zeit in Anspruch nehmen), noch sind sonstige Seiteneffekte zugelassen.
+Die Messung wird mit der Methode \glqq{}time\grqq{} gemessen. Es zählt der Aufruf des Parsers und Zum Thema der Geschwindigkeit des Instaparse--Parsers hat sich der Autor von Instaparse ggf. das Anwenden einer Transformationsfunktion (um aus einem AST Clojure--Listen zu machen), d. h. es wird immer mit der zu parsenden Formel aufgerufen und es wird letztendlich die selbe Clojure--Datenstruktur erzeugt. Innerhalb der Zeitmessung wird weder auf der Konsole ausgegeben (dies kann zusätzliche Zeit in Anspruch nehmen), noch sind sonstige Seiteneffekte zugelassen.
 
 Sofern möglich, wird jede Formel mit jedem Parser und jeder der für ihn definierten Grammatiken aufgerufen. Ist dies in einem besonderen Fall nicht möglich, so kann ein errechneter Wert angegeben werden, insofern er als solcher markiert wird. Jeder so mögliche Durchlauf wird zehnmal ausgeführt und von allen Ergebnissen das arithmetische Mittel gebildet.
 
-Da einige Parser ihren Zustand des letzten Aufrufes speichern können, ist bei mehreren gleichen Aufrufen hintereinander der erste Aufruf signifikant langsamer als die anderen. Aus diesem Grunde dürfen mit jeweils einem Parser keine zwei identischen Aufrufe direkt aufeinanderfolgend ausgeführt werden. Hierfür wurde für jeden Messdurchlauf die REPL neu gestartet.
+Da einige Parser ihren Zustand des letzten Aufrufes speichern können, ist bei mehreren gleichen Aufrufen hintereinander der erste Aufruf signifikant langsamer als die anderen. Aus diesem Grunde dürfen mit jeweils einem Parser keine zwei identischen Aufrufe direkt aufeinanderfolgend ausgeführt werden. Hierfür wurde für jeden Messdurchlauf die REPL neu gestartet. 
+
+Zudem wurde jeder Parser zunächst einmal mit einer für die Messungen nicht herangezogenen Formel verwendet, da der erste Durchlauf auch unabhängig von dem zu parsenden String einen gewissen Initialisierungsaufwand bewältigen muss. So kam es, dass bei einer ersten Messung der Kern--Parser mit der minimalen Grammatik bei der gleichen Formel länger gebraucht hat, als der entsprechende Parser mit der vollen Grammatik.
 
 \section{Grammatiken}
 
@@ -452,7 +453,7 @@ Für das 4--Damen--Problem braucht der \emph{Instaparse--Parser mit der vollen G
 
 Für das 8--Damen--Probmlem brauchte der IPm 354 ms und der IPv 2301 ms. Für dem IPv ist das mehr als die zwanzigfache Zeit. Dies fällt in etwa in die Größenordnung vom Anstieg der Variablen und Zeichen.
 
-Der IPm braucht 344 ms und der IPv 2751 ms zum Parsen der Kartenfärbung der USA. In beiden Fällen ist das fast die gleiche Zeit wie beim 8--Damen--Problem. Da die Anzahl der Variablen und Operatoren gleich geblieben ist, wobei sich die Anzahl der Zeichen mehr als verdoppelt, kann man annehmen, dass die Parse--Zeit sich nicht signifikant durch die Länge der Variablen verändert.
+Der IPm braucht 344 ms und der IPv 2751 ms zum Parsen der Kartenfärbung der USA. In beiden Fällen ist das etwa die gleiche Zeit wie beim 8--Damen--Problem. Da die Anzahl der Variablen und Operatoren gleich geblieben ist, wobei sich die Anzahl der Zeichen mehr als verdoppelt, kann man annehmen, dass die Parse--Zeit sich nicht signifikant durch die Länge der Variablen verändert.
 
 Für das Parsen der $^1/_4$ Sudoku--Regeln braucht der IPm achtmal und der IPv etwa elfmal so lange wie für das 8--Damen--Problem. Man kann daher annehmen, dass das Parsen mit dem Instaparse--Parser durch die starke Verschachtelung mittels Klammern die Parse--Zeit steigert. Hierbei kann der Unterschied zwischen der Erhöhung zwischen IPm und IPv daran liegen, dass die Klammer--Regel sehr weit unten in der Grammatik beschrieben ist, wobei die minimale Grammatik weniger Regeln hat, die bis zur Klammerungsregel geprüft werden müssen. Des Weiteren ist anzunehmen, dass beim IPv die Garbage Collection einsetzt und sich dies negativ auf die Zeit auswirkt.
 
@@ -485,39 +486,39 @@ Mit Ausnahme des Verhaltens bei kleinen Formeln und des Verhältnises der benöt
 
 \begin{thebibliography}{7}
 	\bibitem[LW]{lw}
-		Quellcode des Projektes auf Github, 
+		Quellcode des Projektes auf Github,\\
 		\url{https://github.com/moerkb/logical-workbench}
 
 	\bibitem[LWFORM]{lw-formeln}
-		Testformeln,
+		Testformeln,\\
 		\url{https://github.com/moerkb/logical-workbench/blob/master/src/parser_measures/formulas.clj}
 
 	\bibitem[KERN]{kern}
-		Armando Blancas,
-		Projektseite der Bibliothek Kern, 
+		Armando Blancas,\\
+		Projektseite der Bibliothek Kern, \\
 		\url{https://github.com/blancas/kern}
 
 	\bibitem[INSTA]{instaparse}
-		Mark Engelberg,
-		Projektseite der Bibliothek Instaparse,
+		Mark Engelberg,\\
+		Projektseite der Bibliothek Instaparse,\\
 		\url{https://github.com/Engelberg/instaparse}
 
 	\bibitem[JAVACC]{javacc}
-		Java Compiler Compiler,
+		Java Compiler Compiler,\\
 		\url{https://javacc.java.net}
 
 	\bibitem[MPA]{mpa}
-		Prof. Dr. B. Renz,
-		Projektseite des MPA,
+		Prof. Dr. B. Renz,\\
+		Projektseite des MPA,\\
 		\url{http://homepages.thm.de/~hg11260/mpa.html}
 
 	\bibitem[INSTGR]{instaparse-google-group}
-		Diskussion über Instaparse--Laufzeiten mit Autor Mark Engelberg, 
+		Diskussion über Instaparse--Laufzeiten mit Autor Mark Engelberg, \\
 		\url{https://groups.google.com/forum/#!topic/instaparse/GYoswP-X7O8}
 
 	\bibitem[MPALOG]{mpa-logeleien}
-		Prof. Dr. B. Renz,
-		Lösungen mit dem MNI Proposition Analyzer MPA --- Logeleien, Kartenfärbung, Sudoku, Variabilitätsmodelle,
+		Prof. Dr. B. Renz,\\
+		\glqq{}Lösungen mit dem MNI Proposition Analyzer MPA --- Logeleien, Kartenfärbung, Sudoku, Variabilitätsmodelle\grqq{},\\
 		\url{http://homepages.thm.de/~hg11260/mat/mpa-bsp.pdf}
 \end{thebibliography}
 
