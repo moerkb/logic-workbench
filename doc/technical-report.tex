@@ -285,7 +285,7 @@ Gemäß oben genannten Vorgaben wurden nun die Messungen durchgeführt. Die gemi
 		\textbf{Formel} & \textbf{Instaparse \emph{m}} & \textbf{Instaparse \emph{v}} & \textbf{Kern \emph{m}} & \textbf{Kern \emph{v}} & \textbf{JavaCC} \\ \hline
 		\textbf{4--Damen} & - & 111 & - & 180 & 10 \\ \hline
 		\textbf{8--Damen} & 354 & 2301 & 293 & 590 & 93 \\ \hline
-		\textbf{Kartenf. USA} & 629 & 3890 & 718 & 664 & 204 \\ \hline
+		\textbf{Kartenf. USA} & 344 & 2751 & 300 & 548 & 153 \\ \hline
 		\textbf{$^1/_4$ Sudoku} & 2832 & 25546 & 1282 & 1704 & 461 \\ \hline
 		\textbf{$^1/_2$ Sudoku} & 5161 & \textbf{Fehler} & 1643 & 3586 & 524 \\ \hline
 		\textbf{Sudoku} & 18361 & \textbf{Fehler} & 3035 & 6894 & 963 \\ \hline 
@@ -525,7 +525,7 @@ Nun betrachten wir das Zeitverhältnis zwischen IPm und IPv. Zu Anfang lässt si
 		\rotatebox{90}{
 			\begin{tabular}{|l|r|r|r|r|r|r|r|r|r|r|r|}
 				\hline
-				\textbf{4 Damen} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
+				\textbf{4 Damen} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{r|}{\textbf{Mittel}} \\ \hline
 				javacc  & 10 & 9 & 10 & 8 & 7 & 15 & 11 & 9 & 15 & 10 & 10 \\ \hline
 				kern, voll   & 199 & 199 & 191 & 190 & 187 & 186 & 54 & 194 & 201 & 196 & 180 \\ \hline
 				instaparse, minimal   & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & (38) \\ \hline
@@ -536,12 +536,12 @@ Nun betrachten wir das Zeitverhältnis zwischen IPm und IPv. Zu Anfang lässt si
 				kern, voll   & 645 & 624 & 567 & 649 & 570 & 563 & 468 & 551 & 638 & 626 & 590 \\ \hline
 				instaparse, minimal   & 298 & 369 & 345 & 291 & 366 & 376 & 348 & 355 & 368 & 419 & 354 \\ \hline
 				instaparse, voll   & 2351 & 2223 & 2249 & 2277 & 2330 & 2306 & 2730 & 2328 & 2238 & 1975 & 2301 \\ \hline
-				\textbf{USA} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \textbf{Mittel} \\ \hline
-				javacc  & 208 & 217 & 206 & 196 & 179 & 205 & 210 & 212 & 197 & 215 & 204 \\ \hline
-				kern, minimal   & 610 & 814 & 832 & 859 & 618 & 593 & 596 & 791 & 851 & 613 & 718 \\ \hline
-				kern, voll   & 673 & 665 & 670 & 719 & 658 & 639 & 673 & 660 & 627 & 652 & 664 \\ \hline
-				instaparse, minimal   & 595 & 593 & 584 & 607 & 998 & 590 & 553 & 609 & 572 & 592 & 629 \\ \hline
-				instaparse, voll   & 4094 & 3652 & 3649 & 3607 & 3798 & 4386 & 4141 & 3759 & 3769 & 4040 & 3890 \\ \hline
+				\textbf{USA} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} & \multicolumn{1}{l|}{\textbf{}} \\ \hline
+				javacc  & 101 & 113 & 89 & 336 & 103 & 345 & 119 & 115 & 110 & 105 & 153 \\ \hline
+				kern, minimal   & 331 & 395 & 324 & 259 & 252 & 227 & 323 & 284 & 330 & 275 & 300 \\ \hline
+				kern, voll   & 483 & 593 & 509 & 488 & 601 & 465 & 539 & 541 & 552 & 709 & 548 \\ \hline
+				instaparse, minimal   & 336 & 442 & 340 & 335 & 352 & 314 & 337 & 355 & 334 & 294 & 344 \\ \hline
+				instaparse, voll   & 2588 & 2638 & 2594 & 2960 & 2557 & 2925 & 2640 & 3025 & 2923 & 2664 & 2751 \\ \hline
 				\textbf{Viertel Sudoku} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} \\ \hline
 				javacc  & 629 & 379 & 393 & 375 & 380 & 375 & 659 & 651 & 383 & 384 & 461 \\ \hline
 				kern, minimal   & 1274 & 1290 & 1251 & 1292 & 1245 & 1262 & 1345 & 1289 & 1287 & 1283 & 1282 \\ \hline
