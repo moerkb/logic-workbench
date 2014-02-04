@@ -452,7 +452,7 @@ Für das 4--Damen--Problem braucht der \emph{Instaparse--Parser mit der vollen G
 
 Für das 8--Damen--Probmlem brauchte der IPm 354 ms und der IPv 2301 ms. Für dem IPv ist das mehr als die zwanzigfache Zeit. Dies fällt in etwa in die Größenordnung vom Anstieg der Variablen und Zeichen.
 
-Der IPm braucht 629 ms und der IPv 3890 ms zum Parsen der Kartenfärbung der USA. In beiden Fällen ist das fast eine Verdopplung der Zeit. Da die Anzahl der Variablen und Operatoren gleich geblieben ist, kann man hier annehmen, dass sich dies auf die Erhöhung der Zeichen auf etwas mehr als das Doppelte der Parse--Zeit auswirkt.
+Der IPm braucht 344 ms und der IPv 2751 ms zum Parsen der Kartenfärbung der USA. In beiden Fällen ist das fast die gleiche Zeit wie beim 8--Damen--Problem. Da die Anzahl der Variablen und Operatoren gleich geblieben ist, wobei sich die Anzahl der Zeichen mehr als verdoppelt, kann man annehmen, dass die Parse--Zeit sich nicht signifikant durch die Länge der Variablen verändert.
 
 Für das Parsen der $^1/_4$ Sudoku--Regeln braucht der IPm achtmal und der IPv etwa elfmal so lange wie für das 8--Damen--Problem. Man kann daher annehmen, dass das Parsen mit dem Instaparse--Parser durch die starke Verschachtelung mittels Klammern die Parse--Zeit steigert. Hierbei kann der Unterschied zwischen der Erhöhung zwischen IPm und IPv daran liegen, dass die Klammer--Regel sehr weit unten in der Grammatik beschrieben ist, wobei die minimale Grammatik weniger Regeln hat, die bis zur Klammerungsregel geprüft werden müssen. Des Weiteren ist anzunehmen, dass beim IPv die Garbage Collection einsetzt und sich dies negativ auf die Zeit auswirkt.
 
