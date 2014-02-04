@@ -202,7 +202,7 @@ Um die Ergebnisse der Laufzeitmessung vergleichbar und möglichst aussagekräfti
 Die Messung wird mit der Methode \glqq{}time\grqq{} gemessen. Es zählt der Aufruf des Parsers und Zum Thema der Geschwindigkeit des Instaparse--Parsers hat sich der Autor von Instaparse ggf. das Anwenden einer Transformationsfunktion (um aus einem AST Clojure--Listen z
 u machen), d. h. es wird immer mit der zu parsenden Formel aufgerufen und es wird letztendlich die selbe Clojure--Datenstruktur erzeugt. Innerhalb der Zeitmessung wird weder auf der Konsole ausgegeben (dies kann zusätzliche Zeit in Anspruch nehmen), noch sind sonstige Seiteneffekte zugelassen.
 
-Sofern möglich, wird jede Formel mit jedem Parser und jeder der für ihn definierten Grammatiken aufgerufen. Ist dies in einem besonderen Fall nicht möglich, so kann ein errechneter Wert angegeben werden, insofern er als solcher markiert wird. Jeder so mögliche Durchlauf wird zehn Mal ausgeführt und von allen Ergebnissen das arithmetische Mittel gebildet.
+Sofern möglich, wird jede Formel mit jedem Parser und jeder der für ihn definierten Grammatiken aufgerufen. Ist dies in einem besonderen Fall nicht möglich, so kann ein errechneter Wert angegeben werden, insofern er als solcher markiert wird. Jeder so mögliche Durchlauf wird zehnmal ausgeführt und von allen Ergebnissen das arithmetische Mittel gebildet.
 
 Da einige Parser ihren Zustand des letzten Aufrufes speichern können, ist bei mehreren gleichen Aufrufen hintereinander der erste Aufruf signifikant langsamer als die anderen. Aus diesem Grunde dürfen mit jeweils einem Parser keine zwei identischen Aufrufe direkt aufeinanderfolgend ausgeführt werden. Hierfür wurde für jeden Messdurchlauf die REPL neu gestartet.
 
@@ -411,7 +411,7 @@ Wie man sehen kann, beansprucht das Parsen einer längeren Zeichenkette mehr Zei
 
 Hierbei ist erkennbar, dass Instaparse mit der hier benutzten Grammatik ein akzeptables Verhalten an den Tag legt. Es ist demzufolge nichts verkehrt an der genutzten Grammatik und die Zeit des Parsens wächs linear proportional zur Eingabegröße. Alles in allem eigentlich ein gutes Ergebnis. Der produzierte Parser hat kein abwegiges Wachstum wie etwa Exponentiel.
 
-Um die den Sudoku--Regeln gleichwertige Eingabegröße zu erreichen, müssen wir die hier vorhandene Formel aus \lstinline|(produce 10)| noch etwa fünf mal verdoppeln. Nach dieser Rechnung sollte der Parser also etwa eine Minute brauchen, um eine Formel der geforderten Eingabegröße zu Parsen.
+Um die den Sudoku--Regeln gleichwertige Eingabegröße zu erreichen, müssen wir die hier vorhandene Formel aus \lstinline|(produce 10)| noch etwa fünfmal verdoppeln. Nach dieser Rechnung sollte der Parser also etwa eine Minute brauchen, um eine Formel der geforderten Eingabegröße zu Parsen.
 
 Theoretisch --- in der Praxis sieht das anders aus. Bei dem Versuch eine Formel von \lstinline|(produce 13)| fängt die Garbage--Collection an zu arbeiten und stört damit massiv den Ablauf. Durch dieses Verhalten verlängert sich die Zeit, die zum Parsen benötigt wird, ungemein. Wobei es in dieser Größenordnung der Eingabe schon teilweise zu Out-Of-Memory-Errors kommt.
 
@@ -430,37 +430,37 @@ Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) ni
 
 \subsection{Das Verhältnis der gegebenen Formeln}
 
-Zu aller erst betrachten wird die Größe der Variablen. Bei dem 4-- und 8--Damen--Problem bestehen die Variablen aus zwei Zeichen. Für die Kartenfärbung werden im Schnitt 7,5 Zeichen pro Variable benötigt und für Sudoku drei.\\
+Zuallererst betrachten wir die Größe der Variablen. Bei dem 4-- und 8--Damen--Problem bestehen die Variablen aus zwei Zeichen. Für die Kartenfärbung werden im Schnitt 7,5 Zeichen pro Variable benötigt und für die Sudoku--Regeln drei.\\
 
-Operatoren bestehen im Normalfall aus einem Zeichen. Eine Ausnahme besteht hier bei dem 4--Damen--Problem. dieses enthält auch den Operator \lstinline|->|. Aus diesem Grund kann diese Formel auch nicht mit der Minimalgrammatik übersetzt werden.\\
+Operatoren als Symbole (also z. B. \glqq{}\&\grqq{} statt \glqq{}and\grqq{}) bestehen im Normalfall aus einem Zeichen. Eine Ausnahme besteht hier bei dem 4--Damen--Problem. Dieses enthält auch den Operator \lstinline|->|. Aus diesem Grund kann diese Formel auch nicht mit der Minimalgrammatik übersetzt werden.\\ % TODO Das hört sich so an, als könnte man 4-Damen nicht machen, weil der Operator zwei Zeichen hat, aber es liegt ja daran, dass es die Regeln in der Minimalgrammatik einfach nicht gibt?
 
 Nun wollen wir den Anstieg der Anzahl der jeweiligen Variablen, Operatoren und Zeichen betrachten.
 
-Angefangen mit dem 4--Damen--Problem benötigt diese 200 Variablen, 215 operatoren und insgesammt 711 Zeichen. Beim 8--Damen--Problem verzehnfacht sich etwa die Anzahl der Zeichen. Die Anzahl der Variablen ist hierbei um das 7,5--fache angestiegen und die Anzahl der Operatoren sogar um das 15--fache.
+Das 4--Damen--Problem benötigt 200 Variablen, 215 Operatoren und insgesammt 711 Zeichen. Beim 8--Damen--Problem verzehnfacht sich etwa die Anzahl der Zeichen. Die Anzahl der Variablen ist hierbei um das 7,5--fache angestiegen und die Anzahl der Operatoren sogar um das 15--fache.
 
-Für die Kartenfärbung der USA benötigen wir etwa genauso viele Variablen und Operatoren wie für das 8--Damen--Problem. Da in diesem Fall jedoch die Variablen fast vielmal so lang sind, steight die Zeichenanzahl auf mehr als das Doppelte. Dieser verhältnis kann gentutzt werden, ob zu beobachten, ob die Parse--Zeit eher an der Anzahl der Zeichen oder eher an der Anzahl der Variablen und Operatoren hängt.
+Für die Kartenfärbung der USA benötigen wir etwa genauso viele Variablen und Operatoren wie für das 8--Damen--Problem. Da in diesem Fall jedoch die Variablen fast viermal so lang sind, steigt die Zeichenanzahl auf mehr als das Doppelte an. Dieses Verhältnis kann zur Beobachtung genutzt werden, ob die Parse--Zeit eher von der Anzahl der Zeichen oder der Anzahl der Variablen und Operatoren abhängt.
 
-Da die Länge der Variablen zwischen dem 8--Damen-Problem zu den Sudoku--Regeln weniger schwanken als bei der Kartenfärbung der USA, vergleichen wir die $^1/_4$ Sudoku--Regeln mit dem 8--Damen--Problem. Dabei vervierfacht sich fast die Anzahl der Variablen und Operatoren, wobei die Anzahl der Zeichen sich mehr als verfünffacht. Dieser unterschiedliche Anstieg von Variablen/Operatoren zu Zeichen kommt daher, dass die Sudokuregeln durch Klammerung starkt geschachtelt sind.
+Da die Länge der Variablen zwischen dem 8--Damen-Problem und den Sudoku--Regeln weniger schwanken als bei der Kartenfärbung der USA, vergleichen wir die $^1/_4$ Sudoku--Regeln mit dem 8--Damen--Problem. Dabei vervierfacht sich fast die Anzahl der Variablen und Operatoren, wobei die Anzahl der Zeichen sich mehr als verfünffacht. Dieser unterschiedliche Anstieg von Variablen/Operatoren zu Zeichen kommt daher, dass die Sudokuregeln durch Klammerung starkt geschachtelt sind.
 
-Entsprechend der Abstufungen enthalten die $^1/_2$ Sudoku--Regeln doppelt so viele Variablen, Operatoren und Zeichen. Diese Verdopplung geschieht nocheinmal beim Schritt auf die follen Sudoku--Regeln.
+Entsprechend der Abstufungen enthalten die $^1/_2$ Sudoku--Regeln doppelt so viele Variablen, Operatoren und Zeichen. Diese Verdopplung geschieht nocheinmal beim Schritt auf die vollen Sudoku--Regeln.
 
 \subsection{Instaparse}
 
-Nun wollen wir das Wachstum der Parse--Zeit für den Instaparser im Zusammenhang mit der Eingabe betrachten.
+Nun wollen wir das Wachstum der Parse--Zeit für Instaparse im Zusammenhang mit der Eingabe betrachten.
 
-Für das 4--Damen--Problem braucht der \emph{Instaparse--Parser mit der vollen Grammatk (IPv)} 111 msec. Das diese Formel mit der Minimalgrammatik nicht parsbar war, liegt in diesem Fall keine Zeit für den \emph{Instaparse--Parser mit der minimalen Grammatk (IPm)} vor.
+Für das 4--Damen--Problem braucht der \emph{Instaparse--Parser mit der vollen Grammatk (IPv)} 111 ms. Das diese Formel mit der Minimalgrammatik nicht zu parsen war, liegt in diesem Fall keine Zeit für den \emph{Instaparse--Parser mit der minimalen Grammatk (IPm)} vor.
 
-Für das 8--Damen--Probmlem brauchte der IPm 354 msec und der IPv 2301 msec. Für dem IPv ist das mehr als die zwanzigfache Zeit. Dies fällt in etwa der Größenklasse vom Anstieg der Variablen und Zeichen.
+Für das 8--Damen--Probmlem brauchte der IPm 354 ms und der IPv 2301 ms. Für dem IPv ist das mehr als die zwanzigfache Zeit. Dies fällt in etwa in die Größenordnung vom Anstieg der Variablen und Zeichen.
 
-Der IPm braucht 629 msec und der IPv 3890 msec zum Parsen der Kartenfärbung der USA. In beiden Fällen ist das fast eine Verdopplung der Zeit. Da die Anzahl der Variablen und Operatoren gleich geblieben ist, kann man hier annehmen, dass sich das auf die Erhöhung der Zeichen auf etwas mehr als das Doppelte auf die Parse--Zeit auswirkte.
+Der IPm braucht 629 ms und der IPv 3890 ms zum Parsen der Kartenfärbung der USA. In beiden Fällen ist das fast eine Verdopplung der Zeit. Da die Anzahl der Variablen und Operatoren gleich geblieben ist, kann man hier annehmen, dass sich dies auf die Erhöhung der Zeichen auf etwas mehr als das Doppelte der Parse--Zeit auswirkt.
 
-Für das Parsen der $^1/_4$ Sudoku--Regeln braucht der IPm 8 mal und der IPv etwa elf mal so lange wie für das 8--Damen--Problem. Man kann daher annehmen, dass das Parsen mit dem Instaparse--Parser durch die starke Verschachtelung durch Klammern die Parse--Zeit nach oben treibt. Hierbei ist der Unterschied zwischen der Erhöhung zwischen IPm und IPv daran liegen, dass die Klammerungs--Regel sehr weit unten in der Grammatik beschreiben ist, wobei die minimal Grammatik weniger Regeln hat, die bis zur Klammerungsregel geprüft werden müssen. Desweiteren ist annzunehmen, dass beim IPv die Garbage Collection einsetzt und sich dies auf die Zeit niederschlägt.
+Für das Parsen der $^1/_4$ Sudoku--Regeln braucht der IPm achtmal und der IPv etwa elfmal so lange wie für das 8--Damen--Problem. Man kann daher annehmen, dass das Parsen mit dem Instaparse--Parser durch die starke Verschachtelung mittels Klammern die Parse--Zeit steigert. Hierbei kann der Unterschied zwischen der Erhöhung zwischen IPm und IPv daran liegen, dass die Klammer--Regel sehr weit unten in der Grammatik beschrieben ist, wobei die minimale Grammatik weniger Regeln hat, die bis zur Klammerungsregel geprüft werden müssen. Des Weiteren ist anzunehmen, dass beim IPv die Garbage Collection einsetzt und sich dies negativ auf die Zeit auswirkt.
 
-Wie in der Beschreibung von Mark Engelberg \ref{Engelberg} angenommen und gezeigt wurde, hat sich die Parse--Zeit für IPm von der $^1/_4$ zur $^1/_2$ Sudoku--Regeln verdoppelt. Der IPv konnte die $^1/_2$ Sudoku--Regeln nicht mehr Parsen, da es dabei immer wieder zu Fehlern (\emph{OutOfMemory}) kam.
+Wie in der Beschreibung von Mark Engelberg (siehe Abschnitt \ref{Engelberg}) angenommen und gezeigt wurde, hat sich die Parse--Zeit für IPm von $^1/_4$ zu $^1/_2$ Sudoku--Regeln verdoppelt. Der IPv konnte die $^1/_2$ Sudoku--Regeln nicht mehr Parsen, da es dabei immer wieder zu Fehlern (\emph{OutOfMemoryException, StackOverflowError, ...}) kam.
 
 Die benötigte Zeit vervierfacht sich fast zum Parsen der gesamten Sudokuregel. Hier ist zu erkennen, dass sich die Garbage Collection massiv auf die benötigte Zeit auswirkt.\\
 
-Nun betrachten wir das Zeitverhältnis zwischen IPm und IPv. Zu anfang lässt sich annehmen das der IPv etwa sechs mal länger braucht als der IPm. Beim Parsen der $^1/_4$ Sudoku--Regeln dauert es aber etwa zehn mal so lange. Wir nehmen also an, dass es sich um ein exponentielles Verhältnis ($x^n$) handelt. Hierbei konnte ermittelt werden, dass der Exponent ($^n$) bei etwa 1,293 liegt. Mit Hilfe diese Annahme wurden die theoretischen Werte für den IPv und den IPm errechnet.
+Nun betrachten wir das Zeitverhältnis zwischen IPm und IPv. Zu Anfang lässt sich annehmen, dass der IPv etwa sechsmal länger braucht als der IPm. Beim Parsen der $^1/_4$ Sudoku--Regeln dauert es aber etwa zehnmal so lange. Wir nehmen also an, dass es sich um ein exponentielles Verhältnis ($x^n$) handelt. Hierbei konnte ermittelt werden, dass der Exponent ($^n$) bei etwa 1,293 liegt. Mit Hilfe diese Annahme wurden die theoretischen Werte für den IPv und den IPm errechnet.
 
 \subsection{Kern}
 %TODO
