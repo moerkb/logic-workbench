@@ -430,7 +430,7 @@ Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) ni
 
 \subsection{Das Verhältnis der gegebenen Formeln}
 
-Zuallererst betrachten wir die Größe der Variablen. Bei dem 4-- und 8--Damen--Problem bestehen die Variablen aus zwei Zeichen. Für die Kartenfärbung werden im Schnitt 7,5 Zeichen pro Variable benötigt und für die Sudoku--Regeln drei.\\
+Zuallererst betrachten wir die Größe der Variablen. Bei dem 4-- und 8--Damen--Problem bestehen die Variablen aus zwei Zeichen. Für die Kartenfärbung werden im Schnitt 7,5 Zeichen pro Variable benötigt und für die Sudoku--Regeln vier.\\
 
 Operatoren als Symbole (also z. B. \glqq{}\&\grqq{} statt \glqq{}and\grqq{}) bestehen im Normalfall aus einem Zeichen. Eine Ausnahme besteht hier bei dem 4--Damen--Problem. Dieses enthält auch den Operator \lstinline|->|. Da dieses Zeichen nicht in der Minimalgrammatik vorhanden ist, kann diese Formel auch nicht mit den Parsern übersetzt werden, die diese Grammatik verwenden.\\
 
@@ -464,9 +464,19 @@ Nun betrachten wir das Zeitverhältnis zwischen IPm und IPv. Zu Anfang lässt si
 
 \subsection{Kern}
 
+Wie beim Instaparse--Parser kann auch der \emph{Kern--Parser mit der minimalen Grammatik (KPm)} nicht das 4--Damen--Problem mit der hier gegebenen Formel lösen. Daher kann diese erste Messung nur mit dem \emph{Kern--Parser mit der vollen Grammatik (KPv)} durchgeführt werden. Dieser brauchte für das Parsen 180 ms.
 
+Für das Parsen des 8--Damen--Problems brauchte der KPm 293 ms und der KPv 590 ms. Für den KPv ist das in etwa eine verdreifachung der Zeit. Dies steht in keinem einfachen Zusammenhang mit der Anzahl der Variablen, Operatoren und Zeichen. Auf Grund der sonstigen Beobachtungen scheint dies bei kleinen Eingabegrößen der Fall zu sein.
 
-%TODO
+Ähnlich dem Instaparse--Parser brauchen sowohl der KPm (300 ms) und der KPv (548 ms) annähernd die Gleiche Zeit zum Parsen der Formel für die Kartenfärbung der USA. An diesem Beispiel kann man ablesen, dass die Dauer des Parsens nicht erkennbar von der Länge der Variablen abhängt.
+
+Zum Parsen der $^1/_4$ Sudoku--Regeln braucht der KPm mehr als vier mal so lange und der KPv etwa das Dreifache an Zeit wie für das 8--Damen--Problem. Das ähnelt eher dem Ansteig der Anzahl der Variablen und Operatoren als den der Zeichen.
+
+Der KPm braucht zum Parsen der $^1/_2$ Sudoku--Regeln nicht merkbar mehr Zeit als zum Parsen der $^1/_4$ Sudoku--Regeln. Der KPv hingegen braucht etwas mehr als die doppelte Zeit. Das Verhalten des KPv kann aus der Verdopplung der Anzahl der Variablen, Operatoren und Zeichen hergeleitet werden. Wo gegen das Zeitliche Verhalten des KPm aus dem Rahmen der übrigen Beobachtugen fällt. %Komisch!
+
+Für das Parsen der gesammten Sudoku--Regeln brauchet sowohl der KPm als auch der KPv etwa das Doppelte an Zeit als der jeweilige Parser für die $^1/_2$ Sudoku--Regeln.\\
+
+Mit Ausnahme des Verhaltens bei kleinen Formeln und des Verhältnises der benötigten Zeit des KPm zum Parsen von den $^1/_4$ Sudoku--Regeln und den $^1/_2$ Sudoku--Regeln, sieht man leicht, dass sich die mit Kern geschreibenen Parser in etwa linear proportional zur Anzahl der Variablen bzw. Operatoren verhalten.
 
 \subsection{JavaCC}
 %TODO
