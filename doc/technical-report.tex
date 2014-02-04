@@ -282,7 +282,7 @@ Gemäß oben genannten Vorgaben wurden nun die Messungen durchgeführt. Die gemi
 \begin{table}[h]
 	\begin{tabular}{|l|r|r|r|r|r|}
 		\hline
-		\textbf{Formel} & \textbf{Instaparse \emph{m}} & \textbf{Instaparse. \emph{v}} & \textbf{Kern \emph{m}} & \textbf{Kern \emph{v}} & \textbf{JavaCC} \\ \hline
+		\textbf{Formel} & \textbf{Instaparse \emph{m}} & \textbf{Instaparse \emph{v}} & \textbf{Kern \emph{m}} & \textbf{Kern \emph{v}} & \textbf{JavaCC} \\ \hline
 		\textbf{4--Damen} & - & 111 & - & 180 & 10 \\ \hline
 		\textbf{8--Damen} & 354 & 2301 & 293 & 590 & 93 \\ \hline
 		\textbf{Kartenf. USA} & 629 & 3890 & 718 & 664 & 204 \\ \hline
@@ -456,7 +456,7 @@ Der IPm braucht 629 ms und der IPv 3890 ms zum Parsen der Kartenfärbung der USA
 
 Für das Parsen der $^1/_4$ Sudoku--Regeln braucht der IPm achtmal und der IPv etwa elfmal so lange wie für das 8--Damen--Problem. Man kann daher annehmen, dass das Parsen mit dem Instaparse--Parser durch die starke Verschachtelung mittels Klammern die Parse--Zeit steigert. Hierbei kann der Unterschied zwischen der Erhöhung zwischen IPm und IPv daran liegen, dass die Klammer--Regel sehr weit unten in der Grammatik beschrieben ist, wobei die minimale Grammatik weniger Regeln hat, die bis zur Klammerungsregel geprüft werden müssen. Des Weiteren ist anzunehmen, dass beim IPv die Garbage Collection einsetzt und sich dies negativ auf die Zeit auswirkt.
 
-Wie in der Beschreibung von Mark Engelberg (siehe Abschnitt \ref{Engelberg}) angenommen und gezeigt wurde, hat sich die Parse--Zeit für IPm von $^1/_4$ zu $^1/_2$ Sudoku--Regeln verdoppelt. Der IPv konnte die $^1/_2$ Sudoku--Regeln nicht mehr Parsen, da es dabei immer wieder zu Fehlern (\emph{OutOfMemoryException, StackOverflowError, ...}) kam.
+Wie in der Beschreibung von Mark Engelberg (siehe Abschnitt \ref{Engelberg}) angenommen und gezeigt wurde, hat sich die Parse--Zeit für IPm von $^1/_4$ zu $^1/_2$ Sudoku--Regeln verdoppelt. Der IPv konnte die $^1/_2$ Sudoku--Regeln nicht mehr Parsen, da es dabei immer wieder zu Fehlern (\emph{OutOfMemoryException, StackOverflowError, \dots}) kam.
 
 Die benötigte Zeit vervierfacht sich fast zum Parsen der gesamten Sudokuregel. Hier ist zu erkennen, dass sich die Garbage Collection massiv auf die benötigte Zeit auswirkt.\\
 
