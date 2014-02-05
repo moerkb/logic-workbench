@@ -7,7 +7,8 @@
                  [instaparse "1.2.4"]
                  [org.clojure/math.combinatorics "0.0.4"]
                  [org.ow2.sat4j/org.ow2.sat4j.core "2.3.4"]
-                 [org.blancas/kern "0.7.0"]]
+                 [org.blancas/kern "0.7.0"]
+                 [seesaw "1.4.4"]]
   :main ^:skip-aot logic.util
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
