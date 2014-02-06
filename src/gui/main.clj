@@ -1,8 +1,7 @@
 (ns gui.main
   (require [seesaw.core :refer :all]
            [seesaw.rsyntax :as syntax]
-           [seesaw.dev :refer (show-options)]
-           [seesaw.util :refer (to-mnemonic-keycode)])
+           [seesaw.dev :refer (show-options)])
   (import [java.io File]))
 
 ; general stuff
@@ -49,6 +48,7 @@
 ; menus
 (def project-menu (menu 
                     :text "Project"
+                    :mnemonic "P"
                     :items [(action :name "New Project")
                             (action :name "Open Project")
                             (separator)
@@ -61,13 +61,13 @@
                             (action 
                               :name "Save" 
                               :key "ctrl S" 
-                              :mnemonic "s"
+                              :mnemonic "S"
                               :icon (icon-path "save.gif")
                               :handler (fn [_] (println "Saving")))
                             (action 
                               :name "Save All"
                               :key "ctrl shift S"
-                              :mnemonic "a"
+                              :mnemonic "A"
                               :icon (icon-path "saveall.gif")
                               :handler (fn [_] (println "Saving All"))
                               )
@@ -78,6 +78,7 @@
 
 (def tasks-menu (menu
                   :text "Tasks"
+                  :mnemonic "T"
                   :items [(action :name "Check SAT")
                           (action :name "Truth Table")
                           (action :name "Transform to CNF")
@@ -88,13 +89,18 @@
 
 (def options-menu (menu
                     :text "Options"
+                    :mnemonic "O"
                     :items [(action :name "Select Font")
                             (action :name "Settings")
                             (action :name "Include Path")]))
 
 (def help-menu (menu
                  :text "Help"
-                 :items [(action :name "Help Contents")
+                 :mnemonic "H"
+                 :items [(action 
+                           :name "Help Contents"
+                           :mnemonic "H"
+                           :key "F1")
                          (separator)
                          (action :name "About")]))
 
