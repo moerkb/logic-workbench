@@ -480,7 +480,25 @@ Für das Parsen der gesammten Sudoku--Regeln brauchet sowohl der KPm als auch de
 Mit Ausnahme des Verhaltens bei kleinen Formeln und des Verhältnises der benötigten Zeit des KPm zum Parsen von den $^1/_4$ Sudoku--Regeln und den $^1/_2$ Sudoku--Regeln, sieht man leicht, dass sich die mit Kern geschreibenen Parser in etwa linear proportional zur Anzahl der Variablen bzw. Operatoren verhalten.
 
 \subsection{JavaCC}
-%TODO
+
+Nun wollen wir uns die Zeiten des \emph{JavaCC-Parsers (JP)} ansehen. Da der JP schon von vornherein vorhanden war und Zeiten mit der vollen Grammatik beachtlich kurz waren, erstellten wir für den JavaCC keine minimalistische Grammatik. Für das 4--Damen--Problem brauchte der JP etwa 10 msec zum Parsen.
+
+Zum Parsen des--Damen--Problems brauchte der JP im Schnitt 93 msec. das ist etwas mehr als neunmal so lang, wie für das 4--Damen--Problem. Dies Entspricht in etwa dem Wachstum der Anzahl von Variablen, Operatoren und Zeichen.
+
+Für die Regeln zum Kartenfärben der USA benötigte der JC 153 msec. Dies ist im Gegensatz zu den anderen Parsern ein Ansteig von etwa zwei Drittel der Zeit. Wenn man sich die Messwerte des JC zum Parsen dieser Regeln betrachtet, fällt auf, dass die meisten Werte bis auf zwei Pieks (TODO: wie schreibt man das richtig?) in etwa um die 90 bis 120 liegen. Wenn man den Mittelwert über die Messergebnisse ermittelt und dabei die zwei Extrema auslässt, ergibt sich eine durchschnittliche Zeit von etwa 107 msec. Diese Steigerung liegt dann in etwa bei denen der anderen Parser.
+
+Um die $^1/_4$ Sudoku--Regeln zu Parsen, benötigt der JC etwa 461 msec. Das entspricht fast dem Fünffachem der Zeit für das 8--Damen--Problem. Hierbei lagen drei Messergebnisse über 600 msec und die übrigen sieben etwas unter 400 msec. Würde man ausschließlich diese sieben Messwerte betrachen, wäre das etwa eine vervierfachung der Zeit ausgehend vom 8--Damen--Problem. Damit lägen wir auch in etwa beim Wachstum der bisher betrachteten Parser.
+
+Die Messwerte für die $^1/_2$ Sudoku--Regeln liegen nicht so weit auseinander. Hierbei benötigt der JC in Schnitt etwa 524 msec. Dies ist nur eine kleine Steigerung der benötigten Zeit und entspricht nicht dem Doppelten wie bei den übrigen Parsern, sondern eher im Wachstumsverhältnis des KPm, der auch hier bei dem Vergleich der $^1/_4$ Sudoku--Regeln und $^1/_2$ Sudoku--Regeln nur eine relativ kurze Differenz der durchschnittlichen Zeiten hat.
+
+Zum Parsen der vollen Sudokuregeln nimmt sich der JC im Durchschnitt etwa 963 msec Zeit. Hierbei schwanken die Messwerte von knapp unter 700 bis fast an die 1200 msec. Wobei drei Werte sich um die 700 mehren und die übrigen sieben über 1000 msec liegen. Unter Betrachtung der Mehrheit kam es hier zu einer Verdopplung der benötigten Zeit ähnlich den anderen Parsern.\\
+
+Durch die extrem kurze Zeit des Parsen it dem JC kann es schnell zu messtechnischen Ausreißern kommen, da hier nur eine geringe Zeitverzögerung wie z. B. zum Lastwechsel zwischen Prozessoren ausreicht, um eine signifikant länge Zeit zu benötigen. Daher ist es schwerer, für den JP eine sicheres und klares Ergebnis zu präsentieren. Jedoch scheint das Wachstumsverhältnis ähnlich linear proportional zur Eingabegröße zu sein, wie bei den übrigen betrachteten Parsern, sofern diese nicht an ihre technischen Grenzen stoßen, wie etwa der IPv ab den $^1/_4$ Sudoku--Regeln und der IPm den vollen Sudoku--Regeln.\\
+
+\subsection{Fazit}
+
+Alle hier betrachteten Parser hatten ein erkennbares Wachstumsmuster. Diese ähnelten mit ein paar Ausnahmen und unterhalt der technischen Grenzen sich stark. Man konnte erkennen, dass alle Parser in etwa ein linear propotionales Wachstumsverhältnis zur Eingabegröße hatten. Wobei der Instaparse--Parser am ehesten an seine technischen Grenzen stoß. Kern war wie Instaparse ein mit Clojure entwickeltes Werkzeug. Jedoch Instaparse in zeitlicher Hinsicht klar überlegen. Jedoch benötigte der KPv fast sieben Sekunden zum Parsen der vollen Sudoku--Regeln. Da das erstellte Tool vorzugsweise für die Lehre benutzt werden soll und in \emph{meinem Studium} eher selten Formeln solcher Größe zum Einsatz kamen, könnte man in diesem Rahmen einen auf Kern basierten Parser benutzen. Es hat sich jedoch gezeigt, dass ein auf JavaCC basierender Parser mit der gleichen Grammatik um ein vieles schneller ist --- in unserer Messreihe für die vollen Sudokuregeln etwa sieben mal so schnell wie der KPv.
+Da wir es für sinnvoll halten, unser Projekt nicht unnötig langsam arbeiten zu lassen, haben wir uns entschieden, die schnellste, verfügbare und von uns beherschbare Alternative zu wählen. Damit viel die Wahl eindeutig auf den JavaCC--Parser.
 
 \appendix
 
