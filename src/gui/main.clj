@@ -32,33 +32,30 @@
                 :orientation :horizontal
                 :items [(button :icon (icon-path "new_project.gif"))
                         (button :icon (icon-path "open_project.gif"))
-                        ;(separator :orientation :vertical)
+                        :separator
                         (button :icon (icon-path "new_proposition.gif"))
                         (button :icon (icon-path "rename_proposition.gif"))
-                        ;(separator :orientation :vertical)
+                        :separator
                         (button :icon (icon-path "new_m4file.gif"))
                         (button :icon (icon-path "open_m4file.gif"))
-                        ;(separator :orientation :vertical)
+                        :separator
                         (button :icon (icon-path "save.gif"))
                         (button :icon (icon-path "save_all.gif"))
                         (button :icon (icon-path "close.gif"))
                         (button :icon (icon-path "delete.gif"))
-                        
-                        ;(separator :orientation :vertical)
-                        
+                        :separator
                         (button :icon (icon-path "task_sat.gif"))
                         (button :icon (icon-path "task_tt.gif"))
                         (button :icon (icon-path "task_cnf.gif"))
                         (button :icon (icon-path "task_tcnf.gif"))
                         (button :text "Dimacs")
                         (button :icon (icon-path "task_m4.gif"))
-                        
-                        ;(separator :orientation :vertical)
-                        
+                        :separator
                         (button :icon (icon-path "select_font.gif"))
                         (button :icon (icon-path "settings.gif"))
-                        ]))
-
+                        (combobox
+                          :maximum-size [90 :by 32000]
+                          :model ["DefaultSAT4J" "LightSAT4J" "NaiveDPLL"])]))
 
 (def ver-panel (vertical-panel
                  :items [form-editor
