@@ -9,8 +9,6 @@
 
 (def tseitin-prefix "t_")
 
-(def javaCCparse mpaParser/javaCCparse) ; only an ugly helper to use javaCCparse by using logic.util
-
 (load "tools"
       "logical-operators"
       "evaluator"

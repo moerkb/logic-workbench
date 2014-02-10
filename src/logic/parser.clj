@@ -10,3 +10,5 @@
 
 (defn pure-parse [formula]
   (insta/parse logic-parser formula))
+
+(def parse mpaParser/javaCCparse) ; simply use the parser from mpa.cst.parser

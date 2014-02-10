@@ -1,9 +1,23 @@
 (ns gui.main
   (require [seesaw.core :refer :all]
            [seesaw.rsyntax :as syntax]
-           [seesaw.dev :refer (show-options)])
+           [seesaw.dev :refer (show-options)]
+           [logic.util :as logic])
   (import [java.io File]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))
+
+; early declarations of important widgets for actions
+
+; register own editor parser for highlighting
+(let [tmf (TokenMakerFactory/getDefaultInstance)]
+  (.putMapping tmf "text/mpa" "fully.qualified.MpaTokenMaker"))
+
+(def editor (syntax/text-area :syntax :mpa))
+(def results (text 
+               :multi-line? true
+               :editable? false))
+
+(load "actions")
 
 ; general stuff
 (native!)
@@ -21,15 +35,10 @@
                            :preferred-size [255 :by 600]
                            :maximum-size [255 :by 32000]))
 
-; register own editor parser for highlighting
-(let [tmf (TokenMakerFactory/getDefaultInstance)]
-  (.putMapping tmf "text/mpa" "fully.qualified.MpaTokenMaker"))
-
-(def form-editor (scrollable (syntax/text-area
-                               :syntax :mpa)
+(def form-editor (scrollable editor
                              :preferred-size [690 :by 400]))
 
-(def result-area (scrollable (table)
+(def result-area (scrollable results
                              :preferred-size [690 :by 200]))
 
 (def tool-bar (toolbar
@@ -50,7 +59,9 @@
                         (button :icon (icon-path "delete.gif"))
                         :separator
                         (button :icon (icon-path "task_sat.gif"))
-                        (button :icon (icon-path "task_tt.gif"))
+                        (action 
+                          :icon (icon-path "task_tt.gif")
+                          :handler #(handler-tt %))
                         (button :icon (icon-path "task_cnf.gif"))
                         (button :icon (icon-path "task_tcnf.gif"))
                         (button :text "Dimacs")
