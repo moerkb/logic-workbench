@@ -12,15 +12,12 @@ OPEN TASKS
   (and (or)) = false/nil
   -> abort trivial, generate no dimacs, etc.
 
-- Aussage über die Größe des Problems (Anz. Variablen, Operatoren, (Baumtiefe))
-	- Verhältnis der Zahlen
-
-- Instaparse-Algorithmus (-> Paper)
-
 - visualize formula tree graphically (instaparse/visualize) 
 - compare project to: core.logic, kodkod (alloy) (e.g. Sudoku)
 
 QUESTIONS
+
+- GUI - Truth Table: impl: unkown symbol through eval-formula
 
 NOTES
 
