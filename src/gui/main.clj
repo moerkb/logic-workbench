@@ -2,7 +2,8 @@
   (require [seesaw.core :refer :all]
            [seesaw.rsyntax :as syntax]
            [seesaw.dev :refer (show-options)])
-  (import [java.io File]))
+  (import [java.io File]
+          [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))
 
 ; general stuff
 (native!)
@@ -20,8 +21,12 @@
                            :preferred-size [255 :by 600]
                            :maximum-size [255 :by 32000]))
 
+; register own editor parser for highlighting
+(let [tmf (TokenMakerFactory/getDefaultInstance)]
+  (.putMapping tmf "text/mpa" "fully.qualified.MpaTokenMaker"))
+
 (def form-editor (scrollable (syntax/text-area
-                               :syntax :clojure)
+                               :syntax :mpa)
                              :preferred-size [690 :by 400]))
 
 (def result-area (scrollable (table)
