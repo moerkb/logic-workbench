@@ -70,7 +70,7 @@
                         (button :icon (icon-path "select_font.gif"))
                         (button :icon (icon-path "settings.gif"))
                         (combobox
-                          :maximum-size [90 :by 32000]
+                          :maximum-size [135 :by 32000]
                           :model ["DefaultSAT4J" "LightSAT4J" "NaiveDPLL"])]))
 
 (def ver-panel (vertical-panel
