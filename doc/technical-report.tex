@@ -148,7 +148,7 @@ Ein Makroprozessor wurde nicht eingebunden, da Clojure selbst über ein mächtig
 
 \section{Das Problem: Parser--Laufzeiten}
 
-Zu der wesentlichen Kernfunktionalität der LW gehört das Parsen von Formeln, so dass eine Clojure--Liste entsteht; also beispielsweise der String \lstinline|"A -> !(A & B)"| zu \lstinline|(impl A (not (and A B)))| geparst wird. Die vollständige Referenzgrammatik des MPA findet sich in Anhang \ref{refgrammatik}.
+Zu der wesentlichen Kernfunktionalität der LW gehört das Parsen von Formeln, sodass eine Clojure--Liste entsteht, also beispielsweise der String \lstinline|"A -> !(A & B)"| zu \lstinline|(impl A (not (and A B)))| geparst wird. Die vollständige Referenzgrammatik des MPA findet sich in Anhang \ref{refgrammatik}.\\
 
 Zunächst wurde zur allgemeinen Zufriedenheit die Bibliothek \emph{Instaparse} verwendet. Bei einem Test mit einer großen Formel (Sudoku--Regeln) wurde jedoch eine im Vergleich mit dem Referenzparser sehr viel höhere Laufzeit festgestellt, wenn der mit Instaparse generierte Parser nicht vorher durch einen Stackoverflow abgebrochen wurde. So brauchte dieser in einem Testdurchlauf mehrere Minuten, wogegen der Referenzparser des MPA diese Aufgabe in etwa zwei Sekunden vollbrachte.
 
@@ -185,7 +185,7 @@ Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} ein
 
 \subsection{JavaCC}\label{JavaCC}
 
-Wie Instaparse gehört \emph{JavaCC} zur Gruppe der Parser--Generatoren. Es ist jedoch eine Java--Bibliothek und schon weitaus länger in Entwicklung, so dass es ausgereifter ist. \cite{javacc}
+Wie Instaparse gehört \emph{JavaCC} zur Gruppe der Parser--Generatoren. Es ist jedoch eine Java--Bibliothek und schon weitaus länger in Entwicklung, sodass es ausgereifter ist. \cite{javacc}
 
 JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des JavaCC aus dem MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Typs \glqq{}Knoten\grqq{} (Node) und kann z. B. unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LW verwendeten Clojure--Listen zu produzieren, wird jedoch mittels einer Clojure--Funktion rekursiv durch den AST traversiert und die neue Baumstruktur erzeugt.
 
@@ -416,8 +416,6 @@ Um die den Sudoku--Regeln gleichwertige Eingabegröße zu erreichen, müssen wir
 
 In der Praxis sieht dies jedoch anders aus. Bei dem Versuch eine Formel von \lstinline|(produce 13)| fängt die Garbage--Collection an zu arbeiten und stört damit massiv den Ablauf. Durch dieses Verhalten verlängert sich die Zeit, die zum Parsen benötigt wird, ungemein. Wobei es in dieser Größenordnung der Eingabe schon teilweise zu Out-Of-Memory-Errors kommt.
 
-%\newpage %sonst ist der nächste Satz von den Punkten abgeschnitten
-
 An dieser Stelle können wir also schon einige Punkte festhalten:
 
 \begin{enumerate}
@@ -493,11 +491,12 @@ Die Messwerte für die $^1/_2$ Sudoku--Regeln liegen nicht so weit auseinander. 
 
 Zum Parsen der vollen Sudokuregeln nimmt sich der JC im Durchschnitt etwa 963 ms Zeit. Hierbei schwanken die Messwerte von knapp unter 700 bis fast 1200 ms, wobei drei Werte sich um 700 mehren und die übrigen sieben über 1000 ms liegen. Unter Betrachtung der Mehrheit kam es hier zu einer Verdopplung der benötigten Zeit ähnlich den anderen Parsern.\\
 
-Durch die extrem kurze Zeit des Parsens mit dem JC kann es schnell zu messtechnischen Ausreißern kommen, da hier nur eine geringe Zeitverzögerung wie z. B. zum Lastwechsel zwischen Prozessoren ausreicht, um eine signifikant längere Zeit zu erreichen. Daher ist es schwerer, für den JP ein sicheres und klares Ergebnis zu erhalten. Jedoch scheint das Wachstumsverhältnis ähnlich linear proportional zur Eingabegröße zu sein, wie bei den übrigen betrachteten Parsern, sofern diese nicht an ihre technischen Grenzen stoßen, wie etwa der IPv ab den $^1/_4$ Sudoku--Regeln und der IPm mit den vollen Sudoku--Regeln.\\
+Durch die extrem kurze Zeit des Parsens mit dem JC kann es schnell zu messtechnischen Ausreißern kommen, da hier nur eine geringe Zeitverzögerung wie z. B. der Lastwechsel zwischen Prozessoren ausreicht, um eine signifikant längere Zeit zu erreichen. Daher ist es schwerer, für den JP ein sicheres und klares Ergebnis zu erhalten. Jedoch scheint das Wachstumsverhältnis ähnlich linear proportional zur Eingabegröße zu sein, wie bei den übrigen betrachteten Parsern, sofern diese nicht an ihre technischen Grenzen stoßen, wie etwa der IPv ab den $^1/_4$ Sudoku--Regeln und der IPm mit den vollen Sudoku--Regeln.
 
 \subsection{Fazit}
 
 Alle hier betrachteten Parser hatten ein erkennbares Wachstumsmuster. Diese ähnelten sich mit ein paar Ausnahmen und unterhalb der technischen Grenzen stark. Man konnte erkennen, dass alle Parser in etwa ein linear proportionales Wachstumsverhältnis zur Eingabegröße haben. Wobei der Instaparse--Parser am ehesten an seine technischen Grenzen stoß. Kern war wie Instaparse ein mit Clojure entwickeltes Werkzeug, jedoch Instaparse in zeitlicher Hinsicht klar überlegen. Allerdings benötigte der KPv fast sieben Sekunden zum Parsen der vollen Sudoku--Regeln. Da das erstellte Tool vorzugsweise für die Lehre benutzt werden soll, könnte man in diesem Rahmen einen auf Kern basierten Parser benutzen. Es hat sich jedoch gezeigt, dass ein auf JavaCC basierender Parser mit der gleichen Grammatik um ein Vielfaches schneller ist --- in unserer Messreihe für die vollen Sudokuregeln etwa sieben mal so schnell wie der KPv.
+
 Da wir es für sinnvoll halten, unser Projekt nicht unnötig langsam arbeiten zu lassen, haben wir uns entschieden, die schnellste verfügbare und von uns beherrschbare Alternative zu wählen. Damit viel die Wahl auf den JavaCC--Parser.
 
 \appendix
