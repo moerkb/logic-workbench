@@ -98,7 +98,7 @@ Markus Bader (markus.bader@mni.thm.de)
 
 Im Rahmen des Masterprojekts im Wintersemester 2013/2014 haben die Autoren ein Programm zum Anwenden von Logikfunktionen (z. B. Wahrheitstafeln, Tseitin--Transformation, SAT--Solving) entworfen und mittels der Programmiersprache Clojure implementiert. Unter anderem wird ein Parser zum Umwandeln von logischen Formeln in eine Clojure--Datenstruktur benötigt.
 
-Zu diesem Zweck wurde ein Parser mittels der Bilbiothek Instaparse erzeugt, jedoch viel dessen signifkant längere Laufzeit gegenüber einem JavaCC--Vergleichsparser auf.
+Zu diesem Zweck wurde ein Parser mittels der Bibliothek Instaparse erzeugt, jedoch viel dessen signifikant längere Laufzeit gegenüber einem JavaCC--Vergleichsparser auf.
 
 In diesem technischen Bericht, welcher zugleich die Abschlussdokumentation zum Projekt darstellt, werden die Laufzeiten von fünf Parsern verglichen: Instaparse und Kern, jeweils mit einer vollständigen und einer minimierten Grammatik, sowie der JavaCC--Referenzparser.
 
@@ -122,20 +122,20 @@ Zu den Features gehören u. a.:
 	\item Ausgeben einer Wahrheitstabelle
 	\item Produktion der konjunktiven und disjunktiven Normalform (CNF, DNF)
 	\item Anwenden der Tseitin--Transformation
-	\item Überprüfen der Erfüllbarkeit einer Formel mittels eines externen SAT--Solver (z. B. SAT4J)
+	\item Überprüfen der Erfüllbarkeit einer Formel mittels eines externen SAT--Solvers (z. B. SAT4J)
 	\item Pretty--print--Funktionen z. B. für Tex.
 	\item Anwenden eines externen, M4--kompatiblen Makroprozessors
 \end{itemize}
 
-Die Funktionen können über Kommandozeile oder eine GUI angesprochen werden. Das Programm wird in der Lehre an der THM eingesetzt und ist unter der GPL quelloffen verfügbar.
+Die Funktionen können über eine GUI angesprochen werden. Das Programm wird in der Lehre an der THM eingesetzt und ist unter der GPL quelloffen verfügbar.
 
 \section{Logical Workbench}
 
-Innerhalb des Masterprojektes der Autoren unter Leitung des bereits für den MPA verantwortlichen Prof. Dr. B. Renz wird ein Programm mit identischen oder ähnlichen Funktionen des MPA entwickelt. Unter dem Projektnamen \emph{Logical Workbench (LW)} wird im Gegensatz zu Java jedoch die Programmiersprache \emph{Clojure} verwendet.
+Innerhalb des Masterprojektes der Autoren unter Leitung des bereits für den MPA verantwortlichen Prof. Dr. B. Renz wird ein Programm mit identischen oder ähnlichen Funktionen des MPA entwickelt. Unter dem Projektnamen \emph{Logical Workbench (LW)} wird im Gegensatz zum MPA (Java) jedoch die Programmiersprache \emph{Clojure} verwendet.
 
-Clojure ist ein LISP, welches zu Java--Bytecode kompiliert wird und somit auf der JVM arbeitet. Als Besonderheit ist die einfache Verwendung von Java--Code (etwa Klassen) zu nennen, wodurch auch ein von JavaCC generierter Parser--Code benutzt werden kann (siehe Abschnitt \ref{JavaCC}).
+Clojure ist ein Lisp, welches zu Java--Bytecode kompiliert und somit auf der JVM arbeitet. Als Besonderheit ist die einfache Verwendung von Java--Code (etwa Klassen) zu nennen, wodurch auch ein von JavaCC generierter Parser--Code benutzt werden kann (siehe Abschnitt \ref{JavaCC}).
 
-Zum Zeitpunkt des Verfassens dieses Textes sind die Kernfunktionen implementiert; im Einzelnen:
+Zum Zeitpunkt des Verfassens dieses Textes sind folgende Kernfunktionen implementiert:
 
 \begin{itemize}
 	\item Parsen von Formeln
@@ -144,7 +144,7 @@ Zum Zeitpunkt des Verfassens dieses Textes sind die Kernfunktionen implementiert
 	\item Generieren des Dimacs--Formats und Aufrufen von SAT4J
 \end{itemize}
 
-Ein Makroprozessor wurde nicht eingebunden, da Clojure selbst über ein mächtiges Makrosystem verfügt. Im weiteren Verlauf des Projektes sind die Implementierung einer dem MPA ähnlichen GUI und ein System zum Anwenden der natürlichen Deduktion geplant. Der Code des Projektes ist unter \cite{lw} einsehbar.
+Ein Makroprozessor wurde nicht eingebunden, da Clojure selbst über ein mächtiges Makrosystem verfügt. Im weiteren Verlauf des Projektes sind die Implementierung einer der MPA ähnlichen GUI und ein System zum Anwenden der natürlichen Deduktion geplant. Der Code des Projektes ist unter \cite{lw} einsehbar.
 
 \section{Das Problem: Parser--Laufzeiten}
 
@@ -156,28 +156,28 @@ Aus diesem Grunde wurden zunächst die Ursachen für die stark wachsende Laufzei
 
 \section{Die Parser--Bibliotheken}
 
-In diesem Abschnitt sollen die für den Vergleich benutzten Parser--Bibliotheken nicht nur vorgesellt werden, auch ihre Anwendung, Konzepte und Eigenheiten werden in Kürze umrissen.
+In diesem Abschnitt sollen die für den Vergleich benutzten Parser--Bibliotheken nicht nur vorgestellt werden, auch ihre Anwendung, Konzepte und Eigenheiten werden in Kürze umrissen.
 
 \subsection{Instaparse}
 
-Die von Mark Engelberg entwickelte Bibliothek \emph{Instaparse} gehört zur Gruppe der Parser--Generatoren, d. h. es wird eine Grammatik angegeben, aus der dann ein Programm generiert wird, welches eine Zeichenkette gemäß der Grammatik parsen kann. Da ein Clojure--Programm zur Laufzeit übersetzt werden kann, ist zur Verwendung des generierten Programms kein weiterer Kompilier--Zwischenschritt notwendig, wie etwa bei JavaCC. \cite{instaparse}
+Die von Mark Engelberg entwickelte Bibliothek \emph{Instaparse} gehört zur Gruppe der Parser--Generatoren, d. h. es wird eine Grammatik angegeben, aus der dann ein Programm generiert wird, welches eine Zeichenkette gemäß der Grammatik parsen kann. Dies ist der eigentliche Parser. Da ein Clojure--Programm zur Laufzeit übersetzt werden kann, ist zur Verwendung des generierten Programms kein weiterer Kompilier--Zwischenschritt notwendig, wie etwa bei JavaCC. \cite{instaparse}
 
-Instaparse ist komplett in Clojure geschrieben und wurde deswegen und aufgrund der Simplizität zunächst als Parser für die LW gewählt. So sehen die Schritte zur Entwicklung eines Parsers beispielhaft so aus:
+Instaparse ist komplett in Clojure geschrieben und wurde deswegen und aufgrund der Simplizität zunächst als Parser für die LW gewählt. So sehen die Schritte zur Entwicklung eines Parsers beispielhaft wie folgt aus:
 
 \begin{enumerate}
 	\item In einem Clojure--String oder einer externen Text--Datei wird eine Grammatik spezifiziert.
 	\item Diese Grammatik wird als Argument einer Funktion \glqq{}parse\grqq{} verwendet, welche den Parser zurückgibt, z. B. \lstinline|(def logic-parser (insta/parser "src/logic/grammar.txt"))|.
-	\item Mit diesem Parser kann ein String geparst werden, z. B. erzeugt \lstinline|(logic-parser "A & B")| einen abstrakten Syntaxbaum (AST) \lstinline|[:and [:atom "A"] [:atom "B"]]|. Als Ausgabeformat stehen dabei hiccup oder enlive zur Verfügung.
-	\item Die Funktion \glqq{}transform\grqq{} nimmt einen AST und eine Hash--Map zur Substitution an und kann den Parsebaum somit umwandeln. Aus obigem AST wird somit etwa \lstinline|(and A B)|.
+	\item Mit diesem Parser kann ein String geparst werden, z. B. erzeugt \lstinline|(logic-parser "A & B")| einen abstrakten Syntaxbaum (AST) \lstinline|[:and [:atom "A"] [:atom "B"]]|. Als Ausgabeformat stehen dabei hiccup und enlive zur Verfügung.
+	\item Die Funktion \glqq{}transform\grqq{} nimmt einen AST und eine Hash--Map zur Substitution an und wandelt den Parsebaum um. Aus obigem AST wird somit etwa \lstinline|(and A B)|.
 \end{enumerate}
 
 \subsection{Kern}
 
 Im Gegensatz zu JavaCC und Instaparse gehören mit \emph{Kern} geschriebene Parser zur Gruppe der Combinator--Parser. Dabei gibt es mehrere \glqq{}kleine\grqq{} Parser, also z. B. einen, der eine Konjunktion parst, und einen, der ein Atom parsen kann. Diese Einzelparser können dann mit sogenannten Kombinatoren miteinander verbunden werden, um einen größeren Parser zu erzeugen. Kern bietet eine Reihe von Funktionen, Makros und Datenstrukturen, um solche Combinator--Parser zu erzeugen, z.B. ChainL--Funktionen.
 
-Im Gegensatz zu Instaparse verfügt es dabei über einen dedizierten Lexer, welcher sich nahtlos in die Parsergrammatik einfügt. Dies sorgt einerseits für kompakten Code, kann andererseits aber auch verwirren. So sind \lstinline|token*| und \lstinline|token_| Parser--Funktionen, \lstinline|token| jedoch eine Funktion des Lexers und verlangt einen solchen korrekt eingebunden und eingestellt. Dafür erhöht der Lexer die Komfortabilität, da z. B. die für einen Identifier erlaubten Zeichen als einfacher regulärer Ausdruck angegeben werden können und sich der Benutzer daraufhin nicht mehr um Leerzeichen kümmern muss.
+Im Gegensatz zu Instaparse verfügt es dabei über einen dedizierten Lexer, welcher sich nahtlos in die Parsergrammatik einfügt. Dies sorgt einerseits für kompakten Code, kann andererseits aber auch verwirren. So sind \lstinline|token*| und \lstinline|token_| Parser--Funktionen, \lstinline|token| jedoch eine Funktion des Lexers und verlangt, dass ein solcher korrekt konfiguriert und eingebunden ist. Dafür erhöht der Lexer die Komfortabilität, da z. B. die für einen Identifier erlaubten Zeichen als einfacher regulärer Ausdruck angegeben werden können und sich der Benutzer daraufhin nicht mehr um Leerzeichen kümmern muss.
 
-Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} eingesehen werden. Zu Beachten ist, dass der Autor selber aussagt, dass seine Bibliothek nicht performant ist. 
+Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} eingesehen werden. Zu Beachten ist, dass der Autor von Kern selber aussagt, dass seine Bibliothek nicht performant ist: 
 
 \begin{quote}
 	``Kern's design isn't well-suited for achieving very high performance.'' \cite{kern}
@@ -187,19 +187,19 @@ Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} ein
 
 Wie Instaparse gehört \emph{JavaCC} zur Gruppe der Parser--Generatoren. Es ist jedoch eine Java--Bibliothek und schon weitaus länger in Entwicklung, sodass es ausgereifter ist. \cite{javacc}
 
-JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des JavaCC aus dem MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Types \glqq{}Knoten\grqq{} (Node) und kann unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LW verwendeten Clojure--Listen zu produzieren, wird mittels einer Funktion rekursiv durch den AST traversiert und die neue Struktur aus den Java--Klassen erzeugt.
+JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des JavaCC aus dem MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Typs \glqq{}Knoten\grqq{} (Node) und kann z. B. unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LW verwendeten Clojure--Listen zu produzieren, wird jedoch mittels einer Clojure--Funktion rekursiv durch den AST traversiert und die neue Baumstruktur erzeugt.
 
 Die Bibliothek stellt ebenfalls einen Lexer bereit, jedoch kann dieser nicht optional verwendet werden, sondern es müssen alle Token durch diesen erkannt und an den Parser weitergegeben werden. JavaCC wird produktiv eingesetzt.
 
 \chapter{Versuchsaufbau}
 
-Da wie bereits erwähnt der zuerst implementierte Instaparse--Parser bei einem Beispiel nicht mehr verwendbar war, kam die Idee auf, verschiedene Parser zu vergleichen. Neben besagtem Instaparse und der JavaCC--Referenzimplementierung sollte noch ein Parser verglichen werden, der nach einem gänzlich anderem Prinzip arbeitet. Die Wahl fiel auf Kern.
+Da wie bereits erwähnt der zuerst implementierte Instaparse--Parser bei einem Beispiel nicht mehr praktikabel war, kam die Idee auf, verschiedene Parser zu vergleichen. Neben besagtem Instaparse und der JavaCC--Referenzimplementierung sollte noch ein Parser verglichen werden, der nach einem gänzlich anderem Prinzip arbeitet. Die Wahl fiel auf die Combinator--Parser--Bibliothek Kern.
 
-Um die Ergebnisse der Laufzeitmessung vergleichbar und möglichst aussagekräftig zu halten, mussten die Rahmenbedingungen definiert werden. Dazu gehörte die Auswahl der Formeln --- nach quantitativem und qualitativem Umfang, sowie eine bestimmte Reduktion der Grammatiken, um den Laufzeitunterschied mit einem Anwachsen der Parse--Regeln beurteilen zu können.
+Um die Ergebnisse der Laufzeitmessung vergleichbar und möglichst aussagekräftig zu halten, müssen Rahmenbedingungen definiert werden. Dazu gehört die Auswahl der Formeln --- nach quantitativem und qualitativem Umfang --- sowie eine bestimmte Reduktion der Grammatiken, um den Laufzeitunterschied mit einem Anwachsen der Parse--Regeln beurteilen zu können.
 
 \section{Allgemeine Aspekte}
 
-Die Messung wurde mit der Methode \glqq{}time\grqq{} gemessen. Es zählte der Aufruf des Parsers und Zum Thema der Geschwindigkeit des Instaparse--Parsers hat sich der Autor von Instaparse ggf. das Anwenden einer Transformationsfunktion (um aus einem AST Clojure--Listen zu machen), d. h. es wird immer mit der zu parsenden Formel aufgerufen und es wird letztendlich die selbe Clojure--Datenstruktur erzeugt. Innerhalb der Zeitmessung wird weder auf der Konsole ausgegeben (dies kann zusätzliche Zeit in Anspruch nehmen), noch sind sonstige Seiteneffekte zugelassen.
+Die Messung wird mit der Methode \glqq{}time\grqq{} gemessen. Es zählt der Aufruf des Parsers und ggf. das Anwenden einer Transformationsfunktion (um aus einem AST Clojure--Listen zu machen). D. h. es wird immer mit der zu parsenden Formel begonnen und letztendlich die selbe Clojure--Datenstruktur erzeugt. Innerhalb der Zeitmessung wird weder etwas auf der Konsole ausgegeben (dies kann zusätzliche Zeit in Anspruch nehmen), noch sind sonstige Seiteneffekte zugelassen.
 
 Sofern möglich, wird jede Formel mit jedem Parser und jeder der für ihn definierten Grammatiken aufgerufen. Ist dies in einem besonderen Fall nicht möglich, so kann ein errechneter Wert angegeben werden, insofern er als solcher markiert wird. Jeder so mögliche Durchlauf wird zehnmal ausgeführt und von allen Ergebnissen das arithmetische Mittel gebildet.
 
@@ -211,7 +211,7 @@ Zudem wurde jeder Parser zunächst einmal mit einer für die Messungen nicht her
 
 Als Referenz der zu enthaltenden Regeln dient die Parse--Grammatik des MPA (siehe Anhang \ref{refgrammatik}). Es wurden ähnliche Definitionen für Instaparse und Kern vorgenommen und sie produzieren zumindest für die Testformeln das gleiche Ergebnis. Diese Grammatiken werden im Folgenden \emph{volle Grammatiken} genannt.
 
-Um jedoch das Wachstum der Laufzeit durch Hinzufügen von weiteren Regeln messen zu können, wurde für Kern und Instaparse jeweils eine weitere Grammatik definiert. Diese kann nur Formeln verarbeiten, welche enhalten:
+Um jedoch das Wachstum der Laufzeit durch Hinzufügen von weiteren Regeln messen zu können, wurde für Kern und Instaparse jeweils eine weitere Grammatik definiert. Diese kann nur Formeln verarbeiten, welche enthalten:
 
 \begin{itemize}
 	\item Binäroperatoren \glqq{}and\grqq{} und \glqq{}or\grqq{} durch die Zeichen \glqq{}\&\grqq{} bzw. \glqq{}|\grqq
@@ -232,7 +232,7 @@ Um aussagekräftige Messergebnisse zu erhalten, mussten repräsentative Formeln 
 	\item unterschiedliche Strukturen durch verschiedene Problemstellungen
 \end{itemize}
 
-Da einige Formeln durch das MPA--Projekt bereits vorhanden waren, wurden eben solche gewählt. Sie sollen nun im Einzelnen vorgestellt und können unter \cite{lw-formeln} eingesehen werden. Tabelle \ref{formeln-zahlen} zeigt eine Übersicht der Formeln unter verschiedenen Maßen.
+Da einige Formeln durch das MPA--Projekt bereits vorhanden waren, wurden eben solche gewählt. Sie sollen nun im Einzelnen vorgestellt werden und sind unter \cite{lw-formeln} einsehbar. Tabelle \ref{formeln-zahlen} zeigt eine Übersicht der Formeln unter verschiedenen Metriken.
 
 \subsection{Damenproblem}
 
@@ -243,9 +243,9 @@ Da einige Formeln durch das MPA--Projekt bereits vorhanden waren, wurden eben so
 	\caption{\label{four-queens} Lösung des Damenproblems für $n = 4$: In einem Zug kann keine Dame eine andere schlagen.}
 \end{figure}
 
-Die Forderung lautet auf einem $n \times n$ großem Schachbrett $n$ Damen so zu platzieren, dass keine Dame eine andere in einem Zug schlagen kann. Abbildung \ref{four-queens} zeigt eine mögliche Lösung.
+Die Forderung lautet auf einem $n \times n$ großen Schachbrett $n$ Damen so zu platzieren, dass keine Dame eine andere in einem Zug schlagen kann. Abbildung \ref{four-queens} zeigt eine mögliche Lösung.
 
-Zum Testen wurden zwei verschiedene Formeln verwendet. Einerseits ist dies eine handgeschrieben Lösung für $n = 4$, welche Implikationen enthält und dadurch nicht mit minimalen Grammatiken geparst werden kann. Andererseits ist es eine Lösung für $n = 8$ welche mit Hilfe von eigens dafür geschriebenen Funktionen erzeugt wurde. Sie besteht ausschließlich aus den Basisoperatoren Konjunktion, Disjunktion und Negation und ist zudem eine \emph{konjunktive Normalform (KNF bzw. CNF)}.
+Zum Testen wurden zwei verschiedene Formeln verwendet. Die erste ist eine handgeschriebe Lösung für $n = 4$, welche Implikationen enthält und dadurch nicht mit minimalen Grammatiken geparst werden kann. Die zweite Formel ist eine Lösung für $n = 8$ welche mit Hilfe von eigens dafür geschriebenen Funktionen erzeugt wurde. Sie besteht ausschließlich aus den Basisoperatoren Konjunktion, Disjunktion und Negation und ist zudem eine \emph{konjunktive Normalform (KNF bzw. CNF)}.
 
 \subsection{Kartenfärbung USA}
 
@@ -257,9 +257,9 @@ So kann z. B. gezeigt werden, dass sich eine Karte der USA nicht mit drei Farben
 
 \subsection{Sudoku}
 
-Dieses ebenfalls aus dem MPA--Projekt stammende Beispiel befasst sich mit dem Sudoku--Spiel. Drückt man die Regeln logisch aus und gibt einige Feldbelegungen vor, so kann das Rätsel wiederum durch einen SAT--Solver gelöst werden. Da eine gültige Belegung hier jedoch irrelevant ist, wurden lediglich die Regeln zum Test benutzt. Sie liegen in CNF vor.
+Dieses ebenfalls aus dem MPA--Projekt stammende Beispiel befasst sich mit dem Sudoku--Spiel. Drückt man die Regeln logisch aus und gibt einige Feldbelegungen vor, so kann das Rätsel wiederum durch einen SAT--Solver gelöst werden. Da eine gültige Belegung hier jedoch irrelevant ist, wurden lediglich die Regeln für die Messung benutzt. Sie liegen in CNF vor.
 
-Gemäß Tabelle \ref{formeln-zahlen} wird deutlich, dass die entsprechende Formel signifikant größer als die anderen ist, wodurch die Unzulänglichkeit von Instaparse ursprünglich festgestellt wurde. Um dennoch Messergebnisse eben jenes Parsers erhalten zu können, wurde die Formel zweimal (ungefähr) halbiert. Freilich sind die Regeln dadurch unvollständig geworden, jedoch ist dies hier nicht von Interesse.
+Gemäß Tabelle \ref{formeln-zahlen} wird deutlich, dass die entsprechende Formel signifikant größer als die anderen ist, wodurch die Unzulänglichkeit von Instaparse ursprünglich festgestellt wurde. Um dennoch Messergebnisse eben jenes Parsers erhalten zu können, wurde die Formel zweimal (ungefähr) halbiert. Freilich sind die Regeln dadurch unvollständig geworden, jedoch ist hier lediglich die Parsbarkeit der Formel von Interesse.
 
 \begin{table}[h]
 	\begin{tabular}{|l|r|r|r|c|}
@@ -278,7 +278,7 @@ Gemäß Tabelle \ref{formeln-zahlen} wird deutlich, dass die entsprechende Forme
 
 \section{Messungen}
 
-Gemäß oben genannten Vorgaben wurden nun die Messungen durchgeführt. Die gemittelten Ergebnisse sind in Tabelle \ref{messergebnisse-kurz} einsehbar; die vollständige Messreihe findet sich in \ref{Messergebnisse}.
+Gemäß oben genannten Vorgaben wurden nun die Messungen durchgeführt. Die gemittelten Ergebnisse sind in Tabelle \ref{messergebnisse-kurz} einsehbar; die vollständige Messreihe findet sich unter \ref{Messergebnisse}.
 
 \begin{table}[h]
 	\begin{tabular}{|l|r|r|r|r|r|}
@@ -308,7 +308,7 @@ Ausgeführt wurden die Tests auf einem Asus Zenbook UX31A mit folgender Spezifik
 	\item JavaCC 4.0
 \end{itemize}
 
-Das Parsen der halben und der kompletten Sudoku--Regeln mittels der vollständigen Grammatik war mit Instaparse nicht möglich, da es zu einem Stack--Overflow--Fehler geführt hat.
+Das Parsen der halben und der kompletten Sudoku--Regeln mittels der vollständigen Grammatik war mit Instaparse nicht möglich, da es zu einem Stack--Overflow--Fehler (oder ähnlichem) geführt hat.
 
 \chapter{Bewertung}
 
@@ -320,30 +320,30 @@ Betrachtet man die Ergebnisse aus Tabelle \ref{messergebnisse-kurz}, so kann man
 
 \begin{enumerate}
 	\item JavaCC benötigt immer und deutlich die wenigste Zeit.
-	\item Die Parser mit den vollständigen Grammatiken sind langsamer als die minimalen Grammatiken (Ausnahme: Kern, Kartenfärbung).
+	\item Die Parser mit den vollständigen Grammatiken sind langsamer als die minimalen Grammatiken.
 	\item Ab einer bestimmten Größe ist der vollständige Kern--Parser schneller als Instaparse mit der Minimalgrammatik.
-	\item Die Kern--Parser sind im Allgemeinen schneller als die entsprechneden Instaparse--Produktionen.
+	\item Die Kern--Parser sind im Allgemeinen schneller als die entsprechenden Instaparse--Produktionen.
 	\item Die Laufzeiten von Instaparse wachsen signifikant überproportional zur Größe der Formel.
-	\item Nur bei Instaparse treten bei großen Formeln Fehler (Stack Overflow) auf.
+	\item Nur bei Instaparse treten bei großen Formeln Fehler auf (Stack Overflow).
 \end{enumerate}
 
 Aus 1. folgt, dass der JavaCC--Parser letztendlich in LW eingesetzt wird. Punkt 2. entspricht den Erwartungen.
 
-Die Beobachtungen 3. und 4. weisen darauf hin, dass die Kern--Bibliothek allgemein performanter arbeitet als Instaparse. Es entseht die Frage, ob ein Combinator--Parser grundsätzlich schneller ist als der GLL--Algorithmus, mit dem Instaparse arbeitet \cite[Special Thanks]{instaparse}. Diese Untersuchung ist jedoch nicht Gegenstand dieses Berichts.
+Die Beobachtungen 3. und 4. weisen darauf hin, dass die Kern--Bibliothek allgemein performanter arbeitet als Instaparse. Es stellt sich die Frage, ob ein Combinator--Parser grundsätzlich schneller ist als der GLL--Algorithmus, mit dem Instaparse arbeitet \cite[Special Thanks]{instaparse}. Diese Untersuchung ist jedoch nicht Gegenstand dieses Berichts.
 
 Die letzten Punkte (5. und 6.) zeigen hinreichend, dass Instaparse nicht produktiv in LW eingesetzt werden kann. Die generierten Parser sind einfach unzulänglich.
 
 \section{Analyse des Wachstums}
 
-Zwischen den Messergebnissen lassen sich Verhältnisse herstellen, wodurch ein das Wachstum beschreibender Faktor näherungsweise errechnet werden kann. Dies soll in den folgenden Abschnitten geschehen. Für Instaparse gibt es dazu noch eine zusätlich Überlegung, welche vom Autor Mark Engelbert selber stammt. Diese soll mit den hier gemachten Beobachtungen verglichen werden.
+Zwischen den Messergebnissen lassen sich Verhältnisse feststellen, wodurch ein das Wachstum beschreibender Faktor näherungsweise errechnet werden kann. Dies soll in den folgenden Abschnitten geschehen. Für Instaparse gibt es dazu noch eine zusätzliche Überlegung, welche vom Autor Mark Engelbert selber stammt. Diese soll mit den hier gemachten Beobachtungen verglichen werden.
 
-Allgemein ist zu beachten, dass die Garbage Collection der JVM eine Rolle spielt, da sie die Laufzeiten signifikant beeinflussen kann. Da die Bedingungen für alle Parser gleich sind und es stark davon abhängt, wie viel \glqq{}Garbage\grqq{} ein Programm produziert, wird dieser Faktor nicht näher betrachtet oder gar herausgerechnet.
+Allgemein ist zu beachten, dass die Garbage Collection der JVM eine Rolle spielt, da sie die Laufzeiten signifikant beeinflussen kann. Da die Bedingungen für alle Parser gleich sind und es stark davon abhängt, wie viel \glqq{}Garbage\grqq{} ein Programm produziert, wird dieser Aspekt angemerkt, nimmt jedoch keinen Einfluss auf die abschließende Bewertung.
 
 \subsection{Engelberts Rechnung zum Instaparse--Wachstum}\label{Engelberg}
 
 Zur Geschwindigkeit von Instaparse hat sich dessen Autor \emph{Mark Engelberg} in der zugehörigen Google--Group zu unserer Problemstellung geäußert. Seine Antwort wird im Folgenden erläutert. \cite{instaparse-google-group}
 
-Es ist festgestellt worden, dass die Grammatik gut konstruiert wurde und die enorm lange Parse--Zeit nicht von Mehrdeutigkeiten in der Grammatik abhinge. Daher bemühte sich Mark Engelberg uns zu helfen, dem Problem auf den Grund zu gehen. Alle hier genannten Messergebnisse gehen auf die Angaben und damit auch den Computer --- von dem wir keine genauere Spezifikation haben --- von Mark Engelberg zurück. Daher können die Messergebnisse auf anderen Rechnern abweichen.
+Es ist festgestellt worden, dass die Grammatik gut konstruiert wurde und die lange Parse--Zeit nicht von Mehrdeutigkeiten in der Grammatik abhinge. Daher bemühte sich Mark Engelberg uns zu helfen, dem Problem auf den Grund zu gehen. Alle hier genannten Messergebnisse gehen auf die Angaben und damit auch den Computer --- von dem wir keine genauere Spezifikation haben --- von Mark Engelberg zurück. Daher können die genauen Laufzeiten auf anderen Rechnern abweichen.
 
 Das angenommene Beispiel waren die vollen Sudokuregeln. Diese sind mit Hilfe von insgesammt 168075 Zeichen (Charactern) beschrieben. Die reine Geschwindigkeit des Lesens wurde duch eine minimale Grammatik geprüft.
 
@@ -351,7 +351,7 @@ Das angenommene Beispiel waren die vollen Sudokuregeln. Diese sind mit Hilfe von
   S = #'a'+
 \end{lstlisting}
 
-Mit dieser Grammatik konnten 168075 Zeichen --- in diesem Fall 168075 \glqq{}a\grqq{} --- innerhalb einer Sekunde geparst werden. Hieraus geht hervor, dass ein starkes Ansteigen der Parse--Zeit eher mit der wachsenden Komplexität der Grammatik zusammenhängt.
+Mit dieser Grammatik konnten 168075 Zeichen --- in diesem Fall \glqq{}a\grqq{} --- innerhalb einer Sekunde geparst werden. Hieraus geht hervor, dass ein starkes Ansteigen der Parse--Zeit eher mit der wachsenden Komplexität der Grammatik zusammenhängt.
 
 Es wurde an dieser Stelle angenommen, dass die Zeit linear zur Komplexität steigt. Wenn also die Grammatik aus 60 Regeln besteht --- wie etwa die volle Grammatik des Parsers für die LW --- sollte das Parsen mit dieser Annahme etwa eine Minute dauern.
 
@@ -384,7 +384,7 @@ Diese Funktion produziert also eine Ausgabe, die immer etwa doppelt so groß wir
   229371
 \end{lstlisting}
 
-Wir wollen also einen String parsen, der mit der ungefähren Länge zwischen den Ausgaben von \lstinline|(produce 14)| und \lstinline|(produce 15)| liegt.
+Wir möchten nun einen String parsen, der mit der ungefähren Länge zwischen den Ausgaben von \lstinline|(produce 14)| und \lstinline|(produce 15)| liegt.
 
 Nun betrachten wir die Laufzeit, wenn die Zeichenkette auf die doppelte Länge wächst:
 
@@ -410,11 +410,11 @@ Nun betrachten wir die Laufzeit, wenn die Zeichenkette auf die doppelte Länge w
 
 Wie man sehen kann, beansprucht das Parsen einer längeren Zeichenkette mehr Zeit. Wenn die Länge der zu parsende Zeichenkette verdoppelt wird, benötigt der Parser etwa doppelt so lange. Die Abweichungen können auf das Eingreifen der Garbage--Collection zurückgeführt werden.
 
-Hierbei ist erkennbar, dass Instaparse mit der hier benutzten Grammatik ein akzeptables Verhalten an den Tag legt. Es ist demzufolge nichts verkehrt an der genutzten Grammatik und die Zeit des Parsens wächs linear proportional zur Eingabegröße. Alles in allem eigentlich ein gutes Ergebnis. Der produzierte Parser hat kein abwegiges Wachstum wie etwa Exponentiel.
+Hierbei ist erkennbar, dass Instaparse mit der hier benutzten Grammatik ein akzeptables Verhalten an den Tag legt. Es ist demzufolge nichts verkehrt an der genutzten Grammatik und die Zeit des Parsens wächst linear proportional zur Eingabegröße. Der produzierte Parser hat also kein überproportionales Wachstum.
 
-Um die den Sudoku--Regeln gleichwertige Eingabegröße zu erreichen, müssen wir die hier vorhandene Formel aus \lstinline|(produce 10)| noch etwa fünfmal verdoppeln. Nach dieser Rechnung sollte der Parser also etwa eine Minute brauchen, um eine Formel der geforderten Eingabegröße zu Parsen.
+Um die den Sudoku--Regeln gleichwertige Eingabegröße zu erreichen, müssen wir die hier vorhandene Formel aus \lstinline|(produce 10)| noch etwa fünfmal verdoppeln (\lstinline|(produce 15)|). Nach dieser Rechnung sollte der Parser also etwa eine Minute brauchen, um eine Formel der geforderten Eingabegröße zu Parsen.
 
-Theoretisch --- in der Praxis sieht das anders aus. Bei dem Versuch eine Formel von \lstinline|(produce 13)| zu parsen, fängt die Garbage--Collection an zu arbeiten und stört damit massiv den Ablauf. Durch dieses Verhalten verlängert sich die Zeit, die zum Parsen benötigt wird, ungemein. Wobei es in dieser Größenordnung der Eingabe schon teilweise zu Out-Of-Memory-Errors kommt.
+In der Praxis sieht dies jedoch anders aus. Bei dem Versuch eine Formel von \lstinline|(produce 13)| fängt die Garbage--Collection an zu arbeiten und stört damit massiv den Ablauf. Durch dieses Verhalten verlängert sich die Zeit, die zum Parsen benötigt wird, ungemein. Wobei es in dieser Größenordnung der Eingabe schon teilweise zu Out-Of-Memory-Errors kommt.
 
 An dieser Stelle können wir also schon einige Punkte festhalten:
 
@@ -423,37 +423,37 @@ An dieser Stelle können wir also schon einige Punkte festhalten:
 	\item Die Praxis zeigt, dass der limitierende Faktor der Arbeitsspeicher ist.
 \end{enumerate}
 
-Wir wollen uns nun dem Faktor Arbeitsspeicher widmen. Im Versuchsaufbau konnte mit 1 GB allokiertem Speicher bis zu einer Eingabegröße von \lstinline|(produce 12)| gearbeitet werden, bevor Probleme auftraten. Man kann annehmen, dass Instaparse die Formel für \lstinline|(produce 15)| innerhalb einer Minute parsen kann, wenn man 8 GB Arbeitsspeicher (dreimalige Verdopplung) dafür allokiert --- Diese Theorie wurde von Mark Engelnberg nicht getestet, da er seinen Angaben nach keine einfache Möglichkeit hatte, dies auszuprobieren.\\
+Wir wollen uns nun dem Faktor Arbeitsspeicher widmen. Im Versuchsaufbau konnte mit 1 GB allokiertem Speicher bis zu einer Eingabegröße von \lstinline|(produce 12)| gearbeitet werden, bevor Probleme auftraten. Man kann annehmen, dass Instaparse die Formel für \lstinline|(produce 15)| innerhalb einer Minute parsen kann, wenn man 8 GB Arbeitsspeicher (dreimalige Verdopplung) dafür allokiert. Diese Theorie wurde von Mark Engelberg nicht getestet, da er seinen Angaben nach keine einfache Möglichkeit hatte, dies auszuprobieren.\\
 
-Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) nicht für unsere Anwendung geeignet ist. Das Programm soll ermöglichen, logische Formeln in akzeptabler Zeit zu Parsen. Zum Parsen einer Eingabegröße der Sudoku--Regeln kann man annehmen, dass etwa 8 GB Arbeitsspeicher auschließlich für die Verarbeitung zur Verfügung stehen müssten. Diese Größenordnung ist für die aktuellen Rechner (noch) unüblich. Aber selbst wenn man einen Rechner mit genügent Arbeitsspeicher hat, bräuchte dieser immerhin noch etwa eine Minute zum Parsen. Dies ist im Vergleich zu den hier betrachteten Alternativen ein riesiger Unterschied.
+Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) nicht für unsere Anwendung geeignet ist. Das Programm soll ermöglichen, logische Formeln in akzeptabler Zeit zu Parsen. Zum Parsen einer Eingabegröße der Sudoku--Regeln kann man annehmen, dass etwa 8 GB Arbeitsspeicher ausschließlich für die Verarbeitung zur Verfügung stehen müssten. Diese Größenordnung ist für die aktuellen Rechner (noch) unüblich. Aber selbst wenn man einen Rechner mit genügend Arbeitsspeicher hat, bräuchte dieser immerhin noch etwa eine Minute zum Parsen. Dies ist im Vergleich zu den hier betrachteten Alternativen ein sehr großer Unterschied.
 
 \subsection{Das Verhältnis der gegebenen Formeln}
 
 Zuallererst betrachten wir die Größe der Variablen. Bei dem 4-- und 8--Damen--Problem bestehen die Variablen aus zwei Zeichen. Für die Kartenfärbung werden im Schnitt 7,5 Zeichen pro Variable benötigt und für die Sudoku--Regeln vier.\\
 
-Operatoren als Symbole (also z. B. \glqq{}\&\grqq{} statt \glqq{}and\grqq{}) bestehen im Normalfall aus einem Zeichen. Eine Ausnahme besteht hier bei dem 4--Damen--Problem. Dieses enthält auch den Operator \lstinline|->|. Da dieses Zeichen nicht in der Minimalgrammatik vorhanden ist, kann diese Formel auch nicht mit den Parsern übersetzt werden, die diese Grammatik verwenden.\\
+Operatoren als Symbole (also z. B. \glqq{}\&\grqq{} statt \glqq{}and\grqq{}) bestehen im Normalfall aus einem Zeichen. Eine Ausnahme besteht hier bei dem 4--Damen--Problem. Dieses enthält auch den Operator \lstinline|->|. Da dieses Zeichen nicht in der Minimalgrammatik vorhanden ist, kann diese Formel auch nicht mit den entsprechenden Parsern übersetzt werden.\\
 
 Nun wollen wir den Anstieg der Anzahl der jeweiligen Variablen, Operatoren und Zeichen betrachten.
 
-Das 4--Damen--Problem benötigt 200 Variablen, 215 Operatoren und insgesammt 711 Zeichen. Beim 8--Damen--Problem verzehnfacht sich etwa die Anzahl der Zeichen. Die Anzahl der Variablen ist hierbei um das 7,5--fache angestiegen und die Anzahl der Operatoren sogar um das 15--fache.
+Das 4--Damen--Problem benötigt 200 Variablen, 215 Operatoren und insgesamt 711 Zeichen. Beim 8--Damen--Problem verzehnfacht sich etwa die Anzahl der Zeichen. Die Anzahl der Variablen ist hierbei um das 7,5--fache angestiegen und die Anzahl der Operatoren sogar um das 15--fache.
 
 Für die Kartenfärbung der USA benötigen wir etwa genauso viele Variablen und Operatoren wie für das 8--Damen--Problem. Da in diesem Fall jedoch die Variablen fast viermal so lang sind, steigt die Zeichenanzahl auf mehr als das Doppelte an. Dieses Verhältnis kann zur Beobachtung genutzt werden, ob die Parse--Zeit eher von der Anzahl der Zeichen oder der Anzahl der Variablen und Operatoren abhängt.
 
-Da die Länge der Variablen zwischen dem 8--Damen-Problem und den Sudoku--Regeln weniger schwanken als bei der Kartenfärbung der USA, vergleichen wir die $^1/_4$ Sudoku--Regeln mit dem 8--Damen--Problem. Dabei vervierfacht sich fast die Anzahl der Variablen und Operatoren, wobei die Anzahl der Zeichen sich mehr als verfünffacht. Dieser unterschiedliche Anstieg von Variablen/Operatoren zu Zeichen kommt daher, dass die Sudokuregeln durch Klammerung starkt geschachtelt sind.
+Da die Länge der Variablen zwischen dem 8--Damen-Problem und den Sudoku--Regeln weniger schwanken als bei der Kartenfärbung der USA, vergleichen wir die $^1/_4$ Sudoku--Regeln mit dem 8--Damen--Problem. Dabei vervierfacht sich fast die Anzahl der Variablen und Operatoren, wobei die Anzahl der Zeichen sich mehr als verfünffacht. Dieser unterschiedliche Anstieg von Variablen/Operatoren zu Zeichen kommt daher, dass die Sudokuregeln durch Klammerung stark geschachtelt sind.
 
-Entsprechend der Abstufungen enthalten die $^1/_2$ Sudoku--Regeln doppelt so viele Variablen, Operatoren und Zeichen. Diese Verdopplung geschieht nocheinmal beim Schritt auf die vollen Sudoku--Regeln.
+Entsprechend der Abstufungen enthalten die $^1/_2$ Sudoku--Regeln doppelt so viele Variablen, Operatoren und Zeichen. Diese Verdopplung geschieht noch einmal beim Schritt auf die vollen Sudoku--Regeln.
 
 \subsection{Instaparse}
 
 Nun wollen wir das Wachstum der Parse--Zeit für Instaparse im Zusammenhang mit der Eingabe betrachten.
 
-Für das 4--Damen--Problem braucht der \emph{Instaparse--Parser mit der vollen Grammatk (IPv)} 111 ms. Das diese Formel mit der Minimalgrammatik nicht zu parsen war, liegt in diesem Fall keine Zeit für den \emph{Instaparse--Parser mit der minimalen Grammatk (IPm)} vor.
+Für das 4--Damen--Problem braucht der \emph{Instaparse--Parser mit der vollen Grammatik (IPv)} 111 ms. Das diese Formel mit der Minimalgrammatik nicht zu parsen war, liegt in diesem Fall keine Zeit für den \emph{Instaparse--Parser mit der minimalen Grammatk (IPm)} vor.
 
-Für das 8--Damen--Probmlem brauchte der IPm 354 ms und der IPv 2301 ms. Für dem IPv ist das mehr als die zwanzigfache Zeit. Dies fällt in etwa in die Größenordnung vom Anstieg der Variablen und Zeichen.
+Für das 8--Damen--Problem brauchte der IPm 354 ms und der IPv 2301 ms. Für dem IPv ist das mehr als die zwanzigfache Zeit. Dies fällt in etwa in die Größenordnung vom Anstieg der Variablen und Zeichen.
 
 Der IPm braucht 344 ms und der IPv 2751 ms zum Parsen der Kartenfärbung der USA. In beiden Fällen ist das etwa die gleiche Zeit wie beim 8--Damen--Problem. Da die Anzahl der Variablen und Operatoren gleich geblieben ist, wobei sich die Anzahl der Zeichen mehr als verdoppelt, kann man annehmen, dass die Parse--Zeit sich nicht signifikant durch die Länge der Variablen verändert.
 
-Für das Parsen der $^1/_4$ Sudoku--Regeln braucht der IPm achtmal und der IPv etwa elfmal so lange wie für das 8--Damen--Problem. Man kann daher annehmen, dass das Parsen mit dem Instaparse--Parser durch die starke Verschachtelung mittels Klammern die Parse--Zeit steigert. Hierbei kann der Unterschied zwischen der Erhöhung zwischen IPm und IPv daran liegen, dass die Klammer--Regel sehr weit unten in der Grammatik beschrieben ist, wobei die minimale Grammatik weniger Regeln hat, die bis zur Klammerungsregel geprüft werden müssen. Des Weiteren ist anzunehmen, dass beim IPv die Garbage Collection einsetzt und sich dies negativ auf die Zeit auswirkt.
+Für das Parsen der $^1/_4$ Sudoku--Regeln braucht der IPm achtmal und der IPv etwa elfmal so lange wie für das 8--Damen--Problem. Man kann daher annehmen, dass das Parsen mit dem Instaparse--Parser durch die starke Verschachtelung mittels Klammern die Parse--Zeit steigert. Hierbei kann der Unterschied zwischen der Erhöhung zwischen IPm und IPv daran liegen, dass die Klammer--Regel sehr weit unten in der Grammatik beschrieben ist, wobei die minimale Grammatik weniger Regeln hat, die bis zur Klammerungsregel geprüft werden müssen. Des Weiteren ist anzunehmen, dass beim IPv die Garbage Collection einsetzt und dies die Laufzeit verlängert.
 
 Wie in der Beschreibung von Mark Engelberg (siehe Abschnitt \ref{Engelberg}) angenommen und gezeigt wurde, hat sich die Parse--Zeit für IPm von $^1/_4$ zu $^1/_2$ Sudoku--Regeln verdoppelt. Der IPv konnte die $^1/_2$ Sudoku--Regeln nicht mehr Parsen, da es dabei immer wieder zu Fehlern (\emph{OutOfMemoryException, StackOverflowError, \dots}) kam.
 
@@ -469,11 +469,11 @@ Für das Parsen des 8--Damen--Problems benötigte der KPm 293 ms und der KPv 590
 
 Ähnlich dem Instaparse--Parser brauchen sowohl der KPm (300 ms) und der KPv (548 ms) annähernd die gleiche Zeit zum Parsen der Formel für die Kartenfärbung der USA. An diesem Beispiel kann man ablesen, dass die Dauer des Parsens nicht erkennbar von der Länge der Variablen abhängt.
 
-Zum Parsen der $^1/_4$ Sudoku--Regeln braucht der KPm mehr als viermal so lange und der KPv etwa das Dreifache an Zeit wie für das 8--Damen--Problem. Das ähnelt eher dem Ansteig der Anzahl der Variablen und Operatoren als dem der Zeichen.
+Zum Parsen der $^1/_4$ Sudoku--Regeln braucht der KPm mehr als viermal so lange und der KPv etwa das Dreifache an Zeit wie für das 8--Damen--Problem. Das ähnelt eher dem Anstieg der Anzahl der Variablen und Operatoren als dem der Zeichen.
 
 Der KPm braucht zum Parsen der $^1/_2$ Sudoku--Regeln nicht merkbar mehr Zeit als zum Parsen der $^1/_4$ Sudoku--Regeln. Der KPv hingegen braucht etwas mehr als die doppelte Zeit. Das Verhalten des KPv kann aus der Verdopplung der Anzahl der Variablen, Operatoren und Zeichen hergeleitet werden, wogegen das zeitliche Verhalten des KPm sich mit den übrigen Beobachtungen nicht deckt.
 
-Für das Parsen der gesammten Sudoku--Regeln benötigt sowohl der KPm als auch der KPv etwa das Doppelte an Zeit als der jeweilige Parser für die $^1/_2$ Sudoku--Regeln.\\
+Für das Parsen der gesamten Sudoku--Regeln benötigt sowohl der KPm als auch der KPv etwa das Doppelte an Zeit als der jeweilige Parser für die $^1/_2$ Sudoku--Regeln.\\
 
 Mit Ausnahme des Verhaltens bei kleinen Formeln und des Verhältnisses der benötigten Zeit des KPm zum Parsen der $^1/_4$ Sudoku--Regeln und der $^1/_2$ Sudoku--Regeln, sieht man, dass sich die mit Kern geschriebenen Parser in etwa linear proportional zur Anzahl der Variablen bzw. Operatoren verhalten.
 
@@ -483,9 +483,9 @@ Nun wollen wir uns die Zeiten des \emph{JavaCC-Parsers (JP)} ansehen. Da der JP 
 
 Zum Parsen des 8--Damen--Problems brauchte der JP im Schnitt 93 ms. Das ist etwas mehr als neunmal die für das 4--Damen--Problem benötigte Zeit und entspricht in etwa dem Wachstum der Anzahl von Variablen, Operatoren und Zeichen.
 
-Für die Regeln zum Kartenfärben der USA benötigte der JC 153 ms. Dies ist im Gegensatz zu den anderen Parsern ein Anstieg von etwa zwei Dritteln. Betrachtet man die Messwerte des JC zum Parsen dieser Regeln, fällt auf, dass die meisten Werte bis auf zwei Peeks in etwa bei 90 bis 120 ms liegen. Wenn man den Mittelwert über die Messergebnisse errechnet und dabei die zwei Extrema auslässt, ergibt sich eine durchschnittliche Zeit von etwa 107 ms. Diese Steigerung liegt dann vergleichbar zu den anderen Parsern.
+Für die Regeln zum Kartenfärben der USA benötigte der JC 153 ms. Dies ist im Gegensatz zu den anderen Parsern ein Anstieg von etwa zwei Dritteln. Betrachtet man die Messwerte des JC zum Parsen dieser Regeln, fällt auf, dass die meisten Werte bis auf zwei Peeks in etwa bei 90 bis 120 ms liegen. Wenn man den Mittelwert über die Messergebnisse errechnet und dabei die zwei Extreme auslässt, ergibt sich eine durchschnittliche Zeit von etwa 107 ms. Diese Steigerung liegt dann vergleichbar zu den anderen Parsern.
 
-Um die $^1/_4$ Sudoku--Regeln zu Parsen, benötigt der JC etwa 461 ms, also etwa dem Fünffachen der Zeit für das 8--Damen--Problem. Hierbei lagen drei Messergebnisse über 600 ms und die übrigen sieben etwas unter 400 ms. Würde man ausschließlich diese sieben Messwerte betrachten, wäre das etwa eine Vervierfachung der Zeit ausgehend vom 8--Damen--Problem. Damit lägen wir auch ungefähr beim Wachstum der bisher betrachteten Parser.
+Um die $^1/_4$ Sudoku--Regeln zu Parsen, benötigt der JC etwa 461 ms, also etwa das Fünffache der Zeit für das 8--Damen--Problem. Hierbei lagen drei Messergebnisse über 600 ms und die übrigen sieben etwas unter 400 ms. Würde man ausschließlich diese sieben Messwerte betrachten, wäre das etwa eine Vervierfachung der Zeit ausgehend vom 8--Damen--Problem. Damit lägen wir auch ungefähr beim Wachstum der bisher betrachteten Parser.
 
 Die Messwerte für die $^1/_2$ Sudoku--Regeln liegen nicht so weit auseinander. Hierbei benötigt der JC in Schnitt etwa 524 ms. Dies ist nur eine kleine Steigerung der benötigten Zeit und entspricht nicht dem Doppelten wie bei den übrigen Parsern, sondern eher im Wachstumsverhältnis des KPm, der auch hier bei dem Vergleich der $^1/_4$ Sudoku--Regeln und $^1/_2$ Sudoku--Regeln nur eine relativ kurze Differenz der durchschnittlichen Zeiten hat.
 
@@ -495,7 +495,8 @@ Durch die extrem kurze Zeit des Parsens mit dem JC kann es schnell zu messtechni
 
 \subsection{Fazit}
 
-Alle hier betrachteten Parser hatten ein erkennbares Wachstumsmuster. Diese ähnelten sich mit ein paar Ausnahmen und unterhalb der technischen Grenzen stark. Man konnte erkennen, dass alle Parser in etwa ein linear proportionales Wachstumsverhältnis zur Eingabegröße haben. Wobei der Instaparse--Parser am ehesten an seine technischen Grenzen stoß. Kern war wie Instaparse ein mit Clojure entwickeltes Werkzeug, jedoch diesem in zeitlicher Hinsicht klar überlegen. Allerdings benötigte der KPv fast sieben Sekunden zum Parsen der vollen Sudoku--Regeln. Da das erstellte Tool vorzugsweise für die Lehre benutzt werden soll und in \emph{meinem Studium} eher selten Formeln solcher Größe zum Einsatz kamen, könnte man in diesem Rahmen einen auf Kern basierten Parser benutzen. Es hat sich jedoch gezeigt, dass ein auf JavaCC basierender Parser mit der gleichen Grammatik um ein vieles schneller ist --- in unserer Messreihe für die vollen Sudokuregeln etwa sieben mal so schnell wie der KPv.
+Alle hier betrachteten Parser hatten ein erkennbares Wachstumsmuster. Diese ähnelten sich mit ein paar Ausnahmen und unterhalb der technischen Grenzen stark. Man konnte erkennen, dass alle Parser in etwa ein linear proportionales Wachstumsverhältnis zur Eingabegröße haben. Wobei der Instaparse--Parser am ehesten an seine technischen Grenzen stoß. Kern war wie Instaparse ein mit Clojure entwickeltes Werkzeug, jedoch Instaparse in zeitlicher Hinsicht klar überlegen. Allerdings benötigte der KPv fast sieben Sekunden zum Parsen der vollen Sudoku--Regeln. Da das erstellte Tool vorzugsweise für die Lehre benutzt werden soll, könnte man in diesem Rahmen einen auf Kern basierten Parser benutzen. Es hat sich jedoch gezeigt, dass ein auf JavaCC basierender Parser mit der gleichen Grammatik um ein Vielfaches schneller ist --- in unserer Messreihe für die vollen Sudokuregeln etwa sieben mal so schnell wie der KPv.
+
 Da wir es für sinnvoll halten, unser Projekt nicht unnötig langsam arbeiten zu lassen, haben wir uns entschieden, die schnellste verfügbare und von uns beherrschbare Alternative zu wählen. Damit viel die Wahl auf den JavaCC--Parser.
 
 \appendix
