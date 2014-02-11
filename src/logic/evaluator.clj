@@ -21,4 +21,5 @@
   "Takes a formula in clojure code and evaluates it with the given substitution vector. 
   The last must be of the shape ['a true 'b false]"
   [formula val-assignment]
-  (eval `(let ~val-assignment ~formula)))
+  (binding [*ns* (find-ns 'logic.util)]
+    (eval `(let ~val-assignment ~formula))))
