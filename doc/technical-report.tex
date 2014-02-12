@@ -497,13 +497,13 @@ Durch die extrem kurze Zeit des Parsens mit dem JC kann es schnell zu messtechni
 
 \subsection{Fazit}
 
-Alle hier betrachteten Parser hatten ein erkennbares Wachstumsmuster. Diese ähnelten sich mit ein paar Ausnahmen und unterhalb der technischen Grenzen stark. Man konnte erkennen, dass alle Parser in etwa ein linear proportionales Wachstumsverhältnis zur Eingabegröße haben. Wobei der Instaparse--Parser am ehesten an seine technischen Grenzen stoß. Kern war wie Instaparse ein mit Clojure entwickeltes Werkzeug, jedoch Instaparse in zeitlicher Hinsicht klar überlegen. Allerdings benötigte der KPv fast sieben Sekunden zum Parsen der vollen Sudoku--Regeln. Da das erstellte Tool vorzugsweise für die Lehre benutzt werden soll, könnte man in diesem Rahmen einen auf Kern basierten Parser benutzen. Es hat sich jedoch gezeigt, dass ein auf JavaCC basierender Parser mit der gleichen Grammatik um ein Vielfaches schneller ist --- in unserer Messreihe für die vollen Sudokuregeln etwa sieben mal so schnell wie der KPv.
+Alle hier betrachteten Parser hatten ein erkennbares Wachstumsmuster (vgl. Abb. \ref{parse-zeiten}). Diese ähnelten sich mit ein paar Ausnahmen und unterhalb der technischen Grenzen stark. Man konnte erkennen, dass alle Parser in etwa ein linear proportionales Wachstumsverhältnis zur Eingabegröße haben. Wobei der Instaparse--Parser am ehesten an seine technischen Grenzen stoß. Kern war wie Instaparse ein mit Clojure entwickeltes Werkzeug, jedoch Instaparse in zeitlicher Hinsicht klar überlegen. Allerdings benötigte der KPv fast sieben Sekunden zum Parsen der vollen Sudoku--Regeln. Da das erstellte Tool vorzugsweise für die Lehre benutzt werden soll, könnte man in diesem Rahmen einen auf Kern basierten Parser benutzen. Es hat sich jedoch gezeigt, dass ein auf JavaCC basierender Parser mit der gleichen Grammatik um ein Vielfaches schneller ist --- in unserer Messreihe für die vollen Sudokuregeln etwa sieben mal so schnell wie der KPv.
 
 Da wir es für sinnvoll halten, unser Projekt nicht unnötig langsam arbeiten zu lassen, haben wir uns entschieden, die schnellste verfügbare und von uns beherrschbare Alternative zu wählen. Damit viel die Wahl auf den JavaCC--Parser.
 
 \begin{figure}[ht]
 	\begin{center}
-		\includegraphics[height=\textheight]{img/zeiten}
+		\includegraphics[scale=0.5]{img/zeiten}
 	\end{center}
 	\caption{\label{parse-zeiten}Übersicht der Laufzeiten der Parser im Verhältnis zur Anzahl der Variablen, Operatoren und Zeichen}
 \end{figure}
