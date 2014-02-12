@@ -4,11 +4,14 @@
 \usepackage{lmodern}
 \usepackage{babel}
 \usepackage{geometry}
-\usepackage{graphicx}
-\usepackage[hidelinks]{hyperref}
+\usepackage[pdftex]{graphicx}
+\usepackage[hidelinks,pdfborder={0 0 0}]{hyperref}
 \usepackage{listings}
 \usepackage{color}
 \usepackage[scaled=.8]{beramono}
+\usepackage{fancyhdr}
+\usepackage[babel]{csquotes}
+
 \geometry{a4paper, top=20mm, bottom=40mm, left=40mm, right=25mm, footskip=20mm}
 
 \lstdefinelanguage{clojure}
@@ -79,20 +82,57 @@ with-meta,with-open,with-out-str,with-precision,xml-seq,zero?,zipma
 	frame=single,
 	breaklines=true}
 
-\title{Leistungsvergleich von Clojure--Parsern}
-\subtitle{Technischer Bericht zum Masterprojekt}
-\author{Daniel Kirsten (daniel.kirsten@mni.thm.de)
-\and
-Markus Bader (markus.bader@mni.thm.de)
-\and\\
-\emph{betreut durch Prof. Dr. B. Renz (burkhardt.renz@mni.thm.de)}
-}
-\publishers{Technische Hochschule Mittelhessen, Fachbereich MNI, Wiesentraße 14, D--35390 Gießen}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\rmdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
 
-\date{\today}
+\setlength{\textwidth}{17cm}
+\setlength{\headwidth}{\textwidth}
+\setlength{\headheight}{4cm}
+\setlength{\footskip}{55pt}
+%\setlength{\hoffset}{0in}
+%\setlength{\voffset}{0in}
+\setlength{\oddsidemargin}{-0.5cm}
+\setlength{\evensidemargin}{-5in}
+\setlength{\textheight}{20cm}
+\setlength{\topmargin}{-2.2cm}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2ex plus0.3ex minus0.1ex}
+
 \begin{document}
 
-\maketitle
+  \thispagestyle{fancy}
+
+  \lhead{\includegraphics[height=1.3cm]{img/isa-logo-kurz.pdf}}
+  \chead{}
+  \rhead{\includegraphics[height=1.3cm]{img/thm-logo.pdf}}
+
+  \lfoot{}
+  \cfoot{}
+  \rfoot{}
+
+  \renewcommand{\headrulewidth}{0.4pt}
+
+  \vspace*{2cm}
+  
+    \huge
+    Daniel Kirsten, Markus Bader
+    
+    %\vspace*{1cm}
+    
+    \textbf{Vergleich von Parsern in Clojure und Java}
+    
+    \vspace*{0.8cm}
+ 	
+	12. Februar 2014
+	 
+  	\vfill
+	
+	\large
+	Technischer Bericht Nr. 4\\
+	des Instituts für SoftwareArchitektur
+ 
 \newpage
 \begin{abstract}
 
@@ -151,6 +191,8 @@ Ein Makroprozessor wurde nicht eingebunden, da Clojure selbst über ein mächtig
 Zu der wesentlichen Kernfunktionalität der LW gehört das Parsen von Formeln, sodass eine Clojure--Liste entsteht, also beispielsweise der String \lstinline|"A -> !(A & B)"| zu \lstinline|(impl A (not (and A B)))| geparst wird. Die vollständige Referenzgrammatik des MPA findet sich in Anhang \ref{refgrammatik}.\\
 
 Zunächst wurde zur allgemeinen Zufriedenheit die Bibliothek \emph{Instaparse} verwendet. Bei einem Test mit einer großen Formel (Sudoku--Regeln) wurde jedoch eine im Vergleich mit dem Referenzparser sehr viel höhere Laufzeit festgestellt, wenn der mit Instaparse generierte Parser nicht vorher durch einen Stackoverflow abgebrochen wurde. So brauchte dieser in einem Testdurchlauf mehrere Minuten, wogegen der Referenzparser des MPA diese Aufgabe in etwa zwei Sekunden vollbrachte.
+
+\newpage
 
 Aus diesem Grunde wurden zunächst die Ursachen für die stark wachsende Laufzeit des Instaparse--Parsers eruiert und anschließend eine Vergleichsmessung zwischen verschiedenen Parsern und Grammatiken durchgeführt.
 
@@ -493,6 +535,8 @@ Die Messwerte für die $^1/_2$ Sudoku--Regeln liegen nicht so weit auseinander. 
 
 Zum Parsen der vollen Sudokuregeln nimmt sich der JC im Durchschnitt etwa 963 ms Zeit. Hierbei schwanken die Messwerte von knapp unter 700 bis fast 1200 ms, wobei drei Werte sich um 700 mehren und die übrigen sieben über 1000 ms liegen. Unter Betrachtung der Mehrheit kam es hier zu einer Verdopplung der benötigten Zeit ähnlich den anderen Parsern.\\
 
+\newpage
+
 Durch die extrem kurze Zeit des Parsens mit dem JC kann es schnell zu messtechnischen Ausreißern kommen, da hier nur eine geringe Zeitverzögerung wie z. B. der Lastwechsel zwischen Prozessoren ausreicht, um eine signifikant längere Zeit zu erreichen. Daher ist es schwerer, für den JP ein sicheres und klares Ergebnis zu erhalten. Jedoch scheint das Wachstumsverhältnis ähnlich linear proportional zur Eingabegröße zu sein, wie bei den übrigen betrachteten Parsern, sofern diese nicht an ihre technischen Grenzen stoßen, wie etwa der IPv ab den $^1/_4$ Sudoku--Regeln und der IPm mit den vollen Sudoku--Regeln.
 
 \subsection{Fazit}
@@ -503,7 +547,7 @@ Da wir es für sinnvoll halten, unser Projekt nicht unnötig langsam arbeiten zu
 
 \begin{figure}[ht]
 	\begin{center}
-		\includegraphics[scale=0.5]{img/zeiten}
+		\includegraphics[scale=0.45]{img/zeiten}
 	\end{center}
 	\caption{\label{parse-zeiten}Übersicht der Laufzeiten der Parser im Verhältnis zur Anzahl der Variablen, Operatoren und Zeichen}
 \end{figure}
@@ -556,6 +600,8 @@ Da wir es für sinnvoll halten, unser Projekt nicht unnötig langsam arbeiten zu
 \endgroup
 
 \chapter{Sonstiges}
+\newpage
+
 \section{Messergebnisse}
 \begin{table}[!h]
 	\resizebox{!}{\textwidth}{
@@ -647,14 +693,14 @@ Die binären Operatoren \glqq{}BinOp\grqq{} sind wie folgt organisiert:
 
 \begin{figure}[!ht]
 	\begin{center}
-		\includegraphics{img/linear}
+		\includegraphics[scale=0.85]{img/linear}
 	\end{center}
 	\caption{\label{parse-linear}Formeln und Parsezeiten, linear}
 \end{figure}
 
 \begin{figure}[!ht]
 	\begin{center}
-		\includegraphics{img/log10}
+		\includegraphics[scale=0.85]{img/log10}
 	\end{center}
 	\caption{\label{parse-log}Formeln und Parsezeiten, logarithmisch}
 \end{figure}
