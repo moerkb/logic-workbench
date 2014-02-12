@@ -15,7 +15,7 @@
 (defn insta-full-parse [parse-string]
   (logic/transform-ast (logic/logic-parse parse-string)))
 
-(def javacc-parse logic/javaCCparse)
+(def javacc-parse logic/parse)
 
 ; testing formulas
 (defn formula-parse-test [form-sym ^Boolean slim? ^Boolean insta-full?]
