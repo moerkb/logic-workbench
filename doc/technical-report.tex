@@ -163,7 +163,7 @@ Zu den Features gehören u. a.:
 	\item Produktion der konjunktiven und disjunktiven Normalform (CNF, DNF)
 	\item Anwenden der Tseitin--Transformation
 	\item Überprüfen der Erfüllbarkeit einer Formel mittels eines externen SAT--Solvers (z. B. SAT4J)
-	\item Pretty--print--Funktionen z. B. für Tex.
+	\item Pretty--print--Funktionen z. B. für \TeX{}.
 	\item Anwenden eines externen, M4--kompatiblen Makroprozessors
 \end{itemize}
 
@@ -219,7 +219,7 @@ Im Gegensatz zu JavaCC und Instaparse gehören mit \emph{Kern} geschriebene Pars
 
 Im Gegensatz zu Instaparse verfügt es dabei über einen dedizierten Lexer, welcher sich nahtlos in die Parsergrammatik einfügt. Dies sorgt einerseits für kompakten Code, kann andererseits aber auch verwirren. So sind \lstinline|token*| und \lstinline|token_| Parser--Funktionen, \lstinline|token| jedoch eine Funktion des Lexers und verlangt, dass ein solcher korrekt konfiguriert und eingebunden ist. Dafür erhöht der Lexer die Komfortabilität, da z. B. die für einen Identifier erlaubten Zeichen als einfacher regulärer Ausdruck angegeben werden können und sich der Benutzer daraufhin nicht mehr um Leerzeichen kümmern muss.
 
-Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} eingesehen werden. Zu Beachten ist, dass der Autor von Kern selber aussagt, dass seine Bibliothek nicht performant ist: 
+Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} eingesehen werden. Zu beachten ist, dass der Autor von Kern selber aussagt, dass seine Bibliothek nicht performant ist: 
 
 \begin{quote}
 	``Kern's design isn't well-suited for achieving very high performance.'' \cite{kern}
@@ -287,7 +287,7 @@ Da einige Formeln durch das MPA--Projekt bereits vorhanden waren, wurden eben so
 
 Die Forderung lautet auf einem $n \times n$ großen Schachbrett $n$ Damen so zu platzieren, dass keine Dame eine andere in einem Zug schlagen kann. Abbildung \ref{four-queens} zeigt eine mögliche Lösung.
 
-Zum Testen wurden zwei verschiedene Formeln verwendet. Die erste ist eine handgeschriebe Lösung für $n = 4$, welche Implikationen enthält und dadurch nicht mit minimalen Grammatiken geparst werden kann. Die zweite Formel ist eine Lösung für $n = 8$ welche mit Hilfe von eigens dafür geschriebenen Funktionen erzeugt wurde. Sie besteht ausschließlich aus den Basisoperatoren Konjunktion, Disjunktion und Negation und ist zudem eine \emph{konjunktive Normalform (KNF bzw. CNF)}.
+Zum Testen wurden zwei verschiedene Formeln verwendet. Die erste ist eine handgeschriebe Lösung für $n = 4$, welche Implikationen enthält und dadurch nicht mit minimalen Grammatiken geparst werden kann. Die zweite Formel ist eine Lösung für $n = 8$ welche mit Hilfe von eigens dafür geschriebenen Funktionen erzeugt wurde. Sie besteht ausschließlich aus den Basisoperatoren Konjunktion, Disjunktion und Negation und ist zudem \emph{konjunktive Normalform (KNF bzw. CNF)}.
 
 \subsection{Kartenfärbung USA}
 
@@ -371,7 +371,7 @@ Betrachtet man die Ergebnisse aus Tabelle \ref{messergebnisse-kurz}, so kann man
 
 Aus 1. folgt, dass der JavaCC--Parser letztendlich in LW eingesetzt wird. Punkt 2. entspricht den Erwartungen.
 
-Die Beobachtungen 3. und 4. weisen darauf hin, dass die Kern--Bibliothek allgemein performanter arbeitet als Instaparse. Es stellt sich die Frage, ob ein Combinator--Parser grundsätzlich schneller ist als der GLL--Algorithmus, mit dem Instaparse arbeitet \cite[Special Thanks]{instaparse}. Diese Untersuchung ist jedoch nicht Gegenstand dieses Berichts.
+Die Beobachtungen 3. und 4. weisen darauf hin, dass die Kern--Bibliothek allgemein performanter arbeitet als Instaparse. Es stellt sich die Frage, ob ein Combinator--Parser grundsätzlich schneller ist als der GLL--Algorithmus, mit dem Instaparse arbeitet \cite[\glqq{}Special Thanks\grqq{}]{instaparse}. Diese Untersuchung ist jedoch nicht Gegenstand dieses Berichts.
 
 Die letzten Punkte (5. und 6.) zeigen hinreichend, dass Instaparse nicht produktiv in LW eingesetzt werden kann. Die generierten Parser sind einfach unzulänglich.
 
@@ -387,9 +387,9 @@ Zur Übersicht und begleitend zu der nun folgenden Erklärung sei auf die Diagra
 
 Zur Geschwindigkeit von Instaparse hat sich dessen Autor \emph{Mark Engelberg} in der zugehörigen Google--Group zu unserer Problemstellung geäußert. Seine Antwort wird im Folgenden erläutert. \cite{instaparse-google-group}
 
-Es ist festgestellt worden, dass die Grammatik gut konstruiert wurde und die lange Parse--Zeit nicht von Mehrdeutigkeiten in der Grammatik abhinge. Daher bemühte sich Mark Engelberg uns zu helfen, dem Problem auf den Grund zu gehen. Alle hier genannten Messergebnisse gehen auf die Angaben und damit auch den Computer --- von dem wir keine genauere Spezifikation haben --- von Mark Engelberg zurück. Daher können die genauen Laufzeiten auf anderen Rechnern abweichen.
+Engelbert hat festgestellt, dass die Grammatik gut konstruiert wurde und die lange Parse--Zeit nicht von Mehrdeutigkeiten in der Grammatik abhinge. Daher bemühte er sich uns zu helfen, dem Problem auf den Grund zu gehen. Alle hier genannten Messergebnisse gehen auf die Angaben und damit auch den Computer --- von dem wir keine genauere Spezifikation haben --- von Mark Engelberg zurück. Daher können die genauen Laufzeiten auf anderen Rechnern abweichen.
 
-Das angenommene Beispiel waren die vollen Sudokuregeln. Diese sind mit Hilfe von insgesammt 168075 Zeichen (Charactern) beschrieben. Die reine Geschwindigkeit des Lesens wurde duch eine minimale Grammatik geprüft.
+Das angenommene Beispiel waren die vollen Sudokuregeln. Diese sind mit Hilfe von insgesamt 168075 Zeichen (Charactern) beschrieben. Die reine Geschwindigkeit des Lesens wurde durch eine minimale Grammatik geprüft.
 
 \begin{lstlisting}
   S = #'a'+
@@ -399,7 +399,7 @@ Mit dieser Grammatik konnten 168075 Zeichen --- in diesem Fall \glqq{}a\grqq{} -
 
 Es wurde an dieser Stelle angenommen, dass die Zeit linear zur Komplexität steigt. Wenn also die Grammatik aus 60 Regeln besteht --- wie etwa die volle Grammatik des Parsers für die LW --- sollte das Parsen mit dieser Annahme etwa eine Minute dauern.
 
-Um diese Annahme zu überprüfen, wurde eine Funktion \emph{produce} geschrieben, mit der verschieden große Formeln produziert werden können. Diese haben eine ähnliche Struktur wie die Sudoku--Regeln, wodurch die Laufzeiten des Parsers mit der vollen Grammatik schrittweise im Kleinen überprüft werden können:
+Um diese Annahme zu überprüfen, hat Herr Engelberg eine Funktion \emph{produce} geschrieben, mit der verschieden große Formeln produziert werden können. Diese haben eine ähnliche Struktur wie die Sudoku--Regeln, wodurch die Laufzeiten des Parsers mit der vollen Grammatik schrittweise im Kleinen überprüft werden können:
 
 \begin{lstlisting}
   (defn ^:dynamic produce [n]
@@ -452,7 +452,7 @@ Nun betrachten wir die Laufzeit, wenn die Zeichenkette auf die doppelte Länge w
   "Elapsed time: 2007.042944 msecs"
 \end{lstlisting}
 
-Wie man sehen kann, beansprucht das Parsen einer längeren Zeichenkette mehr Zeit. Wenn die Länge der zu parsende Zeichenkette verdoppelt wird, benötigt der Parser etwa doppelt so lange. Die Abweichungen können auf das Eingreifen der Garbage--Collection zurückgeführt werden.
+Wie man sehen kann, beansprucht das Parsen einer längeren Zeichenkette mehr Zeit. Wenn die Länge der zu parsenden Zeichenkette verdoppelt wird, benötigt der Parser etwa doppelt so lange. Die Abweichungen können auf das Eingreifen der Garbage--Collection zurückgeführt werden.
 
 Hierbei ist erkennbar, dass Instaparse mit der hier benutzten Grammatik ein akzeptables Verhalten an den Tag legt. Es ist demzufolge nichts verkehrt an der genutzten Grammatik und die Zeit des Parsens wächst linear proportional zur Eingabegröße. Der produzierte Parser hat also kein überproportionales Wachstum.
 
@@ -469,7 +469,7 @@ An dieser Stelle können wir also schon einige Punkte festhalten:
 
 Wir wollen uns nun dem Faktor Arbeitsspeicher widmen. Im Versuchsaufbau konnte mit 1 GB allokiertem Speicher bis zu einer Eingabegröße von \lstinline|(produce 12)| gearbeitet werden, bevor Probleme auftraten. Man kann annehmen, dass Instaparse die Formel für \lstinline|(produce 15)| innerhalb einer Minute parsen kann, wenn man 8 GB Arbeitsspeicher (dreimalige Verdopplung) dafür allokiert. Diese Theorie wurde von Mark Engelberg nicht getestet, da er seinen Angaben nach keine einfache Möglichkeit hatte, dies auszuprobieren.\\
 
-Auch mit dieser Annahme wurde gezeigt, dass der aktuelle Instaparse (v 1.2.4) nicht für unsere Anwendung geeignet ist. Das Programm soll ermöglichen, logische Formeln in akzeptabler Zeit zu Parsen. Zum Parsen einer Eingabegröße der Sudoku--Regeln kann man annehmen, dass etwa 8 GB Arbeitsspeicher ausschließlich für die Verarbeitung zur Verfügung stehen müssten. Diese Größenordnung ist für die aktuellen Rechner (noch) unüblich. Aber selbst wenn man einen Rechner mit genügend Arbeitsspeicher hat, bräuchte dieser immerhin noch etwa eine Minute zum Parsen. Dies ist im Vergleich zu den hier betrachteten Alternativen ein sehr großer Unterschied.
+Auch mit dieser Annahme hat Engelbert gezeigt, dass der aktuelle Instaparse (v 1.2.4) nicht für unsere Anwendung geeignet ist. Das Programm soll ermöglichen, logische Formeln in akzeptabler Zeit zu Parsen. Zum Parsen einer Eingabegröße der Sudoku--Regeln kann man annehmen, dass etwa 8 GB Arbeitsspeicher ausschließlich für die Verarbeitung zur Verfügung stehen müssten. Diese Größenordnung ist für die aktuellen Rechner (noch) unüblich. Aber selbst wenn man einen Rechner mit genügend Arbeitsspeicher hat, bräuchte dieser immerhin noch etwa eine Minute zum Parsen. Dies ist im Vergleich zu den hier betrachteten Alternativen ein sehr großer Unterschied.
 
 \subsection{Das Verhältnis der gegebenen Formeln}
 
@@ -499,7 +499,7 @@ Der IPm braucht 344 ms und der IPv 2751 ms zum Parsen der Kartenfärbung der USA
 
 Für das Parsen der $^1/_4$ Sudoku--Regeln braucht der IPm achtmal und der IPv etwa elfmal so lange wie für das 8--Damen--Problem. Man kann daher annehmen, dass das Parsen mit dem Instaparse--Parser durch die starke Verschachtelung mittels Klammern die Parse--Zeit steigert. Hierbei kann der Unterschied zwischen der Erhöhung zwischen IPm und IPv daran liegen, dass die Klammer--Regel sehr weit unten in der Grammatik beschrieben ist, wobei die minimale Grammatik weniger Regeln hat, die bis zur Klammerungsregel geprüft werden müssen. Des Weiteren ist anzunehmen, dass beim IPv die Garbage Collection einsetzt und dies die Laufzeit verlängert.
 
-Wie in der Beschreibung von Mark Engelberg (siehe Abschnitt \ref{Engelberg}) angenommen und gezeigt wurde, hat sich die Parse--Zeit für IPm von $^1/_4$ zu $^1/_2$ Sudoku--Regeln verdoppelt. Der IPv konnte die $^1/_2$ Sudoku--Regeln nicht mehr Parsen, da es dabei immer wieder zu Fehlern (\emph{OutOfMemoryException, StackOverflowError, \dots}) kam.
+Wie in der Beschreibung von Mark Engelberg (siehe Abschnitt \ref{Engelberg}) angenommen und gezeigt wurde, hat sich die Parse--Zeit für IPm von $^1/_4$ zu $^1/_2$ Sudoku--Regeln verdoppelt. Der IPv konnte die $^1/_2$ Sudoku--Regeln nicht mehr parsen, da es dabei immer wieder zu Fehlern (\emph{OutOfMemoryException, StackOverflowError, \dots}) kam.
 
 Die benötigte Zeit vervierfacht sich fast zum Parsen der gesamten Sudokuregel. Hier ist zu erkennen, dass sich die Garbage Collection massiv auf die benötigte Zeit auswirkt.\\
 
