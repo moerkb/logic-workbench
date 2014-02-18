@@ -34,19 +34,9 @@
 (load "tools")
 (load "handler")
 (load "menus")
+(load "project-tree")
 
-; project file tree
-(def test-tree
-  (Node. "Project_1" (list
-                       (Node. "Formel_1" "a&b")
-                       (Node. "Formel_2" "a->b"))))
-
-(def tree-model
-  (simple-tree-model
-    #(.getChildren %)
-    #(.getChildren %)
-    test-tree))
-
+; final window building
 (def form-tree (scrollable (tree
                              :id :tree
                              :model tree-model
@@ -54,7 +44,6 @@
                            :preferred-size [255 :by 600]
                            :maximum-size [255 :by 32000]))
 
-; final window building
 (def editor (syntax/text-area :syntax :mpa))
 (def form-editor (scrollable editor
                              :preferred-size [690 :by 400]))
