@@ -17,7 +17,7 @@
                :multi-line? true
                :editable? false))
 
-(load "actions")
+(load "handler")
 
 ; general stuff
 (native!)

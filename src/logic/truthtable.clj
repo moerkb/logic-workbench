@@ -80,7 +80,7 @@
    :lines parameter is forwared to the same named of generate-truth-table."
   [formula & {:keys [lines] :or {lines :all}}]
   (print-tt formula 
-            (-> formula logic-parse transform-ast (generate-truth-table :lines lines))))
+            (-> formula parse (generate-truth-table :lines lines))))
 
 (defn truth-table
   "Prints truth table of formula in clojure code. :lines parameter is forwared to the same named of generate-truth-table."
