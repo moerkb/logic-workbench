@@ -169,9 +169,9 @@ Zu den Features gehören u. a.:
 
 Die Funktionen können über eine GUI angesprochen werden. Das Programm wird in der Lehre an der THM eingesetzt und ist unter der GPL quelloffen verfügbar.
 
-\section{Logical Workbench}
+\section{Logic Workbench}
 
-Innerhalb des Masterprojektes der Autoren unter Leitung des bereits für den MPA verantwortlichen Prof. Dr. B. Renz wird ein Programm mit identischen oder ähnlichen Funktionen des MPA entwickelt. Unter dem Projektnamen \emph{Logical Workbench (LW)} wird im Gegensatz zum MPA (Java) jedoch die Programmiersprache \emph{Clojure} verwendet.
+Innerhalb des Masterprojektes der Autoren unter Leitung des bereits für den MPA verantwortlichen Prof. Dr. B. Renz wird ein Programm mit identischen oder ähnlichen Funktionen des MPA entwickelt. Unter dem Projektnamen \emph{Logic Workbench (LWB)} wird im Gegensatz zum MPA (Java) jedoch die Programmiersprache \emph{Clojure} verwendet.
 
 Clojure ist ein Lisp, welches zu Java--Bytecode kompiliert und somit auf der JVM arbeitet. Als Besonderheit ist die einfache Verwendung von Java--Code (etwa Klassen) zu nennen, wodurch auch ein von JavaCC generierter Parser--Code benutzt werden kann (siehe Abschnitt \ref{JavaCC}).
 
@@ -184,11 +184,11 @@ Zum Zeitpunkt des Verfassens dieses Textes sind folgende Kernfunktionen implemen
 	\item Generieren des Dimacs--Formats und Aufrufen von SAT4J
 \end{itemize}
 
-Ein Makroprozessor wurde nicht eingebunden, da Clojure selbst über ein mächtiges Makrosystem verfügt. Im weiteren Verlauf des Projektes sind die Implementierung einer der MPA ähnlichen GUI und ein System zum Anwenden der natürlichen Deduktion geplant. Der Code des Projektes ist unter \cite{lw} einsehbar.
+Ein Makroprozessor wurde nicht eingebunden, da Clojure selbst über ein mächtiges Makrosystem verfügt. Im weiteren Verlauf des Projektes sind die Implementierung einer der MPA ähnlichen GUI und ein System zum Anwenden der natürlichen Deduktion geplant. Der Code des Projektes ist unter \cite{lwb} einsehbar.
 
 \section{Das Problem: Parser--Laufzeiten}
 
-Zu der wesentlichen Kernfunktionalität der LW gehört das Parsen von Formeln, sodass eine Clojure--Liste entsteht, also beispielsweise der String \lstinline|"A -> !(A & B)"| zu \lstinline|(impl A (not (and A B)))| geparst wird. Die vollständige Referenzgrammatik des MPA findet sich in Anhang \ref{refgrammatik}.\\
+Zu der wesentlichen Kernfunktionalität der LWB gehört das Parsen von Formeln, sodass eine Clojure--Liste entsteht, also beispielsweise der String \lstinline|"A -> !(A & B)"| zu \lstinline|(impl A (not (and A B)))| geparst wird. Die vollständige Referenzgrammatik des MPA findet sich in Anhang \ref{refgrammatik}.\\
 
 Zunächst wurde zur allgemeinen Zufriedenheit die Bibliothek \emph{Instaparse} verwendet. Bei einem Test mit einer großen Formel (Sudoku--Regeln) wurde jedoch eine im Vergleich mit dem Referenzparser sehr viel höhere Laufzeit festgestellt, wenn der mit Instaparse generierte Parser nicht vorher durch einen Stackoverflow abgebrochen wurde. So brauchte dieser in einem Testdurchlauf mehrere Minuten, wogegen der Referenzparser des MPA diese Aufgabe in etwa zwei Sekunden vollbrachte.
 
@@ -204,7 +204,7 @@ In diesem Abschnitt sollen die für den Vergleich benutzten Parser--Bibliotheken
 
 Die von Mark Engelberg entwickelte Bibliothek \emph{Instaparse} gehört zur Gruppe der Parser--Generatoren, d. h. es wird eine Grammatik angegeben, aus der dann ein Programm generiert wird, welches eine Zeichenkette gemäß der Grammatik parsen kann. Dies ist der eigentliche Parser. Da ein Clojure--Programm zur Laufzeit übersetzt werden kann, ist zur Verwendung des generierten Programms kein weiterer Kompilier--Zwischenschritt notwendig, wie etwa bei JavaCC. \cite{instaparse}
 
-Instaparse ist komplett in Clojure geschrieben und wurde deswegen und aufgrund der Simplizität zunächst als Parser für die LW gewählt. So sehen die Schritte zur Entwicklung eines Parsers beispielhaft wie folgt aus:
+Instaparse ist komplett in Clojure geschrieben und wurde deswegen und aufgrund der Simplizität zunächst als Parser für die LWB gewählt. So sehen die Schritte zur Entwicklung eines Parsers beispielhaft wie folgt aus:
 
 \begin{enumerate}
 	\item In einem Clojure--String oder einer externen Text--Datei wird eine Grammatik spezifiziert.
@@ -219,7 +219,7 @@ Im Gegensatz zu JavaCC und Instaparse gehören mit \emph{Kern} geschriebene Pars
 
 Im Gegensatz zu Instaparse verfügt es dabei über einen dedizierten Lexer, welcher sich nahtlos in die Parsergrammatik einfügt. Dies sorgt einerseits für kompakten Code, kann andererseits aber auch verwirren. So sind \lstinline|token*| und \lstinline|token_| Parser--Funktionen, \lstinline|token| jedoch eine Funktion des Lexers und verlangt, dass ein solcher korrekt konfiguriert und eingebunden ist. Dafür erhöht der Lexer die Komfortabilität, da z. B. die für einen Identifier erlaubten Zeichen als einfacher regulärer Ausdruck angegeben werden können und sich der Benutzer daraufhin nicht mehr um Leerzeichen kümmern muss.
 
-Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} eingesehen werden. Zu beachten ist, dass der Autor von Kern selber aussagt, dass seine Bibliothek nicht performant ist: 
+Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lwb} eingesehen werden. Zu beachten ist, dass der Autor von Kern selber aussagt, dass seine Bibliothek nicht performant ist: 
 
 \begin{quote}
 	``Kern's design isn't well-suited for achieving very high performance.'' \cite{kern}
@@ -229,7 +229,7 @@ Das Äquivalent zur benötigten Grammatik kann im Sourcecode unter \cite{lw} ein
 
 Wie Instaparse gehört \emph{JavaCC} zur Gruppe der Parser--Generatoren. Es ist jedoch eine Java--Bibliothek und schon weitaus länger in Entwicklung, sodass es ausgereifter ist. \cite{javacc}
 
-JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des JavaCC aus dem MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Typs \glqq{}Knoten\grqq{} (Node) und kann z. B. unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LW verwendeten Clojure--Listen zu produzieren, wird jedoch mittels einer Clojure--Funktion rekursiv durch den AST traversiert und die neue Baumstruktur erzeugt.
+JavaCC verlangt eine Grammatik, in der nicht nur die Parseregeln, sondern auch die Regeln des zu produzierenden Codes festgelegt werden können. Daraus erzeugt JavaCC dann Java--Code, der kompiliert dann als Parser verwendet werden kann. Da Clojure die Möglichkeit bietet, Java--Code direkt zu verwenden, kann der Quellcode des JavaCC aus dem MPA übernommen werden; es muss jedoch eine andere Ausgabe erzeugt werden. So besteht im MPA der AST aus verschiedenen Klassen des Typs \glqq{}Knoten\grqq{} (Node) und kann z. B. unter Einsatz eines Visitor--Patterns transformiert werden. Um die in der LWB verwendeten Clojure--Listen zu produzieren, wird jedoch mittels einer Clojure--Funktion rekursiv durch den AST traversiert und die neue Baumstruktur erzeugt.
 
 Die Bibliothek stellt ebenfalls einen Lexer bereit, jedoch kann dieser nicht optional verwendet werden, sondern es müssen alle Token durch diesen erkannt und an den Parser weitergegeben werden. JavaCC wird produktiv eingesetzt.
 
@@ -274,7 +274,7 @@ Um aussagekräftige Messergebnisse zu erhalten, mussten repräsentative Formeln 
 	\item unterschiedliche Strukturen durch verschiedene Problemstellungen
 \end{itemize}
 
-Da einige Formeln durch das MPA--Projekt bereits vorhanden waren, wurden eben solche gewählt. Sie sollen nun im Einzelnen vorgestellt werden und sind unter \cite{lw-formeln} einsehbar. Tabelle \ref{formeln-zahlen} zeigt eine Übersicht der Formeln unter verschiedenen Metriken.
+Da einige Formeln durch das MPA--Projekt bereits vorhanden waren, wurden eben solche gewählt. Sie sollen nun im Einzelnen vorgestellt werden und sind unter \cite{lwb-formeln} einsehbar. Tabelle \ref{formeln-zahlen} zeigt eine Übersicht der Formeln unter verschiedenen Metriken.
 
 \subsection{Damenproblem}
 
@@ -369,11 +369,11 @@ Betrachtet man die Ergebnisse aus Tabelle \ref{messergebnisse-kurz}, so kann man
 	\item Nur bei Instaparse treten bei großen Formeln Fehler auf (Stack Overflow).
 \end{enumerate}
 
-Aus 1. folgt, dass der JavaCC--Parser letztendlich in LW eingesetzt wird. Punkt 2. entspricht den Erwartungen.
+Aus 1. folgt, dass der JavaCC--Parser letztendlich in LWB eingesetzt wird. Punkt 2. entspricht den Erwartungen.
 
-Die Beobachtungen 3. und 4. weisen darauf hin, dass die Kern--Bibliothek allgemein performanter arbeitet als Instaparse. Es stellt sich die Frage, ob ein Combinator--Parser grundsätzlich schneller ist als der GLL--Algorithmus, mit dem Instaparse arbeitet \cite[\glqq{}Special Thanks\grqq{}]{instaparse}. Diese Untersuchung ist jedoch nicht Gegenstand dieses Berichts.
+Die Beobachtungen 3. und 4. weisen darauf hin, dass die Kern--Bibliothek allgemein performanter arbeitet als Instaparse. Es stellt sich die Frage, ob ein Combinator--Parser grundsätzlich schneller ist als der GLL--Algorithmus, mit dem Instaparse arbeitet \cite{instaparse,gll}. Diese Untersuchung ist jedoch nicht Gegenstand dieses Berichts.
 
-Die letzten Punkte (5. und 6.) zeigen hinreichend, dass Instaparse nicht produktiv in LW eingesetzt werden kann. Die generierten Parser sind einfach unzulänglich.
+Die letzten Punkte (5. und 6.) zeigen hinreichend, dass Instaparse nicht produktiv in LWB eingesetzt werden kann. Die generierten Parser sind einfach unzulänglich.
 
 \section{Analyse des Wachstums}
 
@@ -397,7 +397,7 @@ Das angenommene Beispiel waren die vollen Sudokuregeln. Diese sind mit Hilfe von
 
 Mit dieser Grammatik konnten 168075 Zeichen --- in diesem Fall \glqq{}a\grqq{} --- innerhalb einer Sekunde geparst werden. Hieraus geht hervor, dass ein starkes Ansteigen der Parse--Zeit eher mit der wachsenden Komplexität der Grammatik zusammenhängt.
 
-Es wurde an dieser Stelle angenommen, dass die Zeit linear zur Komplexität steigt. Wenn also die Grammatik aus 60 Regeln besteht --- wie etwa die volle Grammatik des Parsers für die LW --- sollte das Parsen mit dieser Annahme etwa eine Minute dauern.
+Es wurde an dieser Stelle angenommen, dass die Zeit linear zur Komplexität steigt. Wenn also die Grammatik aus 60 Regeln besteht --- wie etwa die volle Grammatik des Parsers für die LWB --- sollte das Parsen mit dieser Annahme etwa eine Minute dauern.
 
 Um diese Annahme zu überprüfen, hat Herr Engelberg eine Funktion \emph{produce} geschrieben, mit der verschieden große Formeln produziert werden können. Diese haben eine ähnliche Struktur wie die Sudoku--Regeln, wodurch die Laufzeiten des Parsers mit der vollen Grammatik schrittweise im Kleinen überprüft werden können:
 
@@ -555,11 +555,11 @@ Da wir es für sinnvoll halten, unser Projekt nicht unnötig langsam arbeiten zu
 \appendix
 
 \begin{thebibliography}{7}
-	\bibitem[LW]{lw}
+	\bibitem[LWB]{lwb}
 		Quellcode des Projektes auf Github,\\
 		\url{https://github.com/moerkb/logical-workbench}
 
-	\bibitem[LWFORM]{lw-formeln}
+	\bibitem[LWBFORM]{lwb-formeln}
 		Testformeln,\\
 		\url{https://github.com/moerkb/logical-workbench/blob/master/src/parser_measures/formulas.clj}
 
@@ -590,6 +590,12 @@ Da wir es für sinnvoll halten, unser Projekt nicht unnötig langsam arbeiten zu
 		Prof. Dr. B. Renz,\\
 		\glqq{}Lösungen mit dem MNI Proposition Analyzer MPA --- Logeleien, Kartenfärbung, Sudoku, Variabilitätsmodelle\grqq{},\\
 		\url{http://homepages.thm.de/~hg11260/mat/mpa-bsp.pdf}
+
+	\bibitem[GLL]{gll}
+		Elizabeth Scott, Adrian Johnstone,\\
+		\glqq{}GLL Parsing\grqq{},\\
+		Department of Computer Science, Royal Holloway, University of London,\\
+		\url{http://www.sciencedirect.com/science/article/pii/S1571066110001209}
 \end{thebibliography}
 
 \clearpage

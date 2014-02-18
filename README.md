@@ -1,6 +1,6 @@
-# Logical Workbench with Clojure
+# Logic Workbench with Clojure
 
-This repository holds the work of a research project of the Technische Hochschule Mittelhessen (http://www.thm.de). It is a kind of playground for logical functions like parsing formulas and printing truth tables. It shall later replace the MPA (http://homepages.thm.de/~hg11260/mpa.html).
+This repository holds the work of a research project of the University of Applied Sciences Mittelhessen (http://www.thm.de). It is a kind of playground for logical functions like parsing formulas and printing truth tables. It shall later replace the MPA (http://homepages.thm.de/~hg11260/mpa.html).
 
 ## Features
 
@@ -24,7 +24,7 @@ Planned features:
 
 ## Dependencies
 
-The logical workbench is developed and testes with Clojure 1.3.0, but it might work with earlier versions as well.
+The logic workbench is developed and testes with Clojure 1.3.0, but it might work with earlier versions as well.
 
 Besides, it needs the following libraries:
 
