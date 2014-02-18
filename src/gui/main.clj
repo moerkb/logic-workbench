@@ -21,10 +21,11 @@
 
 ; tree-model
 (def tree-model
-  (simple-tree-model
-    #(.getChildren %)
-    #(.getChildren %)
-    test-tree))
+  (let [children #(.getChildren %)]
+    (simple-tree-model
+		  children
+		  children
+		  test-tree)))
   
 ; result handling
 ; this must be placed here, so it can be accessed from handler.clj

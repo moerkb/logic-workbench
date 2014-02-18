@@ -3,7 +3,7 @@ package gui;
 public class Node {
 	
 	private String name;
-	private String proposition;
+	private String proposition = null;
 	private clojure.lang.PersistentList children = null;
 	
 	public Node(String name, String proposition) {
