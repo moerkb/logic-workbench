@@ -13,18 +13,6 @@
 ; register own editor parser for highlighting
 (let [tmf (TokenMakerFactory/getDefaultInstance)]
   (.putMapping tmf "text/mpa" "fully.qualified.MpaTokenMaker"))
-
-(def test-tree
-  (Node. "Project_1" (list
-                       (Node. "Formel_1" "a&b")
-                       (Node. "Formel_2" "a->b"))))
-
-; tree-model
-(def tree-model
-  (simple-tree-model
-    #(.getChildren %)
-    #(.getChildren %)
-    test-tree))
   
 ; result handling
 ; this must be placed here, so it can be accessed from handler.clj
@@ -47,7 +35,18 @@
 (load "handler")
 (load "menus")
 
-; final window building
+; project file tree
+(def test-tree
+  (Node. "Project_1" (list
+                       (Node. "Formel_1" "a&b")
+                       (Node. "Formel_2" "a->b"))))
+
+(def tree-model
+  (simple-tree-model
+    #(.getChildren %)
+    #(.getChildren %)
+    test-tree))
+
 (def form-tree (scrollable (tree
                              :id :tree
                              :model tree-model
@@ -55,6 +54,7 @@
                            :preferred-size [255 :by 600]
                            :maximum-size [255 :by 32000]))
 
+; final window building
 (def editor (syntax/text-area :syntax :mpa))
 (def form-editor (scrollable editor
                              :preferred-size [690 :by 400]))
