@@ -2,8 +2,10 @@
   (require [seesaw.core :refer :all]
            [seesaw.rsyntax :as syntax]
            [seesaw.dev :refer (show-options)]
+           [seesaw.tree :refer (simple-tree-model)]
            [logic.util :as logic])
   (import [java.io File]
+          [gui Node]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))
 
 ; early declarations of important widgets for actions
@@ -30,8 +32,24 @@
   [file-name]
   (File. (str icon-folder file-name)))
 
+(def test-tree
+  (Node. "Project_1" (list
+                       (Node. "Formel_1" "a&b")
+                       (Node. "Formel_2" "a->b"))))
+
+; tree-model
+(def tree-model
+  (simple-tree-model
+    #(.getChildren %)
+    #(.getChildren %)
+    test-tree))
+  
+
 ; main window building
-(def form-tree (scrollable (tree)
+(def form-tree (scrollable (tree
+                             :id :tree
+                             :model tree-model
+                             )
                            :preferred-size [255 :by 600]
                            :maximum-size [255 :by 32000]))
 
