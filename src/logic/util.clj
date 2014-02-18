@@ -1,11 +1,10 @@
 (ns logic.util
-  (:require [instaparse.core :as insta]
-            [clojure.string :as cstr]
+  (:require [clojure.string :as cstr]
             [mpa.cst.parser.parser :as mpaParser]
-            [clojure.repl :refer :all])
-  (:use     [clojure.math.combinatorics :only (selections combinations)]
-            [clojure.walk :only (postwalk)]
-            [clojure.set :only (union)]))
+            [clojure.repl :refer :all]
+            [clojure.math.combinatorics :refer (selections combinations)]
+            [clojure.walk :refer (postwalk)]
+            [clojure.set :refer (union)]))
 
 (def tseitin-prefix "t_")
 
