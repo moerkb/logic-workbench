@@ -12,10 +12,34 @@
 (let [tmf (TokenMakerFactory/getDefaultInstance)]
   (.putMapping tmf "text/mpa" "fully.qualified.MpaTokenMaker"))
 
+; this must be placed here, so it can be accessed from handler.clj
 (def editor (syntax/text-area :syntax :mpa))
-(def results (text 
-               :multi-line? true
-               :editable? false))
+(def form-editor (scrollable editor
+                             :preferred-size [690 :by 400]))
+
+(def results-start (scrollable 
+                     (text 
+                       :text "Welcome to the Logic Workbench"
+                       :multi-line? true
+                       :editable? false)
+                     :preferred-size [690 :by 200]))
+
+(def results (flow-panel
+               :id :res
+               :align :left
+               :items [results-start]))
+
+(def ver-panel (vertical-panel
+                 :items [form-editor
+                         results]))
+
+(defn set-result! [result-widget]
+  "Clears the result area and sets the new widget."
+  (let [old (select results [:#res :*])]
+    (apply remove! results old)
+    (add! results (scrollable 
+                    result-widget
+                    :preferred-size [690 :by 200]))))
 
 (load "handler")
 
@@ -34,12 +58,6 @@
 (def form-tree (scrollable (tree)
                            :preferred-size [255 :by 600]
                            :maximum-size [255 :by 32000]))
-
-(def form-editor (scrollable editor
-                             :preferred-size [690 :by 400]))
-
-(def result-area (scrollable results
-                             :preferred-size [690 :by 200]))
 
 (def tool-bar (toolbar
                 :floatable? false
@@ -72,10 +90,6 @@
                         (combobox
                           :maximum-size [135 :by 32000]
                           :model ["DefaultSAT4J" "LightSAT4J" "NaiveDPLL"])]))
-
-(def ver-panel (vertical-panel
-                 :items [form-editor
-                         result-area]))
 
 (def hor-panel (horizontal-panel
                  :items [form-tree
