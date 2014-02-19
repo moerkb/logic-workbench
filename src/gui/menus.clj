@@ -99,18 +99,22 @@
                   :items [(action 
                             :name "Check SAT"
                             ;:key "ctrl T+S"
-                            :icon (icon-path "task_sat.gif"))
+                            :icon (icon-path "task_sat.gif")
+                            :handler #(handler-sat %))
                           (action 
                             :name "Truth Table"
                             ;:key "ctrl T T"
-                            :icon (icon-path "task_tt.gif"))
+                            :icon (icon-path "task_tt.gif")
+                            :handler #(handler-tt %))
                           (action 
                             :name "Transform to CNF"
                             ;:key "ctrl T C"
-                            :icon (icon-path "task_cnf.gif"))
+                            :icon (icon-path "task_cnf.gif")
+                            :handler #(handler-cnf %))
                           (action 
                             :name "Tseitin Transformation"
-                            :icon (icon-path "task_tcnf.gif"))
+                            :icon (icon-path "task_tcnf.gif")
+                            :handler #(handler-tseitin %))
                           (action 
                             :name "Generate DIMACS")
                           (action 
