@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="clojure2formula.svg">
+   sodipodi:docname="formula2clojure.svg">
   <defs
      id="defs4">
     <clipPath
@@ -78,15 +78,15 @@
           <text
              id="text3005"
              transform="scale(1,-1)"
-             x="-0.0035550832"
+             x="11.196445"
              y="-20.087219"
              style="font-size:92px;stroke:#000000;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial">
             <tspan
                sodipodi:role="line"
                y="-20.087219"
-               x="-0.0035550832"
+               x="11.196445"
                style="font-size:92px;font-variant:normal;font-weight:bold;font-stretch:normal;writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-opacity:1;font-family:Arial;-inkscape-font-specification:Arial"
-               id="tspan3071">FML</tspan>
+               id="tspan3071">CLJ</tspan>
           </text>
         </g>
       </g>
