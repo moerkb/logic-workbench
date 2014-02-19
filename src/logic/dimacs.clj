@@ -26,9 +26,9 @@
         num-clauses (tseit-clauses :num-clauses)
         clauses (tseit-clauses :clauses)]
     (str
-      "c dimacs file for the logic formula" \newline
-      "c " (seq formula) \newline
-      "c " \newline
+      ;"c dimacs file for the logic formula" \newline
+      ;"c " (seq formula) \newline
+      ;"c " \newline
       "p cnf " num-vars " " num-clauses \newline
       (apply str (map #(str (apply str (map (fn [elem] (str elem " "))
                                             %))

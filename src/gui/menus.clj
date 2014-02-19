@@ -18,10 +18,10 @@
                         (button :icon (icon-path "delete.gif"))
                         :separator
                         (action
-                          :name "Parse"
+                          :icon (icon-path "formula2clojure.gif")
                           :handler handler-parse)
                         (action
-                          :name "Reparse"
+                          :icon (icon-path "clojure2formula.gif")
                           :handler handler-reparse)
                         (action 
                           :icon (icon-path "task_sat.gif")
@@ -36,13 +36,13 @@
                           :icon (icon-path "task_tcnf.gif")
                           :handler handler-tseitin)
                         (action 
-                          :name "Dimacs"
+                          :icon (icon-path "dimacs.gif")
                           :handler handler-dimacs)
                         (action 
-                          :name "CNF + Dimacs"
+                          :icon (icon-path "dimacsCNF.gif")
                           :handler handler-dimacs-cnf)
                         (action 
-                          :name "Tseitin + Dimacs"
+                          :icon (icon-path "dimacsTseitin.gif")
                           :handler handler-dimacs-tseitin)
                         (button :icon (icon-path "task_m4.gif"))
                         :separator
@@ -113,9 +113,11 @@
                   :items [(action
                             :name "Parse formula to clojure"
                             :key "ctrl P"
+                            :icon (icon-path "formula2clojure.gif")
                             :handler handler-parse)
                           (action
                             :name "Parse clojure back to formula"
+                            :icon (icon-path "clojure2formula.gif")
                             :handler handler-reparse)
                           (action 
                             :name "Check SAT"
@@ -138,12 +140,15 @@
                             :handler handler-tseitin)
                           (action 
                             :name "Generate DIMACS"
+                            :icon (icon-path "dimacs.gif")
                             :handler handler-dimacs)
                           (action 
                             :name "Make CNF, then generate DIMACS"
+                            :icon (icon-path "dimacsCNF.gif")
                             :handler handler-dimacs-cnf)
                           (action 
                             :name "Make Tseitin-CNF, then generate DIMACS"
+                            :icon (icon-path "dimacsTseitin.gif")
                             :handler handler-dimacs-tseitin)
                           (action 
                             :name "Preprocess with M4"
