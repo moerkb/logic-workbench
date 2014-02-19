@@ -17,7 +17,9 @@
                         (button :icon (icon-path "close.gif"))
                         (button :icon (icon-path "delete.gif"))
                         :separator
-                        (button :icon (icon-path "task_sat.gif"))
+                        (action 
+                          :icon (icon-path "task_sat.gif")
+                          :handler #(handler-sat %))
                         (action 
                           :icon (icon-path "task_tt.gif")
                           :handler #(handler-tt %))
