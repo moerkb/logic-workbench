@@ -1,5 +1,9 @@
 (ns gui.main)
 
+(defn parse-editor []
+  "Parses the text of the editor and returns the clojure formula."
+  (logic/parse (.getText editor)))
+
 (defn set-result! [result-widget]
   "Clears the result area and sets the new widget."
   (let [old (select results [:#res :*])]

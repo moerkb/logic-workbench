@@ -17,6 +17,12 @@
                         (button :icon (icon-path "close.gif"))
                         (button :icon (icon-path "delete.gif"))
                         :separator
+                        (action
+                          :name "Parse"
+                          :handler handler-parse)
+                        (action
+                          :name "Reparse"
+                          :handler handler-reparse)
                         (action 
                           :icon (icon-path "task_sat.gif")
                           :handler handler-sat)
@@ -32,6 +38,12 @@
                         (action 
                           :name "Dimacs"
                           :handler handler-dimacs)
+                        (action 
+                          :name "CNF + Dimacs"
+                          :handler handler-dimacs-cnf)
+                        (action 
+                          :name "Tseitin + Dimacs"
+                          :handler handler-dimacs-tseitin)
                         (button :icon (icon-path "task_m4.gif"))
                         :separator
                         (button :icon (icon-path "select_font.gif"))
@@ -98,7 +110,14 @@
 (def tasks-menu (menu
                   :text "Tasks"
                   :mnemonic "T"
-                  :items [(action 
+                  :items [(action
+                            :name "Parse formula to clojure"
+                            :key "ctrl P"
+                            :handler handler-parse)
+                          (action
+                            :name "Parse clojure back to formula"
+                            :handler handler-reparse)
+                          (action 
                             :name "Check SAT"
                             ;:key "ctrl T+S"
                             :icon (icon-path "task_sat.gif")
@@ -120,6 +139,12 @@
                           (action 
                             :name "Generate DIMACS"
                             :handler handler-dimacs)
+                          (action 
+                            :name "Make CNF, then generate DIMACS"
+                            :handler handler-dimacs-cnf)
+                          (action 
+                            :name "Make Tseitin-CNF, then generate DIMACS"
+                            :handler handler-dimacs-tseitin)
                           (action 
                             :name "Preprocess with M4"
                             ;:key "ctrl T M"

@@ -25,7 +25,15 @@
 (def reconvert-map
   {'not "!"
    'or  "|"
-   'and "&"})
+   'nor "!|"
+   'and "&"
+   'nand "!&"
+   'cimpl "<-"
+   'ncimpl " nif "
+   'impl "->"
+   'nimpl " nimpl "
+   'equiv "<->"
+   'xor " xor "})
 
 (defn clj-to-fml 
   "Takes a formula in clojure code and produces the human formula of it (only 'and', 'or' and 'not')."
