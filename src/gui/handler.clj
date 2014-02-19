@@ -1,5 +1,6 @@
 (ns gui.main)
 
+;; Menu Bar
 (defn handler-tt
   "Handler function for action 'truth table."
   [e]
@@ -18,3 +19,9 @@
                    :auto-resize :off
                    :model [:columns var-keys
                            :rows (:table tt)]))))
+;; Project Tree
+(defn handler-tree
+  [e]
+  (let [s (selection e)]
+    (when (>= (count s) 2)
+      (.setText editor (.getProposition (last s))))))
