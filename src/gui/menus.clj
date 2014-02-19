@@ -19,16 +19,16 @@
                         :separator
                         (action 
                           :icon (icon-path "task_sat.gif")
-                          :handler #(handler-sat %))
+                          :handler handler-sat)
                         (action 
                           :icon (icon-path "task_tt.gif")
-                          :handler #(handler-tt %))
+                          :handler handler-tt)
                         (action 
                           :icon (icon-path "task_cnf.gif")
-                          :handler #(handler-cnf %))
+                          :handler handler-cnf)
                         (action 
                           :icon (icon-path "task_tcnf.gif")
-                          :handler #(handler-tseitin %))
+                          :handler handler-tseitin)
                         (button :text "Dimacs")
                         (button :icon (icon-path "task_m4.gif"))
                         :separator
@@ -100,23 +100,24 @@
                             :name "Check SAT"
                             ;:key "ctrl T+S"
                             :icon (icon-path "task_sat.gif")
-                            :handler #(handler-sat %))
+                            :handler handler-sat)
                           (action 
                             :name "Truth Table"
                             ;:key "ctrl T T"
                             :icon (icon-path "task_tt.gif")
-                            :handler #(handler-tt %))
+                            :handler handler-tt)
                           (action 
                             :name "Transform to CNF"
                             ;:key "ctrl T C"
                             :icon (icon-path "task_cnf.gif")
-                            :handler #(handler-cnf %))
+                            :handler handler-cnf)
                           (action 
                             :name "Tseitin Transformation"
                             :icon (icon-path "task_tcnf.gif")
-                            :handler #(handler-tseitin %))
+                            :handler handler-tseitin)
                           (action 
                             :name "Generate DIMACS")
+                            ;:handler #(handler-dimacs %))
                           (action 
                             :name "Preprocess with M4"
                             ;:key "ctrl T M"
