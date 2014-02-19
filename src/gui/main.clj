@@ -36,10 +36,10 @@
 (load "project-tree")
 
 ; final window building
-(def form-tree (scrollable (tree
-                             :id :tree
-                             :model tree-model
-                             )
+(def project-tree (tree :model tree-model
+                        :listen [:selection handler-tree]))
+
+(def form-tree (scrollable project-tree
                            :preferred-size [255 :by 600]
                            :maximum-size [255 :by 32000]))
 

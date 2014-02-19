@@ -1,5 +1,6 @@
 (ns gui.main)
 
+;; Menu Bar
 (defn handler-sat
   "Handler function for action 'sat solve'."
   [e]
@@ -44,3 +45,10 @@
  (let [parsed (logic/parse (.getText editor))
        tcnf (:tseitin-formula (logic/transform-tseitin parsed))]
    (set-text-result! (str (apply list tcnf)))))
+
+;; Project Tree
+(defn handler-tree
+  [e]
+  (let [s (selection e)]
+    (when (>= (count s) 2)
+      (.setText editor (.getProposition (last s))))))
