@@ -19,13 +19,19 @@
                         :separator
                         (action 
                           :icon (icon-path "task_sat.gif")
-                          :handler #(handler-sat %))
+                          :handler handler-sat)
                         (action 
                           :icon (icon-path "task_tt.gif")
-                          :handler #(handler-tt %))
-                        (button :icon (icon-path "task_cnf.gif"))
-                        (button :icon (icon-path "task_tcnf.gif"))
-                        (button :text "Dimacs")
+                          :handler handler-tt)
+                        (action 
+                          :icon (icon-path "task_cnf.gif")
+                          :handler handler-cnf)
+                        (action 
+                          :icon (icon-path "task_tcnf.gif")
+                          :handler handler-tseitin)
+                        (action 
+                          :name "Dimacs"
+                          :handler handler-dimacs)
                         (button :icon (icon-path "task_m4.gif"))
                         :separator
                         (button :icon (icon-path "select_font.gif"))
@@ -95,20 +101,25 @@
                   :items [(action 
                             :name "Check SAT"
                             ;:key "ctrl T+S"
-                            :icon (icon-path "task_sat.gif"))
+                            :icon (icon-path "task_sat.gif")
+                            :handler handler-sat)
                           (action 
                             :name "Truth Table"
                             ;:key "ctrl T T"
-                            :icon (icon-path "task_tt.gif"))
+                            :icon (icon-path "task_tt.gif")
+                            :handler handler-tt)
                           (action 
                             :name "Transform to CNF"
                             ;:key "ctrl T C"
-                            :icon (icon-path "task_cnf.gif"))
+                            :icon (icon-path "task_cnf.gif")
+                            :handler handler-cnf)
                           (action 
                             :name "Tseitin Transformation"
-                            :icon (icon-path "task_tcnf.gif"))
+                            :icon (icon-path "task_tcnf.gif")
+                            :handler handler-tseitin)
                           (action 
-                            :name "Generate DIMACS")
+                            :name "Generate DIMACS"
+                            :handler handler-dimacs)
                           (action 
                             :name "Preprocess with M4"
                             ;:key "ctrl T M"

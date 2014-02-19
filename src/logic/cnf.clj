@@ -16,10 +16,11 @@
         (apply list op (map #(impl-free %) (rest formula)))
         
         ;else expand one macro and proceed recursively
-        (let [expform (macroexpand-1 formula)]
-          (apply list
-            (first expform)
-            (map #(impl-free %) (rest expform))))
+        (binding [*ns* (find-ns 'logic.util)]
+          (let [expform (macroexpand-1 formula)]
+            (apply list
+              (first expform)
+              (map #(impl-free %) (rest expform)))))
 ))))
   
 (defn nnf

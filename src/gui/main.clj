@@ -23,9 +23,8 @@
                        :editable? false)
                      :preferred-size [690 :by 200]))
 
-(def results (flow-panel
+(def results (horizontal-panel
                :id :res
-               :align :left
                :items [results-start]))
 
 ; LOADING OF OTHER FILES
