@@ -29,7 +29,9 @@
                         (action 
                           :icon (icon-path "task_tcnf.gif")
                           :handler handler-tseitin)
-                        (button :text "Dimacs")
+                        (action 
+                          :name "Dimacs"
+                          :handler handler-dimacs)
                         (button :icon (icon-path "task_m4.gif"))
                         :separator
                         (button :icon (icon-path "select_font.gif"))
@@ -116,8 +118,8 @@
                             :icon (icon-path "task_tcnf.gif")
                             :handler handler-tseitin)
                           (action 
-                            :name "Generate DIMACS")
-                            ;:handler #(handler-dimacs %))
+                            :name "Generate DIMACS"
+                            :handler handler-dimacs)
                           (action 
                             :name "Preprocess with M4"
                             ;:key "ctrl T M"

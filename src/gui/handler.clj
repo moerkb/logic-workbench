@@ -46,6 +46,13 @@
        tcnf (:tseitin-formula (logic/transform-tseitin parsed))]
    (set-text-result! (str (apply list tcnf)))))
 
+(defn handler-dimacs
+  "Handler function for action 'show dimacs'."
+  [e]
+  (let [parsed (logic/parse (.getText editor))
+        dimacs (logic/generate-dimacs (logic/flatten-ast parsed))]
+    (set-text-result! dimacs)))
+
 ;; Project Tree
 (defn handler-tree
   [e]
