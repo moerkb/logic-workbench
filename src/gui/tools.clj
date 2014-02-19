@@ -8,6 +8,20 @@
                     result-widget
                     :preferred-size [690 :by 200]))))
 
+(defn set-table-result! [table-model]
+  "Takes a TableModel and sets it with a JTable in result area."
+  (set-result! (table
+                 :auto-resize :off
+                 :model table-model)))
+
+(defn set-text-result! [result-text]
+  "Takes a string and displays it in the result area."
+   (set-result! (text 
+                  :multi-line? true
+                  :editable? false
+                  :wrap-lines? true
+                  :text result-text)))
+
 (def icon-folder "resources/icons/")
 
 (defn icon-path

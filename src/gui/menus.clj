@@ -23,8 +23,12 @@
                         (action 
                           :icon (icon-path "task_tt.gif")
                           :handler #(handler-tt %))
-                        (button :icon (icon-path "task_cnf.gif"))
-                        (button :icon (icon-path "task_tcnf.gif"))
+                        (action 
+                          :icon (icon-path "task_cnf.gif")
+                          :handler #(handler-cnf %))
+                        (action 
+                          :icon (icon-path "task_tcnf.gif")
+                          :handler #(handler-tseitin %))
                         (button :text "Dimacs")
                         (button :icon (icon-path "task_m4.gif"))
                         :separator

@@ -8,15 +8,11 @@
                          [(second %) false]
                          [% true]) raw-res)]
     (if (zero? (count proc-res))
-      (set-result! (table
-                     :auto-resize :off
-                     :model [:columns [{:key :message :text "Message"}]
-                             :rows [["not satisfiable"]]]))
-      (set-result! (table
-                     :auto-resize :off
-                     :model [:columns [{:key :symbol :text "Variable"} 
-                                       {:key :value :text "Value"}]
-                             :rows proc-res])))))
+      (set-table-result! [:columns [{:key :message :text "Message"}]
+                          :rows [["not satisfiable"]]])
+      (set-table-result! [:columns [{:key :symbol :text "Variable"} 
+                                    {:key :value :text "Value"}]
+                          :rows proc-res]))))
 
 (defn handler-tt
   "Handler function for action 'truth table'."
@@ -32,7 +28,19 @@
                           vars))
                    {:key :result :text "\u03D5"})]
     
-    (set-result! (table 
-                   :auto-resize :off
-                   :model [:columns var-keys
-                           :rows (:table tt)]))))
+    (set-table-result! [:columns var-keys
+                        :rows (:table tt)])))
+
+(defn handler-cnf
+  "Handler function for action 'cnf'."
+  [e]
+  (let [parsed (logic/parse (.getText editor))
+        cnf (logic/transform-cnf parsed)]
+    (set-text-result! (str (apply list cnf)))))
+
+(defn handler-tseitin
+ "Handler function for action 'tseitin cnf'."
+ [e]
+ (let [parsed (logic/parse (.getText editor))
+       tcnf (:tseitin-formula (logic/transform-tseitin parsed))]
+   (set-text-result! (str (apply list tcnf)))))
