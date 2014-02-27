@@ -14,16 +14,20 @@
 (defn handler-sat
   "Handler function for action 'sat solve'."
   [_]
-  (let [proc-res (map #(if (coll? %)
-                         [(second %) false]
-                         [% true]) 
-                   (parse-editor))]
-    (if (zero? (count proc-res))
-      (set-table-result! [:columns [{:key :message :text "Message"}]
-                          :rows [["not satisfiable"]]])
-      (set-table-result! [:columns [{:key :symbol :text "Variable"} 
-                                    {:key :value :text "Value"}]
-                          :rows proc-res]))))
+  (let [tmap (logic/transform-tseitin (parse-editor))
+        sat-result (-> tmap :tseitin-formula logic/generate-dimacs-clauses logic/sat-solve rest)
+        result (logic/retransform-tseitin sat-result tmap)
+        rows (map #(if (coll? %)
+                     [(second %) false]
+                     [% true]) result)]
+    
+    (if (zero? (count rows))
+     (set-table-result! [:columns [{:key :message :text "Message"}]
+                         :rows [["The preposition is unsatisfiable."]]]
+       :auto-resize :last-column)
+     (set-table-result! [:columns [{:key :symbol :text "Variable"} 
+                                   {:key :value :text "Value"}]
+                         :rows rows]))))
 
 (defn handler-tt
   "Handler function for action 'truth table'."
