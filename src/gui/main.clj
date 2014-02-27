@@ -11,8 +11,8 @@
 (native!)
 
 ; register own editor parser for highlighting
-(let [tmf (TokenMakerFactory/getDefaultInstance)]
-  (.putMapping tmf "text/mpa" "fully.qualified.MpaTokenMaker"))
+;(let [tmf (TokenMakerFactory/getDefaultInstance)]
+;  (.putMapping tmf "text/mpa" "fully.qualified.MpaTokenMaker"))
   
 ; result handling
 ; this must be placed here, so it can be accessed from handler.clj
