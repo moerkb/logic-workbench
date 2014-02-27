@@ -72,8 +72,18 @@
     (set-text-result! dimacs)))
 
 ;; Project Tree
-(defn handler-tree
+(defn- handler-tree
   [e]
   (let [s (selection e)]
     (when (>= (count s) 2)
       (.setText editor (.getProposition (last s))))))
+  
+(defn handler-tree-clicked
+  [e]
+  (when (= (.getClickCount e) 2) ; double click on formula
+    (handler-tree e)))
+
+(defn handler-tree-key
+  [e]
+  (when (= (.getKeyCode e) 10)
+    (handler-tree e)))

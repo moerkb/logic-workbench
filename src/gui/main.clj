@@ -37,7 +37,8 @@
 
 ; final window building
 (def project-tree (tree :model tree-model
-                        :listen [:selection handler-tree]))
+                        :listen [:mouse-clicked handler-tree-clicked
+                                 :key-released handler-tree-key]))
 
 (def form-tree (scrollable project-tree
                            :preferred-size [255 :by 600]
