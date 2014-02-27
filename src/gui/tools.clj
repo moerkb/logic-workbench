@@ -11,11 +11,16 @@
     (add! results (scrollable 
                     result-widget
                     :preferred-size [690 :by 200]))))
-
-(defn set-table-result! [table-model]
+;   :off
+;   :next-column
+;   :subsequent-columns
+;   :last-column
+;   :all-columns
+(defn set-table-result! [table-model & {:keys [auto-resize]
+                                        :or {auto-resize :off}}]
   "Takes a TableModel and sets it with a JTable in result area."
   (set-result! (table
-                 :auto-resize :off
+                 :auto-resize auto-resize
                  :model table-model)))
 
 (defn set-text-result! [result-text]

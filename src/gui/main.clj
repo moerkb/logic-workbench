@@ -18,7 +18,7 @@
 ; this must be placed here, so it can be accessed from handler.clj
 (def results-start (scrollable 
                      (text 
-                       :text "Welcome to the Logic Workbench"
+                       :text "Welcome to the Logic Workbench\n\nFor help, please press F1."
                        :multi-line? true
                        :editable? false)
                      :preferred-size [690 :by 200]))

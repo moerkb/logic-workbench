@@ -23,7 +23,8 @@
     
     (if (zero? (count rows))
      (set-table-result! [:columns [{:key :message :text "Message"}]
-                         :rows [["not satisfiable"]]])
+                         :rows [["The preposition is unsatisfiable."]]]
+       :auto-resize :last-column)
      (set-table-result! [:columns [{:key :symbol :text "Variable"} 
                                    {:key :value :text "Value"}]
                          :rows rows]))))
