@@ -1,7 +1,10 @@
 package gui;
 
-public class Node {
-	
+import java.io.Serializable;
+
+public class Node implements Serializable {
+
+	private static final long serialVersionUID = -113546151223878327L; // automatic generated
 	private String name;
 	private String proposition = null;
 	private clojure.lang.PersistentList children = null;

@@ -79,7 +79,7 @@
 (defn- handler-tree
   [e]
   (let [s (selection e)]
-    (when (>= (count s) 2)
+    (when (>= (count s) 3)
       (.setText editor (.getProposition (last s))))))
   
 (defn handler-tree-clicked
@@ -91,3 +91,8 @@
   [e]
   (when (= (.getKeyCode e) 10)
     (handler-tree e)))
+
+;; On Close
+(defn handler-close-window
+  [_]
+  (println tree)) ; TODO save tree
