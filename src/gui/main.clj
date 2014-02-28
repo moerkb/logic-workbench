@@ -29,6 +29,7 @@
 
 ; LOADING OF OTHER FILES
 (declare editor)
+(declare project-tree)
 
 (load "tools")
 (load "handler")

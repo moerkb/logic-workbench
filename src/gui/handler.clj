@@ -94,5 +94,6 @@
 
 ;; On Close
 (defn handler-close-window
+  "Safe all relevant informations for the next app start."
   [_]
-  (println tree)) ; TODO save tree
+  (println project-tree)) ; TODO save tree
