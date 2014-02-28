@@ -10,6 +10,9 @@
 
 (native!)
 
+; global variables
+(def ^:dynamic *node-tabs* (atom {}))
+
 ; register own editor parser for highlighting
 ;(let [tmf (TokenMakerFactory/getDefaultInstance)]
 ;  (.putMapping tmf "text/mpa" "fully.qualified.MpaTokenMaker"))
@@ -30,6 +33,7 @@
 ; LOADING OF OTHER FILES
 (declare editor)
 (declare project-tree)
+(declare editor-tabs)
 
 (load "tools")
 (load "handler")
@@ -48,12 +52,14 @@
                            :preferred-size [255 :by 600]
                            :maximum-size [255 :by 32000]))
 
-(def editor (syntax/text-area :syntax :mpa))
+(def editor (syntax/text-area))
 (def form-editor (scrollable editor
                              :preferred-size [690 :by 400]))
 
+(def editor-tabs (tabbed-panel :tabs [{:title "New*" :content form-editor}]))
+
 (def ver-panel (vertical-panel
-                 :items [form-editor
+                 :items [editor-tabs
                          results]))
 
 (def hor-panel (horizontal-panel
