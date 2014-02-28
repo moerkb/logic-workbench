@@ -78,9 +78,12 @@
 ;; Project Tree
 (defn- handler-tree
   [e]
-  (let [s (selection e)]
+  (let [s (selection e)
+        ed-tabs @*node-tabs*]
     (when (>= (count s) 2)
-      (.setText editor (.getProposition (last s))))))
+      (if (contains? ed-tabs s)
+        (selection! editor-tabs (ed-tabs s))
+        (add-editor (last s) (.getProposition (last s)) s)))))
   
 (defn handler-tree-clicked
   [e]
