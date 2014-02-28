@@ -40,6 +40,9 @@
 
 ; final window building
 (def project-tree (tree :model tree-model
+                        :root-visible? false
+                        :selection-mode :single
+                        :shows-root-handles? true
                         :listen [:mouse-clicked handler-tree-clicked
                                  :key-released handler-tree-key]))
 

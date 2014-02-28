@@ -80,7 +80,7 @@
   [e]
   (let [s (selection e)
         ed-tabs @*node-tabs*]
-    (when (>= (count s) 2)
+    (when (>= (count s) 3)
       (if (contains? ed-tabs s)
         (selection! editor-tabs (ed-tabs s))
         (add-editor (last s) (.getProposition (last s)) s)))))
@@ -94,3 +94,8 @@
   [e]
   (when (= (.getKeyCode e) 10)
     (handler-tree e)))
+
+;; On Close
+(defn handler-close-window
+  [_]
+  (println tree)) ; TODO save tree
