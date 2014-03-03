@@ -1,0 +1,5 @@
+{
+	:__description "This is an example LWB file"
+	:formula_1 "a & b"
+	:formula_2 "a -> b"
+}

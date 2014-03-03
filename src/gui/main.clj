@@ -3,7 +3,8 @@
            [seesaw.rsyntax :as syntax]
            [seesaw.dev :refer (show-options)]
            [seesaw.tree :refer (simple-tree-model)]
-           [logic.util :as logic])
+           [logic.util :as logic]
+           [clojure.string :as str])
   (import [java.io File]
           [gui Node]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))
@@ -16,7 +17,7 @@
 ; register own editor parser for highlighting
 ;(let [tmf (TokenMakerFactory/getDefaultInstance)]
 ;  (.putMapping tmf "text/mpa" "fully.qualified.MpaTokenMaker"))
-  
+
 ; result handling
 ; this must be placed here, so it can be accessed from handler.clj
 (def results-start (scrollable 
