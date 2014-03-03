@@ -21,7 +21,7 @@
                      (= lines :false-only) #{false}
                      :else #{true false})]
     (if (> (count symbols) 10)
-      (throw (IllegalArgumentException. "This formula has more than 10 variables, which exceeds the limit. The truth table would consist of more than 1024 rows anyway, so you might want to use the SAT solver."))
+      (throw (IllegalArgumentException. (str "This formula has more than 10 variables, which exceeds the limit." \newline "The truth table would consist of more than 1024 rows anyway, so you might want to use the SAT solver.")))
 	    
 	    (let [allcomb (selections [true false] (count symbols))
 	          assign-map (for [comb allcomb]
