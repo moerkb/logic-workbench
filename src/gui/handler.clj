@@ -60,8 +60,11 @@
 (defn handler-dimacs
   "Handler function for action 'show dimacs'."
   [_]
-  (let [dimacs (logic/generate-dimacs (logic/flatten-ast (parse-editor)))]
-    (set-text-result! dimacs)))
+  (try
+    (let [dimacs (logic/generate-dimacs (logic/flatten-ast (parse-editor)))]
+      (set-text-result! dimacs))
+    (catch Exception _ (alert "An error occurred. Are you sure the formula is not clojure code, a valid formula and cnf?\nYou might want to try the other dimacs tasks that generate cnf before."))))
+  
 
 (defn handler-dimacs-cnf
   "Handler function for action 'make cnf, then show dimacs'."
