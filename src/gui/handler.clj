@@ -4,80 +4,88 @@
 (defn handler-parse
   "Handler function for action 'parse to clojure formula'."
   [_]
-  (set-text-result! (str (apply list (parse-editor)))))
+  (std-catch
+    (set-text-result! (str (apply list (parse-editor))))))
   
 (defn handler-reparse
   "Reads a clojure formula form the editor and makes the formula of it."
   [_]
-  (set-text-result! (logic/clj-to-fml (read-string (.getText editor)))))
+  (std-catch
+    (set-text-result! (logic/clj-to-fml (read-string (.getText editor))))))
 
 (defn handler-sat
   "Handler function for action 'sat solve'."
   [_]
-  (let [tmap (logic/transform-tseitin (parse-editor))
-        sat-result (-> tmap :tseitin-formula logic/generate-dimacs-clauses logic/sat-solve rest)
-        result (logic/retransform-tseitin sat-result tmap)
-        rows (map #(if (coll? %)
-                     [(second %) false]
-                     [% true]) result)]
+  (std-catch
+    (let [tmap (logic/transform-tseitin (parse-editor))
+          sat-result (-> tmap :tseitin-formula logic/generate-dimacs-clauses logic/sat-solve rest)
+          result (logic/retransform-tseitin sat-result tmap)
+          rows (map #(if (coll? %)
+                       [(second %) false]
+                       [% true]) result)]
     
-    (if (zero? (count rows))
-     (set-table-result! [:columns [{:key :message :text "Message"}]
-                         :rows [["The preposition is unsatisfiable."]]]
-       :auto-resize :last-column)
-     (set-table-result! [:columns [{:key :symbol :text "Variable"} 
-                                   {:key :value :text "Value"}]
-                         :rows rows]))))
+      (if (zero? (count rows))
+       (set-table-result! [:columns [{:key :message :text "Message"}]
+                           :rows [["The preposition is unsatisfiable."]]]
+         :auto-resize :last-column)
+       (set-table-result! [:columns [{:key :symbol :text "Variable"} 
+                                     {:key :value :text "Value"}]
+                           :rows rows])))))
 
 (defn handler-tt
   "Handler function for action 'truth table'."
   [_]
-  (let [tt (logic/generate-truth-table (parse-editor))
-        vars (butlast (:symbols tt))
-        var-keys (conj 
-                   (vec (map 
-                          (fn [key text]
-                            {:key key :text (str text)}) 
-                          (map keyword vars) 
-                          vars))
-                   {:key :result :text "\u03D5"})]
+  (std-catch
+    (let [tt (logic/generate-truth-table (parse-editor))
+          vars (butlast (:symbols tt))
+          var-keys (conj 
+                     (vec (map 
+                            (fn [key text]
+                              {:key key :text (str text)}) 
+                            (map keyword vars) 
+                            vars))
+                     {:key :result :text "\u03D5"})]
     
-    (set-table-result! [:columns var-keys
-                        :rows (:table tt)])))
+      (set-table-result! [:columns var-keys
+                          :rows (:table tt)]))
+    (catch IllegalArgumentException e (alert (.getMessage e)))))
 
 (defn handler-cnf
   "Handler function for action 'cnf'."
   [_]
-  (let [cnf (logic/transform-cnf (parse-editor))]
-    (set-text-result! (str (apply list cnf)))))
+  (std-catch
+    (let [cnf (logic/transform-cnf (parse-editor))]
+      (set-text-result! (str (apply list cnf))))))
 
 (defn handler-tseitin
  "Handler function for action 'tseitin cnf'."
  [_]
- (let [tcnf (:tseitin-formula (logic/transform-tseitin (parse-editor)))]
-   (set-text-result! (str (apply list tcnf)))))
+ (std-catch
+   (let [tcnf (:tseitin-formula (logic/transform-tseitin (parse-editor)))]
+     (set-text-result! (str (apply list tcnf))))))
 
 (defn handler-dimacs
   "Handler function for action 'show dimacs'."
   [_]
-  (try
+  (std-catch
     (let [dimacs (logic/generate-dimacs (logic/flatten-ast (parse-editor)))]
-      (set-text-result! dimacs))
-    (catch Exception _ (alert "An error occurred. Are you sure the formula is not clojure code, a valid formula and cnf?\nYou might want to try the other dimacs tasks that generate cnf before."))))
+      (set-text-result! dimacs))))
   
 
 (defn handler-dimacs-cnf
   "Handler function for action 'make cnf, then show dimacs'."
   [_]
-  (let [dimacs (logic/generate-dimacs (logic/transform-cnf (parse-editor)))]
-    (set-text-result! dimacs)))
+  (std-catch
+    (let [dimacs (logic/generate-dimacs (logic/transform-cnf (parse-editor)))]
+      (set-text-result! dimacs))))
 
 (defn handler-dimacs-tseitin
   "Handler function for action 'make tseitin-cnf, then show dimacs'."
   [_]
-  (let [tseit (logic/transform-tseitin (parse-editor))
-        dimacs (logic/generate-dimacs (:tseitin-formula tseit))]
-    (set-text-result! (logic/dimacs-sub-vars dimacs (:lits tseit)))))
+  (std-catch
+    (let [tseit (logic/transform-tseitin (parse-editor))
+          dimacs (logic/generate-dimacs (:tseitin-formula tseit))]
+      (set-text-result! (logic/dimacs-sub-vars dimacs (:lits tseit))))))
 
 ;; Project Tree
 (defn- handler-tree

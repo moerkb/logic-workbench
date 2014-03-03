@@ -1,5 +1,13 @@
 (ns gui.main)
 
+(defmacro std-catch
+  "Puts the argument in a try block and catches all exceptions for a standard message.
+  Additional catch clauses are applied in order before a final clause catches all of type Exception."
+  [code & catches]
+  `(try ~code
+     ~@catches
+     (catch Exception _# (alert "An error ocurred. Please check the entered formula."))))
+
 (defn current-editor 
   "Returns the currently selected editor (due to tabs)."
   []
