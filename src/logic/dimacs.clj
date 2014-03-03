@@ -24,11 +24,19 @@
   (let [tseit-clauses (generate-dimacs-clauses formula)
         num-vars (tseit-clauses :num-vars)
         num-clauses (tseit-clauses :num-clauses)
-        clauses (tseit-clauses :clauses)]
+        clauses (tseit-clauses :clauses)
+        subs-print (apply str (map (fn [[a b]] (str "c " a ": " b \newline)) (:subs tseit-clauses)))]
     (str
       ;"c dimacs file for the logic formula" \newline
       ;"c " (seq formula) \newline
       ;"c " \newline
+      
+      "c dimacs file for formula" \newline
+      "c variable substitution:" \newline
+      "c"\newline
+      subs-print
+      "c"\newline
+      
       "p cnf " num-vars " " num-clauses \newline
       (apply str (map #(str (apply str (map (fn [elem] (str elem " "))
                                             %))
@@ -49,3 +57,13 @@
                                            [:clauses (conj (second x) neg-res)]
                                            x))
                                        dimacs-map)))))
+
+(defn dimacs-sub-vars 
+  "Takes a dimacs string and a map of literals to symbol (e.g. {a t_1}. Returns the 
+  dimacs file with the symbols replaced by the literals."
+  [dimacs lits]
+  (let [subs (zipmap (map (comp re-pattern str) (vals lits)) (map str (keys lits)))]
+    (loop [txt dimacs, [k v] (first subs), rest-s (rest subs)]
+      (if (nil? k)
+        txt
+        (recur (cstr/replace-first txt k v) (first rest-s) (rest rest-s))))))

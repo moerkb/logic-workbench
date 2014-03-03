@@ -72,8 +72,9 @@
 (defn handler-dimacs-tseitin
   "Handler function for action 'make tseitin-cnf, then show dimacs'."
   [_]
-  (let [dimacs (logic/generate-dimacs (:tseitin-formula (logic/transform-tseitin (parse-editor))))]
-    (set-text-result! dimacs)))
+  (let [tseit (logic/transform-tseitin (parse-editor))
+        dimacs (logic/generate-dimacs (:tseitin-formula tseit))]
+    (set-text-result! (logic/dimacs-sub-vars dimacs (:lits tseit)))))
 
 ;; Project Tree
 (defn- handler-tree
