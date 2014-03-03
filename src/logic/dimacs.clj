@@ -59,8 +59,8 @@
                                        dimacs-map)))))
 
 (defn dimacs-sub-vars 
-  "Takes a dimacs string and a map of literals to symbol (e.g. {a t_1}. Returns the 
-  dimacs file with the symbols replaced by the literals."
+  "Takes a dimacs string and a map of literals to symbol (e.g. {a t_1}). The map is like
+  (:lits (tseitin-transform ...)). Returns the dimacs file with the symbols replaced by the literals."
   [dimacs lits]
   (let [subs (zipmap (map (comp re-pattern str) (vals lits)) (map str (keys lits)))]
     (loop [txt dimacs, [k v] (first subs), rest-s (rest subs)]
