@@ -53,12 +53,21 @@
   []
   (.getTabCount editor-tabs))
   
-
+(declare tab-mark-new-listener)
 (defn add-editor
   "Creates a new editor widget and adds it to the tabs for the editors."
   [title content node]
-  (let [new-editor (scrollable (syntax/text-area :text content)
+  (let [new-editor (scrollable (syntax/text-area 
+                                 :text content
+                                 :listen [:document tab-mark-new-listener])
                                :preferred-size [690 :by 400])]
     (config! editor-tabs :tabs [{:title title :content new-editor}])
     (swap! *node-tabs* #(assoc % node (dec (tab-count))))
     (selection! editor-tabs (dec (tab-count)))))
+
+(defn tab-marked-new?
+  "Checks if the last character of the current activated editor tab's name is an asterisk."
+  []
+  (let [tab-name (:title (selection editor-tabs))
+        last-char (get tab-name (dec (count tab-name)))]
+    (= last-char \*)))

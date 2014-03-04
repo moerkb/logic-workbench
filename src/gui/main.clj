@@ -1,8 +1,8 @@
 (ns gui.main
   (require [seesaw.core :refer :all]
            [seesaw.rsyntax :as syntax]
-           [seesaw.dev :refer (show-options)]
-           [seesaw.tree :refer :all];;(simple-tree-model node-inserted)]
+           [seesaw.tree :refer (simple-tree-model node-structure-changed)]
+           [seesaw.dev :refer (show-options show-events)]
            [seesaw.chooser :refer (choose-file)]
            [logic.util :as logic]
            [clojure.string :as str]
@@ -60,6 +60,9 @@
                              :preferred-size [690 :by 400]))
 
 (def editor-tabs (tabbed-panel :tabs [{:title "New*" :content form-editor}]))
+
+(listen editor
+  :document tab-mark-new-listener)
 
 (def ver-panel (vertical-panel
                  :items [editor-tabs
