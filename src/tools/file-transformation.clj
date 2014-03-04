@@ -1,6 +1,4 @@
-(ns tools.main
-  (require [clojure.string :as str]
-           [clojure.pprint :as pretty]))
+(ns tools.main)
 
 (defn pp-str [& things]
   (let [s (with-out-str (pretty/pprint things))]
