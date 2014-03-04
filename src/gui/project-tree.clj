@@ -27,6 +27,7 @@
         file2node (fn [f] (let [data (get-data f)]
                             (Node. (apply str (drop-last 4 (last (str/split f #"/"))))
                                    (:__description data)
+                                   f
                                    (apply list (map
                                                  #(Node.
                                                     (apply str (rest (str (first %))))
@@ -37,12 +38,13 @@
     
     (Node. "Projects"
            nil
+           nil
          (if (first file-vector)
              (get-project-list file-vector)
              nil))))
 
 (def tree-model
-  (let [children #(.getChildren %)]
+  (let [children #(.children %)]
     (simple-tree-model
 		  children
 		  children
