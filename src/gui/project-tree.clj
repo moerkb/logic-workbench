@@ -16,25 +16,29 @@
 ;                    (Node. "Formel_3" "a <-> b")
 ;                    (Node. "Formel_4" "a !| b"))))))
 
-(defn- projects
-  [file-vector]
+(defn file2node
+  [f]
   (let [get-data (fn [f] (let [file-type (last (str/split f #"\."))
                                data (slurp f)]
                            (case file-type
                              "lwf" (read-string data)
                              "mpf" (read-string (tools/mpf2lwf data)))))
-                             
-        file2node (fn [f] (let [data (get-data f)]
-                            (Node. (apply str (drop-last 4 (last (str/split f #"/"))))
-                                   (:__description data)
-                                   f
-                                   (apply list (map
-                                                 #(Node.
-                                                    (apply str (rest (str (first %))))
-                                                    (second %))
-                                                 (dissoc data :__description))))))
         
-        get-project-list (fn [f] (apply list (map file2node f)))]
+        data (get-data f)]
+    
+    (Node. (apply str (drop-last 4 (last (str/split f #"/"))))
+           (:__description data)
+           f
+           (apply list (map
+                         #(Node.
+                            (apply str (rest (str (first %))))
+                            (second %))
+                         (dissoc data :__description))))))
+  
+
+(defn- projects
+  [file-vector]
+  (let [get-project-list (fn [f] (apply list (map file2node f)))]
     
     (Node. "Projects"
            nil
@@ -43,9 +47,12 @@
              (get-project-list file-vector)
              nil))))
 
+(def tree-of-projects
+  (projects ["examples/test.lwf" "examples/Coloring.mpf"]))
+
 (def tree-model
   (let [children #(.children %)]
     (simple-tree-model
 		  children
 		  children
-		  (projects ["examples/test.lwf" "examples/Coloring.mpf"]))))
+		  tree-of-projects)))

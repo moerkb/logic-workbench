@@ -2,7 +2,7 @@
   (require [seesaw.core :refer :all]
            [seesaw.rsyntax :as syntax]
            [seesaw.dev :refer (show-options)]
-           [seesaw.tree :refer (simple-tree-model)]
+           [seesaw.tree :refer :all];;(simple-tree-model node-inserted)]
            [seesaw.chooser :refer (choose-file)]
            [logic.util :as logic]
            [clojure.string :as str]
@@ -39,9 +39,9 @@
 (declare editor-tabs)
 
 (load "tools")
+(load "project-tree")
 (load "handler")
 (load "menus")
-(load "project-tree")
 
 ; final window building
 (def project-tree (tree :model tree-model
