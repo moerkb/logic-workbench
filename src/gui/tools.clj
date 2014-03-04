@@ -62,3 +62,7 @@
     (config! editor-tabs :tabs [{:title title :content new-editor}])
     (swap! *node-tabs* #(assoc % node (dec (tab-count))))
     (selection! editor-tabs (dec (tab-count)))))
+
+(defn replace-several [content & replacements]
+  (let [replacement-list (partition 2 replacements)]
+    (reduce #(apply str/replace %1 %2) content replacement-list)))

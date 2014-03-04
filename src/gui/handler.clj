@@ -11,7 +11,7 @@
   "Reads a clojure formula form the editor and makes the formula of it."
   [_]
   (std-catch
-    (set-text-result! (logic/clj-to-fml (read-string (.getText editor))))))
+    (set-text-result! (logic/clj-to-fml (read-string (.getText (current-editor)))))))
 
 (defn handler-sat
   "Handler function for action 'sat solve'."
