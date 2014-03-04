@@ -46,4 +46,4 @@
     (simple-tree-model
 		  children
 		  children
-		  (projects ["examples/test.lwf" "C:/Users/Daniel/Desktop/mpa-1.0-win32/Examples/Coloring.mpf"]))))
+		  (projects ["examples/test.lwf" "examples/Coloring.mpf"]))))

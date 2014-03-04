@@ -1,0 +1,360 @@
+/*
+ * Examples of map coloring
+ */
+phi::Luxembourg
+dnl needs mmp
+/*
+  Map coloring Luxembourg
+  Luxembourg (LU) is clockwise surrounded by
+  Germany (DE), France (FR) and Belgium (BE),
+  which are pairwise neighboured in this order.
+
+  Question: can a segment of a map showing the surroundings
+  of Luxembourg be colored with 3 colors?
+*/
+divert(-1)
+include(`util.mml') 
+include(`logic.mml')
+divert
+
+// Each country has exactly one color:
+foreach(`c',`lu',`de',`fr',`be',`oneOf(c`'_r, c`'_g, c`'_b) &
+') 
+
+// Adjacent contries have different colors:
+define(`adjacent',`(foreach(`c',`r',`g',`b',`(!$1_`'c|!$2_`'c)ifdef(@lastc,`',` & ')'))') 
+adjacent(lu, de) & 
+adjacent(lu, fr) & 
+adjacent(lu, be) & 
+adjacent(de, fr) &
+adjacent(fr, be) & 
+adjacent(be, de)
+
+
+phi::Czech Republic
+dnl needs mmp
+/*
+  Map Coloring Czech Republic
+  The Czech Republic (CZ) is clockwise surronded
+  by Poland (PL), Slovakia (SK), Austria (AT) and Germany (DE),
+  which are pairwise adjacent in this order.
+
+  Question: can this map cutout be colored with
+  3 colors?
+*/
+divert(-1)
+include(`util.mml') 
+include(`logic.mml')
+divert
+
+// Each country has exactly one color:
+foreach(`c',`cz',`pl',`sk',`at',`de',`oneOf(c`'_r, c`'_g, c`'_b) &
+') 
+
+// Adjacent countries have different colors:
+define(`adjacent',`(foreach(`c',`r',`g',`b',`(!$1_`'c|!$2_`'c)ifdef(@lastc,`',` & ')'))') 
+adjacent(cz, pl) & 
+adjacent(cz, pl) & 
+adjacent(cz, sk) & 
+adjacent(cz, at) & 
+adjacent(cz, de) &
+adjacent(pl, sk) & 
+adjacent(sk, at) & 
+adjacent(at, de) & 
+adjacent(de, pl)
+
+
+phi::Australia
+dnl needs mmp
+/*
+  Coloring Australia map
+  
+  Australia has the following states and territories:
+  Western Australia (wa)
+  Queensland (qld)
+  New South Wales (nsw)
+  Victoria (vic)
+  South Australia (sa)
+  Tasmania (tas)
+  Northern Territory (nt)
+  Australien Capital Territory (act)
+  Jevis Bay Territory (jbt) (a peninsula adjacent to nsw)
+
+  Question: can a map of australia be colored with 3 colors?
+  (The ocean has a fixed color different from all states.)
+*/
+divert(-1)
+include(`util.mml')
+include(`logic.mml')
+divert
+
+// Each state/territory has exactly one color out of r,g,b:
+foreach(`c',`wa',`qld',`nsw',`vic',`sa',`tas',`nt',`act',`jbt',`oneOf(c`'_r, c`'_g, c`'_b) &
+') 
+
+// Adjacent states have different colors:
+define(`adjacent',`(foreach(`c',`r',`g',`b',`(!$1_`'c|!$2_`'c)ifdef(@lastc,`',` & ')'))') 
+ 
+adjacent(`wa',`nt') &
+adjacent(`wa',`sa') &
+adjacent(`nt',`sa') &
+adjacent(`nt',`qld') &
+adjacent(`qld',`sa') &
+adjacent(`qld',`nsw') &
+adjacent(`nsw',`sa') &
+adjacent(`nsw',`act') &
+adjacent(`nsw',`jbt') &
+adjacent(`vic',`sa') &
+adjacent(`vic',`nsw') 
+
+phi::US-3
+dnl needs mmp
+/*
+  Coloring U.S. map
+
+  Question: can a map of the U.S. be colored with 3 colors?
+  (We only consider North America without Alaska.)
+
+*/
+divert(-1)
+include(`util.mml')
+include(`logic.mml')
+divert
+
+// Each state has exactly one color out of r, g, b:
+foreach(`c',`al',`ak',`az',`ar',`ca',`co',`ct',`de',`fl',`ga',`id',`il',`in',`ia',`ks',`ky',`la',`me',`md',`ma',`mi',`mn',`ms',`mo',`mt',`ne',`nv',`nh',`nj',`nm',`ny',`nc',`nd',`oh',`ok',`or',`pa',`ri',`sc',`tn',`tx',`ut',`vt',`va',`wa',`wv',`wi',`wy',`oneOf(c`'_r, c`'_g, c`'_b) &
+') 
+
+// Adjacent states have different colors:
+define(`adjacent',`(foreach(`c',`r',`g',`b',`(!$1_`'c|!$2_`'c)ifdef(@lastc,`',` & ')'))') 
+ 
+adjacent(`wa',`or') &
+adjacent(`wa',`id') &
+adjacent(`or',`id') &
+adjacent(`or',`nv') &
+adjacent(`or',`ca') &
+adjacent(`ca',`nv') &
+adjacent(`ca',`az') &
+adjacent(`az',`nm') &
+adjacent(`az',`nv') &
+adjacent(`az',`ut') &
+adjacent(`nv',`ut') &
+adjacent(`nv',`id') &
+adjacent(`id',`mt') &
+adjacent(`id',`ut') &
+adjacent(`id',`wy') &
+adjacent(`ut',`wy') &
+adjacent(`ut',`co') &
+adjacent(`nm',`tx') &
+adjacent(`nm',`ok') &
+adjacent(`nm',`co') &
+adjacent(`co',`ok') &
+adjacent(`co',`ks') &
+adjacent(`co',`ne') &
+adjacent(`co',`wy') &
+adjacent(`wy',`ne') &
+adjacent(`wy',`sd') &
+adjacent(`wy',`mt') &
+adjacent(`mt',`sd') &
+adjacent(`mt',`nd') &
+adjacent(`nd',`sd') &
+adjacent(`nd',`mn') &
+adjacent(`sd',`ne') &
+adjacent(`sd',`ia') &
+adjacent(`sd',`mn') &
+adjacent(`ne',`ks') &
+adjacent(`ne',`mo') &
+adjacent(`ne',`ia') &
+adjacent(`ks',`ok') &
+adjacent(`ks',`mo') &
+adjacent(`ok',`tx') &
+adjacent(`ok',`ar') &
+adjacent(`ok',`mo') &
+adjacent(`tx',`la') &
+adjacent(`la',`ms') &
+adjacent(`la',`ar') &
+adjacent(`ar',`ms') &
+adjacent(`ar',`tn') &
+adjacent(`ar',`mo') &
+adjacent(`mo',`tn') &
+adjacent(`mo',`ky') &
+adjacent(`mo',`il') &
+adjacent(`mo',`ia') &
+adjacent(`ia',`il') &
+adjacent(`ia',`wi') &
+adjacent(`ia',`mn') &
+adjacent(`mn',`wi') &
+adjacent(`wi',`il') &
+adjacent(`wi',`mi') &
+adjacent(`il',`ky') &
+adjacent(`il',`in') &
+adjacent(`ms',`al') &
+adjacent(`ms',`tn') &
+adjacent(`al',`fl') &
+adjacent(`al',`ga') &
+adjacent(`tn',`ga') &
+adjacent(`tn',`nc') &
+adjacent(`tn',`va') &
+adjacent(`tn',`ky') &
+adjacent(`ky',`va') &
+adjacent(`ky',`wv') &
+adjacent(`ky',`oh') &
+adjacent(`ky',`in') &
+adjacent(`in',`oh') &
+adjacent(`in',`mi') &
+adjacent(`oh',`pa') &
+adjacent(`oh',`wv') &
+adjacent(`wv',`pa') &
+adjacent(`wv',`md') &
+adjacent(`wv',`va') &
+adjacent(`va',`md') &
+adjacent(`va',`dc') &
+adjacent(`vc',`nc') &
+adjacent(`nc',`sc') &
+adjacent(`sc',`ga') &
+adjacent(`ga',`fl') &
+adjacent(`dc',`md') &
+adjacent(`md',`de') &
+adjacent(`md',`pa') &
+adjacent(`de',`pa') &
+adjacent(`de',`nj') &
+adjacent(`nj',`pa') &
+adjacent(`nj',`ny') &
+adjacent(`pa',`ny') &
+adjacent(`ny',`ct') &
+adjacent(`ny',`ma') &
+adjacent(`ny',`vt') &
+adjacent(`ct',`ma') &
+adjacent(`ct',`ri') &
+adjacent(`ma',`ri') &
+adjacent(`ma',`vt') &
+adjacent(`ma',`nh') &
+adjacent(`vt',`nh') &
+adjacent(`nh',`me')
+
+
+phi::US-4
+dnl needs mmp
+/*
+  Coloring U.S. map
+
+  Question: can a map of the U.S. be colored with 4 colors?
+  (We only consider north america without alaska.)
+  Surely -- the 4-color theorem says so!
+*/
+divert(-1)
+include(`util.mml')
+include(`logic.mml')
+divert
+
+// Each state has exactly one color out of r, g, b, w:
+foreach(`c',`al',`ak',`az',`ar',`ca',`co',`ct',`de',`fl',`ga',`id',`il',`in',`ia',`ks',`ky',`la',`me',`md',`ma',`mi',`mn',`ms',`mo',`mt',`ne',`nv',`nh',`nj',`nm',`ny',`nc',`nd',`oh',`ok',`or',`pa',`ri',`sc',`tn',`tx',`ut',`vt',`va',`wa',`wv',`wi',`wy',`oneOf(c`'_r, c`'_g, c`'_b,c`'_w) &
+') 
+
+// Adjacent states have different colors:
+define(`adjacent',`(foreach(`c',`r',`g',`b',`w',`(!$1_`'c|!$2_`'c)ifdef(@lastc,`',` & ')'))')
+
+adjacent(`wa',`or') &
+adjacent(`wa',`id') &
+adjacent(`or',`id') &
+adjacent(`or',`nv') &
+adjacent(`or',`ca') &
+adjacent(`ca',`nv') &
+adjacent(`ca',`az') &
+adjacent(`az',`nm') &
+adjacent(`az',`nv') &
+adjacent(`az',`ut') &
+adjacent(`nv',`ut') &
+adjacent(`nv',`id') &
+adjacent(`id',`mt') &
+adjacent(`id',`ut') &
+adjacent(`id',`wy') &
+adjacent(`ut',`wy') &
+adjacent(`ut',`co') &
+adjacent(`nm',`tx') &
+adjacent(`nm',`ok') &
+adjacent(`nm',`co') &
+adjacent(`co',`ok') &
+adjacent(`co',`ks') &
+adjacent(`co',`ne') &
+adjacent(`co',`wy') &
+adjacent(`wy',`ne') &
+adjacent(`wy',`sd') &
+adjacent(`wy',`mt') &
+adjacent(`mt',`sd') &
+adjacent(`mt',`nd') &
+adjacent(`nd',`sd') &
+adjacent(`nd',`mn') &
+adjacent(`sd',`ne') &
+adjacent(`sd',`ia') &
+adjacent(`sd',`mn') &
+adjacent(`ne',`ks') &
+adjacent(`ne',`mo') &
+adjacent(`ne',`ia') &
+adjacent(`ks',`ok') &
+adjacent(`ks',`mo') &
+adjacent(`ok',`tx') &
+adjacent(`ok',`ar') &
+adjacent(`ok',`mo') &
+adjacent(`tx',`la') &
+adjacent(`la',`ms') &
+adjacent(`la',`ar') &
+adjacent(`ar',`ms') &
+adjacent(`ar',`tn') &
+adjacent(`ar',`mo') &
+adjacent(`mo',`tn') &
+adjacent(`mo',`ky') &
+adjacent(`mo',`il') &
+adjacent(`mo',`ia') &
+adjacent(`ia',`il') &
+adjacent(`ia',`wi') &
+adjacent(`ia',`mn') &
+adjacent(`mn',`wi') &
+adjacent(`wi',`il') &
+adjacent(`wi',`mi') &
+adjacent(`il',`ky') &
+adjacent(`il',`in') &
+adjacent(`ms',`al') &
+adjacent(`ms',`tn') &
+adjacent(`al',`fl') &
+adjacent(`al',`ga') &
+adjacent(`tn',`ga') &
+adjacent(`tn',`nc') &
+adjacent(`tn',`va') &
+adjacent(`tn',`ky') &
+adjacent(`ky',`va') &
+adjacent(`ky',`wv') &
+adjacent(`ky',`oh') &
+adjacent(`ky',`in') &
+adjacent(`in',`oh') &
+adjacent(`in',`mi') &
+adjacent(`oh',`pa') &
+adjacent(`oh',`wv') &
+adjacent(`wv',`pa') &
+adjacent(`wv',`md') &
+adjacent(`wv',`va') &
+adjacent(`va',`md') &
+adjacent(`va',`dc') &
+adjacent(`vc',`nc') &
+adjacent(`nc',`sc') &
+adjacent(`sc',`ga') &
+adjacent(`ga',`fl') &
+adjacent(`dc',`md') &
+adjacent(`md',`de') &
+adjacent(`md',`pa') &
+adjacent(`de',`pa') &
+adjacent(`de',`nj') &
+adjacent(`nj',`pa') &
+adjacent(`nj',`ny') &
+adjacent(`pa',`ny') &
+adjacent(`ny',`ct') &
+adjacent(`ny',`ma') &
+adjacent(`ny',`vt') &
+adjacent(`ct',`ma') &
+adjacent(`ct',`ri') &
+adjacent(`ma',`ri') &
+adjacent(`ma',`vt') &
+adjacent(`ma',`nh') &
+adjacent(`vt',`nh') &
+adjacent(`nh',`me')
+
