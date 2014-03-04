@@ -87,6 +87,15 @@
           dimacs (logic/generate-dimacs (:tseitin-formula tseit))]
       (set-text-result! (logic/dimacs-sub-vars dimacs (:lits tseit))))))
 
+(defn handler-open-file
+  [_]
+  (choose-file :filters [["Logical Workbench (*.lwf)"
+                          ["lwf"]
+                          ["Folders" #(.isDirectory %)]]
+                         ["MPA (*.mpf)"
+                          ["mpf"]
+                          ["Folders" #(.isDirectory %)]]]))
+
 ;; Project Tree
 (defn- handler-tree
   [e]

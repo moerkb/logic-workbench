@@ -3,6 +3,7 @@
            [seesaw.rsyntax :as syntax]
            [seesaw.dev :refer (show-options)]
            [seesaw.tree :refer (simple-tree-model)]
+           [seesaw.chooser :refer (choose-file)]
            [logic.util :as logic]
            [clojure.string :as str])
   (import [java.io File]

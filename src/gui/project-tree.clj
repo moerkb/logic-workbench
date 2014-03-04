@@ -16,25 +16,30 @@
 ;                    (Node. "Formel_3" "a <-> b")
 ;                    (Node. "Formel_4" "a !| b"))))))
 
-(defn- get-project-list
-  [f]
-  (let [file2node (fn [f] (let [data (read-string (slurp f))]
+(defn- projects
+  [file-vector]
+  (let [get-data (fn [f] (let [file-type (last (str/split f #"."))
+                               data (read-string (slurp f))]
+                           (case file-type
+                             "lwf" data
+                             "mpf" (mpf2lwf data))))
+                             
+        file2node (fn [f] (let [data (get-data f)]
                             (Node. (apply str (drop-last 4 (last (str/split f #"/"))))
                                    (:__description data)
                                    (apply list (map
                                                  #(Node.
                                                     (apply str (rest (str (first %))))
                                                     (second %))
-                                                 (dissoc data :__description))))))]
-    (apply list (map file2node f))))
-
-(defn- projects
-  [file-vector]
-  (Node. "Projects"
-         nil
+                                                 (dissoc data :__description))))))
+        
+        get-project-list (fn [f] (apply list (map file2node f)))]
+    
+    (Node. "Projects"
+           nil
          (if (first file-vector)
-           (get-project-list file-vector)
-           nil)))
+             (get-project-list file-vector)
+             nil))))
 
 (def tree-model
   (let [children #(.getChildren %)]

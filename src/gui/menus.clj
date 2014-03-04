@@ -4,7 +4,9 @@
                 :floatable? false
                 :orientation :horizontal
                 :items [(button :icon (icon-path "new_project.gif"))
-                        (button :icon (icon-path "open_project.gif"))
+                        (action
+                          :icon (icon-path "open_project.gif")
+                          :handler handler-open-file)
                         :separator
                         (button :icon (icon-path "new_proposition.gif"))
                         (button :icon (icon-path "rename_proposition.gif"))
@@ -62,7 +64,8 @@
                             (action 
                               :name "Open Project"
                               :key "ctrl shift O"
-                              :icon (icon-path "open_project.gif"))
+                              :icon (icon-path "open_project.gif")
+                              :handler handler-open-file)
                             (separator)
                             (action 
                               :name "New Proposition"
