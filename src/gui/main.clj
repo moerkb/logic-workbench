@@ -39,6 +39,7 @@
 (load "handler")
 (load "menus")
 (load "project-tree")
+(load "file-transformation")
 
 ; final window building
 (def project-tree (tree :model tree-model
