@@ -92,10 +92,10 @@
   [e]
   (let [s (selection e)
         ed-tabs @*node-tabs*]
-    (when (>= (count s) 3)
+    (when (>= (count s) 2)
       (if (contains? ed-tabs s)
         (selection! editor-tabs (ed-tabs s))
-        (add-editor (last s) (.getProposition (last s)) s)))))
+        (add-editor (last s) (.getContent (last s)) s)))))
   
 (defn handler-tree-clicked
   [e]

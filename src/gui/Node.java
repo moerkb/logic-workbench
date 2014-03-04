@@ -6,16 +6,23 @@ public class Node implements Serializable {
 
 	private static final long serialVersionUID = -113546151223878327L; // automatic generated
 	private String name;
-	private String proposition = null;
+	private String content = null;
 	private clojure.lang.PersistentList children = null;
 	
+	/**
+	 * Generates a node with formula.
+	 */
 	public Node(String name, String proposition) {
 		this.name = name;
-		this.proposition = proposition;
+		this.content = proposition;
 	}
 	
-	public Node(String name, clojure.lang.PersistentList children) {
+	/**
+	 * Generates a project with formulas
+	 */
+	public Node(String name, String description, clojure.lang.PersistentList children) {
 		this.name = name;
+		this.content = description;
 		this.children = children;
 	}
 	
@@ -23,8 +30,8 @@ public class Node implements Serializable {
 		return children;
 	}
 	
-	public String getProposition() {
-		return proposition;
+	public String getContent() {
+		return this.content;
 	}
 	
 	@Override
