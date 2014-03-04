@@ -87,14 +87,16 @@
           dimacs (logic/generate-dimacs (:tseitin-formula tseit))]
       (set-text-result! (logic/dimacs-sub-vars dimacs (:lits tseit))))))
 
-(defn handler-open-file
+(defn handler-open-file ; TODO: Baum aktualisieren
   [_]
-  (choose-file :filters [["Logical Workbench (*.lwf)"
+  (let [file (choose-file :filters [["Logical Workbench (*.lwf)"
                           ["lwf"]
                           ["Folders" #(.isDirectory %)]]
                          ["MPA (*.mpf)"
                           ["mpf"]
-                          ["Folders" #(.isDirectory %)]]]))
+                          ["Folders" #(.isDirectory %)]]]
+                          :success-fn (fn [fc file] (.getAbsolutePath file)))]
+    (println file)))
 
 ;; Project Tree
 (defn- handler-tree
@@ -104,7 +106,7 @@
     (when (>= (count s) 2)
       (if (contains? ed-tabs s)
         (selection! editor-tabs (ed-tabs s))
-        (add-editor (last s) (.getContent (last s)) s)))))
+        (add-editor (last s) (.content (last s)) s)))))
   
 (defn handler-tree-clicked
   [e]

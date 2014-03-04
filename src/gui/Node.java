@@ -5,9 +5,10 @@ import java.io.Serializable;
 public class Node implements Serializable {
 
 	private static final long serialVersionUID = -113546151223878327L; // automatic generated
-	private String name;
-	private String content = null;
-	private clojure.lang.PersistentList children = null;
+	public String name;
+	public String content = null;
+	public clojure.lang.PersistentList children = null;
+	public String path = null;
 	
 	/**
 	 * Generates a node with formula.
@@ -20,18 +21,11 @@ public class Node implements Serializable {
 	/**
 	 * Generates a project with formulas
 	 */
-	public Node(String name, String description, clojure.lang.PersistentList children) {
+	public Node(String name, String description, String path, clojure.lang.PersistentList children) {
 		this.name = name;
 		this.content = description;
 		this.children = children;
-	}
-	
-	public clojure.lang.PersistentList getChildren() {
-		return children;
-	}
-	
-	public String getContent() {
-		return this.content;
+		this.path = path;
 	}
 	
 	@Override
