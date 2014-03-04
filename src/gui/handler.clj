@@ -121,3 +121,13 @@
   "Safe all relevant informations for the next app start."
   [_]
   (println project-tree)) ; TODO save tree
+
+; Listener
+(defn tab-mark-new-listener
+ "Listener function that should be called when a text in an editor changes.
+ Puts an asterisk in the end of the tab name, if not already done."
+  [_]
+  (when (not (tab-marked-new?))
+    (let [title (:title (selection editor-tabs))
+          index (:index (selection editor-tabs))]
+      (.setTitleAt editor-tabs index (str title "*")))))
