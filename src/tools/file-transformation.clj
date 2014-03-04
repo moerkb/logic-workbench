@@ -1,5 +1,9 @@
 (ns tools.main)
 
+(defn replace-several [content & replacements]
+  (let [replacement-list (partition 2 replacements)]
+    (reduce #(apply str/replace %1 %2) content replacement-list)))
+
 (defn pp-str [& things]
   (let [s (with-out-str (pretty/pprint things))]
     (println s)

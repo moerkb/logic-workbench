@@ -5,7 +5,8 @@
            [seesaw.tree :refer (simple-tree-model)]
            [seesaw.chooser :refer (choose-file)]
            [logic.util :as logic]
-           [clojure.string :as str])
+           [clojure.string :as str]
+           [tools.main :as tools])
   (import [java.io File]
           [gui Node]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))

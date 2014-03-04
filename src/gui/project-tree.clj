@@ -18,11 +18,11 @@
 
 (defn- projects
   [file-vector]
-  (let [get-data (fn [f] (let [file-type (last (str/split f #"."))
+  (let [get-data (fn [f] (let [file-type (last (str/split f #"\."))
                                data (read-string (slurp f))]
                            (case file-type
                              "lwf" data
-                             "mpf" (mpf2lwf data))))
+                             "mpf" (tools/mpf2lwf data))))
                              
         file2node (fn [f] (let [data (get-data f)]
                             (Node. (apply str (drop-last 4 (last (str/split f #"/"))))
@@ -46,4 +46,4 @@
     (simple-tree-model
 		  children
 		  children
-		  (projects ["examples/test.lwf"]))))
+		  (projects ["examples/test.lwf" "C:/Users/Daniel/Desktop/mpa-1.0-win32/Examples/Coloring.mpf"]))))
