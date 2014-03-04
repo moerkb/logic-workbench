@@ -49,7 +49,8 @@
                lines (drop-while no-phi-line? all-lines)]
           (if (empty? lines)
               file-map
-              (let [new-name (keyword (subs (first lines) 5 (count (first lines))))
+              (let [new-name (keyword (str/replace (subs (first lines) 5 (count (first lines)))
+                                        #" " "_"))
                     new-formula (next-formula (rest lines))]
                 (recur (assoc file-map new-name new-formula)
                   (drop-while no-phi-line? (rest lines))))))
