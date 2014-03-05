@@ -71,3 +71,16 @@
   (let [tab-name (:title (selection editor-tabs))
         last-char (get tab-name (dec (count tab-name)))]
     (= last-char \*)))
+
+(defn get-settings
+  "Reads the settings from the settings file and returns them as a map. For any error, i.e. no file
+   exist or cannot be read properly, an exception will be thrown (see 'slurp' and 'read-string')."
+  []
+  (read-string (slurp "settings.clj")))
+
+(defn set-setting
+  "Takes a key value pair and overwrites the current setting with it. Applies on the current settings file.
+   As of now, no responsiblity for wrong arguments is taken."
+  [key value]
+  (spit "settings.clj" (assoc (get-settings) key value))) 
+  
