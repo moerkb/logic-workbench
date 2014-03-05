@@ -4,6 +4,7 @@
            [seesaw.tree :refer (simple-tree-model node-structure-changed)]
            [seesaw.dev :refer (show-options show-events)]
            [seesaw.chooser :refer (choose-file)]
+           [seesaw.border :as border]
            [logic.util :as logic]
            [clojure.string :as str]
            [tools.main :as tools])
@@ -41,6 +42,7 @@
 (load "tools")
 (load "project-tree")
 (load "handler")
+(load "frames")
 (load "menus")
 
 ; final window building

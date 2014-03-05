@@ -49,7 +49,9 @@
                         (button :icon (icon-path "task_m4.gif"))
                         :separator
                         (button :icon (icon-path "select_font.gif"))
-                        (button :icon (icon-path "settings.gif"))
+                        (action 
+                          :icon (icon-path "settings.gif")
+                          :handler (fn [_] (settings-frame!)))
                         (combobox
                           :maximum-size [135 :by 32000]
                           :model ["DefaultSAT4J" "LightSAT4J" "NaiveDPLL"])]))
@@ -168,7 +170,8 @@
                             (action 
                               :name "Settings"
                               :key "alt S"
-                              :icon (icon-path "settings.gif"))
+                              :icon (icon-path "settings.gif")
+                              :handler (fn [_] (settings-frame!)))
                             (action :name "Include Path")]))
 
 (def help-menu (menu

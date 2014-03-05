@@ -1,1 +1,1 @@
-{:show-tt :false}
+{:show-tt :all}

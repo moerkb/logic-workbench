@@ -36,7 +36,9 @@
   "Handler function for action 'truth table'."
   [_]
   (std-catch
-    (let [tt (logic/generate-truth-table (parse-editor))
+    (let [tt (logic/generate-truth-table
+               (parse-editor)
+               :lines (:show-tt (get-settings)))
           vars (butlast (:symbols tt))
           var-keys (conj 
                      (vec (map 
