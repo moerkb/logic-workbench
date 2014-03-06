@@ -1,5 +1,7 @@
 (ns gui.main)
 
+(declare get-include-paths)
+
 (defmacro std-catch
   "Puts the argument in a try block and catches all exceptions for a standard message.
   Additional catch clauses are applied in order before a final clause catches all of type Exception."
@@ -15,7 +17,9 @@
 
 (defn parse-editor []
   "Parses the text of the editor and returns the clojure formula."
-  (logic/parse (tools/invoke-mmp (.getText (current-editor)))))
+  (logic/parse (tools/invoke-mmp 
+                 (.getText (current-editor))
+                 (get-include-paths))))
 
 (defn set-result! [result-widget]
   "Clears the result area and sets the new widget."
@@ -89,3 +93,7 @@
   [key value]
   (spit "settings.clj" (assoc (get-settings) key value))) 
   
+(defn get-include-paths
+  "Reads the MMP include paths from the settings and returns them as a collection."
+  []
+  (map str/trim (str/split (:mmp-include-path (get-settings)) #";")))

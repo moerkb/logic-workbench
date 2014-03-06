@@ -102,7 +102,9 @@
   "Handler function for action 'preprocess with MMP'."
   [_]
   (std-catch
-    (let [m4 (tools/invoke-mmp (.getText (current-editor)))]
+    (let [m4 (tools/invoke-mmp 
+               (.getText (current-editor))
+               (get-include-paths))]
       (set-text-result! m4))))
 
 (defn handler-open-file ; TODO: Baum aktualisieren

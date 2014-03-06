@@ -40,6 +40,14 @@
                                          :text "... as MPA formula."
                                          :selected? (= :formula sat-curr-setting)
                                          :group sat-radios)])
+        ; settings for MMP include path
+        mmp-curr-setting (:mmp-include-path curr-settings)
+        mmp-text (text :text mmp-curr-setting)
+        mmp-panel (vertical-panel
+                    :border (border/compound-border "Include path for MMP")
+                    :items [(label "Path to the directoreis, in which should be searched")
+                            (label "for .mml files. Separate by semicolon.")
+                            mmp-text])
         
         ; putting it together
         save-button (button :text "Save")
@@ -50,13 +58,16 @@
                           :content (border-panel
                                      :border 20
                                      :center (vertical-panel :items [tt-radio-panel
-                                                                     sat-radio-panel])
+                                                                     sat-radio-panel
+                                                                     mmp-panel])
                                      :south save-button))]
     (listen save-button
             :mouse-clicked (fn [_] 
                              (let [new-tt-setting (config (selection tt-radios) :id)
-                                   new-sat-setting (config (selection sat-radios) :id)]
+                                   new-sat-setting (config (selection sat-radios) :id)
+                                   new-mmp-setting (.getText mmp-text)]
                                (set-settings {:show-tt new-tt-setting,
-                                              :show-sat new-sat-setting})
+                                              :show-sat new-sat-setting
+                                              :mmp-include-path new-mmp-setting})
                                (dispose! settings-dialog))))
     (-> settings-dialog pack! show!)))

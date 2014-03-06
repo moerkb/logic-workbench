@@ -167,15 +167,15 @@
 (def options-menu (menu
                     :text "Options"
                     :mnemonic "O"
-                    :items [(action 
-                              :name "Select Font"
-                              :icon (icon-path "select_font.gif"))
+                    :items [#_(action 
+                               :name "Select Font"
+                               :icon (icon-path "select_font.gif"))
                             (action 
                               :name "Settings"
                               :key "alt S"
                               :icon (icon-path "settings.gif")
                               :handler (fn [_] (settings-frame!)))
-                            (action :name "Include Path")]))
+                            #_(action :name "Include Path")]))
 
 (def help-menu (menu
                  :text "Help"

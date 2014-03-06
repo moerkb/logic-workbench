@@ -1,1 +1,1 @@
-{:show-tt :true-only, :show-sat :true-only}
+{:show-tt :true-only, :show-sat :true-only, :mmp-include-path "src/examples"}

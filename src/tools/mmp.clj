@@ -11,12 +11,14 @@
 
 (defn invoke-mmp
   "Takes a proposition as a string and if needed, runs the MMP and returns its
-   output. Returns the original string otherwise."
-  [formula]
+   output. Returns the original string otherwise. The second argument is a 
+   collection with arbitrary number of paths as strings."
+  [formula include-paths]
   (if (needs-mmp? formula)
     (let [result (StringWriter.)
           engine (Engine. (StringReader. formula) result)]
-      (.. engine (getSettings) (addToSearchPath "src/examples/"))
+      (doseq [path include-paths]
+        (.. engine (getSettings) (addToSearchPath path)))
       (.run engine)
       (str "/* Result of preprocessing by mmp: */"
         \newline
