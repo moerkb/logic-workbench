@@ -71,3 +71,36 @@
                                               :mmp-include-path new-mmp-setting})
                                (dispose! settings-dialog))))
     (-> settings-dialog pack! show!)))
+
+(defn about-frame!
+  "Dislays Help->About."
+  []
+  (let [info-frame (dialog :type :plain
+                     :content (label :text
+"<html><strong>Logic Workbench</strong><br />
+<br />
+Written 2013/2014<br />
+Project home: github.com/moerkb/logic-workbench<br />
+<br />
+<strong>Authors</strong><br />
+Prof. Dr. B. Renz (homepages.thm.de/~hg11260)<br />
+Daniel Kirsten (daniel.kirsten@mni.thm.de)<br />
+Markus Bader (markus.bader@mni.thm.de)<br />
+<br />
+Licensed under <strong>Eclipse Public License 1.0</strong><br />
+(http://www.eclipse.org/legal/epl-v10.html)<br />
+<br />
+This program uses much code and many ideas of the<br />
+<strong>MNI Propopsition Analyzer (MNI)</strong><br />
+(homepages.thm.de/~hg11260/mpa.html)<br />
+<br />
+Written in <strong>Clojure</strong> (clojure.org)<br />
+<br />
+<strong>Libraries</strong> used:<br />
+Instaparse (github.com/Engelberg/instaparse)<br />
+SAT4J (sat4j.org)<br />
+Kern (github.com/blancas/kern)<br />
+Seesaw (github.com/daveray/seesaw)
+"
+))]
+    (-> info-frame pack! show!)))

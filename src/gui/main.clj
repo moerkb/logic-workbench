@@ -10,6 +10,8 @@
            [tools.main :as tools])
   (import [java.io File]
           [gui Node]
+          [java.net URI]
+          [java.awt Desktop]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))
 
 (native!)

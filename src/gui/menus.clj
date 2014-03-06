@@ -183,6 +183,12 @@
                  :items [(action 
                            :name "Help Contents"
                            :mnemonic "H"
+                           :handler (fn [_]
+                                      (.. Desktop getDesktop 
+                                        (browse 
+                                          (URI. "http://www.mni.thm.de"))))
                            :key "F1")
                          (separator)
-                         (action :name "About")]))
+                         (action 
+                           :name "About"
+                           :handler (fn [_] (about-frame!)))]))
