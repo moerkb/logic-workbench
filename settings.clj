@@ -1,1 +1,1 @@
-{:show-tt :all}
+{:show-tt :true-only, :show-sat :true-only}

@@ -20,17 +20,26 @@
     (let [tmap (logic/transform-tseitin (parse-editor))
           sat-result (-> tmap :tseitin-formula logic/generate-dimacs-clauses logic/sat-solve rest)
           result (logic/retransform-tseitin sat-result tmap)
-          rows (map #(if (coll? %)
-                       [(second %) false]
-                       [% true]) result)]
+          all-rows (map #(if (coll? %)
+                               [(second %) false]
+                               [% true]) result)
+          curr-settings (get-settings)
+          rows (if (= :true-only (:show-sat curr-settings))
+                 (filter second all-rows)
+                 all-rows)]
     
       (if (zero? (count rows))
        (set-table-result! [:columns [{:key :message :text "Message"}]
                            :rows [["The preposition is unsatisfiable."]]]
          :auto-resize :last-column)
-       (set-table-result! [:columns [{:key :symbol :text "Variable"} 
-                                     {:key :value :text "Value"}]
-                           :rows rows])))))
+       (if (= :formula (:show-sat curr-settings))
+         (set-text-result! (apply str (interpose "&" (map #(if (second %)
+                                                             (str (first %))
+                                                             (str "!" (first %)))
+                                                       rows))))
+         (set-table-result! [:columns [{:key :symbol :text "Variable"} 
+                                       {:key :value :text "Value"}]
+                             :rows rows]))))))
 
 (defn handler-tt
   "Handler function for action 'truth table'."

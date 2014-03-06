@@ -78,6 +78,11 @@
   []
   (read-string (slurp "settings.clj")))
 
+(defn set-settings
+  "Takes a map and overwrites the complete settings with it. Don't forget anything!"
+  [settings-map]
+  (spit "settings.clj" settings-map))
+
 (defn set-setting
   "Takes a key value pair and overwrites the current setting with it. Applies on the current settings file.
    As of now, no responsiblity for wrong arguments is taken."
