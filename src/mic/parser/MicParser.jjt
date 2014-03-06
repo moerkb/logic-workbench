@@ -1,0 +1,257 @@
+/** --------------------------------------------------------------------------
+ * Grammar for Integer Expressions
+ * 
+ * Copyright (c) 2008 
+ * by Fachhochschule Gieﬂen-Friedberg University of Applied Sciences.
+ * 
+ * mip is free software; you can redistribute it and/or modify it under 
+ * the terms of the GNU General Public License as published by the Free 
+ * Software Foundation; either version 2 of the License, or (at your option) 
+ * any later version.
+ *  
+ * mip is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
+ * more details. 
+ * 
+ * You should have received a copy of the GNU General Public License along 
+ * with this program; if not, write to the Free Software Foundation, Inc., 
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+ * --------------------------------------------------------------------------
+ * $Id:MpaParser.jjt 112 2007-02-06 09:59:22Z br $
+ * --------------------------------------------------------------------------
+ */
+
+options {
+  NODE_PREFIX 	 = "Mic";
+  MULTI			     = true;
+  VISITOR	       = true;
+  STATIC		     = false;
+}
+
+PARSER_BEGIN(MicParser)
+
+package mic.parser;
+
+public class MicParser {
+}
+
+PARSER_END(MicParser)
+
+SKIP : /* ignore white spaces and comments */
+{
+    " "
+  | "\t"
+  | "\n"
+  | "\r"
+}
+
+
+TOKEN :
+{
+    < LPAREN: "(" >
+  | < RPAREN: ")" >
+}
+
+
+/**
+ * Unary operators
+ * + sign  
+ * - sign
+ * ~ bitwise negation
+ * ! logical negation
+
+/**
+ * Precedence of binary operators
+ *
+ * prec operator        assoc
+ * high POWER    		    right
+ *      MUL, DIV, MOD   left
+ *      PLUS, MINUS     left
+ *      LSHIFT, RSHIFT  left
+ *      LT, GT, LE, GE  left
+ *      EG, NE          left
+ *      BAND            left
+ *      BXOR            left
+ *      BOR             left
+ *      LAND            left
+ * low  LOR             left
+ */
+ 
+TOKEN :	 /* Operators */
+{
+	  < PLUS:   "+" >
+	| < MINUS:  "-" >
+	| < BNEG:	  "~" >
+	| < LNEG:   "!" >
+	| < POWER:  "**" >
+	| < MUL:    "*" >
+	| < DIV:    "/" >
+	| < MOD:    "%" >
+	| < LSHIFT: "<<" >
+	| < RSHIFT: ">>" >
+	| < LT:     "<" >
+	| < GT:     ">" >
+	| < LE:     "<=" >
+	| < GE:     ">=" >
+	| < EQ:     "==" >
+	| < NE:     "!=" >
+	| < BAND:   "&" >
+	| < BXOR:   "^" >
+	| < BOR:    "|" >
+	| < LAND:   "&&" >
+	| < LOR:    "||" >
+}
+
+TOKEN : /* Operators -- not supported */
+{
+	  < INCR:   "++" >
+	| < DECR:   "--" >  
+}
+
+TOKEN : 
+{
+	< INT_LITERAL: 
+	  <DEC_LITERAL> | <HEX_LITERAL> | <OCT_LITERAL>
+	>  
+  | < #DEC_LITERAL: ["1"-"9"] (["0"-"9"])* >
+  | < #HEX_LITERAL: "0" ["x","X"](["0"-"9","a"-"f","A"-"F"])+ >
+  | < #OCT_LITERAL: "0" (["0"-"7"]) * >
+}
+
+
+MicStart Start() : 
+{}
+{
+	Expression() <EOF> { return jjtThis; }
+}
+
+void Expression() #void :
+{}
+{
+  LOrExpression() 
+}    
+
+void LOrExpression() #void :
+{}
+{
+  LAndExpression() #LOrExpression(>1)
+  	( <LOR> LAndExpression() #LOrExpression(2) )*
+  
+}    
+
+void LAndExpression() #void :
+{}
+{
+	BOrExpression() #LAndExpression(>1)
+		( <LAND> BOrExpression() #LAndExpression(2) )*
+}
+
+void BOrExpression() #void :
+{}
+{
+	BXorExpression() #BOrExpression(>1) 
+		( <BOR> BXorExpression() #BOrExpression(2) )*
+}
+
+void BXorExpression() #void : 
+{}
+{
+	BAndExpression() #BXorExpression(>1) 
+		( <BXOR> BAndExpression() #BXorExpression(2) )*
+}
+
+void BAndExpression() #void : 
+{}
+{
+ 	EqualExpression() #BAndExpression(>1)
+ 		( <BAND> EqualExpression() #BAndExpression(2) )*
+}
+
+void EqualExpression() #void :
+{
+	Token t;
+}
+{
+	RelationalExpression() #EqualExpression(>1)  
+		( ( t = <EQ> | t = <NE> ) 
+				RelationalExpression() 
+					{ jjtThis.setOp( t.kind ); } #EqualExpression(2) )*
+}
+
+void RelationalExpression() #void :
+{
+	Token t;
+}
+{
+	ShiftExpression() #RelationalExpression(>1)
+		( ( t = <LT> | t = <GT> | t = <LE> | t = <GE> ) 
+		 		ShiftExpression()
+					{ jjtThis.setOp( t.kind ); } #RelationalExpression(2) )*
+}		
+
+void ShiftExpression() #void :
+{
+	Token t;
+}
+{
+	AdditiveExpression() #ShiftExpression(>1)
+		( ( t = <LSHIFT> | t = <RSHIFT> ) 
+			AdditiveExpression() 
+					{ jjtThis.setOp( t.kind ); } #ShiftExpression(2) )*
+}
+
+void AdditiveExpression() #void :
+{
+	Token t;
+}
+{
+	MultiplicativeExpression() #AdditiveExpression(>1)
+		( ( t = <PLUS> | t = <MINUS> ) 
+			MultiplicativeExpression()
+					{ jjtThis.setOp( t.kind ); } #AdditiveExpression(2) )*
+}
+
+void MultiplicativeExpression() #void :
+{
+	Token t;
+}
+{
+ PowerExpression() #MultiplicativeExpression(>1)
+		( ( t = <MUL> | t = <DIV> | t = <MOD> ) 
+			PowerExpression()
+					{ jjtThis.setOp( t.kind ); } #MultiplicativeExpression(2) )*
+}
+
+void PowerExpression() #void :
+{}
+{
+ 	UnaryExpression()	#PowerExpression(>2)
+ 		( <POWER> PowerExpression() #PowerExpression(2) )?
+}
+
+void UnaryExpression() #void:
+{
+	Token t;
+}
+{ UnarySimpleExpression() 
+	|
+	( t = <PLUS> | t = <MINUS> | t = <BNEG> | t = <LNEG> )
+		UnaryExpression()
+					{ jjtThis.setOp( t.kind ); } #UnaryExpression(1)
+}	
+
+void UnarySimpleExpression() #void :
+{}
+{
+	  Integer() 
+	| <LPAREN> Expression() <RPAREN>  
+}
+
+void Integer() :
+{
+	Token t;
+}
+{
+	t = <INT_LITERAL> { jjtThis.setLexeme( t.image ); }
+}

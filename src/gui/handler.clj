@@ -89,6 +89,13 @@
           dimacs (logic/generate-dimacs (:tseitin-formula tseit))]
       (set-text-result! (logic/dimacs-sub-vars dimacs (:lits tseit))))))
 
+(defn handler-m4
+  "Handler function for action 'preprocess with MMP'."
+  [_]
+  (std-catch
+    (let [m4 (tools/invoke-mmp (.getText (current-editor)))]
+      (set-text-result! m4))))
+
 (defn handler-open-file ; TODO: Baum aktualisieren
   [_]
   (let [file (choose-file :filters [["Logical Workbench (*.lwf)"
@@ -102,7 +109,7 @@
         new-children (apply list (conj (vec (.children tree-of-projects)) new-node))]
     (set! (.children tree-of-projects) new-children)
     (node-structure-changed tree-model (list tree-of-projects))))
-
+  
 ;; Project Tree
 (defn- handler-tree
   [e]

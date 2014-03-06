@@ -46,7 +46,9 @@
                         (action 
                           :icon (icon-path "dimacsTseitin.gif")
                           :handler handler-dimacs-tseitin)
-                        (button :icon (icon-path "task_m4.gif"))
+                        (action 
+                          :handler handler-m4
+                          :icon (icon-path "task_m4.gif"))
                         :separator
                         (button :icon (icon-path "select_font.gif"))
                         (action 
@@ -158,6 +160,7 @@
                           (action 
                             :name "Preprocess with M4"
                             ;:key "ctrl T M"
+                            :handler handler-m4
                             :icon (icon-path "task_m4.gif"))
                   ]))
 

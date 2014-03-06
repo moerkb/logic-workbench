@@ -15,7 +15,7 @@
 
 (defn parse-editor []
   "Parses the text of the editor and returns the clojure formula."
-  (logic/parse (.getText (current-editor))))
+  (logic/parse (tools/invoke-mmp (.getText (current-editor)))))
 
 (defn set-result! [result-widget]
   "Clears the result area and sets the new widget."
