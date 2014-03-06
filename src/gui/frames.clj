@@ -22,6 +22,7 @@
                                         :text "... not satisfying valuations only."
                                         :selected? (= :false-only tt-curr-setting)
                                                       :group tt-radios)])
+
         ; settings for sat solving
         sat-curr-setting (:show-sat curr-settings)
         sat-radios (button-group)
@@ -47,6 +48,7 @@
                           :modal? true
                           :id :settings-dialog
                           :content (border-panel
+                                     :border 20
                                      :center (vertical-panel :items [tt-radio-panel
                                                                      sat-radio-panel])
                                      :south save-button))]
