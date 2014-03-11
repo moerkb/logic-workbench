@@ -1,6 +1,11 @@
 (ns gui.main)
 
 ;; Menu Bar
+(defn handler-close-selcted-project
+  [_]
+  (change-project-list (apply list (remove #(= (second (selection project-tree)) %) (.children tree-of-projects)))))
+    
+
 (defn handler-parse
   "Handler function for action 'parse to clojure formula'."
   [_]
@@ -118,13 +123,7 @@
                           :success-fn (fn [fc file] (.getAbsolutePath file)))]
     (if (file-is-open? file)
       nil
-      (let [new-node (file2node (tools/path-conformer file))
-            new-children (apply list (conj (vec (.children tree-of-projects)) new-node))]
-        (set! (.children tree-of-projects) new-children)
-        (node-structure-changed tree-model (list tree-of-projects))
-        (set-setting
-          :project-tree
-          (vec (map #(.path %) (.children tree-of-projects))))))))
+      (change-project-list (apply list (conj (vec (.children tree-of-projects)) (file2node (tools/path-conformer file))))))))
   
 ;; Project Tree
 (defn- handler-tree

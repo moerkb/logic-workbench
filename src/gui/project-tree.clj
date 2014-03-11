@@ -64,12 +64,17 @@
 		  children
 		  children
 		  tree)))
-        
+
+(defn change-project-list
+  [new-project-list]
+  (set! (.children tree-of-projects) new-project-list)
+        (node-structure-changed tree-model (list tree-of-projects))
+        (set-setting
+          :project-tree
+          (vec (map #(.path %) (.children tree-of-projects)))))
 
 (defn file-is-open?
   [file]
   (let [open-files (set (map #(.path %) (.children tree-of-projects)))
         f (tools/path-conformer file)]
-    (do
-      (println "contains?" open-files f "->" (contains? open-files f))
-      (contains? open-files f))))
+    (contains? open-files f)))

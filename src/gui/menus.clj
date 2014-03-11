@@ -32,8 +32,9 @@
                           :tip "Save all"
                           :icon (icon-path "save_all.gif"))
                         (action
-                          :tip "Closes the selected project, proposition or M4 file."
-                          :icon (icon-path "close.gif"))
+                          :tip "Closes the selected project."
+                          :icon (icon-path "close.gif")
+                          :handler handler-close-selcted-project)
                         (action 
                           :tip "Deletes the selected project, proposition or M4 file."
                           :icon (icon-path "delete.gif"))
@@ -142,8 +143,9 @@
                               )
                             (action 
                               :name "Close"
-                              :tip "Closes the selected project, proposition or M4 file."
-                              :icon (icon-path "close.gif"))
+                              :tip "Closes the selected project."
+                              :icon (icon-path "close.gif")
+                              :handler handler-close-selcted-project)
                             (action 
                               :name "Delete"
                               :tip "Deletes the selected project, proposition or M4 file."
