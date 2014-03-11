@@ -184,9 +184,10 @@
                            :name "Help Contents"
                            :mnemonic "H"
                            :handler (fn [_]
-                                      (.. Desktop getDesktop 
-                                        (browse 
-                                          (URI. "http://www.mni.thm.de"))))
+                                      (let [help-file (File. "resources/help/index.html")]
+                                        (.. Desktop getDesktop 
+                                          (browse 
+                                            (URI. (str "file://" (.getAbsolutePath help-file)))))))
                            :key "F1")
                          (separator)
                          (action 
