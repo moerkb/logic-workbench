@@ -65,7 +65,8 @@
                                  :text content
                                  :listen [:document tab-mark-new-listener])
                                :preferred-size [690 :by 400])]
-    (config! editor-tabs :tabs [{:title title :content new-editor}])
+    (config! editor-tabs :tabs [{:title title
+                                 :content new-editor}])
     (swap! *node-tabs* #(assoc % node (dec (tab-count))))
     (selection! editor-tabs (dec (tab-count)))))
 
