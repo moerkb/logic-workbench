@@ -50,13 +50,13 @@
                           :handler handler-m4
                           :icon (icon-path "task_m4.gif"))
                         :separator
-                        (button :icon (icon-path "select_font.gif"))
+                        ;(button :icon (icon-path "select_font.gif"))
                         (action 
                           :icon (icon-path "settings.gif")
                           :handler (fn [_] (settings-frame!)))
-                        (combobox
-                          :maximum-size [135 :by 32000]
-                          :model ["DefaultSAT4J" "LightSAT4J" "NaiveDPLL"])]))
+                        #_(combobox
+                           :maximum-size [135 :by 32000]
+                           :model ["DefaultSAT4J" "LightSAT4J" "NaiveDPLL"])]))
 
 (def project-menu (menu 
                     :text "Project"

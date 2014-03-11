@@ -43,7 +43,7 @@
                                 #"//|\*/+|/\*+|\*+" ""))]
     
     ; pretty print result
-    (replace-several 
+    (str/replace
         ; recursion: put top comment, then one loop for each preposition
         (loop [file-map {:__description top-comment}
                lines (drop-while no-phi-line? all-lines)]
@@ -54,7 +54,4 @@
                     new-formula (next-formula (rest lines))]
                 (recur (assoc file-map new-name new-formula)
                   (drop-while no-phi-line? (rest lines))))))
-        #"\\n" "\n"
-        #", " "\n\t"
-        #"\{" "{\n\t"
-        #"\}" "\n}")))
+        #"\\n" "\n")))
