@@ -91,7 +91,7 @@
   "Takes a key value pair and overwrites the current setting with it. Applies on the current settings file.
    As of now, no responsiblity for wrong arguments is taken."
   [key value]
-  (spit "settings.clj" (assoc (get-settings) key value))) 
+  (spit "settings.clj" (assoc (get-settings) key value)))
   
 (defn get-include-paths
   "Reads the MMP include paths from the settings and returns them as a collection."

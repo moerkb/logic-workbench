@@ -121,7 +121,10 @@
       (let [new-node (file2node (tools/path-conformer file))
             new-children (apply list (conj (vec (.children tree-of-projects)) new-node))]
         (set! (.children tree-of-projects) new-children)
-        (node-structure-changed tree-model (list tree-of-projects))))))
+        (node-structure-changed tree-model (list tree-of-projects))
+        (set-setting
+          :project-tree
+          (vec (map #(.path %) (.children tree-of-projects))))))))
   
 ;; Project Tree
 (defn- handler-tree
@@ -143,13 +146,7 @@
   (when (= (.getKeyCode e) 10)
     (handler-tree e)))
 
-;; On Close
-(defn handler-close-window
-  "Safe all relevant informations for the next app start."
-  [_]
-  (println project-tree)) ; TODO save tree
-
-; Listener
+;; Listener
 (defn tab-mark-new-listener
  "Listener function that should be called when a text in an editor changes.
  Puts an asterisk in the end of the tab name, if not already done."
