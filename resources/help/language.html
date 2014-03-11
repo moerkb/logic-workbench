@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link type="text/css" rel="stylesheet" href="default.css" />
+	<title>Language - Grammar</title>
+</head>
+
+<body>
+	<h1>Language - Grammar</h1>
+	Propositions may contain single line comments (<code>// ... until end of line</code>) and
+	multi line comments  (<code>/* ... */</code>). White space is not significant.
+	  
+	<h2>Grammar</h2>
+	<table>
+		<tr>
+			<td align="right"  valign="baseline"><i>Proposition</i></td>
+			<td align="center" valign="baseline">::=</td>
+			<td align="left"   valign="baseline"><i>Atom</i> | <i>Const</i></td>
+		</tr>
+		<tr>
+			<td align="right"  valign="baseline"></td>
+			<td align="center" valign="baseline"></td>
+			<td align="left"   valign="baseline">| <code>"("</code> <i>UnOp Proposition</i> <code>")"</code> </td>
+		</tr>
+		<tr>
+			<td align="right"  valign="baseline"></td>
+			<td align="center" valign="baseline"></td>
+			<td align="left"   valign="baseline">| <code>"("</code> <i>Proposition BinOp Proposition</i> <code>")"</code></td>
+		</tr>
+		<tr>
+			<td align="right"  valign="baseline"><i>Atom</i></td>
+			<td align="center" valign="baseline">::=</td>
+			<td align="left"   valign="baseline"><code>([letter]|"_"|"\"|"{"|"}")([letter]|[digit]|"_"|"\"|"{"|"}")*</code></td>
+		</tr>
+		<tr>
+			<td align="right"  valign="baseline"><i>Const</i></td>
+			<td align="center" valign="baseline">::=</td>
+			<td align="left"   valign="baseline"><code>("T"|"1"|"True"|"F"|"0"|"False")</code></td>
+		</tr>
+		<tr>
+			<td align="right"  valign="baseline"><i>UnOp</i></td>
+			<td align="center" valign="baseline">::=</td>
+			<td align="left"   valign="baseline"><code>("!"|"not")</code></td>
+		</tr>
+		<tr>
+			<td align="right"  valign="baseline"><i>BinOp</i></td>
+			<td align="center" valign="baseline">::=</td>
+			<td align="left"   valign="baseline">see Section below</td>
+		</tr>
+	</table>
+	<br/>
+	In propositions with many brackets it is often difficult to see the matching ones. 
+	Therefore MPA allows to corresponding pairs of brackets: 
+	<code>"(" ")"</code> and <code>"[" "]"</code>.
+	Furthermore we economize on brackets by agreeing on precedence of operators: The unary operator
+	binds more strongly than the binary operators. Binary operators have precedence according to the following 
+	section. 
+	
+	<h2>Binary Operators</h2>
+	
+	<p>Binary operators in MPA in descending order of precedence</p>
+	
+		<table border='1' cellpadding='5' cellspacing='0' bordercolor='black'>
+			<tr class='header'>
+				<td>Description</td>
+				<td>Syntax</td>
+				<td>Associativity</td>
+			</tr>
+			<tr>
+				<td>logical and</td>
+				<td><code>"&amp;", "and"</code></td>
+				<td>left</td>
+			</tr>
+			<tr>
+				<td>logical not and</td>
+				<td><code>"!&amp;", "nand"</code></td>
+				<td>left</td>
+			</tr>
+			<tr>
+				<td>logical or</td>
+				<td><code>"|", "or"</code></td>
+				<td>left</td>
+			</tr>
+			<tr>
+				<td>logical not or</td>
+				<td><code>"!|", "nor"</code></td>
+				<td>left</td>
+			</tr>
+			<tr>
+				<td>logical from</td>
+				<td><code>"<-", "if"</code></td>
+				<td>right</td>
+			</tr>
+			<tr>
+				<td>logical not from</td>
+				<td><code>"nif"</code></td>
+				<td>right</td>
+			</tr>
+			<tr>
+				<td>logical implies</td>
+				<td><code>"->", "impl"</code></td>
+				<td>right</td>
+			</tr>
+			<tr>
+				<td>logical not implies</td>
+				<td><code>"nimpl"</code></td>
+				<td>right</td>
+			</tr>
+			<tr>
+				<td>logical equivalent</td>
+				<td><code>"<->", "iff"</code></td>
+				<td>left</td>
+			</tr>
+			<tr>
+				<td>logical exclusive or</td>
+				<td><code>"^";, "xor"</code></td>
+				<td>left</td>
+			</tr>
+		</table>
+	<br/>
+</body>
+</html>
