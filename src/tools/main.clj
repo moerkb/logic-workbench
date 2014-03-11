@@ -6,3 +6,7 @@
 
 (load "file-transformation")
 (load "mmp")
+
+(defn path-conformer
+  [p]
+  (str/replace p "\\" "/"))

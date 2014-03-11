@@ -60,7 +60,7 @@
 (defn file-is-open?
   [file]
   (let [open-files (set (map #(.path %) (.children tree-of-projects)))
-        f (str/replace file "\\" "/")]
+        f (tools/path-conformer file)]
     (do
       (println "contains?" open-files f "->" (contains? open-files f))
       (contains? open-files f))))

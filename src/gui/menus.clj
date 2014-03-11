@@ -240,7 +240,7 @@
                                       (let [help-file (File. "resources/help/toc.html")]
                                         (.. Desktop getDesktop 
                                           (browse 
-                                            (URI. (str "file://" (.getAbsolutePath help-file)))))))
+                                            (URI. (str "file://" (tools/path-conformer (.getAbsolutePath help-file))))))))
                            :key "F1")
                          (separator)
                          (action 

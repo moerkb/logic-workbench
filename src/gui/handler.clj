@@ -118,7 +118,7 @@
                           :success-fn (fn [fc file] (.getAbsolutePath file)))]
     (if (file-is-open? file)
       nil
-      (let [new-node (file2node (str/replace file "\\" "/"))
+      (let [new-node (file2node (tools/path-conformer file))
             new-children (apply list (conj (vec (.children tree-of-projects)) new-node))]
         (set! (.children tree-of-projects) new-children)
         (node-structure-changed tree-model (list tree-of-projects))))))
