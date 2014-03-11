@@ -115,11 +115,13 @@
                          ["MPA (*.mpf)"
                           ["mpf"]
                           ["Folders" #(.isDirectory %)]]]
-                          :success-fn (fn [fc file] (.getAbsolutePath file)))
-        new-node (file2node (str/replace file "\\" "/"))
-        new-children (apply list (conj (vec (.children tree-of-projects)) new-node))]
-    (set! (.children tree-of-projects) new-children)
-    (node-structure-changed tree-model (list tree-of-projects))))
+                          :success-fn (fn [fc file] (.getAbsolutePath file)))]
+    (if (file-is-open? file)
+      nil
+      (let [new-node (file2node (str/replace file "\\" "/"))
+            new-children (apply list (conj (vec (.children tree-of-projects)) new-node))]
+        (set! (.children tree-of-projects) new-children)
+        (node-structure-changed tree-model (list tree-of-projects))))))
   
 ;; Project Tree
 (defn- handler-tree

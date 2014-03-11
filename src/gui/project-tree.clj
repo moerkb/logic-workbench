@@ -56,3 +56,11 @@
 		  children
 		  children
 		  tree-of-projects)))
+
+(defn file-is-open?
+  [file]
+  (let [open-files (set (map #(.path %) (.children tree-of-projects)))
+        f (str/replace file "\\" "/")]
+    (do
+      (println "contains?" open-files f "->" (contains? open-files f))
+      (contains? open-files f))))
