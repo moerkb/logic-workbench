@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link type="text/css" rel="stylesheet" href="default.css" />
+	<title>Examples</title>
+</head>
+
+<body>
+<h1>Examples</h1>
+  <h2>Some simple exercises in propositional logic</h2>
+  
+  <p>The first chapter of Dirk van Dalen's book <i>Logic and Structure</i>
+     has propositional logic as subject. We can solve some of the exercises
+     of this chapter quite easily with MPA.</p>
+  <p>In exercise 1 on page 20 we are invited to check whether some propositions
+     are valid. Let's check this!</p>
+  <p>The distribution of MPA contains a couple of example projects. We will open 
+     the project <i>vanDalen</i>:</p>
+  <p><img src="../icons/open_project.gif"/> <b>Project > Open Project</b>. In the file open dialog
+     choose folder <code>Examples</code> and file <code>vanDalen.mpf</code><p>
+  <p>Click on the project node named <code>vanDalen</code> in the left pane and
+     open the editor with one of the propositions e.g. <code>p20-1h</code>.
+     You should see something like this:<p>
+  <br/>
+  <div align="center">
+		<img src="img/expl1.gif">
+	</div>
+	</br>        
+	<p>Now we can check whether the proposition is a tautology by using the tasks<br/>
+		<img src="../icons/task_tt.gif"/> <b>Tasks > Truth Table</b> or <br/>
+		<img src="../icons/task_val.gif"/> <b>Tasks > check VAL</b>
+	</p>
+	<p>There are more tasks, see <a href="tasks.html">Tasks</a>. Play with MPA!</p>
+  
+  <h2>Map Coloring</h2>
+  
+  <p>The problem to check whether a planar map can be colored by three or four
+    colors such that adjacent countries doesn't have the same color, can easily 
+    be formulated in the propositional logic:</p>
+  <p>Let <code>c</code> be a country and <code>r, g, b</code> three colors, we 
+    use three propositional atoms <code>c_r, c_g, c_b</code> to express that the
+    country is red, green oder blue. Clearly: a country may just have one of these
+    colors. This is expressed by the proposition<br/>
+    <code>(!c_r|!c_g) & (!c_r|!c_b) & (!c_g|!c_b) & (c_r|c_g|c_b)</code>.<br/>
+    In a similar way, we can express that adjacent countries must have different
+    colors.</p>
+  <p>The project <code>Coloring.mpf</code> contains some map coloring problems.
+    Opening the project and the open the editor with <code>Luxembourg</code>.
+    You should see this:
+  </p><br/>  
+  <div align="center">
+		<img src="img/expl2.gif">
+	</div>
+	<p>Obviously it would be exhausting to repeat the same conditions for the different
+	 countries. On this account MPA has a built-in macro processor MMP that is compatible
+	 with the classical and well-known M4 macro processor.</p>
+	<p>The first line of the coloring problem <code>Luxembourg</code> is as follows:<br/>
+		<code>dnl needs mmp</code></br>
+		This line is a directive that informs MPA to first perform the macro expansion and then
+		the task on the resulting proposition. More about macro processing in MPA, see
+		<a href="mmp.html">Macros in MPA</a>.
+	</p>
+	<p>The MPA distribution contains some pre-defined macros in the macro libraries
+	  <code>util.mml</code> and <code>logic.mml</code>. In order to locate these files,
+	  MPA has to be informed on the folder of these files, i.e. the folder <code>Examples</code>.
+	  To do this, use <b>Options > Include Path</b> and add the folder <code>Example</code> on
+	  your machine. You can check the result of macro preprocessing wiht the task
+	  <img src="../icons/task_m4.gif"/>. 
+	 </p> 
+	 <p>With the appropriate include path, we can check whether a map cutout of the
+	   surroundings of Luxembourg can be colored by 3 colors. Not difficult to guess
+	   the answer anyway.
+	 </p>
+	 <p>There are more examples, e.g. Australia with 3 colors, U.S with 3 and 4 colors.</p>  
+    
+  
+  <h2>Sudoku</h2>
+  
+  <p>The last example found in the folder <code>Examples</code> is <i>Sudoku</i>, which can be 
+    encoded in  the propositional logic by using
+    9 atoms for each cell of the 9x9-lattice of sudoku: <code>c122</code> is true if and only if the 
+    cell at line 1 and column 2 has the value "2". We need 9^3 = 729 atoms for a sudoku.
+  </p>
+  <p>Again, the built-in macro processor does a good job. We put the rules of sudoku into the
+    include file <code>sudoku.m4</code> and the given values of the puzzle in our proposition.
+  </p>
+  <p>Given the rules and the values we can check the satisfiability <img src="../icons/task_sat.gif"/>
+    and obtain a solution (if there is one). To see <i>all</i> atoms obstructs the view on the result.
+    With the <b>Options > Settings</b> "Models are shown... ...true variables in tabular form"
+    we obtain a more consie result, like this:
+  </p><br/>  
+  <div align="center">
+		<img src="img/expl3.gif">
+	</div>
+	<br/><br/>
+  <p>The rules in <code>sudoku.m4</code> can easily be extended to the rules of the sudokus from
+    the International Herald Tribune - see the example <code>iht-2008-08-02</code>.
+  </p>  
+    
+</body>
+</html>

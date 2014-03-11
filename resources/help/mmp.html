@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link type="text/css" rel="stylesheet" href="default.css" />
+	<title>Macro Processing</title>
+</head>
+
+<body>
+	<h1>Macro Processing</h1>
+	MPA supports macro processing compatible with m4. Macro processing is performed by
+	the MNI Macro Processor MMP, an m4 compatible, embeddable and extensible macro processor 
+	written in the Java programming language.
+	
+	<h2>Basic usage</h2>
+	<p>The macro <code>define</code> allows the definition of macros, e.g. <br/>
+	  <code>define(`both',`$1 iff $2')</code>.
+	</p>
+	<p>One then can use the macro, e.g. <br/>
+	  <code>both(`r1',`r2')</code>, <br/>
+	  which expands after the macro processing to <br/>  
+	  <code> r1 iff r2</code>
+	</p>
+	<p>To activate macro processing in MPA, use the directive<br/>
+	  <code>dnl needs mmp</code> as the first line of the proposition. The task
+	  <img src="../icons/task_m4.gif"/> <b>Tasks > Preprocess with M4</b> just performs
+	  the macro processing and allows testing macros before performing other tasks.     
+	<br/>
+	<h2>More about M4 and MMP</h2>
+	<p>The classical M4 macro processor is specified in <b>Brian W. Kernighan, Dennis M. Ritchie</b> 
+	  <i>The M4 Macro Processor</i> Bell Laboratories 1977, electronically available 
+	  <a href="http://en.wikipedia.org/wiki/M4_(computer_language)" target="_blank">Link to Wikipedia</a>.
+	</p>
+	<p>There is an improved M4 macro processor by GNU, accompanied by an excellent manual 
+	  <b>René Seindal</b> <i>GNU M4 Manual</i> GNU Press, see 
+	  <a href="http://www.gnu.org/software/m4/m4.html" target="_blank">GNU M4</a>.
+	</p>
+	<p>The MNI Macro Processor MMP is described in 
+	  <b>Burkhardt Renz</b> <i>Usage and Design of the MNI Macro Processor - An Embeddable, Extensible,
+			M4-Compatible Macro Processor Written in Java</i>, Technical Report Fachhochschulke Gießen-Friedberg,
+			2008, see 
+			<a href="http://homepages.fh-giessen.de/~hg11260/hp_p2_de.html" target="_blank">Website of the project</a>.
+	</p>
+			
+	<h2>Macro Libraries</h2>
+	<p>The distribution of MPA contains two macro libraries:</p>
+	<h3>Macro Library "util"</h3>
+	<p>Include file "util.mml" with the following macros:</p>
+	<dl>
+		<dt><code>for( var, lower, upper, expr )</code></dt>
+		<dd>Apply macro var for lower to upper to expr.<br/>
+			Example: <code>for( `i', 1, 5, `item i, ')</code><br/>
+			Expands to: <code>item 1, item 2, item 3, item 4, item 5, </code>
+		</dd>	
+		<dt><code>forstep( var, bound1, bound2, step, expr )</code></dt>
+		<dd>Apply macro var for bound1 to bound2 with step to expr.<br/>
+			Example: <code>for( `i', 1, 5, 2, `item i, ')</code><br/>
+			Expands to: <code>item 1, item 3, item 5, </code>
+		</dd>	
+		<dt><code>foreach( var, item1, ..., itemn, expr ))</code></dt>
+		<dd>Apply macro var for item1, ... itemn to expr.<br/>
+			Example: <code>foreach( `i', `a', `b', `c', `item i, ')</code><br/>
+			Expands to: <code>item a, item b, item c, </code>
+		</dd>	
+	</dl>		
+	<p>Each of the loop macros defines a macro <code>@lastvar</code> when processing
+	  the last item in the loop. <code>@lastvar</code> can be used to alter the processing
+	  of the last item. This feature is used in the examples on map coloring, see <a href="examples.html">
+	  Getting Started > Examples</a>.
+	</p>  
+			
+	<h3>Macro Library "logic"</h3>
+	<p>Include file "logic.mml" with the following macros:</p>
+	<dl>
+		<dt><code>kOf( no, atom1, ..., atomn )</code></dt>
+		<dd>Expands to a proposition expressing "Exactly no of the atoms are true."
+		</dd>	
+		<dt><code>MaxKOf( no, atom1, ..., atomn )</code></dt>
+		<dd>Expands to a proposition expressing "At most no of the atoms are true."
+		</dd>	
+		<dt><code>MinKOf( no, atom1, ..., atomn )</code></dt>
+		<dd>Expands to a proposition expressing "At least no of the atoms are true."
+		</dd>	
+		<dt><code>OneOf( atom1, ..., atomn )</code></dt>
+		<dd>Expands to a proposition expressing "Exactly 1 of the atoms is true."
+		</dd>	
+		<dt><code>MaxOneOf( atom1, ..., atomn )</code></dt>
+		<dd>Expands to a proposition expressing "At most 1 of the atoms is true."
+		</dd>	
+		<dt><code>MinOneOf( atom1, ..., atomn )</code></dt>
+		<dd>Expands to a proposition expressing "At least 1 of the atoms is true."
+		</dd>	
+	</dl>		
+	<br/>
+</body>
+</html>

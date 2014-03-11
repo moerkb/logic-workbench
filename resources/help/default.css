@@ -1,0 +1,43 @@
+body {
+  font-family: Helvetica, Arial, Verdana, sans-serif;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.3em;
+  color: black;
+  background-color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Helvetica, Verdana, Arial, sans-serif;
+  padding: 2px 2px 2px 2px;
+  border-bottom: 1px solid silver;
+}
+h1 {
+	margin-top: 1em;
+  font-size: large;
+}
+h2 {
+  font-size: medium;
+}
+h3 {
+  font-size: medium;
+  font-style: italic;
+}
+dt {
+	margin-top: 0.8em;
+}
+
+a {
+  font-style: normal;
+  text-decoration: none;
+  color: blue;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+code {
+  font-size: 1.1em;
+}  
+

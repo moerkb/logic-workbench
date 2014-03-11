@@ -184,7 +184,7 @@
                            :name "Help Contents"
                            :mnemonic "H"
                            :handler (fn [_]
-                                      (let [help-file (File. "resources/help/index.html")]
+                                      (let [help-file (File. "resources/help/toc.html")]
                                         (.. Desktop getDesktop 
                                           (browse 
                                             (URI. (str "file://" (.getAbsolutePath help-file)))))))
