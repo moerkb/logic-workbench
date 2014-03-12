@@ -78,13 +78,33 @@
     (when (= (last title) \*)
       (.setTitleAt editor-tabs (:index tab) (subs title 0 (dec (count title)))))))
         
-
 (defn tab-marked-new?
   "Checks if the last character of the current activated editor tab's name is an asterisk."
   []
   (let [tab-name (:title (selection editor-tabs))
         last-char (get tab-name (dec (count tab-name)))]
     (= last-char \*)))
+
+(defn remove-tab
+  "Removes the tab with the given index."
+  [tab-index]
+  (let [node ((zipmap (vals @*node-tabs*) (keys @*node-tabs*)) tab-index)]
+          (.remove editor-tabs tab-index)
+          (swap! *node-tabs* #(dissoc % node))
+          
+          ; after removing tab, correct the indexes in *node-tabs*, as they are not valid any longer
+          (when (not (empty? @*node-tabs*))
+            (if (count @*node-tabs*)
+              (swap! *node-tabs* #(let [k (first (keys %))
+                                        v (% k)]
+                                    (if (> v tab-index)
+                                      {k (dec v)}
+                                      {k v})))
+              (swap! *node-tabs* #(apply conj (map (fn [[k v]] 
+                                                    (if (> v tab-index)
+                                                       {k (dec v)}
+                                                       {k v}
+                                                    )) %)))))))
 
 (defn get-settings
   "Reads the settings from the settings file and returns them as a map. For any error, i.e. no file

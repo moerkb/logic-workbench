@@ -207,24 +207,14 @@
   (if (not (zero? (tab-count)))
     (let [tab-index (:index (selection editor-tabs))]
       (if (tab-marked-new?)
-        (alert "Saving aborted: The tab you are about to close contains unsaved changes.")
-        (let [node ((zipmap (vals @*node-tabs*) (keys @*node-tabs*)) tab-index)]
-          (.remove editor-tabs tab-index)
-          (swap! *node-tabs* #(dissoc % node))
-          
-          ; after removing tab, correct the indexes in *node-tabs*, as they are not valid any longer
-          (when (not (empty? @*node-tabs*))
-            (if (count @*node-tabs*)
-              (swap! *node-tabs* #(let [k (first (keys %))
-                                        v (% k)]
-                                    (if (> v tab-index)
-                                      {k (dec v)}
-                                      {k v})))
-              (swap! *node-tabs* #(apply conj (map (fn [[k v]] 
-                                                    (if (> v tab-index)
-                                                       {k (dec v)}
-                                                       {k v}
-                                                    )) %))))))))))
+        (let [q-diag (dialog 
+                       :type :question
+                       :option-type :yes-no-cancel
+                       :content "The tab you want to close has unsaved changes. Save now?"
+                       :no-fn (fn [_] (remove-tab tab-index))
+                       :success-fn (fn [_] (handler-save nil)))]
+          (-> q-diag pack! show!))
+        (remove-tab tab-index)))))
 
 (defn handler-save
   "Saves the content of the currently active tab in the node."

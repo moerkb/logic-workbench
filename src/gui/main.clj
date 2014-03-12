@@ -64,7 +64,7 @@
 (def form-editor (scrollable editor
                              :preferred-size [690 :by 400]))
 
-(def editor-tabs (tabbed-panel :tabs [{:title "New*" :content form-editor}]))
+(def editor-tabs (tabbed-panel))
 
 (listen editor
   :document tab-mark-new-listener)
