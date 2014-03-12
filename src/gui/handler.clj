@@ -213,12 +213,18 @@
           (swap! *node-tabs* #(dissoc % node))
           
           ; after removing tab, correct the indexes in *node-tabs*, as they are not valid any longer
-          (swap! *node-tabs* #(apply conj (map (fn [[k v]] 
-                                                (if (> v tab-index)
-                                                   {k (dec v)}
-                                                   {k v}
-                                                )) %)))
-          )))))
+          (when (not (empty? @*node-tabs*))
+            (if (count @*node-tabs*)
+              (swap! *node-tabs* #(let [k (first (keys %))
+                                        v (% k)]
+                                    (if (> v tab-index)
+                                      {k (dec v)}
+                                      {k v})))
+              (swap! *node-tabs* #(apply conj (map (fn [[k v]] 
+                                                    (if (> v tab-index)
+                                                       {k (dec v)}
+                                                       {k v}
+                                                    )) %))))))))))
 
 (defn handler-save
   "Saves the content of the currently active tab in the node."
