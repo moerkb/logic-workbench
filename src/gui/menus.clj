@@ -27,7 +27,8 @@
                         :separator
                         (action 
                           :tip "Save"
-                          :icon (icon-path "save.gif"))
+                          :icon (icon-path "save.gif")
+                          :handler handler-save)
                         (action 
                           :tip "Save all"
                           :icon (icon-path "save_all.gif"))
@@ -133,7 +134,7 @@
                               :key "ctrl S" 
                               :mnemonic "S"
                               :icon (icon-path "save.gif")
-                              :handler (fn [_] (println "Saving"))) ;TODO
+                              :handler handler-save)
                             (action 
                               :name "Save All"
                               :tip "Save all"

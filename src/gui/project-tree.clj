@@ -78,3 +78,13 @@
   (let [open-files (set (map #(.path %) (.children tree-of-projects)))
         f (tools/path-conformer file)]
     (contains? open-files f)))
+
+(defn save-project
+  "Saves a project to a disc file."
+  [project-node]
+  (let [path (.path project-node)
+        path-length (count path)
+        file-ending (subs path (- path-length 3) path-length)
+        ;node-content (node2lwf-structure project-node)
+        ]
+    (println file-ending)))

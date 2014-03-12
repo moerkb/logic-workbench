@@ -189,6 +189,22 @@
                                                 )) %)))
           )))))
 
+(defn handler-save
+  "Saves the content of the currently active tab in the node."
+  [_]
+  (when (tab-marked-new?)
+    (let [formula (.getText (current-editor))
+          node-list (get (zipmap (vals @*node-tabs*) (keys @*node-tabs*)) (:index (selection editor-tabs)))
+          project-node (second node-list)
+          node (last node-list)]
+      (if (nil? node)
+        (alert "No node.")
+        (do 
+          (println node-list)
+          (set! (.content node) formula)
+          (change-project-list (.children tree-of-projects))
+          (save-project project-node))))))
+
 ;; Listener
 (defn tab-mark-new-listener
  "Listener function that should be called when a text in an editor changes.
