@@ -36,9 +36,16 @@
 	                            (second %))
 	                         (dissoc data :__description)))))
    (catch java.io.FileNotFoundException e
-     (alert (str "Die Datei " f " konnte nicht gefunden werden!")))
-   ))
-  
+     (alert (str "Die Datei " f " konnte nicht gefunden werden!")))))
+
+(defn node2lwf-structure
+  [n]
+  (when (.path n)
+    (apply hash-map (flatten (conj
+                               (map
+                                 (fn [node] [(keyword (.name node)) (.content node)])
+                                 (.children n))
+                               [:__description (.content n)])))))
 
 (defn- projects
   [file-vector]
