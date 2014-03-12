@@ -7,7 +7,8 @@
            [seesaw.border :as border]
            [logic.util :as logic]
            [clojure.string :as str]
-           [tools.main :as tools])
+           [tools.main :as tools]
+           [clojure.java.io :as io])
   (import [java.io File]
           [gui Node]
           [java.net URI]
