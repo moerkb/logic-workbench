@@ -133,16 +133,47 @@
 
 (defn handler-open-file ; TODO: Baum aktualisieren
   [_]
-  (let [file (choose-file :filters [["Logical Workbench (*.lwf)"
+  (let [file (choose-file
+               :filters [["Logical Workbench (*.lwf)"
                           ["lwf"]
                           ["Folders" #(.isDirectory %)]]
                          ["MPA (*.mpf)"
                           ["mpf"]
                           ["Folders" #(.isDirectory %)]]]
-                          :success-fn (fn [fc file] (.getAbsolutePath file)))]
+               :success-fn (fn [fc file] (.getAbsolutePath file)))]
     (if (file-is-open? file)
       nil
       (change-project-list (apply list (conj (vec (.children tree-of-projects)) (file2node (tools/path-conformer file))))))))
+
+(defn handler-create-new-project
+  [_]
+  (let [f (choose-file
+            :type :save
+            :filters [["Logical Workbench (*.lwf)"
+                       ["lwf"]
+                       ["Folders" #(.isDirectory %)]]
+                      ["MPA (*.mpf)"
+                       ["mpf"]
+                       ["Folders" #(.isDirectory %)]]])
+        dir (tools/path-conformer(.getParent f))
+        name (.getName f)
+        file (str/replace
+               (if (and
+                     (= (last (str/split name #"\.")) "lwf")
+                     (< 1 (count (str/split name #"\."))))
+                 name
+                 (str name ".lwf"))
+               #" " "_")
+        new-node (Node.
+                   (str/replace file #"\.lwf" "")
+                   ""
+                   (str dir "/" file)
+                   nil)]
+    (if (file-is-open? (str dir "/" file))
+      nil
+      (change-project-list (conj (.children tree-of-projects) new-node)))
+      ;; TODO save
+    (println (str dir "/" file))))
   
 ;; Project Tree
 (defn- handler-tree

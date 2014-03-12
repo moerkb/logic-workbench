@@ -5,7 +5,8 @@
                 :orientation :horizontal
                 :items [(action
                           :tip "Create a new project."
-                          :icon (icon-path "new_project.gif"))
+                          :icon (icon-path "new_project.gif")
+                          :handler handler-create-new-project)
                         (action
                           :tip "Open an exisiting project."
                           :icon (icon-path "open_project.gif")
@@ -97,7 +98,8 @@
                               :name "New Project"
                               :tip "Create a new project."
                               :key "ctrl shift N"
-                              :icon (icon-path "new_project.gif"))
+                              :icon (icon-path "new_project.gif")
+                              :handler handler-create-new-project)
                             (action 
                               :name "Open Project"
                               :tip "Open an exisiting project."
