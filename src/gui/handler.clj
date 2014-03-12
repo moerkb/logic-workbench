@@ -205,12 +205,20 @@
   "Handler function for closing a tab."
   [_]
   (if (not (zero? (tab-count)))
-    (let [active-tab (selection editor-tabs)]
+    (let [tab-index (:index (selection editor-tabs))]
       (if (tab-marked-new?)
         (alert "Saving aborted: The tab you are about to close contains unsaved changes.")
-        (let [node ((zipmap (vals @*node-tabs*) (keys @*node-tabs*)) (active-tab :index))]
-          (.remove editor-tabs (:index active-tab))
-          (swap! *node-tabs* #(dissoc % node)))))))
+        (let [node ((zipmap (vals @*node-tabs*) (keys @*node-tabs*)) tab-index)]
+          (.remove editor-tabs tab-index)
+          (swap! *node-tabs* #(dissoc % node))
+          
+          ; after removing tab, correct the indexes in *node-tabs*, as they are not valid any longer
+          (swap! *node-tabs* #(apply conj (map (fn [[k v]] 
+                                                (if (> v tab-index)
+                                                   {k (dec v)}
+                                                   {k v}
+                                                )) %)))
+          )))))
 
 ;; Listener
 (defn tab-mark-new-listener
