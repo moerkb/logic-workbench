@@ -164,6 +164,23 @@
   (when (= (.getKeyCode e) 10)
     (handler-tree e)))
 
+;; On Close
+(defn handler-close-window
+  "Safe all relevant informations for the next app start."
+  [_]
+  (println project-tree)) ; TODO save tree
+
+(defn handler-close-tab
+  "Handler function for closing a tab."
+  [_]
+  (if (not (zero? (tab-count)))
+    (let [active-tab (selection editor-tabs)]
+      (if (tab-marked-new?)
+        (alert "Saving aborted: The tab you are about to close contains unsaved changes.")
+        (let [node ((zipmap (vals @*node-tabs*) (keys @*node-tabs*)) (active-tab :index))]
+          (.remove editor-tabs (:index active-tab))
+          (swap! *node-tabs* #(dissoc % node)))))))
+
 ;; Listener
 (defn tab-mark-new-listener
  "Listener function that should be called when a text in an editor changes.

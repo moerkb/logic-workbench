@@ -152,8 +152,13 @@
                               :tip "Deletes the selected project, proposition or M4 file."
                               :icon (icon-path "delete.gif")
                               :handler handler-delete-selcted-project-proposition-m4file)
+                            (action
+                              :name "Close tab"
+                              :tip "Closes the currently shown tab."
+                              :key "ctrl W"
+                              :handler handler-close-tab)
                             (separator)
-                            (action 
+                            (action
                               :name "Exit"
                               :tip "Exit the whole application."
                               :key "ctrl Q"
