@@ -131,7 +131,7 @@
                (get-include-paths))]
       (set-text-result! m4))))
 
-(defn handler-open-file ; TODO: Baum aktualisieren
+(defn handler-open-file
   [_]
   (let [file (choose-file
                :filters [["Logical Workbench (*.lwf)"
@@ -171,9 +171,19 @@
                    nil)]
     (if (file-is-open? (str dir "/" file))
       nil
-      (change-project-list (conj (.children tree-of-projects) new-node)))
-      ;; TODO save
-    (println (str dir "/" file))))
+      (do
+        (change-project-list (apply list (conj (vec (.children tree-of-projects)) new-node)))
+        (save-project new-node)))))
+
+(defn handler-add-new-proposition
+  [_]
+  (let [node (second(selection project-tree))
+        name (-> (dialog :content
+                         (vertical-panel :items ["Enter the proposition name" (text :id :name)])
+                         :option-type :ok-cancel
+                         :type :question
+                         :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)]
+    (println name))) ;; TODO: hier weiter arbeiten!!! ;)
   
 ;; Project Tree
 (defn- handler-tree
@@ -199,7 +209,7 @@
 (defn handler-close-window
   "Safe all relevant informations for the next app start."
   [_]
-  (println project-tree)) ; TODO save tree
+  (println project-tree)) ; TODO
 
 (defn handler-close-tab
   "Handler function for closing a tab."

@@ -14,7 +14,8 @@
                         :separator
                         (action 
                           :tip "Add a new proposition (formula) to the current project."
-                          :icon (icon-path "new_proposition.gif"))
+                          :icon (icon-path "new_proposition.gif")
+                          :handler handler-add-new-proposition)
                         (action 
                           :tip "Rename the selected proposition (formula)."
                           :icon (icon-path "rename_proposition.gif"))
@@ -112,7 +113,8 @@
                               :name "New Proposition"
                               :tip "Add a new proposition (formula) to the current project."
                               :key "ctrl N"
-                              :icon (icon-path "new_proposition.gif"))
+                              :icon (icon-path "new_proposition.gif")
+                              :handler handler-add-new-proposition)
                             (action 
                               :name "Rename Proposition"
                               :tip "Rename the selected proposition (formula)."

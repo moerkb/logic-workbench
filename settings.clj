@@ -1,1 +1,1 @@
-{:show-tt :true-only, :show-sat :true-only, :mmp-include-path "src/examples", :project-tree ["examples/test.lwf" "examples/Coloring.mpf"]}
+{:show-tt :true-only, :show-sat :true-only, :mmp-include-path "src/examples", :project-tree ["examples/test.lwf" "examples/Coloring.mpf" "C:/Users/Daniel/Desktop/blub.lwf"]}
