@@ -94,6 +94,9 @@
   (let [path (.path project-node)
         path-length (count path)
         file-ending (subs path (- path-length 3) path-length)
-        ;node-content (node2lwf-structure project-node)
+        node-content (node2lwf-structure project-node)
+        new-content (if (= "mpf" file-ending)
+                      (tools/lwf2mpf (str node-content))
+                      node-content)
         ]
-    (println file-ending)))
+    (spit path new-content)))

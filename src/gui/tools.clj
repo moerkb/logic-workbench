@@ -70,6 +70,15 @@
     (swap! *node-tabs* #(assoc % node (dec (tab-count))))
     (selection! editor-tabs (dec (tab-count)))))
 
+(defn tab-demark-new
+  "Removes the ending asterisk of a title of the currently active tab, if there is any."
+  []
+  (let [tab (selection editor-tabs)
+        title (:title tab)]
+    (when (= (last title) \*)
+      (.setTitleAt editor-tabs (:index tab) (subs title 0 (dec (count title)))))))
+        
+
 (defn tab-marked-new?
   "Checks if the last character of the current activated editor tab's name is an asterisk."
   []

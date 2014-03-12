@@ -1,37 +1,8 @@
 /*
  * Examples of map coloring
  */
-phi::Luxembourg
-dnl needs mmp
-/*
-  Map coloring Luxembourg
-  Luxembourg (LU) is clockwise surrounded by
-  Germany (DE), France (FR) and Belgium (BE),
-  which are pairwise neighboured in this order.
 
-  Question: can a segment of a map showing the surroundings
-  of Luxembourg be colored with 3 colors?
-*/
-divert(-1)
-include(`util.mml') 
-include(`logic.mml')
-divert
-
-// Each country has exactly one color:
-foreach(`c',`lu',`de',`fr',`be',`oneOf(c`'_r, c`'_g, c`'_b) &
-') 
-
-// Adjacent contries have different colors:
-define(`adjacent',`(foreach(`c',`r',`g',`b',`(!$1_`'c|!$2_`'c)ifdef(@lastc,`',` & ')'))') 
-adjacent(lu, de) & 
-adjacent(lu, fr) & 
-adjacent(lu, be) & 
-adjacent(de, fr) &
-adjacent(fr, be) & 
-adjacent(be, de)
-
-
-phi::Czech Republic
+phi::Czech_Republic
 dnl needs mmp
 /*
   Map Coloring Czech Republic
@@ -62,50 +33,6 @@ adjacent(pl, sk) &
 adjacent(sk, at) & 
 adjacent(at, de) & 
 adjacent(de, pl)
-
-
-phi::Australia
-dnl needs mmp
-/*
-  Coloring Australia map
-  
-  Australia has the following states and territories:
-  Western Australia (wa)
-  Queensland (qld)
-  New South Wales (nsw)
-  Victoria (vic)
-  South Australia (sa)
-  Tasmania (tas)
-  Northern Territory (nt)
-  Australien Capital Territory (act)
-  Jevis Bay Territory (jbt) (a peninsula adjacent to nsw)
-
-  Question: can a map of australia be colored with 3 colors?
-  (The ocean has a fixed color different from all states.)
-*/
-divert(-1)
-include(`util.mml')
-include(`logic.mml')
-divert
-
-// Each state/territory has exactly one color out of r,g,b:
-foreach(`c',`wa',`qld',`nsw',`vic',`sa',`tas',`nt',`act',`jbt',`oneOf(c`'_r, c`'_g, c`'_b) &
-') 
-
-// Adjacent states have different colors:
-define(`adjacent',`(foreach(`c',`r',`g',`b',`(!$1_`'c|!$2_`'c)ifdef(@lastc,`',` & ')'))') 
- 
-adjacent(`wa',`nt') &
-adjacent(`wa',`sa') &
-adjacent(`nt',`sa') &
-adjacent(`nt',`qld') &
-adjacent(`qld',`sa') &
-adjacent(`qld',`nsw') &
-adjacent(`nsw',`sa') &
-adjacent(`nsw',`act') &
-adjacent(`nsw',`jbt') &
-adjacent(`vic',`sa') &
-adjacent(`vic',`nsw') 
 
 phi::US-3
 dnl needs mmp
@@ -232,7 +159,6 @@ adjacent(`ma',`nh') &
 adjacent(`vt',`nh') &
 adjacent(`nh',`me')
 
-
 phi::US-4
 dnl needs mmp
 /*
@@ -357,4 +283,76 @@ adjacent(`ma',`vt') &
 adjacent(`ma',`nh') &
 adjacent(`vt',`nh') &
 adjacent(`nh',`me')
+
+phi::Australia
+dnl needs mmp
+/*
+  Coloring Australia map
+  
+  Australia has the following states and territories:
+  Western Australia (wa)
+  Queensland (qld)
+  New South Wales (nsw)
+  Victoria (vic)
+  South Australia (sa)
+  Tasmania (tas)
+  Northern Territory (nt)
+  Australien Capital Territory (act)
+  Jevis Bay Territory (jbt) (a peninsula adjacent to nsw)
+
+  Question: can a map of australia be colored with 3 colors?
+  (The ocean has a fixed color different from all states.)
+*/
+divert(-1)
+include(`util.mml')
+include(`logic.mml')
+divert
+
+// Each state/territory has exactly one color out of r,g,b:
+foreach(`c',`wa',`qld',`nsw',`vic',`sa',`tas',`nt',`act',`jbt',`oneOf(c`'_r, c`'_g, c`'_b) &
+') 
+
+// Adjacent states have different colors:
+define(`adjacent',`(foreach(`c',`r',`g',`b',`(!$1_`'c|!$2_`'c)ifdef(@lastc,`',` & ')'))') 
+ 
+adjacent(`wa',`nt') &
+adjacent(`wa',`sa') &
+adjacent(`nt',`sa') &
+adjacent(`nt',`qld') &
+adjacent(`qld',`sa') &
+adjacent(`qld',`nsw') &
+adjacent(`nsw',`sa') &
+adjacent(`nsw',`act') &
+adjacent(`nsw',`jbt') &
+adjacent(`vic',`sa') &
+adjacent(`vic',`nsw')
+
+phi::Luxembourg
+dnl needs mmp
+/*
+  Map coloring Luxembourg
+  Luxembourg (LU) is clockwise surrounded by
+  Germany (DE), France (FR) and Belgium (BE),
+  which are pairwise neighboured in this order.
+
+  Question: can a segment of a map showing the surroundings
+  of Luxembourg be colored with 3 colors?
+*/
+divert(-1)
+include(`util.mml') 
+include(`logic.mml')
+divert
+
+// Each country has exactly one color:
+foreach(`c',`lu',`de',`fr',`be',`oneOf(c`'_r, c`'_g, c`'_b) &
+') 
+
+// Adjacent contries have different colors:
+define(`adjacent',`(foreach(`c',`r',`g',`b',`(!$1_`'c|!$2_`'c)ifdef(@lastc,`',` & ')'))') 
+adjacent(lu, de) & 
+adjacent(lu, fr) & 
+adjacent(lu, be) & 
+adjacent(de, fr) &
+adjacent(fr, be) & 
+adjacent(be, de)
 

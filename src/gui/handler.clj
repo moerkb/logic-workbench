@@ -231,10 +231,10 @@
       (if (nil? node)
         (alert "No node.")
         (do 
-          (println node-list)
           (set! (.content node) formula)
           (change-project-list (.children tree-of-projects))
-          (save-project project-node))))))
+          (save-project project-node)
+          (tab-demark-new) )))))
 
 ;; Listener
 (defn tab-mark-new-listener
