@@ -36,9 +36,17 @@
 	                            (second %))
 	                         (dissoc data :__description)))))
    (catch java.io.FileNotFoundException e
-     (alert (str "Die Datei " f " konnte nicht gefunden werden!")))
-   ))
-  
+     (alert (str "Die Datei " f " konnte nicht gefunden werden!")))))
+
+(defn node2lwf-structure
+  "Only for project nodes!!!"
+  [n]
+  (when (.path n)
+    (apply hash-map (flatten (conj
+                               (map
+                                 (fn [node] [(keyword (.name node)) (.content node)])
+                                 (.children n))
+                               [:__description (.content n)])))))
 
 (defn- projects
   [file-vector]
@@ -46,7 +54,7 @@
     
     (Node. "Projects"
            nil
-           nil
+           "true"
          (if (first file-vector)
              (get-project-list file-vector)
              nil))))
@@ -56,22 +64,23 @@
 
 (def tree-model
   (let [children #(.children %)
+        branch? #(.path %)
         tree tree-of-projects]
     (set-setting
           :project-tree
           (vec (map #(.path %) (.children tree))))
     (simple-tree-model
-		  children
+		  branch?
 		  children
 		  tree)))
 
 (defn change-project-list
   [new-project-list]
   (set! (.children tree-of-projects) new-project-list)
-        (node-structure-changed tree-model (list tree-of-projects))
-        (set-setting
-          :project-tree
-          (vec (map #(.path %) (.children tree-of-projects)))))
+  (node-structure-changed tree-model (list tree-of-projects))
+  (set-setting
+    :project-tree
+    (vec (map #(.path %) (.children tree-of-projects)))))
 
 (defn file-is-open?
   [file]
