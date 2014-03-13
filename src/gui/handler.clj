@@ -1,22 +1,6 @@
 (ns gui.main)
 
 ;; Menu Bar
-(defn handler-save
-  "Saves the content of the currently active tab in the node."
-  [_]
-  (when (tab-marked-new?)
-    (let [formula (.getText (current-editor))
-          node-list (get (zipmap (vals @*node-tabs*) (keys @*node-tabs*)) (:index (selection editor-tabs)))
-          project-node (second node-list)
-          node (last node-list)]
-      (if (nil? node)
-        (alert "No node.")
-        (do 
-          (set! (.content node) formula)
-          (change-project-list (.children tree-of-projects))
-          (save-project project-node)
-          (tab-demark-new))))))
-
 (defn handler-close-selcted-project
   [_]
   (let [node (selection project-tree)]
@@ -243,6 +227,22 @@
   [_]
   (println project-tree)) ; TODO
 
+(defn handler-save
+  "Saves the content of the currently active tab in the node."
+  [_]
+  (when (tab-marked-new?)
+    (let [formula (.getText (current-editor))
+          node-list (get (zipmap (vals @*node-tabs*) (keys @*node-tabs*)) (:index (selection editor-tabs)))
+          project-node (second node-list)
+          node (last node-list)]
+      (if (nil? node)
+        (alert "No node.")
+        (do 
+          (set! (.content node) formula)
+          (change-project-list (.children tree-of-projects))
+          (save-project project-node)
+          (tab-demark-new) )))))
+
 (defn handler-close-tab
   "Handler function for closing a tab."
   [_]
@@ -257,6 +257,36 @@
                        :success-fn (fn [_] (handler-save nil)))]
           (-> q-diag pack! show!))
         (remove-tab tab-index)))))
+
+(defn handler-save-all
+  "Saves all open projects."
+  [_]
+  (let [unsaved-tabs (map (fn [[_ index]] 
+                            [(.getComponentAt editor-tabs index) index])
+                       (filter 
+                         (fn [[title _]]
+                           (if (= (last title) \*)
+                             true
+                             false))
+                         (for [i (range 0 (tab-count))]
+                           [(.getTitleAt editor-tabs i) i])))]
+    (when-not (empty? unsaved-tabs)
+      (doseq [tab unsaved-tabs]
+        (let [scroll-pane (first tab)
+              index (second tab)
+              title (.getTitleAt editor-tabs index)
+              editor (first (select scroll-pane [:<org.fife.ui.rsyntaxtextarea.RSyntaxTextArea!>]))
+              formula (.getText editor)
+              node-list (get (zipmap (vals @*node-tabs*) (keys @*node-tabs*)) index)
+              project-node (second node-list)
+              node (last node-list)]
+          (if (nil? node)
+        (alert "No node.")
+        (do 
+          (set! (.content node) formula)
+          (change-project-list (.children tree-of-projects))
+          (save-project project-node)
+          (.setTitleAt editor-tabs index (apply str (butlast title))))))))))
 
 ;; Listener
 (defn tab-mark-new-listener

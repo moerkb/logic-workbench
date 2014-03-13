@@ -33,7 +33,8 @@
                           :handler handler-save)
                         (action 
                           :tip "Save all"
-                          :icon (icon-path "save_all.gif"))
+                          :icon (icon-path "save_all.gif")
+                          :handler handler-save-all)
                         (action
                           :tip "Closes the selected project."
                           :icon (icon-path "close.gif")
@@ -145,8 +146,7 @@
                               :key "ctrl shift S"
                               :mnemonic "A"
                               :icon (icon-path "save_all.gif")
-                              :handler (fn [_] (println "Saving All")) ;TODO
-                              )
+                              :handler handler-save-all)
                             (action 
                               :name "Close"
                               :tip "Closes the selected project."
