@@ -177,13 +177,24 @@
 
 (defn handler-add-new-proposition
   [_]
-  (let [node (second(selection project-tree))
-        name (-> (dialog :content
-                         (vertical-panel :items ["Enter the proposition name" (text :id :name)])
-                         :option-type :ok-cancel
-                         :type :question
-                         :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)]
-    (println name))) ;; TODO: hier weiter arbeiten!!! ;)
+  (let [node (second (selection project-tree))
+        name (str/replace
+               (-> (dialog :content
+                           (vertical-panel :items ["Enter the proposition name" (text :id :name)])
+                           :option-type :ok-cancel
+                           :type :question
+                           :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)
+               #" " "_")]
+    (if (not node)
+      (alert "Please select a project.")
+      (if (= name "")
+        (alert "Empty names are not allowed.")
+        (if ((keyword name) (set (map #(keyword (.name %)) (.children node))))
+          (alert "This proposition already exists.")
+          (do
+            (set! (.children node) (apply list (conj (vec (.children node)) (Node. name ""))))
+            (change-project-list (.children tree-of-projects))
+            (save-project node)))))))
   
 ;; Project Tree
 (defn- handler-tree
