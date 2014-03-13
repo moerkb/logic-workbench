@@ -1,6 +1,22 @@
 (ns gui.main)
 
 ;; Menu Bar
+(defn handler-save
+  "Saves the content of the currently active tab in the node."
+  [_]
+  (when (tab-marked-new?)
+    (let [formula (.getText (current-editor))
+          node-list (get (zipmap (vals @*node-tabs*) (keys @*node-tabs*)) (:index (selection editor-tabs)))
+          project-node (second node-list)
+          node (last node-list)]
+      (if (nil? node)
+        (alert "No node.")
+        (do 
+          (set! (.content node) formula)
+          (change-project-list (.children tree-of-projects))
+          (save-project project-node)
+          (tab-demark-new))))))
+
 (defn handler-close-selcted-project
   [_]
   (change-project-list (apply list (remove #(= (second (selection project-tree)) %) (.children tree-of-projects)))))
@@ -177,13 +193,24 @@
 
 (defn handler-add-new-proposition
   [_]
-  (let [node (second(selection project-tree))
-        name (-> (dialog :content
-                         (vertical-panel :items ["Enter the proposition name" (text :id :name)])
-                         :option-type :ok-cancel
-                         :type :question
-                         :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)]
-    (println name))) ;; TODO: hier weiter arbeiten!!! ;)
+  (let [node (second (selection project-tree))
+        name (str/replace
+               (-> (dialog :content
+                           (vertical-panel :items ["Enter the proposition name" (text :id :name)])
+                           :option-type :ok-cancel
+                           :type :question
+                           :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)
+               #" " "_")]
+    (if (not node)
+      (alert "Please select a project.")
+      (if (= name "")
+        (alert "Empty names are not allowed.")
+        (if ((keyword name) (set (map #(keyword (.name %)) (.children node))))
+          (alert "This proposition already exists.")
+          (do
+            (set! (.children node) (apply list (conj (vec (.children node)) (Node. name ""))))
+            (change-project-list (.children tree-of-projects))
+            (save-project node)))))))
   
 ;; Project Tree
 (defn- handler-tree
@@ -225,22 +252,6 @@
                        :success-fn (fn [_] (handler-save nil)))]
           (-> q-diag pack! show!))
         (remove-tab tab-index)))))
-
-(defn handler-save
-  "Saves the content of the currently active tab in the node."
-  [_]
-  (when (tab-marked-new?)
-    (let [formula (.getText (current-editor))
-          node-list (get (zipmap (vals @*node-tabs*) (keys @*node-tabs*)) (:index (selection editor-tabs)))
-          project-node (second node-list)
-          node (last node-list)]
-      (if (nil? node)
-        (alert "No node.")
-        (do 
-          (set! (.content node) formula)
-          (change-project-list (.children tree-of-projects))
-          (save-project project-node)
-          (tab-demark-new) )))))
 
 ;; Listener
 (defn tab-mark-new-listener
