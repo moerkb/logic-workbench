@@ -19,13 +19,16 @@
 
 (defn handler-close-selcted-project
   [_]
-  (change-project-list (apply list (remove #(= (second (selection project-tree)) %) (.children tree-of-projects)))))
+  (let [node (selection project-tree)]
+    (if (not= 2 (count node))
+      (alert "Please select a project")
+      (change-project-list (apply list (remove #(= (second (selection project-tree)) %) (.children tree-of-projects)))))))
 
 (defn handler-delete-selcted-project-proposition-m4file
   [_]
   (let [node (selection project-tree)
         c (count node)]
-    (when 
+    (when
       (when (>= c 2)
         (-> (dialog
               :content "Are you sure you want to delete the project, proposioten or m4 file?"
@@ -36,8 +39,10 @@
             (change-project-list (apply list (remove #(= deleted-node %) (.children tree-of-projects))))
           (io/delete-file (.path deleted-node)))
           
-        3 (alert "TODO: Delete proposion or m4 file")
-      
+        3 (do
+            (set! (.children (second node)) (apply list (remove #(= (last node) %) (.children (second node)))))
+            (change-project-list (.children tree-of-projects))
+            (save-project (second node)))
         nil))))
     
 
