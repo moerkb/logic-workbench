@@ -16,17 +16,28 @@
     1 (if (= (class cst) mpa.cst.parser.MpaNotExpr) ; NOT | hierarchic descent
         (list 'not (cst2list (.jjtGetChild cst 0)))
         (cst2list (.jjtGetChild cst 0)))
-    2 (let [op (case (.getOp cst)
-                 14 'and
-                 15 'nand
-                 16 'or
-                 17 'nor
-                 18 'cimpl
-                 19 'ncimpl
-                 20 'impl
-                 21 'nimpl
-                 22 'equiv
-                 23 'xor)]
+    2 (let [op-nr (.getOp cst)
+            AND (MpaParser/AND)
+						NAND (MpaParser/NAND)
+						OR (MpaParser/OR)
+						NOR (MpaParser/NOR)
+						IF (MpaParser/IF)
+						NIF (MpaParser/NIF)
+						IMPL (MpaParser/IMPL)
+						NIMPL (MpaParser/NIMPL)
+						IFF (MpaParser/IFF)
+						XOR (MpaParser/XOR)
+            op (cond
+                 (= op-nr AND) 'and
+                 (= op-nr NAND) 'nand
+                 (= op-nr OR) 'or
+                 (= op-nr NOR) 'nor
+                 (= op-nr IF) 'cimpl
+                 (= op-nr NIF) 'ncimpl
+                 (= op-nr IMPL) 'impl
+                 (= op-nr NIMPL) 'nimpl
+                 (= op-nr IFF) 'equiv
+                 (= op-nr XOR) 'xor)]
         (list op (cst2list (.jjtGetChild cst 0)) (cst2list (.jjtGetChild cst 1))))))
 
 (defn javaCCparse
