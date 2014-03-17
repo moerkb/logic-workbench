@@ -28,13 +28,13 @@
 	        data (get-data f)]
 	    
 	    (Node. (apply str (drop-last 4 (last (str/split f #"/"))))
-	           (:__description data)
+	           (first data)
 	           f
-	           (apply list (map
-	                         #(Node.
-	                            (apply str (rest (str (first %))))
-	                            (second %))
-	                         (dissoc data :__description)))))
+	           (vec (map
+                   #(Node.
+                      (:name %)
+                      (:proposition %))
+                   (rest data)))))
    (catch java.io.FileNotFoundException e
      (alert (str "Die Datei " f " konnte nicht gefunden werden!")))))
 
@@ -42,15 +42,14 @@
   "Only for project nodes!!!"
   [n]
   (when (.path n)
-    (apply hash-map (flatten (conj
-                               (map
-                                 (fn [node] [(keyword (.name node)) (.content node)])
-                                 (.children n))
-                               [:__description (.content n)])))))
+    (apply vector (.content n)
+           (for [e (.children n)]
+             {:name (.name e)
+              :proposition (.content e)}))))
 
 (defn- projects
   [file-vector]
-  (let [get-project-list (fn [f] (apply list (remove nil? (map file2node f))))]
+  (let [get-project-list (fn [f] (vec (remove nil? (map file2node f))))]
     
     (Node. "Projects"
            nil
