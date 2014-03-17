@@ -47,7 +47,9 @@
   [_]
   (std-catch
     (let [tmap (logic/transform-tseitin (parse-editor))
-          sat-result (-> tmap :tseitin-formula logic/generate-dimacs-clauses logic/sat-solve rest)
+          overall-result (-> tmap :tseitin-formula logic/generate-dimacs-clauses logic/sat-solve)
+          res? (if (zero? (first overall-result)) false true)
+          sat-result (rest overall-result)
           result (logic/retransform-tseitin sat-result tmap)
           all-rows (map #(if (coll? %)
                                [(second %) false]
@@ -56,19 +58,21 @@
           rows (if (= :true-only (:show-sat curr-settings))
                  (filter second all-rows)
                  all-rows)]
-    
-      (if (zero? (count rows))
-       (set-table-result! [:columns [{:key :message :text "Message"}]
-                           :rows [["The preposition is unsatisfiable."]]]
-         :auto-resize :last-column)
-       (if (= :formula (:show-sat curr-settings))
-         (set-text-result! (apply str (interpose "&" (map #(if (second %)
-                                                             (str (first %))
-                                                             (str "!" (first %)))
-                                                       rows))))
-         (set-table-result! [:columns [{:key :symbol :text "Variable"} 
-                                       {:key :value :text "Value"}]
-                             :rows rows]))))))
+      (if res?
+        (if (empty? rows)
+          (set-text-result! "NOTE: The proposition is satisfiable, but all variables are false. Please change your settings to see all valuations.")
+          
+          (if (= :formula (:show-sat curr-settings))
+            (set-text-result! (apply str (interpose "&" (map #(if (second %)
+                                                                (str (first %))
+                                                                (str "!" (first %)))
+                                                          rows))))
+            (set-table-result! [:columns [{:key :symbol :text "Variable"} 
+                                          {:key :value :text "Value"}]
+                                :rows rows])))
+        (set-table-result! [:columns [{:key :message :text "Message"}]
+                              :rows [["The proposition is unsatisfiable."]]]
+            :auto-resize :last-column)))))
 
 (defn handler-tt
   "Handler function for action 'truth table'."

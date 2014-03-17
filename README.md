@@ -4,7 +4,7 @@ This repository holds the work of a research project of the University of Applie
 
 ## Features
 
-+ Parse a 'human-readable' formula to clojure code (e.g. `"A and (B or C)"` becomes `(and A (or B C))`).
++ Parse an infix formula to a prefix formula/clojure code (e.g. `"A and (B or C)"` becomes `(and A (or B C))`).
 + A couple of macros to serve all common logic functions (nand, nor, impl, nipml, cimpl, ncimpl, equiv, xor).
 + Generate a truth table as a relation.
 + Print truth tables with up to 10 variables.
@@ -12,26 +12,22 @@ This repository holds the work of a research project of the University of Applie
 + Perform the tseitin transformation (generating a cnf with linear complexity).
 + 'Flattening' functions `and` and `or` (e.g. `(and A (and B C))` becomes `(and A B C)`).
 + Creating the dimacs file format for a cnf formula.
-
-Planned features:
-
-+ SAT solving (SAT4J and naive DPLL implementation)
-+ GUI
-+ Loading a formula in a REPL, modifiying it there and returning to program.
-+ Visualizing parse trees (probably with rhizome/graphviz)
-+ Generating tex code for formulas, truth tables, etc.
-+ Other fancy stuff we have not figured out yet.
++ SAT Solving using SAT4J.
++ A GUI to work with infix formulas.
 
 ## Dependencies
 
 The logic workbench is developed and testes with Clojure 1.3.0, but it might work with earlier versions as well.
 
-Besides, it needs the following libraries:
+It needs a couple of libraries such as Seesaw. They are all acquired in project.clj and are available through the Leiningen/Maven repository (that means you do not need to install anything manually).
 
-+ [instaparse](https://github.com/Engelberg/instaparse)
-+ [math.combinatorics](https://github.com/clojure/math.combinatorics)
+## GUI and REPL
 
-They are all available through the Leiningen/Maven repository.
+There are two different way in which this program can be accessed - depending on the user's knowledge and needs.
+
+There is a *GUI*, that works with infix formulas only. So it is suitable for people not familiar with clojure and who want to have an easy, ready-to-go tool to work with. By now, you need to load gui/main.clj in your REPL, but a all-in-one JAR is coming soon. You will not get much help for the GUI on this site, but by the build in help system (Menu: Help or press F1).
+
+The other, underlying layer is REPL-based. These are the functions that are used by the GUI, but even more. Read through this page to get started and to get an idea of what the application can do for you.
 
 ## Usage
 
@@ -68,15 +64,15 @@ nil
 
 The function `truth-table-parse` takes a formula and prints the truth table for it.
 
-### The two type of formulas: human-readable and clojure code
+### The two type of formulas: infix and prefix/clojure code
 
 There are two different types of formulas that can be handled with this library, and it is important to keep track of it.
 
-All functions (like cnf transformation, for example) basically work with the second type (clojure code), but some exist with the postfix '-parse', which automatically parse a human-readable formula and invokes the function on it (e.g. truth-table-parse).
+All functions (like cnf transformation, for example) basically work with the prefix formulas (clojure code), but some exist with the postfix '-parse', which automatically parse an infix formula and invokes the function on it (e.g. truth-table-parse).
 
-#### Human-readable formulas
+#### Infix formulas
 
-The first one is - how we call it - a 'human-readable' form (this term is not really good, because the other type is also easily readable by humans). It uses infix operators and has an own syntax. Just to give you an idea, here are a couple of them:
+The first one is an infix form and has an own syntax. Just to give you an idea, here are a couple of them:
 
 ```
 A and B
@@ -85,7 +81,7 @@ A & B
 !(A <-> (B <- !C) nor D
 ```
 
-Such a formula can be transformed into clojure code with the function `clojure-formula` like this:
+Such a formula can be transformed into prefix clojure code with the function `clojure-formula` like this:
 
 ```clj
 > (clojure-formula "A and B")
@@ -93,15 +89,15 @@ Such a formula can be transformed into clojure code with the function `clojure-f
 (and A B)
 ```
 
-In case you need to do it manually, the parsing is done with `logic-parse` and the returned ast is transformed with `transform-ast`:
+In case you need to do it manually, the parsing is done with `parse`:
 
 ```clj
-> (transform-ast (logic-parse "A and B"))
+> (parse "A and B")
 
 (and A B)
 ```
 
-#### Grammar for human-readable formulas
+#### Grammar for infix formulas
 
 The atoms for a formula are either booleans or variables. 
 
@@ -138,9 +134,9 @@ This is the syntax for binary functions, descending order of precedence:
 | equivalent | `<->`, `iff` | left |
 | exclusive or | `^`, `xor` | left |
 
-#### Clojure code
+#### Prefix formulas / clojure code
 
-The second type of formulas would be what human-readable code transforms to: direct clojure code. A few examples:
+The second type of formulas would be what infix code can be parsed to: direct clojure code. A few examples:
 
 ```clj
 (and A B)
@@ -223,7 +219,7 @@ The function can produce truth tables where only rows with the result true (or f
  :table ([true false false] [false true false])}
 ```
 
-The function to print a truth table without producing the truth table relation before (automatically done) is `truth-table` for a clojure formula, and `truth-table-parse` for a human-readable one:
+The function to print a truth table without producing the truth table relation before (automatically done) is `truth-table` for a prefix formula, and `truth-table-parse` for an infix one:
 
 ```clj
 > (truth-table '(impl A B))
@@ -287,7 +283,7 @@ nil
 
 ### CNF transformation
 
-The function `transform-cnf` takes a formula in clojure code and produces the conjunctive normal form of it:
+The function `transform-cnf` takes a formula in prefix clojure code and produces the conjunctive normal form of it:
 
 ```clj
 > (transform-cnf '(or A (and B (impl C D))))
@@ -325,7 +321,7 @@ So the above function call `(transform-cnf '(or A (and B (impl C D))))` would st
 ### Tseitin transformation
 
 Just like `transform-cnf`, the function `transform-tseitin` creates a cnf, but with linear complexity by using the tseitin transformation:
-It is recommended, to use the tseitin transformation for at least larger formulas, when using the sat solver. It uses the `gensym` function with the value of `tseitin-prefix` (defined in util.clj) as its prefix. 
+It is recommended, to use the tseitin transformation for at least larger formulas, when using the sat solver. It uses an increasing number with `tseitin-prefix` (defined in util.clj) as its prefix. 
 
 ```clj
 > (transform-tseitin '(or A (and B (impl C D))))
@@ -408,7 +404,27 @@ It returns a hash map, containing the following information:
 
 ### SAT solving
 
-not implemented yet
+The currently used SAT solver is SAT4J (http://www.sat4j.org). They are used with the functions `sat-solve` and `sat-solve-dimacs`, which take a dimacs map like this:
+
+```clj
+=> (sat-solve-dimacs (generate-dimacs-clauses '(impl (and a b) c)))
+
+[1 -1 2 3]
+```
+
+The first element of the returned vector indicates if the formula is satisfiable: 1 means it is, 0 means it is unsatisfiable.
+
+Right now, we only get the numbers for the correct solution, as they are generated in the dimacs process. To resubstitute the variable names we got - guess what - another function:
+
+```clj
+=> (sat-solve (generate-dimacs-clauses '(impl (and a b) c)))
+
+[1 (not a) b c]
+```
+
+Again, the first element shows if the proposition is satisfiable.
+
+You can use the functions `sat-solve-find-all-results`, `sat-solve-find-all-results-formula` and `sat-solve-dimacs-find-all-results` to get all results, but be careful! You usually use the SAT solver for pretty big formulas and calculating all possible satisfying combinations can take a very, very long time. 
 
 ## License
 

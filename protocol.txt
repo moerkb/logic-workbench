@@ -1,28 +1,13 @@
 OPEN TASKS
 
 - MPA-Hilfe umstricken
-- SAT funktioniert nicht richtig
 - CNF, etc. -> MPA-Formel, kein Clojure-Listing
-- README: "human-readable"/"clojure" -> infix/prefix
-	- "zwei-Ebenen-System": Clojure-Niveau/REPL (für Prefix) und GUI (für Infix)
-	- über GUI schreiben
 - Deployment (AOT?)
 - Remove Task "Dimacs" (CNF macht nochmal das gleiche?)
 - Baum beim Speichern nicht mehr zuklappen
-- Symbols "\a"
 - Parser: Konstanten aus Token-Klasse statt direkter Zahlen
 - Funktion: alle Tabs eines Projektes schließen
-
-- UNIT TESTS!
-
 - How do true/false constants behave in transform and solve functions?
 - (and) = true
   (and (or)) = false/nil
   -> abort trivial, generate no dimacs, etc.
-
-- visualize formula tree graphically (instaparse/visualize) 
-- compare project to: core.logic, kodkod (alloy) (e.g. Sudoku)
-
-QUESTIONS
-
-- GUI - Truth Table: impl: unkown symbol through eval-formula
