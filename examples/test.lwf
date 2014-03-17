@@ -1,1 +1,11 @@
-{:formula_1 "A and (B -> C) and A", :__description "This is an example LWB file", :formula_2 "a -> b"}
+[
+	"This is an example LWB file"
+	{
+		:name "formula 1"
+		:proposition "a & b"
+	}
+	{
+		:name "formula 2"
+		:proposition
+	}
+]
