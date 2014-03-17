@@ -68,7 +68,8 @@
                                    new-mmp-setting (.getText mmp-text)]
                                (set-settings {:show-tt new-tt-setting,
                                               :show-sat new-sat-setting
-                                              :mmp-include-path new-mmp-setting})
+                                              :mmp-include-path new-mmp-setting
+                                              :project-tree (:project-tree (get-settings))})
                                (dispose! settings-dialog))))
     (-> settings-dialog pack! show!)))
 

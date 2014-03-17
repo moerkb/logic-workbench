@@ -98,15 +98,15 @@
   "Handler function for action 'cnf'."
   [_]
   (std-catch
-    (let [cnf (logic/transform-cnf (parse-editor))]
-      (set-text-result! (str (apply list cnf))))))
+    (let [cnf (logic/clj-to-fml (logic/transform-cnf (parse-editor)))]
+      (set-text-result! cnf))))
 
 (defn handler-tseitin
  "Handler function for action 'tseitin cnf'."
  [_]
  (std-catch
-   (let [tcnf (:tseitin-formula (logic/transform-tseitin (parse-editor)))]
-     (set-text-result! (str (apply list tcnf))))))
+   (let [tcnf (logic/clj-to-fml (:tseitin-formula (logic/transform-tseitin (parse-editor))))]
+     (set-text-result! tcnf))))
 
 (defn handler-dimacs
   "Handler function for action 'show dimacs'."

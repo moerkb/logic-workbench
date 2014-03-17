@@ -6,6 +6,6 @@
 	}
 	{
 		:name "formula 2"
-		:proposition
+		:proposition "a -> b"
 	}
 ]
