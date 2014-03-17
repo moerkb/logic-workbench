@@ -2,9 +2,7 @@ OPEN TASKS
 
 - MPA-Hilfe umstricken
 - Deployment (AOT?)
-- Remove Task "Dimacs" (CNF macht nochmal das gleiche?)
 - Baum beim Speichern nicht mehr zuklappen
-- Parser: Konstanten aus Token-Klasse statt direkter Zahlen
 - Funktion: alle Tabs eines Projektes schließen
 - How do true/false constants behave in transform and solve functions?
 - (and) = true
