@@ -40,7 +40,7 @@
               (vec (cons 1 (filter #(not= 0 %) (map #(Integer. %) (clojure.string/split res-str #" "))))))))
 
 (defn sat-solve
-  "Returns one result as set with litereals.
+  "Returns one result as set with literals.
    The first number is 0 or 1:
    0: the formula is unsatisfiable
    1: the formula is satisfiable"

@@ -10,8 +10,8 @@
                                                       (fn [[v k]] [v k (list 'not v) (Integer. (str "-" k))])
                                                       subs)))
 	      clauses (cl-set (map clause (map
-                                    #(replace substitutions %)
-                                    (map rest (rest formula)))))]
+                                    #(replace substitutions (if (coll? %) % [%]))
+                                    (map #(if (coll? %) (rest %) %) (rest formula)))))]
     {:formula formula
      :num-vars num-vars
      :num-clauses (count clauses)
