@@ -40,3 +40,44 @@ $RECYCLE.BIN/
 /doc/*.fdb_latexmk
 /doc/*.fls
 /doc/*.pdf
+/target
+/classes
+/checkouts
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/.lein-*
+/.nrepl-port
+
+# Mac OS 
+.DS_Store
+.AppleDouble
+.LSoverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temp files
+*~
+/bin
+
+# Eclipse
+.settings
+
+# Tex
+/doc/*.aux
+/doc/*.lof
+/doc/*.lot
+/doc/*.log
+/doc/*.lot
+/doc/*.out
+/doc/*.toc
+/doc/*.fdb_latexmk
+/doc/*.fls
+/doc/*.pdf
