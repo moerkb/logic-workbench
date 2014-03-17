@@ -1,9 +1,17 @@
-PROTOCOL
-
-This file contains notes on what has been done and what needs to be done. It also 
-holds important things to remember.
-
 OPEN TASKS
+
+- MPA-Hilfe umstricken
+- SAT funktioniert nicht richtig
+- CNF, etc. -> MPA-Formel, kein Clojure-Listing
+- README: "human-readable"/"clojure" -> infix/prefix
+	- "zwei-Ebenen-System": Clojure-Niveau/REPL (für Prefix) und GUI (für Infix)
+	- über GUI schreiben
+- Deployment (AOT?)
+- Remove Task "Dimacs" (CNF macht nochmal das gleiche?)
+- Baum beim Speichern nicht mehr zuklappen
+- Symbols "\a"
+- Parser: Konstanten aus Token-Klasse statt direkter Zahlen
+- Funktion: alle Tabs eines Projektes schließen
 
 - UNIT TESTS!
 
@@ -18,49 +26,3 @@ OPEN TASKS
 QUESTIONS
 
 - GUI - Truth Table: impl: unkown symbol through eval-formula
-
-NOTES
-
-- Projekt-Idee:
-	SAT-Wrapper (Wrapper um SAT4J, Dokumentation) 
-	(Video: Distilling Java Libraries, Zach Tellman)
-	Mutable-Java mit Persistent-Wrapper
-- Forschungsfeld: Softwaretechnik FP
-	Abhängigkeiten über Namensräume
-	
-- MPA: mpf-files - logic samples (use macro processor and recode in clojure)
-	Logelei 2
-	Sudoku
-	Coloring
-- SAT solve competitions (www.satcompetitions.org)
-- Is it a good idea to remove tautologies from cnf? Yes.
-- Printing a truth table is reasonable only for a number of vars up to 12, limiting to 10
-- David Nolen, 'Architecture of core.logic'
-- only 'and' and 'or' are n-ary, all other operators binary
-- Basicfunctions must not be changed from macros to functions as cnf transformation
-  would not work anymore (works with macroexpand).
-- RSyntaxRichTextArea
-- MPA: no own macro processor
-  idea: 
-    Input "human" code 
-    -> Clj-Button 
-    -> show clojure code
-    -> start REPL (autoload generated code) 
-    -> do something...
-    -> save (in REPL)
-- Queens problem for (n = 2) (must be false for all):
-	(a1 -> (!b1 and !a2 and !b2))
-	and 
-	(a2 -> (!b1 and !b2 and !a1))
-	and
-	(b1 -> (!a1 and !a2 and !b2))
-	and
-	(b2 -> (!a1 and !a2 and !b1))
-	and
-	(a1 or b1)
-	and
-	(a2 or b2)
-	and
-	(a1 or a2)
-	and
-	(b1 or b2)
