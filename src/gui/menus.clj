@@ -44,14 +44,14 @@
                           :icon (icon-path "delete.gif")
                           :handler handler-delete-selcted-project-proposition-m4file)
                         :separator
-                        (action
-                          :tip "Transforms the current MPA proposition to clojure code."
-                          :icon (icon-path "formula2clojure.gif")
-                          :handler handler-parse)
-                        (action
-                          :tip "Transforms the current clojure code to a MPA proposition."
-                          :icon (icon-path "clojure2formula.gif")
-                          :handler handler-reparse)
+                        #_(action
+                           :tip "Transforms the current MPA proposition to clojure code."
+                           :icon (icon-path "formula2clojure.gif")
+                           :handler handler-parse)
+                        #_(action
+                           :tip "Transforms the current clojure code to a MPA proposition."
+                           :icon (icon-path "clojure2formula.gif")
+                           :handler handler-reparse)
                         (action 
                           :tip "SAT solves the proposition."
                           :icon (icon-path "task_sat.gif")
@@ -172,17 +172,17 @@
 (def tasks-menu (menu
                   :text "Tasks"
                   :mnemonic "T"
-                  :items [(action
-                            :name "Parse formula to clojure"
-                            :tip "Transforms the current MPA proposition to clojure code."
-                            :key "ctrl P"
-                            :icon (icon-path "formula2clojure.gif")
-                            :handler handler-parse)
-                          (action
-                            :name "Parse clojure back to formula"
-                            :tip "Transforms the current clojure code to a MPA proposition."
-                            :icon (icon-path "clojure2formula.gif")
-                            :handler handler-reparse)
+                  :items [#_(action
+                             :name "Parse formula to clojure"
+                             :tip "Transforms the current MPA proposition to clojure code."
+                             :key "ctrl P"
+                             :icon (icon-path "formula2clojure.gif")
+                             :handler handler-parse)
+                          #_(action
+                             :name "Parse clojure back to formula"
+                             :tip "Transforms the current clojure code to a MPA proposition."
+                             :icon (icon-path "clojure2formula.gif")
+                             :handler handler-reparse)
                           (action 
                             :name "Check SAT"
                             :tip "SAT solves the proposition."

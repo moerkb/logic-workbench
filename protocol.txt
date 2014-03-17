@@ -3,9 +3,6 @@ OPEN TASKS
 - MPA-Hilfe umstricken
 - SAT funktioniert nicht richtig
 - CNF, etc. -> MPA-Formel, kein Clojure-Listing
-- README: "human-readable"/"clojure" -> infix/prefix
-	- "zwei-Ebenen-System": Clojure-Niveau/REPL (für Prefix) und GUI (für Infix)
-	- über GUI schreiben
 - Deployment (AOT?)
 - Remove Task "Dimacs" (CNF macht nochmal das gleiche?)
 - Baum beim Speichern nicht mehr zuklappen
