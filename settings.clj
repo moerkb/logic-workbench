@@ -1,1 +1,1 @@
-{:show-tt :all, :show-sat :true-only, :mmp-include-path "src/examples"}
+{:show-tt :all, :show-sat :all, :mmp-include-path "src/examples"}
