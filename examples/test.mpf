@@ -1,0 +1,11 @@
+/*
+ * Meine
+ * mehrzeilige Beschreibung
+ */
+
+phi::Formel 1
+a & b
+
+phi::Formel 2
+A <-> (B xor !C) <-> !A
+
