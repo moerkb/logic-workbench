@@ -1,7 +1,6 @@
 OPEN TASKS
 
 - MPA-Hilfe umstricken
-- CNF, etc. -> MPA-Formel, kein Clojure-Listing
 - Deployment (AOT?)
 - Remove Task "Dimacs" (CNF macht nochmal das gleiche?)
 - Baum beim Speichern nicht mehr zuklappen
