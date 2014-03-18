@@ -143,39 +143,45 @@
 
 (defn handler-open-file
   [_]
-  (let [file (choose-file
-               :filters [["MPA (*.mpf)"
-                          ["mpf"]
-                          ["Folders" #(.isDirectory %)]]]
-               :success-fn (fn [fc file] (.getAbsolutePath file)))]
-    (if (file-is-open? file)
-      nil
-      (add-node (list tree-of-projects) (file2node (tools/path-conformer file))))))
+  (std-catch 
+	  (let [file (choose-file
+	               :filters [["MPA (*.mpf)"
+	                          ["mpf"]
+	                          ["Folders" #(.isDirectory %)]]]
+	               :success-fn (fn [fc file] (.getAbsolutePath file)))]
+	    (if (file-is-open? file)
+	      nil
+	      (add-node (list tree-of-projects) (file2node (tools/path-conformer file)))))
+  (catch Exception e nil)))
 
 (defn handler-create-new-project
   [_]
-  (let [f (choose-file
-            :type :save
-            :filters [["MPA/LWB (*.mpf)"
-                       ["mpf"]
-                       ["Folders" #(.isDirectory %)]]])
-        dir (tools/path-conformer(.getParent f))
-        name (.getName f)
-        file (if (and
-                   (= (last (str/split name #"\.")) "mpf")
-                   (< 1 (count (str/split name #"\."))))
-               name
-               (str name ".mpf"))
-        new-node (Node.
-                   (str/replace file #"\.mpf" "")
-                   ""
-                   (str dir "/" file)
-                   nil)]
-    (if (file-is-open? (str dir "/" file))
-      nil
-      (do
-        (add-node (list tree-of-projects) new-node)
-        (save-project new-node)))))
+  (std-catch
+	  (let [f (choose-file
+	            :type :save
+	            :filters [["MPA/LWB (*.mpf)"
+	                       ["mpf"]
+	                       ["Folders" #(.isDirectory %)]]])
+	        dir (tools/path-conformer(.getParent f))
+	        name (.getName f)
+	        file (if (and
+	                (= (last (str/split name #"\.")) "mpf")
+	                (< 1 (count (str/split name #"\."))))
+	            name
+	            (str name ".mpf"))
+	        new-node (Node.
+	                   (str/replace file #"\.mpf" "")
+	                   ""
+	                   (str dir "/" file)
+	                   nil)]
+	    (if (file-is-open? (str dir "/" file))
+	      nil
+        (if (std-catch (slurp (str dir "/" file)) (catch Exception e nil))
+          (alert "This file already exists.")
+          (do
+            (add-node (list tree-of-projects) new-node)
+            (save-project new-node)))))
+   (catch Exception e nil)))
 
 (defn handler-add-new-proposition
   [_]
