@@ -107,12 +107,35 @@
   (let [z (atom 0)
         gen-map (generate-tseitin-symbols formula z)
         rev-subs (zipmap (vals gen-map) (keys gen-map))
-        lit-list (set (filter literal? (vals gen-map)))]
-    {:formula formula
-     :lits (apply merge (map (fn [l] {l (l rev-subs)}) lit-list)) 
-     :tseitin-formula (flatten-subast (apply list 'and
+        lit-list (set (filter literal? (vals gen-map)))
+        lits (apply merge (map (fn [l] {l (rev-subs l)}) lit-list))
+        tseitin-formula (flatten-subast (apply list 'and
                                         (list 'or (symbol (str tseitin-prefix @z)))
-                                        (filter (complement literal?) (vals gen-map))))}))
+                                        (filter (complement literal?) (vals gen-map))))]
+    {:formula formula
+     :lits lits
+     :tseitin-formula (cond  ; care about booleans as own symbols
+                        (and (contains? lits true)
+                          (contains? lits false))
+                        (conj (conj (conj (rest tseitin-formula) 
+                                      (list 'or (lits true)))
+                                (list 'or (list 'not (lits 'false)))) 
+                          'and)
+                        
+                        (and (contains? lits true)
+                          (not (contains? lits false)))
+                        (conj (conj (rest tseitin-formula) 
+                                (list 'or (lits true)))
+                          'and)
+                        
+                        (and (not (contains? lits true))
+                          (contains? lits false))
+                        (conj (conj (rest tseitin-formula)
+                                (list 'or (list 'not (lits false))))
+                          'and)
+                        
+                        :else tseitin-formula
+                        )}))
 
 (defn retransform-tseitin
   "Takes a map as produced by transform-tseitin and a solver result and removes all tseitin
@@ -124,8 +147,18 @@
                            lits
                            (if (literal? %) % (second %)))
                  result)]
-    (map #(if (seq? %) 
-            (list 'not (get subs (second %)))
-            (get subs %))
-      cln-res)))
+    (filter #(cond ; remove booleans
+                           (boolean? %) false
+                           (and (coll? %)
+                             (boolean? (second %))) false
+                           :else true
+                           )
+      (map #(if (seq? %) 
+              (list 'not (get subs (second %)))
+              (get subs %))
+        cln-res))))
     
+(let [tseit-map (transform-tseitin (parse "!A & T & (F <- B)"))
+      result (rest (sat-solve (generate-dimacs-clauses (:tseitin-formula tseit-map))))
+      retrans (retransform-tseitin result tseit-map)]
+  retrans)
