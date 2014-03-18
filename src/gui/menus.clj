@@ -72,10 +72,10 @@
                            :tip "Generates the dimacs file for the proposition (must be CNF)."
                            :icon (icon-path "dimacs.gif")
                            :handler handler-dimacs)
-                        (action 
-                          :tip "Generates the CNF, then prints the dimacs file."
-                          :icon (icon-path "dimacsCNF.gif")
-                          :handler handler-dimacs-cnf)
+                        #_(action 
+                           :tip "Generates the CNF, then prints the dimacs file."
+                           :icon (icon-path "dimacsCNF.gif")
+                           :handler handler-dimacs-cnf)
                         (action 
                           :tip "Performs the tseitin transformation, then prints the dimacs file."
                           :icon (icon-path "dimacsTseitin.gif")
@@ -211,11 +211,11 @@
                              :tip "Generates the dimacs file for the proposition (must be CNF)."
                              :icon (icon-path "dimacs.gif")
                              :handler handler-dimacs)
-                          (action 
-                            :name "Make CNF, then generate DIMACS"
-                            :tip "Generates the CNF, then prints the dimacs file."
-                            :icon (icon-path "dimacsCNF.gif")
-                            :handler handler-dimacs-cnf)
+                          #_(action 
+                             :name "Make CNF, then generate DIMACS"
+                             :tip "Generates the CNF, then prints the dimacs file."
+                             :icon (icon-path "dimacsCNF.gif")
+                             :handler handler-dimacs-cnf)
                           (action 
                             :name "Make Tseitin-CNF, then generate DIMACS"
                             :tip "Performs the tseitin transformation, then prints the dimacs file."
