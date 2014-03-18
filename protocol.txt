@@ -4,8 +4,12 @@ OPEN TASKS
 - Deployment (AOT?)
 - Baum beim Speichern nicht mehr zuklappen
 - How do true/false constants behave in transform and solve functions?
-- (and) = true
-  (and (or)) = false/nil
-  -> abort trivial, generate no dimacs, etc.
 - GUI: Wenn kein Tab gewählt/geöffnet ist und eine Funktion (z .B. TT) gedrückt wird, soll eine passende Fehlermeldung erscheinen.
 - clj-to-fml: false -> False
+- Resolution in aus GUI ausführbar?
+
+
+QUESTIONS
+
+- Exception: Satsolve "A & F"
+- Tseitin Bools: so i. O.?
