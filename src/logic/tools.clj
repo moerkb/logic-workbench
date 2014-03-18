@@ -43,8 +43,14 @@
           arg1 (second fml)]
       (if (= op 'not)
         (str "!" (clj-to-fml arg1))
-        (str "(" (clj-to-fml arg1) (apply str (map #(str (reconvert-map op) (clj-to-fml %)) (rest (rest fml)))) ")"))) 
-    fml))
+        (str "(" 
+          (clj-to-fml arg1) 
+          (apply str (map #(str (reconvert-map op) (clj-to-fml %)) (rest (rest fml)))) ")"))) 
+    (if (boolean? fml)
+      (if (true? fml)
+        "T"
+        "F")
+      fml)))
 
 (defn- count-rec [f [cnt-op cnt-var]]
   (cond 
