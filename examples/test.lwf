@@ -1,11 +1,4 @@
-[
-	"This is an example LWB file"
-	{
-		:name "formula 1"
-		:proposition "a & b"
-	}
-	{
-		:name "formula 2"
-		:proposition "a -> b"
-	}
-]
+["/*
+ * Meine
+ * mehrzeilige Beschreibung
+ */" {:name "Formel 1", :proposition "a & b"} {:name "Formel 2", :proposition "A <-> (B xor !C) <-> !A"}]

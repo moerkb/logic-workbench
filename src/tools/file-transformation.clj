@@ -19,11 +19,8 @@
         description (first file-vector)
         forms (rest file-vector)]
     (str
-      "/*" \newline
-      (apply str (map #(str " * " % \newline) 
-                   (str/split-lines description)))
-      " */" \newline
-      \newline
+      description
+      \newline \newline
       (apply str (map (fn [m] (str "phi::" (:name m) \newline
                                 (:proposition m)
                                 \newline
@@ -40,8 +37,7 @@
                        (not= "phi::" (subs % 0 5))) 
         next-formula (fn [lines] (str/trim (apply str (map #(str % \newline)
                                                         (take-while no-phi-line? lines)))))
-        top-comment [(str/trim (str/replace (next-formula all-lines)
-                                 #"//|\*/+|/\*+|\*+" ""))]]
+        top-comment [(str/trim (next-formula all-lines))]]
     
     ; print result
     (str/replace
