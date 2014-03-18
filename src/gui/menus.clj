@@ -18,7 +18,8 @@
                           :handler handler-add-new-proposition)
                         (action 
                           :tip "Rename the selected proposition (formula)."
-                          :icon (icon-path "rename_proposition.gif"))
+                          :icon (icon-path "rename_proposition.gif")
+                          :handler handler-rename-proposition)
                         :separator
                         (action 
                           :tip "Create a new M4 file."
@@ -120,7 +121,8 @@
                               :name "Rename Proposition"
                               :tip "Rename the selected proposition (formula)."
                               :key "ctrl R"
-                              :icon (icon-path "rename_proposition.gif"))
+                              :icon (icon-path "rename_proposition.gif")
+                              :handler handler-rename-proposition)
                             (separator)
                             (action 
                               :name "New M4 File"

@@ -87,7 +87,7 @@
 
 (defn change-node-name ;(node-changed tree-model node-path)
   [node-path new-name]
-  (!set (.name (last node-path)) new-name)
+  (set! (.name (last node-path)) new-name)
   (node-changed tree-model node-path)
   (change-settings))
 
