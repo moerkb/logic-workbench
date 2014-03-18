@@ -1,1 +1,1 @@
-{:project-tree ["examples/Coloring.mpf"], :show-tt :all, :show-sat :all, :mmp-include-path "src/examples"}
+{:project-tree ["examples/test.mpf" "examples/Coloring.mpf"], :show-tt :all, :show-sat :all, :mmp-include-path "src/examples"}

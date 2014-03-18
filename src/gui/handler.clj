@@ -6,7 +6,8 @@
   (let [node (selection project-tree)]
     (if (not= 2 (count node))
       (alert "Please select a project")
-      (change-project-list (apply list (remove #(= (second (selection project-tree)) %) (.children tree-of-projects)))))))
+      ;(change-project-list (vec (remove #(= (second (selection project-tree)) %) (.children tree-of-projects)))))))
+      (rm-node (selection project-tree)))))
 
 (defn handler-delete-selcted-project-proposition-m4file
   [_]

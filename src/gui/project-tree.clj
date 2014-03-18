@@ -22,8 +22,8 @@
 	  (let [get-data (fn [f] (let [file-type (last (str/split f #"\."))
 	                               data (slurp f)]
 	                           (case file-type
-	                             "lwf" (read-string data)
-	                             "mpf" (read-string (tools/mpf2lwf data)))))
+                               "mpf" (read-string (tools/mpf2lwf data))
+                               (alert "Wrong file type."))))
 	        
 	        data (get-data f)]
 	    
@@ -36,7 +36,7 @@
                       (:proposition %))
                    (rest data)))))
    (catch java.io.FileNotFoundException e
-     (alert (str "Die Datei " f " konnte nicht gefunden werden!")))))
+     (alert (str "Can not find file " f ".")))))
 
 (defn node2lwf-structure
   "Only for project nodes!!!"
@@ -75,11 +75,23 @@
 
 (defn change-project-list
   [new-project-list]
-  (set! (.children tree-of-projects) new-project-list)
+ (set! (.children tree-of-projects) new-project-list)
   (node-structure-changed tree-model (list tree-of-projects))
   (set-setting
     :project-tree
     (vec (map #(.path %) (.children tree-of-projects)))))
+
+(defn add-node
+  [new-node]
+  )
+
+(defn rm-node
+  [removed-node-path]
+  (let [parent-path (apply list(butlast removed-node-path))
+        rm-node (last removed-node-path)
+        index (.indexOf (.children (last parent-path)) rm-node)]
+    (node-removed tree-model parent-path index rm-node)
+    (set! (.children (last parent-path)) (vec (remove nil? (assoc (.children (last parent-path)) index nil))))))
 
 (defn file-is-open?
   [file]
