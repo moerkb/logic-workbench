@@ -8,9 +8,7 @@
       (alert "Please select a project")
       (do
         (close-project-tabs (second node))
-        (rm-node (selection project-tree))
-        ;; TODO change settings
-        ))))
+        (rm-node (selection project-tree))))))
 
 (defn handler-delete-selected-project-proposition-m4file
   [_]
@@ -23,13 +21,12 @@
               :option-type :ok-cancel
               :type :warning) pack! show!))
       (case c
-        2 (let [deleted-node (second node)]
-            (change-project-list (apply list (remove #(= deleted-node %) (.children tree-of-projects))))
-          (io/delete-file (.path deleted-node)))
+        2 (do
+            (rm-node node)
+            (io/delete-file (.path (second node))))
           
         3 (do
-            (set! (.children (second node)) (apply list (remove #(= (last node) %) (.children (second node)))))
-            (change-project-list (.children tree-of-projects))
+            (rm-node node)
             (save-project (second node)))
         nil))))
     
