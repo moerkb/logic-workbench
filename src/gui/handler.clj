@@ -1,14 +1,16 @@
 (ns gui.main)
 
 ;; Menu Bar
-(defn handler-close-selcted-project
+(defn handler-close-selected-project
   [_]
   (let [node (selection project-tree)]
     (if (not= 2 (count node))
       (alert "Please select a project")
-      (change-project-list (apply list (remove #(= (second (selection project-tree)) %) (.children tree-of-projects)))))))
+      (do
+        (close-project-tabs (second node))
+        (change-project-list (apply list (remove #(= (second (selection project-tree)) %) (.children tree-of-projects))))))))
 
-(defn handler-delete-selcted-project-proposition-m4file
+(defn handler-delete-selected-project-proposition-m4file
   [_]
   (let [node (selection project-tree)
         c (count node)]

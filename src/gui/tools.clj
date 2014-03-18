@@ -94,7 +94,7 @@
           
           ; after removing tab, correct the indexes in *node-tabs*, as they are not valid any longer
           (when (not (empty? @*node-tabs*))
-            (if (count @*node-tabs*)
+            (if (= 1 (count @*node-tabs*))
               (swap! *node-tabs* #(let [k (first (keys %))
                                         v (% k)]
                                     (if (> v tab-index)
@@ -127,3 +127,16 @@
   "Reads the MMP include paths from the settings and returns them as a collection."
   []
   (map str/trim (str/split (:mmp-include-path (get-settings)) #";")))
+
+(defn close-project-tabs
+  "Takes a project node and closes all open editor tabs that belong to it."
+  [project-node]
+  (let [find-tab (fn [] 
+                   (filter 
+                     #(= (second %) project-node) 
+                     (keys @*node-tabs*)))]
+   (loop [tabs (find-tab)]
+     (when (not (empty? tabs))
+       (remove-tab (@*node-tabs* (first tabs)))
+       (recur (find-tab)))
+     )))

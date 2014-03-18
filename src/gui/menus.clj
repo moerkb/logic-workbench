@@ -38,11 +38,11 @@
                         (action
                           :tip "Closes the selected project."
                           :icon (icon-path "close.gif")
-                          :handler handler-close-selcted-project)
+                          :handler handler-close-selected-project)
                         (action 
                           :tip "Deletes the selected project, proposition or M4 file."
                           :icon (icon-path "delete.gif")
-                          :handler handler-delete-selcted-project-proposition-m4file)
+                          :handler handler-delete-selected-project-proposition-m4file)
                         :separator
                         #_(action
                            :tip "Transforms the current MPA proposition to clojure code."
@@ -151,12 +151,12 @@
                               :name "Close"
                               :tip "Closes the selected project."
                               :icon (icon-path "close.gif")
-                              :handler handler-close-selcted-project)
+                              :handler handler-close-selected-project)
                             (action 
                               :name "Delete"
                               :tip "Deletes the selected project, proposition or M4 file."
                               :icon (icon-path "delete.gif")
-                              :handler handler-delete-selcted-project-proposition-m4file)
+                              :handler handler-delete-selected-project-proposition-m4file)
                             (action
                               :name "Close tab"
                               :tip "Closes the currently shown tab."
