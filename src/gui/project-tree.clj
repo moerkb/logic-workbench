@@ -87,8 +87,10 @@
   
 
 (defn add-node ;;(node-inserted tree-model node-path)
-  [new-node-path]
-  (node-insertion treemodel new-node-path))
+  [parent-path new-node]
+  (set! (.children (last parent-path)) (vec (conj (.children (last parent-path)) new-node)))
+  (node-inserted tree-model (conj (vec parent-path) new-node))
+  (change-settings))
 
 (defn rm-node
   [removed-node-path]
