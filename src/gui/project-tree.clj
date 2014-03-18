@@ -84,9 +84,22 @@
   (set! (.children tree-of-projects) new-project-list)
   (node-structure-changed tree-model (list tree-of-projects))
   (change-settings))
-  
 
-(defn add-node ;;(node-inserted tree-model node-path)
+(defn change-node-name ;(node-changed tree-model node-path)
+  [node-path new-name]
+  (!set (.name (last node-path)) new-name)
+  (node-changed tree-model node-path)
+  (change-settings))
+
+(defn change-node-content ;(node-changed tree-model node-path)
+  [node-path new-content]
+  )
+
+(defn change-node-position ;(node-changed tree-model node-path)
+  [node-path up?]
+  )
+
+(defn add-node
   [parent-path new-node]
   (set! (.children (last parent-path)) (vec (conj (.children (last parent-path)) new-node)))
   (node-inserted tree-model (conj (vec parent-path) new-node))
