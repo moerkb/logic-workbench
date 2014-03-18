@@ -1,7 +1,7 @@
 (ns gui.main
   (require [seesaw.core :refer :all]
            [seesaw.rsyntax :as syntax]
-           [seesaw.tree :refer (simple-tree-model node-removed node-structure-changed)]
+           [seesaw.tree :refer (simple-tree-model node-removed node-inserted node-structure-changed)]
            [seesaw.dev :refer (show-options show-events)]
            [seesaw.chooser :refer (choose-file)]
            [seesaw.border :as border]

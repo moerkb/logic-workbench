@@ -73,17 +73,24 @@
 		  children
 		  tree)))
 
-(defn change-project-list
-  [new-project-list]
- (set! (.children tree-of-projects) new-project-list)
-  (node-structure-changed tree-model (list tree-of-projects))
+(defn change-settings
+  []
   (set-setting
     :project-tree
     (vec (map #(.path %) (.children tree-of-projects)))))
 
-(defn add-node
-  [new-node]
-  )
+(defn change-project-list
+  [new-project-list]
+  (set! (.children tree-of-projects) new-project-list)
+  (node-structure-changed tree-model (list tree-of-projects))
+  (change-settings))
+  
+
+(defn add-node ;;(node-inserted tree-model node-path)
+  [parent-path new-node]
+  (set! (.children (last parent-path)) (vec (conj (.children (last parent-path)) new-node)))
+  (node-inserted tree-model (conj (vec parent-path) new-node))
+  (change-settings))
 
 (defn rm-node
   [removed-node-path]
@@ -91,7 +98,8 @@
         rm-node (last removed-node-path)
         index (.indexOf (.children (last parent-path)) rm-node)]
     (node-removed tree-model parent-path index rm-node)
-    (set! (.children (last parent-path)) (vec (remove nil? (assoc (.children (last parent-path)) index nil))))))
+    (set! (.children (last parent-path)) (vec (remove nil? (assoc (.children (last parent-path)) index nil))))
+    (change-settings)))
 
 (defn file-is-open?
   [file]

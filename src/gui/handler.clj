@@ -8,9 +8,7 @@
       (alert "Please select a project")
       (do
         (close-project-tabs (second node))
-        (rm-node (selection project-tree))
-        ;; TODO change settings
-        ))))
+        (rm-node (selection project-tree))))))
 
 (defn handler-delete-selected-project-proposition-m4file
   [_]
@@ -23,13 +21,12 @@
               :option-type :ok-cancel
               :type :warning) pack! show!))
       (case c
-        2 (let [deleted-node (second node)]
-            (change-project-list (apply list (remove #(= deleted-node %) (.children tree-of-projects))))
-          (io/delete-file (.path deleted-node)))
+        2 (do
+            (rm-node node)
+            (io/delete-file (.path (second node))))
           
         3 (do
-            (set! (.children (second node)) (apply list (remove #(= (last node) %) (.children (second node)))))
-            (change-project-list (.children tree-of-projects))
+            (rm-node node)
             (save-project (second node)))
         nil))))
     
@@ -146,67 +143,61 @@
 
 (defn handler-open-file
   [_]
-  (let [file (choose-file
-               :filters [["Logical Workbench (*.lwf)"
-                          ["lwf"]
-                          ["Folders" #(.isDirectory %)]]
-                         ["MPA (*.mpf)"
-                          ["mpf"]
-                          ["Folders" #(.isDirectory %)]]]
-               :success-fn (fn [fc file] (.getAbsolutePath file)))]
-    (if (file-is-open? file)
-      nil
-      (change-project-list (apply list (conj (vec (.children tree-of-projects)) (file2node (tools/path-conformer file))))))))
+  (std-catch 
+	  (let [file (choose-file
+	               :filters [["MPA (*.mpf)"
+	                          ["mpf"]
+	                          ["Folders" #(.isDirectory %)]]]
+	               :success-fn (fn [fc file] (.getAbsolutePath file)))]
+	    (if (file-is-open? file)
+	      nil
+	      (add-node (list tree-of-projects) (file2node (tools/path-conformer file)))))
+  (catch Exception e nil)))
 
 (defn handler-create-new-project
   [_]
-  (let [f (choose-file
-            :type :save
-            :filters [["Logical Workbench (*.lwf)"
-                       ["lwf"]
-                       ["Folders" #(.isDirectory %)]]
-                      ["MPA (*.mpf)"
-                       ["mpf"]
-                       ["Folders" #(.isDirectory %)]]])
-        dir (tools/path-conformer(.getParent f))
-        name (.getName f)
-        file (str/replace
-               (if (and
-                     (= (last (str/split name #"\.")) "lwf")
-                     (< 1 (count (str/split name #"\."))))
-                 name
-                 (str name ".lwf"))
-               #" " "_")
-        new-node (Node.
-                   (str/replace file #"\.lwf" "")
-                   ""
-                   (str dir "/" file)
-                   nil)]
-    (if (file-is-open? (str dir "/" file))
-      nil
-      (do
-        (change-project-list (apply list (conj (vec (.children tree-of-projects)) new-node)))
-        (save-project new-node)))))
+  (std-catch
+	  (let [f (choose-file
+	            :type :save
+	            :filters [["MPA/LWB (*.mpf)"
+	                       ["mpf"]
+	                       ["Folders" #(.isDirectory %)]]])
+	        dir (tools/path-conformer(.getParent f))
+	        name (.getName f)
+	        file (if (and
+	                (= (last (str/split name #"\.")) "mpf")
+	                (< 1 (count (str/split name #"\."))))
+	            name
+	            (str name ".mpf"))
+	        new-node (Node.
+	                   (str/replace file #"\.mpf" "")
+	                   ""
+	                   (str dir "/" file)
+	                   nil)]
+	    (if (file-is-open? (str dir "/" file))
+	      nil
+        (if (std-catch (slurp (str dir "/" file)) (catch Exception e nil))
+          (alert "This file already exists.")
+          (do
+            (add-node (list tree-of-projects) new-node)
+            (save-project new-node)))))
+   (catch Exception e nil)))
 
 (defn handler-add-new-proposition
   [_]
   (let [node (second (selection project-tree))
-        name (str/replace
-               (-> (dialog :content
+        name (-> (dialog :content
                            (vertical-panel :items ["Enter the proposition name" (text :id :name)])
                            :option-type :ok-cancel
                            :type :question
-                           :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)
-               #" " "_")]
+                           :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)]
     (if (not node)
       (alert "Please select a project.")
-      (if (= name "")
-        (alert "Empty names are not allowed.")
-        (if ((keyword name) (set (map #(keyword (.name %)) (.children node))))
-          (alert "This proposition already exists.")
+      (when name
+        (if (= name "")
+          (alert "Empty names are not allowed.")
           (do
-            (set! (.children node) (apply list (conj (vec (.children node)) (Node. name ""))))
-            (change-project-list (.children tree-of-projects))
+            (add-node (list tree-of-projects node) (Node. name ""))
             (save-project node)))))))
   
 ;; Project Tree
