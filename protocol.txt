@@ -3,7 +3,6 @@ OPEN TASKS
 - MPA-Hilfe umstricken
 - Deployment (AOT?)
 - Baum beim Speichern nicht mehr zuklappen
-- Funktion: alle Tabs eines Projektes schließen
 - How do true/false constants behave in transform and solve functions?
 - (and) = true
   (and (or)) = false/nil
