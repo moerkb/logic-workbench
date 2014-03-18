@@ -157,8 +157,3 @@
               (list 'not (get subs (second %)))
               (get subs %))
         cln-res))))
-    
-(let [tseit-map (transform-tseitin (parse "!A & T & (F <- B)"))
-      result (rest (sat-solve (generate-dimacs-clauses (:tseitin-formula tseit-map))))
-      retrans (retransform-tseitin result tseit-map)]
-  retrans)
