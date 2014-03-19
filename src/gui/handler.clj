@@ -47,33 +47,41 @@
   "Handler function for action 'sat solve'."
   [_]
   (std-catch
-    (let [tmap (logic/transform-tseitin (parse-editor))
-          overall-result (-> tmap :tseitin-formula logic/generate-dimacs-clauses logic/sat-solve)
-          res? (if (zero? (first overall-result)) false true)
-          sat-result (rest overall-result)
-          result (logic/retransform-tseitin sat-result tmap)
-          all-rows (map #(if (coll? %)
+    (let [parsed (parse-editor)]
+      (if (logic/literal? parsed)
+        ; trivial cases
+        (set-text-result! (str "SAT solver not invoked, as the result is always trivially "
+                            parsed
+                            "."))
+        
+        ; standard case: apply tseitin and sat-solver
+        (let [tmap (logic/transform-tseitin parsed)
+              overall-result (-> tmap :tseitin-formula logic/generate-dimacs-clauses logic/sat-solve)
+              res? (if (zero? (first overall-result)) false true)
+              sat-result (rest overall-result)
+              result (logic/retransform-tseitin sat-result tmap)
+              all-rows (map #(if (coll? %)
                                [(second %) false]
                                [% true]) result)
-          curr-settings (get-settings)
-          rows (if (= :true-only (:show-sat curr-settings))
-                 (filter second all-rows)
-                 all-rows)]
-      (if res?
-        (if (empty? rows)
-          (set-text-result! "NOTE: The proposition is satisfiable, but all variables are false. Please change your settings to see all valuations.")
-          
-          (if (= :formula (:show-sat curr-settings))
-            (set-text-result! (apply str (interpose "&" (map #(if (second %)
-                                                                (str (first %))
-                                                                (str "!" (first %)))
-                                                          rows))))
-            (set-table-result! [:columns [{:key :symbol :text "Variable"} 
-                                          {:key :value :text "Value"}]
-                                :rows rows])))
-        (set-table-result! [:columns [{:key :message :text "Message"}]
-                              :rows [["The proposition is unsatisfiable."]]]
-            :auto-resize :last-column)))))
+              curr-settings (get-settings)
+              rows (if (= :true-only (:show-sat curr-settings))
+                     (filter second all-rows)
+                     all-rows)]
+          (if res?
+            (if (empty? rows)
+              (set-text-result! "NOTE: The proposition is satisfiable, but all variables are false. Please change your settings to see all valuations.")
+            
+              (if (= :formula (:show-sat curr-settings))
+                (set-text-result! (apply str (interpose "&" (map #(if (second %)
+                                                                    (str (first %))
+                                                                    (str "!" (first %)))
+                                                              rows))))
+                (set-table-result! [:columns [{:key :symbol :text "Variable"} 
+                                              {:key :value :text "Value"}]
+                                    :rows rows])))
+            (set-table-result! [:columns [{:key :message :text "Message"}]
+                                  :rows [["The proposition is unsatisfiable."]]]
+                :auto-resize :last-column)))))))
 
 (defn handler-tt
   "Handler function for action 'truth table'."
