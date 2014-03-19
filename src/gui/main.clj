@@ -41,6 +41,7 @@
 (declare editor)
 (declare project-tree)
 (declare editor-tabs)
+(declare save-project)
 
 (load "tools")
 (load "project-tree")

@@ -28,6 +28,13 @@
                           :tip "Open an existing M4 file."
                           :icon (icon-path "open_m4file.gif"))
                         :separator
+                        (action
+                          :tip "Move the project, proposition or M4 file one step up."
+                          :icon (icon-path "up.gif"))
+                        (action
+                          :tip "Move the project, proposition or M4 file one step down."
+                          :icon (icon-path "down.gif"))
+                        :separator
                         (action 
                           :tip "Save"
                           :icon (icon-path "save.gif")
@@ -134,6 +141,17 @@
                               :tip "Open an existing M4 file."
                               :key "alt O"
                               :icon (icon-path "open_m4file.gif"))
+                            (separator)
+                            (action
+                              :name "Up"
+                              :tip "Move the project, proposition or M4 file one step up."
+                              :key "ctrl shift UP"
+                              :handler (fn [_] (alert "up")))
+                            (action
+                              :name "Down"
+                              :tip "Move the project, proposition or M4 file one step down."
+                              :key "ctrl shift DOWN"
+                              :handler (fn [_] (alert "down")))
                             (separator)
                             (action 
                               :name "Save" 
