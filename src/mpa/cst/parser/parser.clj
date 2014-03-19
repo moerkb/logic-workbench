@@ -7,15 +7,15 @@
 (MpaParser. (StringReader. ""))
 
 (defn- cst2list
-  [cst]
+  [cst *const?*]
   (case (.jjtGetNumChildren cst)
     0 (case (.getLexeme cst) ; Boolean | Atom
-        "TRUE" 'true
-        "FALSE" 'false
+        "TRUE" (do (reset! *const?* true) 'true)
+        "FALSE" (do (reset! *const?* true) 'false)
         (symbol (.getLexeme cst)))
     1 (if (= (class cst) mpa.cst.parser.MpaNotExpr) ; NOT | hierarchic descent
-        (list 'not (cst2list (.jjtGetChild cst 0)))
-        (cst2list (.jjtGetChild cst 0)))
+        (list 'not (cst2list (.jjtGetChild cst 0) *const?*))
+        (cst2list (.jjtGetChild cst 0) *const?*))
     2 (let [op-nr (.getOp cst)
             AND (MpaParser/AND)
 						NAND (MpaParser/NAND)
@@ -38,10 +38,13 @@
                  (= op-nr NIMPL) 'nimpl
                  (= op-nr IFF) 'equiv
                  (= op-nr XOR) 'xor)]
-        (list op (cst2list (.jjtGetChild cst 0)) (cst2list (.jjtGetChild cst 1))))))
+        (list op (cst2list (.jjtGetChild cst 0) *const?*) (cst2list (.jjtGetChild cst 1) *const?*)))))
 
 (defn javaCCparse
   [formula]
   (MpaParser/ReInit (StringReader. formula))
-  (let [cst (MpaParser/Start)]
-    (cst2list cst)))
+  (let [cst (MpaParser/Start)
+        *const?* (atom false)
+        parsed (cst2list cst *const?*)]
+    (with-meta parsed {:constants? @*const?*})))
+
