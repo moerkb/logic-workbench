@@ -97,8 +97,29 @@
   (node-changed tree-model node-path)
   (save-project (second node-path)))
 
-(defn change-node-position ;(node-changed tree-model node-path)
-  [node-path up?]
+(defn move-node-up ;(node-changed tree-model node-path)
+  [node-path]
+  (when (not= (last node-path)
+           (first (.children (last (butlast node-path)))))
+    (let [parent-path (butlast node-path)
+          node (last node-path)
+          siblings (.children (last parent-path))
+          siblings-bevor (subvec siblings 0 (.indexOf siblings node))
+          siblings-after (subvec siblings (inc (.indexOf siblings node)))
+          new-siblings (vec (concat (conj (vec (butlast siblings-bevor)) node (last siblings-bevor)) siblings-after))]
+      (set! (.children (last parent-path)) new-siblings)
+      
+      (node-changed tree-model node-path)
+      (node-changed tree-model (conj (vec parent-path) (last siblings-bevor)))
+    
+      (when (= 2 (count node-path))
+        (do
+          (node-structure-changed tree-model  (conj (vec parent-path) (last siblings-bevor)))
+          (node-structure-changed tree-model  node-path)
+          (change-settings))))))
+
+(defn move-node-down ;(node-changed tree-model node-path)
+  [node-path]
   )
 
 (defn add-node

@@ -216,6 +216,10 @@
 	          (do
 	            (change-node-name node name)
 	            (save-project (second node))))))))
+
+(defn handler-move-up
+  [_]
+  (move-node-up (selection project-tree))) ;; TODO: save project maybe ;)
   
 ;; Project Tree
 (defn- handler-tree

@@ -30,7 +30,8 @@
                         :separator
                         (action
                           :tip "Move the project, proposition or M4 file one step up."
-                          :icon (icon-path "up.gif"))
+                          :icon (icon-path "up.gif")
+                          :handler handler-move-up)
                         (action
                           :tip "Move the project, proposition or M4 file one step down."
                           :icon (icon-path "down.gif"))
@@ -145,13 +146,14 @@
                             (action
                               :name "Up"
                               :tip "Move the project, proposition or M4 file one step up."
-                              :key "ctrl shift UP"
-                              :handler (fn [_] (alert "up")))
+                              :key "ctrl UP" ;; TODO: short cut does not work
+                              :icon (icon-path "up.gif")
+                              :handler handler-move-up)
                             (action
                               :name "Down"
                               :tip "Move the project, proposition or M4 file one step down."
-                              :key "ctrl shift DOWN"
-                              :handler (fn [_] (alert "down")))
+                              :key "ctrl DOWN"
+                              :icon (icon-path "down.gif"))
                             (separator)
                             (action 
                               :name "Save" 
