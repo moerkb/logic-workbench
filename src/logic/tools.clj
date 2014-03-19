@@ -11,6 +11,40 @@
   [x]
   (= (class x) java.lang.Boolean))
 
+(defn one-is-bool?
+  "True if one element of the formula is a boolean constant."
+  [formula]
+  (if (coll? formula)
+    (if (nil? (some boolean? (rest formula)))
+      false
+      true)
+    false))
+
+(defn one-is-true?
+  "True if one element of the formula is true."
+  [formula]
+  (if (coll? formula)
+    (if (nil? (some true? (rest formula)))
+      false
+      true)
+    false))
+
+(defn one-is-false?
+  "True if one element of the formula is false."
+  [formula]
+  (if (coll? formula)
+    (if (nil? (some false? (rest formula)))
+      false
+      true)
+    false))
+
+(defn negate-formula-elements
+  "Negates all arguments of a formula (e.g. (and a b c) => (and (not a) (not b) (not c))."
+  [formula]
+  (conj
+    (map #(list 'not %) (rest formula))
+    (first formula)))
+
 (defn n-ary?
   [x]
   (contains? n-ary-symbols x))
