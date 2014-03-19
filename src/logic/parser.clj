@@ -1,15 +1,18 @@
 (ns logic.util)
 
 ; define parser
-(comment
-	(def logic-parser
-	  (insta/parser "src/logic/grammar.txt"))
+#_(comment
+	 (def logic-parser
+	   (insta/parser "src/logic/grammar.txt"))
 	
-	(defn logic-parse [formula]
-	  (let [ast (insta/parses logic-parser formula)]
-	    (first (first ast))))
+	 (defn logic-parse [formula]
+	   (let [ast (insta/parses logic-parser formula)]
+	     (first (first ast))))
 	
-	(defn pure-parse [formula]
-	  (insta/parse logic-parser formula)))
+	 (defn pure-parse [formula]
+	   (insta/parse logic-parser formula)))
 
-(def parse mpaParser/javaCCparse) ; simply use the parser from mpa.cst.parser
+(defn parse
+  "Invokes the JavaCC parser and performs (remove-constants) on it."
+  [formula]
+  (remove-constants (mpaParser/javaCCparse formula)))
