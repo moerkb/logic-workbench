@@ -114,28 +114,7 @@
                                         (filter (complement literal?) (vals gen-map))))]
     {:formula formula
      :lits lits
-     :tseitin-formula (cond  ; care about booleans as own symbols
-                        (and (contains? lits true)
-                          (contains? lits false))
-                        (conj (conj (conj (rest tseitin-formula) 
-                                      (list 'or (lits true)))
-                                (list 'or (list 'not (lits 'false)))) 
-                          'and)
-                        
-                        (and (contains? lits true)
-                          (not (contains? lits false)))
-                        (conj (conj (rest tseitin-formula) 
-                                (list 'or (lits true)))
-                          'and)
-                        
-                        (and (not (contains? lits true))
-                          (contains? lits false))
-                        (conj (conj (rest tseitin-formula)
-                                (list 'or (list 'not (lits false))))
-                          'and)
-                        
-                        :else tseitin-formula
-                        )}))
+     :tseitin-formula tseitin-formula}))
 
 (defn retransform-tseitin
   "Takes a map as produced by transform-tseitin and a solver result and removes all tseitin
@@ -147,13 +126,7 @@
                            lits
                            (if (literal? %) % (second %)))
                  result)]
-    (filter #(cond ; remove booleans
-                           (boolean? %) false
-                           (and (coll? %)
-                             (boolean? (second %))) false
-                           :else true
-                           )
-      (map #(if (seq? %) 
-              (list 'not (get subs (second %)))
-              (get subs %))
-        cln-res))))
+    (map #(if (seq? %) 
+            (list 'not (get subs (second %)))
+            (get subs %))
+      cln-res)))
