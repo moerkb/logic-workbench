@@ -214,16 +214,26 @@
     (alert "Please select a Proposition.")
     (let [node (selection project-tree)
           name (-> (dialog :content
-                           (vertical-panel :items ["Enter the proposition name" (text :id :name)])
+                           (vertical-panel :items ["Enter the proposition name" 
+                                                   (text :id :name
+                                                     :multi-line? false)])
                            :option-type :ok-cancel
                            :type :question
                            :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)]
       (when name
-	      (if (= name "")
-	          (alert "Empty names are not allowed.")
-	          (do
-	            (change-node-name node name)
-	            (save-project (second node))))))))
+        (if (= name "")
+          (alert "Empty names are not allowed.")
+          (do
+            (change-node-name node name)
+            ; change tab name, if one is open
+            (when (contains? @*node-tabs* node)
+              (let [index (@*node-tabs* node)
+                    title (.getTitleAt editor-tabs index)
+                    new-title (if (= (last title) \*)
+                                (str name "*")
+                                name)]
+                (.setTitleAt editor-tabs index new-title)))
+            (save-project (second node))))))))
   
 ;; Project Tree
 (defn- handler-tree

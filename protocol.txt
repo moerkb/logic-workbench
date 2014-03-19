@@ -8,7 +8,5 @@ OPEN TASKS
 
 QUESTIONS
 
-- Exception: Satsolve "A & F"
-- Tseitin Bools: so i. O.?
 - MPA has shorter CNF for A <-> (B xor !C) <-> !A
 - Resolution in aus GUI ausführen?
