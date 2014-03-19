@@ -202,14 +202,14 @@
 
 (defn handler-rename-proposition
   [_]
-  (let [node (selection project-tree)
-        name (-> (dialog :content
+  (if (not= 3 (count (selection project-tree)))
+    (alert "Please select a Proposition.")
+    (let [node (selection project-tree)
+          name (-> (dialog :content
                            (vertical-panel :items ["Enter the proposition name" (text :id :name)])
                            :option-type :ok-cancel
                            :type :question
                            :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)]
-    (if (not= 3 (count node))
-      (alert "Please select a Proposition.")
       (when name
 	      (if (= name "")
 	          (alert "Empty names are not allowed.")
@@ -249,15 +249,12 @@
   (when (tab-marked-new?)
     (let [formula (.getText (current-editor))
           node-list (get (zipmap (vals @*node-tabs*) (keys @*node-tabs*)) (:index (selection editor-tabs)))
-          project-node (second node-list)
           node (last node-list)]
       (if (nil? node)
         (alert "No node.")
-        (do 
-          (set! (.content node) formula)
-          (change-project-list (.children tree-of-projects))
-          (save-project project-node)
-          (tab-demark-new) )))))
+        (do
+          (change-node-content node-list formula)
+          (tab-demark-new))))))
 
 (defn handler-close-tab
   "Handler function for closing a tab."
@@ -294,14 +291,11 @@
               editor (first (select scroll-pane [:<org.fife.ui.rsyntaxtextarea.RSyntaxTextArea!>]))
               formula (.getText editor)
               node-list (get (zipmap (vals @*node-tabs*) (keys @*node-tabs*)) index)
-              project-node (second node-list)
               node (last node-list)]
           (if (nil? node)
         (alert "No node.")
         (do 
-          (set! (.content node) formula)
-          (change-project-list (.children tree-of-projects))
-          (save-project project-node)
+          (change-node-content node-list formula)
           (.setTitleAt editor-tabs index (apply str (butlast title))))))))))
 
 ;; Listener

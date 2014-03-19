@@ -7,5 +7,5 @@ phi::Formel 1
 a & b
 
 phi::Formel 2
-A <-> (B xor !C) <-> !A
+a -> b
 

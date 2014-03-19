@@ -85,15 +85,17 @@
   (node-structure-changed tree-model (list tree-of-projects))
   (change-settings))
 
-(defn change-node-name ;(node-changed tree-model node-path)
+(defn change-node-name
   [node-path new-name]
   (set! (.name (last node-path)) new-name)
   (node-changed tree-model node-path)
   (change-settings))
 
-(defn change-node-content ;(node-changed tree-model node-path)
+(defn change-node-content
   [node-path new-content]
-  )
+  (set! (.content (last node-path)) new-content)
+  (node-changed tree-model node-path)
+  (save-project (second node-path)))
 
 (defn change-node-position ;(node-changed tree-model node-path)
   [node-path up?]
