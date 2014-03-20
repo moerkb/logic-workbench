@@ -97,9 +97,53 @@
   (node-changed tree-model node-path)
   (save-project (second node-path)))
 
-(defn change-node-position ;(node-changed tree-model node-path)
-  [node-path up?]
-  )
+(defn move-node-up
+  [node-path]
+  (when (not= (last node-path)
+           (first (.children (last (butlast node-path)))))
+    (let [parent-path (butlast node-path)
+          node (last node-path)
+          siblings (.children (last parent-path))
+          siblings-before (subvec siblings 0 (.indexOf siblings node))
+          siblings-after (subvec siblings (inc (.indexOf siblings node)))
+          new-siblings (vec (concat (conj (vec (butlast siblings-before)) node (last siblings-before)) siblings-after))]
+      
+      (set! (.children (last parent-path)) new-siblings)
+      
+      (node-changed tree-model node-path)
+      (node-changed tree-model (conj (vec parent-path) (last siblings-before)))
+    
+      (when (= 2 (count node-path))
+        (do
+          (node-structure-changed tree-model  (conj (vec parent-path) (last siblings-before)))
+          (node-structure-changed tree-model  node-path)
+          (change-settings)))
+      (when (= 3 count node-path)
+        (save-project (second node-path))))))
+
+(defn move-node-down
+  [node-path]
+  (when (not= (last node-path)
+           (last (.children (last (butlast node-path)))))
+    (let [parent-path (butlast node-path)
+          node (last node-path)
+          siblings (.children (last parent-path))
+          siblings-before (subvec siblings 0 (.indexOf siblings node))
+          siblings-after (subvec siblings (inc (.indexOf siblings node)))
+          new-siblings (vec (concat siblings-before (vector (first siblings-after) node) (rest siblings-after)))]
+      
+      (set! (.children (last parent-path)) new-siblings)
+      
+      (node-changed tree-model node-path)
+      (node-changed tree-model (conj (vec parent-path) (first siblings-after)))
+    
+      (when (= 2 (count node-path))
+        (do
+          (node-structure-changed tree-model  (conj (vec parent-path) (first siblings-after)))
+          (node-structure-changed tree-model  node-path)
+          (change-settings)))
+      (when (= 3 count node-path)
+        (save-project (second node-path))))))
 
 (defn add-node
   [parent-path new-node]

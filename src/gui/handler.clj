@@ -221,19 +221,26 @@
                            :type :question
                            :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)]
       (when name
-        (if (= name "")
-          (alert "Empty names are not allowed.")
-          (do
-            (change-node-name node name)
-            ; change tab name, if one is open
-            (when (contains? @*node-tabs* node)
-              (let [index (@*node-tabs* node)
-                    title (.getTitleAt editor-tabs index)
-                    new-title (if (= (last title) \*)
-                                (str name "*")
-                                name)]
-                (.setTitleAt editor-tabs index new-title)))
-            (save-project (second node))))))))
+	      (if (= name "")
+	          (alert "Empty names are not allowed.")
+	          (do
+	            (change-node-name node name)
+              (when (contains? @*node-tabs* node)
+	              (let [index (@*node-tabs* node)
+	                    title (.getTitleAt editor-tabs index)
+	                    new-title (if (= (last title) \*)
+	                                (str name "*")
+	                                name)]
+	                (.setTitleAt editor-tabs index new-title)))
+	            (save-project (second node))))))))
+
+(defn handler-move-up
+  [_]
+  (move-node-up (selection project-tree)))
+
+(defn handler-move-down
+  [_]
+  (move-node-down (selection project-tree)))
   
 ;; Project Tree
 (defn- handler-tree

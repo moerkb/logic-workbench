@@ -21,19 +21,21 @@
                           :icon (icon-path "rename_proposition.gif")
                           :handler handler-rename-proposition)
                         :separator
-                        (action 
-                          :tip "Create a new M4 file."
-                          :icon (icon-path "new_m4file.gif"))
-                        (action 
-                          :tip "Open an existing M4 file."
-                          :icon (icon-path "open_m4file.gif"))
-                        :separator
+;                        (action 
+;                          :tip "Create a new M4 file."
+;                          :icon (icon-path "new_m4file.gif"))
+;                        (action 
+;                          :tip "Open an existing M4 file."
+;                          :icon (icon-path "open_m4file.gif"))
+;                        :separator
                         (action
-                          :tip "Move the project, proposition or M4 file one step up."
-                          :icon (icon-path "up.gif"))
+                          :tip "Move the project or proposition one step up."
+                          :icon (icon-path "up.gif")
+                          :handler handler-move-up)
                         (action
-                          :tip "Move the project, proposition or M4 file one step down."
-                          :icon (icon-path "down.gif"))
+                          :tip "Move the project or proposition one step down."
+                          :icon (icon-path "down.gif")
+                          )
                         :separator
                         (action 
                           :tip "Save"
@@ -48,7 +50,7 @@
                           :icon (icon-path "close.gif")
                           :handler handler-close-selected-project)
                         (action 
-                          :tip "Deletes the selected project, proposition or M4 file."
+                          :tip "Deletes the selected project or proposition."
                           :icon (icon-path "delete.gif")
                           :handler handler-delete-selected-project-proposition-m4file)
                         :separator
@@ -131,27 +133,29 @@
                               :icon (icon-path "rename_proposition.gif")
                               :handler handler-rename-proposition)
                             (separator)
-                            (action 
-                              :name "New M4 File"
-                              :tip "Create a new M4 file."
-                              :key "alt N"
-                              :icon (icon-path "new_m4file.gif"))
-                            (action 
-                              :name "Open M4 File"
-                              :tip "Open an existing M4 file."
-                              :key "alt O"
-                              :icon (icon-path "open_m4file.gif"))
-                            (separator)
+;                            (action 
+;                              :name "New M4 File"
+;                              :tip "Create a new M4 file."
+;                              :key "alt N"
+;                              :icon (icon-path "new_m4file.gif"))
+;                            (action 
+;                              :name "Open M4 File"
+;                              :tip "Open an existing M4 file."
+;                              :key "alt O"
+;                              :icon (icon-path "open_m4file.gif"))
+;                            (separator)
                             (action
                               :name "Up"
-                              :tip "Move the project, proposition or M4 file one step up."
-                              :key "ctrl shift UP"
-                              :handler (fn [_] (alert "up")))
+                              :tip "Move the project or proposition one step up."
+                              :key "ctrl UP" ;; TODO: short cut does not work
+                              :icon (icon-path "up.gif")
+                              :handler handler-move-up)
                             (action
                               :name "Down"
-                              :tip "Move the project, proposition or M4 file one step down."
-                              :key "ctrl shift DOWN"
-                              :handler (fn [_] (alert "down")))
+                              :tip "Move the project or proposition one step down."
+                              :key "ctrl DOWN" ;; TODO: short cut does not work
+                              :icon (icon-path "down.gif")
+                              :handler handler-move-down)
                             (separator)
                             (action 
                               :name "Save" 
@@ -174,7 +178,7 @@
                               :handler handler-close-selected-project)
                             (action 
                               :name "Delete"
-                              :tip "Deletes the selected project, proposition or M4 file."
+                              :tip "Deletes the selected project or proposition."
                               :icon (icon-path "delete.gif")
                               :handler handler-delete-selected-project-proposition-m4file)
                             (action
