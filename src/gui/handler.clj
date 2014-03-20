@@ -294,7 +294,7 @@
                        :option-type :yes-no-cancel
                        :content "The tab you want to close has unsaved changes. Save now?"
                        :no-fn (fn [_] (remove-tab tab-index))
-                       :success-fn (fn [_] (handler-save nil)))]
+                       :success-fn (fn [_] (handler-save nil) (remove-tab tab-index)))]
           (-> q-diag pack! show!))
         (remove-tab tab-index)))))
 
