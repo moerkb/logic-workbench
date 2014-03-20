@@ -1,6 +1,0 @@
-c dimacs file for the logic formula
-c (and (or p1 p2) (or (not p3) p4 p1))
-c 
-p cnf 4 2
-1 2 0
--3 4 1 0

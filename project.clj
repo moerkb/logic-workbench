@@ -10,8 +10,9 @@
                  [org.blancas/kern "0.7.0"]
                  [seesaw "1.4.4"]]
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}}
-  :aot :all
+  ;:profiles {:uberjar {:aot [mpa.cst.parser.parser logic.util main.gui]}}
   :java-source-paths ["src"]
-  :main gui.main)
+  :manifest {"SplashScreen-Image" "help/img/splash.png"}
+  :main gui.main
+  :aot [mpa.cst.parser.parser logic.util gui.main])
 

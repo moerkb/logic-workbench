@@ -16,11 +16,8 @@
           [java.awt Desktop]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))
 
-(native!)
-
-; entry point for uberjar
-(defn -main [& args]
-
+(native!) 
+ 
 ; global variables
 (def ^:dynamic *node-tabs* (atom {}))
 
@@ -98,5 +95,6 @@
                                      options-menu
                                      help-menu])))
 
-; we're rolling!
-(-> main-frame pack! show!))
+; entry point for uberjar
+(defn -main [& args]
+  (-> main-frame pack! show!))

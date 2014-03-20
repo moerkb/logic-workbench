@@ -8,8 +8,13 @@
   [code & catches]
   `(try ~code
      ~@catches
-     (catch IllegalStateException _# (alert "Please open a file before applying task."))
-     (catch Exception _# (alert "An error ocurred. Please check the entered formula."))))
+     (catch Exception e# (do 
+                           (println (.getMessage e#))
+                           (.printStackTrace e#)
+                           ))))
+
+;(catch IllegalStateException _# (alert "Please open a file before applying task."))
+;(catch Exception _# (alert "An error ocurred. Please check the entered formula."))
 
 (defn current-editor 
   "Returns the currently selected editor (due to tabs). If no tab is open, it throws an

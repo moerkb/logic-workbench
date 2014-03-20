@@ -1,8 +1,8 @@
 /* --------------------------------------------------------------------------
- * Definitions of MNI macro library 'util'
+ * Definitions of MNI macro library 'logic'
  * 
  * Copyright (c) 2008
- * by Fachhochschule Gie√üen-Friedberg University of Applied Sciences.
+ * by Fachhochschule Gieﬂen-Friedberg University of Applied Sciences.
  * 
  * mml is free software; you can redistribute it and/or modify it under 
  * the terms of the GNU General Public License as published by the Free 
@@ -18,10 +18,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc., 
  * 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  * --------------------------------------------------------------------------
- * $Id: util.mml 673 2008-10-17 00:06:48Z brenz $
+ * $Id: logic.mml 673 2008-10-17 00:06:48Z brenz $
  * --------------------------------------------------------------------------
  */
- instreg(`for', `mml.util.loops', `for')
- instreg(`forstep', `mml.util.loops', `forstep')
- instreg(`foreach', `mml.util.loops', `foreach')
- 
+ instreg(`kOf', `mml.logic.kOf', `exactly')
+ instreg(`maxKOf', `mml.logic.kOf', `max')
+ instreg(`minKOf', `mml.logic.kOf', `min')
+ define(`oneOf',`kOf(`1',$@)')
+ define(`maxOneOf',`maxKOf(`1',$@)')
+ define(`minOneOf',`minKOf(`1',$@)')
