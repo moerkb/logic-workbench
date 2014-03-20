@@ -236,7 +236,11 @@
 
 (defn handler-move-up
   [_]
-  (move-node-up (selection project-tree))) ;; TODO: save project maybe ;)
+  (move-node-up (selection project-tree)))
+
+(defn handler-move-down
+  [_]
+  (move-node-down (selection project-tree)))
   
 ;; Project Tree
 (defn- handler-tree
