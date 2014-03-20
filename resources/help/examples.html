@@ -13,10 +13,10 @@
   
   <p>The first chapter of Dirk van Dalen's book <i>Logic and Structure</i>
      has propositional logic as subject. We can solve some of the exercises
-     of this chapter quite easily with MPA.</p>
+     of this chapter quite easily with LWB.</p>
   <p>In exercise 1 on page 20 we are invited to check whether some propositions
      are valid. Let's check this!</p>
-  <p>The distribution of MPA contains a couple of example projects. We will open 
+  <p>The distribution of LWB contains a couple of example projects. We will open 
      the project <i>vanDalen</i>:</p>
   <p><img src="../icons/open_project.gif"/> <b>Project > Open Project</b>. In the file open dialog
      choose folder <code>Examples</code> and file <code>vanDalen.mpf</code><p>
@@ -32,7 +32,7 @@
 		<img src="../icons/task_tt.gif"/> <b>Tasks > Truth Table</b> or <br/>
 		<img src="../icons/task_val.gif"/> <b>Tasks > check VAL</b>
 	</p>
-	<p>There are more tasks, see <a href="tasks.html">Tasks</a>. Play with MPA!</p>
+	<p>There are more tasks, see <a href="tasks.html">Tasks</a>. Play with LWB!</p>
   
   <h2>Map Coloring</h2>
   
@@ -54,17 +54,17 @@
 		<img src="img/expl2.gif">
 	</div>
 	<p>Obviously it would be exhausting to repeat the same conditions for the different
-	 countries. On this account MPA has a built-in macro processor MMP that is compatible
+	 countries. On this account LWB has a built-in macro processor MMP that is compatible
 	 with the classical and well-known M4 macro processor.</p>
 	<p>The first line of the coloring problem <code>Luxembourg</code> is as follows:<br/>
 		<code>dnl needs mmp</code></br>
-		This line is a directive that informs MPA to first perform the macro expansion and then
-		the task on the resulting proposition. More about macro processing in MPA, see
-		<a href="mmp.html">Macros in MPA</a>.
+		This line is a directive that informs LWB to first perform the macro expansion and then
+		the task on the resulting proposition. More about macro processing in LWB, see
+		<a href="mmp.html">Macros in LWB</a>.
 	</p>
-	<p>The MPA distribution contains some pre-defined macros in the macro libraries
+	<p>The LWB distribution contains some pre-defined macros in the macro libraries
 	  <code>util.mml</code> and <code>logic.mml</code>. In order to locate these files,
-	  MPA has to be informed on the folder of these files, i.e. the folder <code>Examples</code>.
+	  LWB has to be informed on the folder of these files, i.e. the folder <code>Examples</code>.
 	  To do this, use <b>Options > Include Path</b> and add the folder <code>Example</code> on
 	  your machine. You can check the result of macro preprocessing wiht the task
 	  <img src="../icons/task_m4.gif"/>. 

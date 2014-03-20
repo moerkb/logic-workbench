@@ -9,9 +9,7 @@
 
 <body>
 	<h1>Projects and Files</h1>
-	<p>In MPA one can edit and analyze proposition. The propositions are organized in
-		projects. Is is possible, and often convenient to use macros. The macros are organized in
-	  M4 files and Macro Library files.
+	<p>The propositions in LWF are organized via projects. One project is one file on disc; that means one file contains one or more propositions.
 	</p>	
 	<p>The menu "Project" provides the actions to work with projects and files.
 	</p> 
@@ -23,13 +21,14 @@
 	</p>  
 	<p>A project file is organized as follows:
 		<ul type="square">
-			<li>A header, which can be edited by double clicking the project name.</li>
+			<li>A header (as a C-style comment), which can be edited by double clicking the project name.</li>
 			<li>A sequence of propositions. The beginning of a task is marked in the project file
 			 by the line <br/><code>phi::&lt;name of proposition></code>.<br/>Proposition can be edited by
 			 double clicking the name of the proposition.</li>
 		</ul>
 	</p>	
 	<h2>M4 Files</h2>
+	<p><strong>NOTICE:</strong> Right now, M4 files can be used in propositions, but can not be edited. Please use a normal text editor for that instead.</p>
 	<p>MPA uses two kinds of M4 files:
 		<ul type="square">
 			<li>M4 files for inclusion in proposition. M4 files are used to provide reusable macros

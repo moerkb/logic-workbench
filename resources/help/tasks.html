@@ -4,62 +4,35 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<link type="text/css" rel="stylesheet" href="default.css" />
-	<title>Tasks in MPA</title>
+	<title>Tasks in LWB</title>
 </head>
 
 <body>
-	<h1>Tasks in MPA</h1>
+	<h1>Tasks in LWB</h1>
 	<dl>
-		<dt><img src="../icons/task_pp.gif"/> <b>Pretty Printer</b></dt>
-		<dd>The proposition is printed with <i>all</i> brackets. (The result is "pretty" 
-			and useful with quite small propositions only.)
-		</dd>  
-		<dt><img src="../icons/task_pn.gif"/> <b>Print normalized</b></dt>
-		<dd>The proposition is printed with the operators <code>!</code> (not),
-		  <code>&</code> (and) and <code>|</code> (or) only.
-		</dd>  
-		<dt><img src="../icons/task_tex.gif"/> <b>TeX Printer</b></dt>
-		<dd>The input is transformed into LaTeX. The resulting LaTeX input
-		  uses the package <code>mathabx</code>. <br/>
-		  This task is useful to prepare the publication of propositions.
-		</dd>  
-		<dt><img src="../icons/task_tikz.gif"/> <b>Syntax tree in Ti<i>k</i>Z</b></dt>
-		<dd>Ti<i>k</i>Z is a LaTeX package for portable graphics and programming
-		  illustrations and figures, see <a href="http://www.ctan.org/tex-archive/help/Catalogue/entries/pgf.html">
-		  pgf and tikz</a> developed by Till Tantau. This task uses a variant of the
-		  Reingold-Tilford algorithm to determine the layout of the abstract syntax tree of the proposition 
-		  and outputs the result in the languange of tikz for publication with LaTex.
-		</dd>  
 		<dt><img src="../icons/task_sat.gif"/> <b>Check SAT</b></dt>
-		<dd>This tasks checks whether the proposition is satisfiable, using the SAT solver
-		  specified in the option box of the toolbar. If the proposition is satisfiable, in the
-		  output pane a model is shown.
-		</dd>  
-		<dt><img src="../icons/task_val.gif"/> <b>Check VAL</b></dt>
-		<dd>This tasks checks whether the proposition is valid, using the SAT solver
-		  specified in the option box of the toolbar. If the proposition is not valid, in the
-		  output pane a counter example is shown.
+		<dd>Checks if the formula is satisfiable. If it is, a valid valuation is given. The settings can be used to show all valuations, only true valuations or the valuation as a formula.
 		</dd>  
 		<dt><img src="../icons/task_tt.gif"/> <b>Truth Table</b></dt>
-		<dd>This tasks outputs a truth table for the proposition, given that the number of
-		  variables in the proposition is not greater than 16.
+		<dd>This tasks outputs a truth table for the proposition, given that the number of variables in the proposition is not greater than 10. Only true or false values can be shown, whatever is set in the settings.
 		</dd>  
 		<dt><img src="../icons/task_cnf.gif"/> <b>Transform to CNF</b></dt>
 		<dd>The proposition is transformed to the conjunctive normal from (CNF).
 		</dd>  
-		<dt><img src="../icons/task_dnf.gif"/> <b>Transform to DNF</b></dt>
-		<dd>The proposition is transformed to the disjunctive normal from (DNF).
-		</dd>  
 		<dt><img src="../icons/task_tcnf.gif"/> <b>Tseitin Transformation</b></dt>
-		<dd>SAT solver usually expect the proposition in CNF. Unfortunately the transformation of
+		<dd>SAT solvers usually expect the proposition in CNF. Unfortunately the transformation of
 		  a proposition to a logically equivalent proposition is exponential. Therefore the first step 
 		  to check the satisfiability is the transformation into a proposition that is
 		  equivalent with respect to satisfiability. The Tseitin transformation outputs such a proposition in
 		  linear time.<br/>
+		  It is always produced, when the task "Check SAT" is invoked. <br />
 		  The Tseitin transformation is described in <b>Grigori Tseitin</b>: 
 		  <i>On the Complexity of Derivation in Propositional Calculus</i> in:
 		  Jörg Siekmann, Graham Wrightson (Eds.) Automation of Reasoning 2, Springer 1983, P. 466-483.
 		</dd>  
+		<dt><img src="../icons/dimacsTseitin.gif"/> <b>Produce Dimacs</b></dt>
+		<dd>Applies the Tseitin transformation and prints it as a dimacs file - a file format that is used by SAT solvers.
+		</dd> 
 		<dt><img src="../icons/task_m4.gif"/> <b>Preprocess with M4</b></dt>
 		<dd>MPA uses the MNI Macro Processor which is compatible with the classical M4 macro processor.
 		  This tasks just performs the macro processing.

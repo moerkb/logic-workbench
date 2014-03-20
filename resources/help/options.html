@@ -8,45 +8,17 @@
 </head>
 
 <body>
-	<h1>Options</h1>
-	<p>MPA provides options through the toolbar and the menu "Options".
+	<h1>Options / Settings</h1>
+	<p>LWB provides options through the toolbar, the menu "Options" or the key combination "Alt + s".
 	</p>
-	<h2>SAT solver</h2>
-	<p>The SAT solver for checking satisfiability and validity of proposition is selected from
-	  the option box in the toolbar.
-		<ul type="square">
-			<li><b>DefaultSAT4J</b>. According to <a href="http://www.sat4j.org" _target="blank">SAT4J</a>
-			 "this SAT solver is well suited for huge and difficult SAT benchmarks. It is basically the best 
-			 solver available in the library".</li>
-			<li><b>LightSAT4J</b>. According to <a href="http://www.sat4j.org" _target="blank">SAT4J</a>
-				"this SAT solver is useful for people using a SAT solver for hundreds or thousands small/easy 
-				SAT problems within their application."</li>
-			<li><b>NaiveDPLL</b>. This SAT solver is a naive implementation of the Davis-Putnam-Logemann-Loveland 
-			  algorithm for solving the SAT problem for propositions in CNF. "NaiveDPLL" is part of the 
-			  implementation of MPA with the aim to demonstrate the idea of the algorithm, it is very, very slow
-			  compared with the SAT4J solvers.</li>
-		</ul>	  
-	</p>		  
-	<h2>More options</h2>
-	<dl>
-		<dt><img src="../icons/select_font.gif"/> <b>Select Font</b></dt>
-		<dd>Selects the font in the editor and the output pane.
-		</dd>  
-		<dt><img src="../icons/settings.gif"/> <b>Settings</b></dt>
-		<dd>Some options to control the output of some tasks:
-		  <br/><br/>
-  		<div align="center">
-				<img src="img/settings.gif">
-			</div>
-		</dd>  
-		<dt><b>Include Paths</b></dt>
-		<dd>Include Paths for inclusion of m4 files and macro library files:
-		  <br/><br/>
-  		<div align="center">
-				<img src="img/includepath.gif">
-			</div>
-		</dd>  
-	</dl>
-	<br/>
+	
+	<h2>Truth tables show...</h2>
+	<p>Usual truth tables show all possible combinations of valuations. With this setting you can choose to only show truth table rows, where the result is true; or false.</p>
+
+	<h2>SAT solutions show...</h2>
+	<p>When the SAT solver finds a valid solution for a formula, the valuations are presented in a table per default. You might also choose to show a table only of the variables that are true. The third option shows the complete result of the SAT solving like the first option, but as a formula.</p>
+
+	<h2>MMP include path</h2>
+	<p>Use this field to add <strong>directories</strong>, in which the program should search for M4 files. The paths can be absolute or relative, beginning from the applications root folder. Use semicolons to seperate paths.
 </body>
 </html>
