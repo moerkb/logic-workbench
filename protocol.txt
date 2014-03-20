@@ -1,8 +1,6 @@
 OPEN TASKS
 
 - Deployment (AOT?)
-- GUI: Wenn kein Tab gewählt/geöffnet ist und eine Funktion (z .B. TT) gedrückt wird, 
-	soll eine passende Fehlermeldung erscheinen.
 
 
 QUESTIONS
