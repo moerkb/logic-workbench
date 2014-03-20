@@ -85,6 +85,7 @@
 (def main-frame (frame 
                   :title "Logical Workbench"
                   :on-close :exit
+                  :icon (icon-path "lwf-logo.gif")
                   :size [980 :by 600]
                   :content main-panel
                   :menubar (menubar 

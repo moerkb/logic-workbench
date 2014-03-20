@@ -95,6 +95,7 @@ Written in <strong>Clojure</strong> (clojure.org)<br />
 <br />
 <strong>Libraries</strong> used:<br />
 SAT4J (sat4j.org)<br />
+JavaCC (javacc.java.net)<br />
 Seesaw (github.com/daveray/seesaw)
 "
 ))]
