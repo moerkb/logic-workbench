@@ -1,9 +1,8 @@
 OPEN TASKS
 
-- MPA-Hilfe umstricken
 - Deployment (AOT?)
-- Baum beim Speichern nicht mehr zuklappen
-- GUI: Wenn kein Tab gewählt/geöffnet ist und eine Funktion (z .B. TT) gedrückt wird, soll eine passende Fehlermeldung erscheinen.
+- GUI: Wenn kein Tab gewählt/geöffnet ist und eine Funktion (z .B. TT) gedrückt wird, 
+	soll eine passende Fehlermeldung erscheinen.
 
 
 QUESTIONS

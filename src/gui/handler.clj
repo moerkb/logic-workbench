@@ -17,15 +17,17 @@
     (when
       (when (>= c 2)
         (-> (dialog
-              :content "Are you sure you want to delete the project, proposioten or m4 file?"
+              :content "Are you sure you want to delete the project/proposition?"
               :option-type :ok-cancel
               :type :warning) pack! show!))
       (case c
-        2 (do
+        2 (do  ; case project node
+            (close-project-tabs (second node))
             (rm-node node)
             (io/delete-file (.path (second node))))
           
-        3 (do
+        3 (do  ; case proposition node
+            (remove-tab (@*node-tabs* node))
             (rm-node node)
             (save-project (second node)))
         nil))))
