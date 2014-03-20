@@ -2,7 +2,7 @@
  * Exception for syntax errors in input
  * 
  * Copyright (c) 2008
- * by Fachhochschule Gieﬂen-Friedberg University of Applied Sciences.
+ * by Fachhochschule Gie√üen-Friedberg University of Applied Sciences.
  * 
  * mmp is free software; you can redistribute it and/or modify it under 
  * the terms of the GNU General Public License as published by the Free 

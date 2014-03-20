@@ -2,7 +2,7 @@
  * Test translit
  * 
  * Copyright (c) 2008
- * by Fachhochschule Gießen-Friedberg University of Applied Sciences.
+ * by Fachhochschule GieÃŸen-Friedberg University of Applied Sciences.
  * 
  * mmp is free software; you can redistribute it and/or modify it under 
  * the terms of the GNU General Public License as published by the Free 
@@ -73,7 +73,7 @@ public class Test_translit {
 	@Test
 	public final void test150translit() throws IOException, SyntaxErrorException, RuntimeErrorException {
 		String input = new String(
-				"translit(`«abc~', `~-»')\n"
+				"translit(`Â«abc~', `~-Â»')\n"
 		);	
 		
 		String expectedOutput = new String(

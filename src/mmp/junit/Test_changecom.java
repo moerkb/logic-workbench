@@ -2,7 +2,7 @@
  * Test 'changecom'
  * 
  * Copyright (c) 2008
- * by Fachhochschule Gießen-Friedberg University of Applied Sciences.
+ * by Fachhochschule GieÃŸen-Friedberg University of Applied Sciences.
  * 
  * mmp is free software; you can redistribute it and/or modify it under 
  * the terms of the GNU General Public License as published by the Free 
@@ -115,16 +115,16 @@ public class Test_changecom {
 	public final void test105changecom() throws IOException, SyntaxErrorException, RuntimeErrorException {
 		String input = new String(
 				"define(`a', `b')\n" +
-				"«a»\n" +
-				"changecom(`«', `»')\n" +
-				"«a»\n" 
+				"Â«aÂ»\n" +
+				"changecom(`Â«', `Â»')\n" +
+				"Â«aÂ»\n" 
 		);	
 	
 		String expectedOutput = new String(
 				"\n" +
-				"«b»\n" +
+				"Â«bÂ»\n" +
 				"\n" +
-				"«a»\n"
+				"Â«aÂ»\n"
 		);		
 		StringWriter output = new StringWriter();
 		

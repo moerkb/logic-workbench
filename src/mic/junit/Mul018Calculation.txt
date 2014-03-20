@@ -4,9 +4,9 @@
 
 (3): 46340 + 1 = 46341                       |Factor
 
-(4): 46341² = 2147488281                     |Factor²
+(4): 46341â‰¤ = 2147488281                     |Factorâ‰¤
 
-(5): 2147488281 - 2147483647 = 4634          |factor² - MAX_VALUE = Summand
+(5): 2147488281 - 2147483647 = 4634          |factorâ‰¤ - MAX_VALUE = Summand
 
 (6): 2147483647 + 1 = -2147483648            |MIN_VALUE (java-integer-calculation)
 

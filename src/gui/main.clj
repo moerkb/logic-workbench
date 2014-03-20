@@ -1,4 +1,5 @@
 (ns gui.main
+  (:gen-class)
   (require [seesaw.core :refer :all]
            [seesaw.rsyntax :as syntax]
            [seesaw.tree :refer (simple-tree-model node-removed node-inserted node-changed node-structure-changed)]
@@ -16,6 +17,9 @@
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))
 
 (native!)
+
+; entry point for uberjar
+(defn -main [& args]
 
 ; global variables
 (def ^:dynamic *node-tabs* (atom {}))
@@ -95,4 +99,4 @@
                                      help-menu])))
 
 ; we're rolling!
-(-> main-frame pack! show!)
+(-> main-frame pack! show!))

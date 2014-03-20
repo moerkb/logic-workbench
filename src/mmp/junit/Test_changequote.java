@@ -2,7 +2,7 @@
  * Test 'changequote'
  * 
  * Copyright (c) 2008
- * by Fachhochschule Gießen-Friedberg University of Applied Sciences.
+ * by Fachhochschule GieÃŸen-Friedberg University of Applied Sciences.
  * 
  * mmp is free software; you can redistribute it and/or modify it under 
  * the terms of the GNU General Public License as published by the Free 
@@ -122,14 +122,14 @@ public class Test_changequote {
 	public final void test094changequot() throws IOException, SyntaxErrorException, RuntimeErrorException {
 		String input = new String(
 				"define(`a', `b')\n" +
-				"«a»\n" +
-				"changequote(`«', `»')\n" +
-				"«a»\n"
+				"Â«aÂ»\n" +
+				"changequote(`Â«', `Â»')\n" +
+				"Â«aÂ»\n"
 		);	
 	
 		String expectedOutput = new String(
 				"\n" +
-				"«b»\n" +
+				"Â«bÂ»\n" +
 				"\n" +
 				"a\n"
 		);		

@@ -3,7 +3,7 @@
  * @author Matthias Peter
  * 
  * Copyright (c) 2007 
- * by Fachhochschule Gieﬂen-Friedberg University of Applied Sciences.
+ * by Fachhochschule Gie√üen-Friedberg University of Applied Sciences.
  * 
  * mpa is free software; you can redistribute it and/or modify it under 
  * the terms of the GNU General Public License as published by the Free 
@@ -98,7 +98,7 @@ TOKEN :		/* Binary operators */
 TOKEN : 
 {
       < ATOM: (<LETTER>|<SPECIAL>) (<LETTER>|<SPECIAL>|<DIGIT>)* >
-    | < #LETTER:  ["a"-"z", "‰", "ˆ", "¸", "ﬂ", "A"-"Z", "ƒ", "÷", "‹"] >
+    | < #LETTER:  ["a"-"z", "√§", "√∂", "√º", "√ü", "A"-"Z", "√Ñ", "√ñ", "√ú"] >
     | < #SPECIAL: ["_", "{", "}", ".", "\\"] >
     | < #DIGIT:   ["0"-"9"] >
 }
