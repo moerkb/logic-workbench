@@ -1,6 +1,6 @@
 (ns logic.util
   (:require [clojure.string :as cstr]
-            [mpa.cst.parser.parser :as mpaParser]
+            ;[mpa.cst.parser.parser :as mpaParser]
             [clojure.repl :refer :all]
             [clojure.math.combinatorics :refer (selections combinations)]
             [clojure.walk :refer (postwalk)]

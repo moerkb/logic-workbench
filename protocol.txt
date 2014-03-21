@@ -1,6 +1,6 @@
 OPEN TASKS
 
-- Deployment (AOT?)
+- final deployment
 
 
 QUESTIONS

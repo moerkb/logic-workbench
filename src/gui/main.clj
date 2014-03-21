@@ -14,10 +14,10 @@
           [gui Node]
           [java.net URI]
           [java.awt Desktop]
-          [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))
-
-(native!) 
+          [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))  
  
+(def _ (native!))
+
 ; global variables
 (def ^:dynamic *node-tabs* (atom {}))
 
@@ -68,9 +68,6 @@
 
 (def editor-tabs (tabbed-panel))
 
-(listen editor
-  :document tab-mark-new-listener)
-
 (def ver-panel (vertical-panel
                  :items [editor-tabs
                          results]))
@@ -95,6 +92,7 @@
                                      options-menu
                                      help-menu])))
 
-; entry point for uberjar
 (defn -main [& args]
+  (listen editor
+    :document tab-mark-new-listener)
   (-> main-frame pack! show!))

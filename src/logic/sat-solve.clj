@@ -69,13 +69,13 @@
 
 (defn sat-solve-formula
   [formula]
-  (let [tmap (-> formula mpaParser/javaCCparse transform-tseitin)
+  (let [tmap (-> formula parse transform-tseitin)
         result (-> tmap :tseitin-formula generate-dimacs-clauses sat-solve rest)]
     (retransform-tseitin result tmap)))
 
 (defn sat-solve-find-all-results-formula
   [formula]
-  (let [tmap (-> formula mpaParser/javaCCparse transform-tseitin)
+  (let [tmap (-> formula parse transform-tseitin)
         result (-> tmap :tseitin-formula generate-dimacs-clauses sat-solve-find-all-results)]
     (set (map #(retransform-tseitin % tmap) result))))
     
