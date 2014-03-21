@@ -79,18 +79,33 @@
 (def main-panel (border-panel
                   :north tool-bar
                   :center hor-panel))
-
-(def main-frame (frame 
-                  :title "Logical Workbench"
-                  :on-close :exit
-                  :icon (icon-path "lwb-logo.gif")
-                  :size [980 :by 600]
-                  :content main-panel
-                  :menubar (menubar 
-                             :items [project-menu
-                                     tasks-menu
-                                     options-menu
-                                     help-menu])))
+ 
+(def main-frame 
+  (if (and
+        (= "Mac OS X" (System/getProperty "os.name"))
+        (= "10.7.5" (System/getProperty "os.version")))
+    ; Hotfix: Java on Mac OS X Lion has a bug for displaying the frame icon 
+    (frame 
+      :title "Logical Workbench"
+      :on-close :exit
+      :size [980 :by 600]
+      :content main-panel
+      :menubar (menubar 
+                 :items [project-menu
+                         tasks-menu
+                         options-menu
+                         help-menu]))
+    (frame 
+      :title "Logical Workbench"
+      :on-close :exit
+      :icon (icon-path "lwb-logo.gif")
+      :size [980 :by 600]
+      :content main-panel
+      :menubar (menubar 
+                 :items [project-menu
+                         tasks-menu
+                         options-menu
+                         help-menu]))))
 
 (defn -main [& args]
   (listen editor
