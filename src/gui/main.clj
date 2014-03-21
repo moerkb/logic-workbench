@@ -16,6 +16,9 @@
           [java.awt Desktop]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))  
  
+
+(def working-dir (System/getProperty "user.dir"))
+
 (def _ (native!))
 
 ; global variables

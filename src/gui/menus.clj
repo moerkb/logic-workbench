@@ -275,7 +275,7 @@
                            :tip "Opens the help files in the system standard web browser."
                            :mnemonic "H"
                            :handler (fn [_]
-                                      (let [help-file (File. "resources/help/toc.html")]
+                                      (let [help-file (File. (str working-dir "/resources/help/toc.html"))]
                                         (.. Desktop getDesktop 
                                           (browse 
                                             (URI. (str "file://" (tools/path-conformer (.getAbsolutePath help-file))))))))

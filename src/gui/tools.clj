@@ -1,5 +1,8 @@
 (ns gui.main)
 
+(def settings-path (str working-dir "/settings.clj"))
+(def icon-folder (str working-dir "/resources/icons/"))
+ 
 (declare get-include-paths)
 
 (defmacro std-catch
@@ -52,8 +55,6 @@
                   :editable? false
                   :wrap-lines? true
                   :text result-text)))
-
-(def icon-folder "resources/icons/")
 
 (defn icon-path
   "Takes a file name and gives the file object with the relative path to the correct icon folder, e.g.
@@ -119,23 +120,26 @@
   "Reads the settings from the settings file and returns them as a map. For any error, i.e. no file
    exist or cannot be read properly, an exception will be thrown (see 'slurp' and 'read-string')."
   []
-  (read-string (slurp "settings.clj")))
+  (read-string (slurp settings-path)))
 
 (defn set-settings
   "Takes a map and overwrites the complete settings with it. Don't forget anything!"
   [settings-map]
-  (spit "settings.clj" settings-map))
+  (spit settings-path settings-map))
 
 (defn set-setting
   "Takes a key value pair and overwrites the current setting with it. Applies on the current settings file.
    As of now, no responsiblity for wrong arguments is taken."
   [key value]
-  (spit "settings.clj" (assoc (get-settings) key value)))
+  (spit settings-path (assoc (get-settings) key value)))
   
 (defn get-include-paths
   "Reads the MMP include paths from the settings and returns them as a collection."
   []
-  (map str/trim (str/split (:mmp-include-path (get-settings)) #";")))
+  (map #(if (not= \/ (first %))
+          (str working-dir "/" %)
+          %)
+    (map str/trim (str/split (:mmp-include-path (get-settings)) #";"))))
 
 (defn close-project-tabs
   "Takes a project node and closes all open editor tabs that belong to it."
