@@ -14,10 +14,10 @@
           [gui Node]
           [java.net URI]
           [java.awt Desktop]
+          [gui FileLocator]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))  
  
-
-(def working-dir (-> (ClassLoader/getSystemResource *file*) clojure.java.io/file .getParentFile .getParentFile .getParent))
+(def working-dir (FileLocator/getProgrammRoot))
 
 (def _ (native!))
 
