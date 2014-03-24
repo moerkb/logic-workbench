@@ -11,5 +11,6 @@
   :profiles {:uberjar {:aot [gui.main]}}
   :java-source-paths ["src"]
   :manifest {"SplashScreen-Image" "help/img/LWB-splash.png"}
+  :resource-paths ["resources"]
   :main ^:skip-aot gui.main)
 

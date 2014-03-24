@@ -17,7 +17,7 @@
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))  
  
 
-(def working-dir (System/getProperty "user.dir"))
+(def working-dir (-> (ClassLoader/getSystemResource *file*) clojure.java.io/file .getParentFile .getParentFile .getParent))
 
 (def _ (native!))
 
