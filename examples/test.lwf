@@ -3,3 +3,12 @@
 	:formula_1 "a & b"
 	:formula_2 "a -> b"
 }
+
+[{:desc "Beschreibung"}
+ {:name "formula1",
+  :code "a & b"}
+ {:name "formula2",
+  :code "dnl needs mmp
+  divert(1)
+  ....
+  "}]   
