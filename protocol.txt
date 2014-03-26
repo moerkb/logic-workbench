@@ -1,9 +1,24 @@
 OPEN TASKS
 
+- Beim Schließen: Tabs speichern
 - final deployment
+- neue Aktion: Ergebnis leer machen bis Ergebnis, Mauszeiger zu Sanduhr
+- SAT-Ergebnis: Sortieren
+- Sudoku dauert sehr lange (SAT, Dimacs)
+- Tseitin-Dimacs: Kommentare Tseitin-Symbole rausnehmen
+- M4-Dateien öffnen (Sudoku)
+- Hoch/Runter-Pfeile: Aktualisierung
+- Hilfe: neue Screenshots
+- Validität einbauen: Formel verneinen -> SAT-Solver -> unsatisfiable -> Formel allgemeingültig
+- Softwrap Formeleditor
+- TT kann sehr lange dauern
+- CNF Tautologien entfernen
 
 
 QUESTIONS
 
-- MPA has shorter CNF for A <-> (B xor !C) <-> !A
-- Resolution in aus GUI ausführen?
+- Inhalte Clojure-Ausarbeitung
+- Wissenschaftlichkeit der Ausarbeitung (Verweise)
+
+- Schließberechtigung
+
