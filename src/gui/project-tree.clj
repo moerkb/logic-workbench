@@ -110,16 +110,15 @@
       
       (set! (.children (last parent-path)) new-siblings)
       
-      (node-changed tree-model node-path)
-      (node-changed tree-model (conj (vec parent-path) (last siblings-before)))
-    
       (when (= 2 (count node-path))
         (do
           (node-structure-changed tree-model  (conj (vec parent-path) (last siblings-before)))
           (node-structure-changed tree-model  node-path)
           (change-settings)))
-      (when (= 3 count node-path)
-        (save-project (second node-path))))))
+      (when (= 3 (count node-path))
+        (do
+          (node-structure-changed tree-model  (butlast node-path))
+          (save-project (second node-path)))))))
 
 (defn move-node-down
   [node-path]
@@ -134,16 +133,15 @@
       
       (set! (.children (last parent-path)) new-siblings)
       
-      (node-changed tree-model node-path)
-      (node-changed tree-model (conj (vec parent-path) (first siblings-after)))
-    
       (when (= 2 (count node-path))
         (do
           (node-structure-changed tree-model  (conj (vec parent-path) (first siblings-after)))
           (node-structure-changed tree-model  node-path)
           (change-settings)))
-      (when (= 3 count node-path)
-        (save-project (second node-path))))))
+      (when (= 3 (count node-path))
+        (do
+          (node-structure-changed tree-model  (butlast node-path))
+          (save-project (second node-path)))))))
 
 (defn add-node
   [parent-path new-node]

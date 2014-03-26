@@ -14,10 +14,10 @@
           [gui Node]
           [java.net URI]
           [java.awt Desktop]
+          [gui FileLocator]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))  
  
-
-(def working-dir (-> (ClassLoader/getSystemResource *file*) clojure.java.io/file .getParentFile .getParentFile .getParent))
+(def working-dir (FileLocator/getProgrammRoot))
 
 (def _ (native!))
 
@@ -71,13 +71,22 @@
 
 (def editor-tabs (tabbed-panel))
 
-(def ver-panel (vertical-panel
-                 :items [editor-tabs
-                         results]))
+;(def ver-panel (vertical-panel
+;                 :items [editor-tabs
+;                         results]))
 
-(def hor-panel (horizontal-panel
-                 :items [form-tree
-                         ver-panel]))
+(def ver-panel (top-bottom-split
+                 editor-tabs
+                 results
+                 :resize-weight 1))
+
+;(def hor-panel (horizontal-panel
+;                 :items [form-tree
+;                         ver-panel]))
+
+(def hor-panel (left-right-split
+                 form-tree
+                 ver-panel))
 
 (def main-panel (border-panel
                   :north tool-bar

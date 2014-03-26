@@ -35,7 +35,7 @@
                         (action
                           :tip "Move the project or proposition one step down."
                           :icon (icon-path "down.gif")
-                          )
+                          :handler handler-move-down)
                         :separator
                         (action 
                           :tip "Save"
