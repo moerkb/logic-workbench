@@ -1,1 +1,1 @@
-{:show-tt :all, :show-sat :all, :mmp-include-path "examples", :project-tree []}
+{:show-tt :all, :show-sat :all, :mmp-include-path "examples", :project-tree ["C:/Users/Daniel/Desktop/test.mpf"]}
