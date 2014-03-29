@@ -62,9 +62,9 @@
               res? (if (zero? (first overall-result)) false true)
               sat-result (rest overall-result)
               result (logic/retransform-tseitin sat-result tmap)
-              all-rows (map #(if (coll? %)
-                               [(second %) false]
-                               [% true]) result)
+              all-rows (sort-by first (map #(if (coll? %)
+                                              [(second %) false]
+                                              [% true]) result))
               curr-settings (get-settings)
               rows (if (= :true-only (:show-sat curr-settings))
                      (filter second all-rows)

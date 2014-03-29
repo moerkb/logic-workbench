@@ -2,9 +2,7 @@ OPEN TASKS
 
 - Beim Schließen: Tabs speichern
 - final deployment (32/64 bit)
-- SAT-Ergebnis: Sortieren
 - Sudoku dauert sehr lange (SAT, Dimacs)
-- Tseitin-Dimacs: Kommentare Tseitin-Symbole rausnehmen
 - M4-Dateien öffnen (Sudoku)
 - Hoch/Runter-Pfeile: Aktualisierung
 - Hilfe: neue Screenshots
