@@ -1,7 +1,7 @@
 OPEN TASKS
 
 - Beim Schließen: Tabs speichern
-- final deployment
+- final deployment (32/64 bit)
 - neue Aktion: Ergebnis leer machen bis Ergebnis, Mauszeiger zu Sanduhr
 - SAT-Ergebnis: Sortieren
 - Sudoku dauert sehr lange (SAT, Dimacs)
@@ -16,9 +16,3 @@ OPEN TASKS
 
 
 QUESTIONS
-
-- Inhalte Clojure-Ausarbeitung
-- Wissenschaftlichkeit der Ausarbeitung (Verweise)
-
-- Schließberechtigung
-

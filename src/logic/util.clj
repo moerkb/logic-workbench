@@ -19,4 +19,5 @@
       "clause"
       "dimacs"
       "sat-solve"
-      "resolution")
+      "resolution"
+      "validity")

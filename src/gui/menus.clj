@@ -66,6 +66,10 @@
                           :tip "SAT solves the proposition."
                           :icon (icon-path "task_sat.gif")
                           :handler handler-sat)
+                        (action
+                          :tip "Checks if the proposition is valid."
+                          :icon (icon-path "task_val.gif")
+                          :handler handler-validity)
                         (action 
                           :tip "Prints a truth table for the proposition."
                           :icon (icon-path "task_tt.gif")
@@ -213,6 +217,11 @@
                             ;:key "ctrl T+S"
                             :icon (icon-path "task_sat.gif")
                             :handler handler-sat)
+                          (action
+                            :name "Check validity"
+                            :tip "Checks if the proposition is valid."
+                            :icon (icon-path "task_val.gif")
+                            :handler handler-validity)
                           (action 
                             :name "Truth Table"
                             :tip "Prints a truth table for the proposition."
