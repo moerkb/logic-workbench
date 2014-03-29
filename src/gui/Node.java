@@ -1,14 +1,13 @@
 package gui;
 
-import java.io.Serializable;
 
-public class Node implements Serializable {
+public class Node {
 
-	private static final long serialVersionUID = -113546151223878327L; // automatic generated
 	public String name;
 	public String content = null;
 	public clojure.lang.PersistentVector children = null;
 	public String path = null;
+	public boolean isProject = false;
 	
 	/**
 	 * Generates a node with formula.
@@ -25,6 +24,16 @@ public class Node implements Serializable {
 		this.name = name;
 		this.content = description;
 		this.children = children;
+		this.path = path;
+		this.isProject = true;
+	}
+	
+	/**
+	 * Generates a m4 file
+	 */
+	public Node(String name, String content, String path) {
+		this.name = name;
+		this.content = content;
 		this.path = path;
 	}
 	
