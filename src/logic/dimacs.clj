@@ -27,16 +27,6 @@
         clauses (tseit-clauses :clauses)
         subs-print (apply str (map (fn [[a b]] (str "c " a ": " b \newline)) (:subs tseit-clauses)))]
     (str
-      ;"c dimacs file for the logic formula" \newline
-      ;"c " (seq formula) \newline
-      ;"c " \newline
-      
-      "c dimacs file for formula" \newline
-      "c variable substitution:" \newline
-      "c"\newline
-      subs-print
-      "c"\newline
-      
       "p cnf " num-vars " " num-clauses \newline
       (apply str (map #(str (apply str (map (fn [elem] (str elem " "))
                                             %))

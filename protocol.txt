@@ -2,17 +2,18 @@ OPEN TASKS
 
 - Beim Schließen: Tabs speichern
 - final deployment (32/64 bit)
-- neue Aktion: Ergebnis leer machen bis Ergebnis, Mauszeiger zu Sanduhr
 - SAT-Ergebnis: Sortieren
 - Sudoku dauert sehr lange (SAT, Dimacs)
 - Tseitin-Dimacs: Kommentare Tseitin-Symbole rausnehmen
 - M4-Dateien öffnen (Sudoku)
 - Hoch/Runter-Pfeile: Aktualisierung
 - Hilfe: neue Screenshots
-- Validität einbauen: Formel verneinen -> SAT-Solver -> unsatisfiable -> Formel allgemeingültig
 - Softwrap Formeleditor
 - TT kann sehr lange dauern
 - CNF Tautologien entfernen
 
 
 QUESTIONS
+
+- Validität: Tseitin funzt net
+- neue Aktion: Ergebnis leer machen bis Ergebnis, Mauszeiger zu Sanduhr - geht nicht?
