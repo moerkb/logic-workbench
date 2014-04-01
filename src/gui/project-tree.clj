@@ -96,6 +96,8 @@
       
       (when (= 2 (count node-path))
         (do
+          (node-changed tree-model node-path)
+          (node-changed tree-model (conj (vec parent-path) (last siblings-before)))
           (node-structure-changed tree-model  (conj (vec parent-path) (last siblings-before)))
           (node-structure-changed tree-model  node-path)
           (change-settings)))
@@ -119,6 +121,8 @@
       
       (when (= 2 (count node-path))
         (do
+          (node-changed tree-model node-path)
+          (node-changed tree-model (conj (vec parent-path) (first siblings-after)))
           (node-structure-changed tree-model  (conj (vec parent-path) (first siblings-after)))
           (node-structure-changed tree-model  node-path)
           (change-settings)))
