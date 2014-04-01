@@ -4,7 +4,6 @@ OPEN TASKS
 - final deployment (32/64 bit)
 - Sudoku dauert sehr lange (SAT, Dimacs)
 - M4-Dateien öffnen (Sudoku)
-- Hoch/Runter-Pfeile: Aktualisierung
 - Hilfe: neue Screenshots
 - Softwrap Formeleditor
 - TT kann sehr lange dauern
@@ -13,5 +12,4 @@ OPEN TASKS
 
 QUESTIONS
 
-- Validität: Tseitin funzt net
 - neue Aktion: Ergebnis leer machen bis Ergebnis, Mauszeiger zu Sanduhr - geht nicht?
