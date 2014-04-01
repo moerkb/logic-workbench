@@ -62,9 +62,9 @@
               res? (if (zero? (first overall-result)) false true)
               sat-result (rest overall-result)
               result (logic/retransform-tseitin sat-result tmap)
-              all-rows (map #(if (coll? %)
-                               [(second %) false]
-                               [% true]) result)
+              all-rows (sort-by first (map #(if (coll? %)
+                                              [(second %) false]
+                                              [% true]) result))
               curr-settings (get-settings)
               rows (if (= :true-only (:show-sat curr-settings))
                      (filter second all-rows)
@@ -111,6 +111,16 @@
   (std-catch
     (let [cnf (logic/clj-to-fml (logic/transform-cnf (parse-editor)))]
       (set-text-result! cnf))))
+
+(defn handler-validity
+  "Handler function for tast 'validity'."
+  [_]
+  (std-catch
+    (let [valid-res (logic/valid (parse-editor))]
+      (if (true? (first valid-res))
+        (set-text-result! "The formula is valid.")
+        (set-text-result! (str "The formula is not valid; counterexample found:\n" 
+                            (apply str (interpose " & " (map #(if (coll? %) (str "!" (second %)) %) (second valid-res))))))))))
 
 (defn handler-tseitin
  "Handler function for action 'tseitin cnf'."

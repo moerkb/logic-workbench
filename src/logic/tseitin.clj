@@ -15,6 +15,7 @@
       
       (if (= op 'not)
         (list 'and
+          (list 'or t a)
           (list 'or nt na))
  
         (let [b (when (> (count formula) 2) (nth formula 2))
