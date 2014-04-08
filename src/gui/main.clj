@@ -65,7 +65,8 @@
                            :preferred-size [255 :by 600]
                            :maximum-size [255 :by 32000]))
 
-(def editor (syntax/text-area))
+(def editor (syntax/text-area
+              :wrap-lines? true))
 (def form-editor (scrollable editor
                              :preferred-size [690 :by 400]))
 

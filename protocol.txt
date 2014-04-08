@@ -5,7 +5,6 @@ OPEN TASKS
 - Sudoku dauert sehr lange (SAT, Dimacs)
 - M4-Dateien öffnen (Sudoku)
 - Hilfe: neue Screenshots
-- Softwrap Formeleditor
 - TT kann sehr lange dauern
 - CNF Tautologien entfernen
 

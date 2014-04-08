@@ -72,6 +72,7 @@
   "Creates a new editor widget and adds it to the tabs for the editors."
   [title content node]
   (let [new-editor (scrollable (syntax/text-area 
+                                 :wrap-lines? true
                                  :text content
                                  :listen [:document tab-mark-new-listener])
                                :preferred-size [690 :by 400])]
