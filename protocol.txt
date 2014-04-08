@@ -8,6 +8,6 @@ OPEN TASKS
 - TT kann sehr lange dauern
 - CNF Tautologien entfernen
 - neue Aktion: Ergebnis leer machen bis Ergebnis, Mauszeiger zu Sanduhr - geht nicht?
-
+- Vailidät: Trivialfälle (True, False)
 
 QUESTIONS
