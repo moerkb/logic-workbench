@@ -15,7 +15,8 @@
   [clj-code & {:keys [lines] :or {lines :all}}]
   {:pre [(contains? #{:all :true-only :false-only} lines)]}
 
-  (let [symbols (find-variables clj-code)
+  (let [formula (flatten-ast clj-code)
+        symbols (find-variables formula)
         line-bools (cond 
                      (= lines :true-only) #{true}
                      (= lines :false-only) #{false}
@@ -30,13 +31,13 @@
 	     :formula clj-code
        :lines lines
 	     :table (remove nil? (vec (for [curr-valuation assign-map]
-						    (let [curr-val-map (apply hash-map curr-valuation)
-                      curr-result (eval-formula clj-code curr-valuation)]
-                  (when (contains? line-bools curr-result)
-							      (conj (vec (for [sym symbols] 
-	                               (sym curr-val-map)))
-	                        curr-result))
-							   ))))}))))
+                                  (let [curr-val-map (apply hash-map curr-valuation)
+                                        curr-result (eval-formula formula curr-valuation)]
+                                    curr-result (when (contains? line-bools curr-result)
+                                                 (conj (vec (for [sym symbols] 
+                                                              (sym curr-val-map)))
+                                                   curr-result))
+))))}))))
 
 (defn abbrev-bool 
   "Replaces 'true' with 'T' and 'false' with 'F' for better reading of a truth table."

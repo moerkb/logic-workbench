@@ -175,9 +175,9 @@
         new-form))))
 
 (defn remove-constants
-  "Removes boolean constants from formula, if there are any (known from meta data :constants?). 
-  Returns the reduced formula; true if trivially true and false if trivially false. If no 
-  constants are in there, it returns the original formula."
+  "Removes boolean constants from formula, if there are any (known from meta data :constants?,
+  invoked if the meta data is not set). Returns the reduced formula; true if trivially true and 
+  false if trivially false. If no constants are in there, it returns the original formula."
   [formula]
   (let [form-meta (meta formula)]
     (if-not (and 

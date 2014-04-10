@@ -4,10 +4,7 @@ OPEN TASKS
 - final deployment (32/64 bit)
 - Sudoku dauert sehr lange (SAT, Dimacs)
 - M4-Dateien öffnen (Sudoku) - wrong filetype
-- Hilfe: neue Screenshots
-- TT kann sehr lange dauern
-- CNF Tautologien entfernen
-- neue Aktion: Ergebnis leer machen bis Ergebnis, Mauszeiger zu Sanduhr - geht nicht?
-- Vailidät: Trivialfälle (True, False)
 
 QUESTIONS
+
+- neue Aktion: Ergebnis leer machen bis Ergebnis, Mauszeiger zu Sanduhr - geht nicht?
