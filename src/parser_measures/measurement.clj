@@ -10,10 +10,10 @@
 (def kern-slim-parse kern-slim/kern-parse)
 (def kern-full-parse kern-full/kern-parse)
 
-(defn insta-slim-parse [parse-string]
-  (logic/transform-ast (insta-slim/logic-parse parse-string)))
-(defn insta-full-parse [parse-string]
-  (logic/transform-ast (logic/logic-parse parse-string)))
+;(defn insta-slim-parse [parse-string]
+;  (logic/transform-ast (insta-slim/logic-parse parse-string)))
+;(defn insta-full-parse [parse-string]
+;  (logic/transform-ast (logic/logic-parse parse-string)))
 
 (def javacc-parse logic/parse)
 
@@ -34,13 +34,13 @@
   (println "Parsing with kern, full grammar...")
   (time (kern-full-parse (eval form-sym)))
   
-  (when slim?
-    (println "Parsing with instaparse, slim grammar...")
-    (time (insta-slim-parse (eval form-sym))))
+;  (when slim?
+;    (println "Parsing with instaparse, slim grammar...")
+;    (time (insta-slim-parse (eval form-sym))))
   
-  (when insta-full?
-	  (println "Parsing with instaparse, full grammar...")
-	  (time (insta-full-parse (eval form-sym))))
+;  (when insta-full?
+;	  (println "Parsing with instaparse, full grammar...")
+;	  (time (insta-full-parse (eval form-sym))))
   
   (println "END:" form-sym))
 
