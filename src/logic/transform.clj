@@ -185,3 +185,25 @@
               (false? (:constants? form-meta)))
       (remove-constants-rec formula)
       formula)))
+
+(defn- tautology?
+  "Needs all symbols of a conjunction as collection."
+  [symbols]
+  (let [complement-first (if (coll? (first symbols))
+                           (second (first symbols))
+                           (list 'not (first symbols)))
+        rest (set (rest symbols))]
+    (if (<= (count symbols) 1)
+      false
+      (if (contains? rest complement-first)
+        true
+        (tautology? rest)))))
+
+(defn remove-tautologies
+  "Needs a CNF with an 'and' at fist symbol and 'or' as first symbol in every clauses."
+  [formula]
+  (conj (map
+          #(conj (list* (set (rest %))) 'or)
+          (filter #(not (tautology? (rest %))) (rest formula)))
+        'and))
+          
