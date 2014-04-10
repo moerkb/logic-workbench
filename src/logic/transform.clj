@@ -179,6 +179,9 @@
   Returns the reduced formula; true if trivially true and false if trivially false. If no 
   constants are in there, it returns the original formula."
   [formula]
-  (if (:constants? (meta formula))
-    (remove-constants-rec formula)
-    formula))
+  (let [form-meta (meta formula)]
+    (if-not (and 
+              (contains? form-meta :constants?)
+              (false? (:constants? form-meta)))
+      (remove-constants-rec formula)
+      formula)))
