@@ -285,12 +285,6 @@
   (when (= (.getKeyCode e) 10)
     (handler-tree e)))
 
-;; On Close
-(defn handler-close-window
-  "Safe all relevant informations for the next app start."
-  [_]
-  (println project-tree)) ; TODO
-
 (defn handler-save
   "Saves the content of the currently active tab in the node."
   [_]
@@ -303,6 +297,25 @@
         (do
           (change-node-content node-list formula)
           (tab-demark-new))))))
+
+;; On Close
+; TODO Save project tree
+(defn handler-close-window
+  "Safe all relevant informations for the next app start."
+  [_]
+  (let [unsaved-tabs (unsaved-tabs)]
+    (if (empty? unsaved-tabs)
+      (System/exit 0)
+      (show! (pack! (dialog 
+                      :type :question
+                      :option-type :yes-no-cancel
+                      :content "There are unsaved changes. Do you want to save them?"
+                      :no-fn (fn [_] (System/exit 0))
+                      :success-fn (fn [_] 
+                                    (doseq [tab unsaved-tabs] 
+                                      (selection! editor-tabs (second tab))
+                                      (handler-save nil))
+                                    (System/exit 0))))))))
 
 (defn handler-close-tab
   "Handler function for closing a tab."
@@ -322,15 +335,7 @@
 (defn handler-save-all
   "Saves all open projects."
   [_]
-  (let [unsaved-tabs (map (fn [[_ index]] 
-                            [(.getComponentAt editor-tabs index) index])
-                       (filter 
-                         (fn [[title _]]
-                           (if (= (last title) \*)
-                             true
-                             false))
-                         (for [i (range 0 (tab-count))]
-                           [(.getTitleAt editor-tabs i) i])))]
+  (let [unsaved-tabs (unsaved-tabs)]
     (when-not (empty? unsaved-tabs)
       (doseq [tab unsaved-tabs]
         (let [scroll-pane (first tab)

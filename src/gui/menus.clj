@@ -195,7 +195,8 @@
                               :name "Exit"
                               :tip "Exit the whole application."
                               :key "ctrl Q"
-                              :icon (icon-path "exit.gif"))]))
+                              :icon (icon-path "exit.gif")
+                              :handler handler-close-window)]))
 
 (def tasks-menu (menu
                   :text "Tasks"

@@ -157,3 +157,16 @@
        (remove-tab (@*node-tabs* (first tabs)))
        (recur (find-tab)))
      )))
+
+(defn unsaved-tabs
+  "Returns a list of all tabs that are unsaved."
+  []
+  (map (fn [[_ index]] 
+         [(.getComponentAt editor-tabs index) index])
+    (filter 
+      (fn [[title _]]
+        (if (= (last title) \*)
+          true
+          false))
+      (for [i (range 0 (tab-count))]
+        [(.getTitleAt editor-tabs i) i]))))

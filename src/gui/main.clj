@@ -100,7 +100,7 @@
     ; Hotfix: Java on Mac OS X Lion has a bug for displaying the frame icon 
     (frame 
       :title "Logical Workbench"
-      :on-close :exit
+      :on-close :nothing
       :size [980 :by 600]
       :content main-panel
       :menubar (menubar 
@@ -110,7 +110,7 @@
                          help-menu]))
     (frame 
       :title "Logical Workbench"
-      :on-close :exit
+      :on-close :nothing
       :icon (icon-path "lwb-logo.gif")
       :size [980 :by 600]
       :content main-panel
@@ -119,6 +119,9 @@
                          tasks-menu
                          options-menu
                          help-menu]))))
+
+(listen main-frame
+  :window-closing handler-close-window)
 
 (defn -main [& args]
   (listen editor
