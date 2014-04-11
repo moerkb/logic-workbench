@@ -1,9 +1,6 @@
 OPEN TASKS
 
 - Beim Schließen: Projektbaum speichern
-- Sudoku dauert sehr lange (SAT, Dimacs)
 - M4-Dateien öffnen (Sudoku) - wrong filetype
 
 QUESTIONS
-
-- final deployment (32/64 bit)
