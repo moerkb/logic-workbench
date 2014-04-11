@@ -6,5 +6,3 @@ OPEN TASKS
 - M4-Dateien öffnen (Sudoku) - wrong filetype
 
 QUESTIONS
-
-- neue Aktion: Ergebnis leer machen bis Ergebnis, Mauszeiger zu Sanduhr - geht nicht?

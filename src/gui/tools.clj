@@ -11,13 +11,16 @@
   [code & catches]
   `(try ~code
      ~@catches
-     (catch IllegalStateException _# (alert "Please open a file before applying task."))
-     (catch Exception _# (alert "An error ocurred. Please check the entered formula."))))
+     (catch IllegalStateException _# (set-text-result! "Please open a file before applying task."))
+     (catch Exception _# (set-text-result! "An error ocurred. Please check the entered formula."))))
+  
+(defmacro wait-msg
+  "Shows a wait message and then executes the body (threading)."
+  [body]
+  `(do
+     (set-text-result! "Task is being processed, please wait...")
+     (future (invoke-later ~body))))
 
-;     (catch Exception e# (do
-;                           (println (.getMessage e#))
-;                           (.printStackTrace e#)))))
-     
 (defn current-editor 
   "Returns the currently selected editor (due to tabs). If no tab is open, it throws an
   IllegalStateException."
