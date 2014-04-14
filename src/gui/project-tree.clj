@@ -3,24 +3,32 @@
 (defn file2node
   [f]
   (std-catch
-	  (let [get-data (fn [f] (let [file-type (last (str/split f #"\."))
-	                               data (slurp f)]
+	  (let [file-type (last (str/split f #"\."))
+          get-data (fn [f] (let [data (slurp f)]
 	                           (case file-type
                                "mpf" (read-string (tools/mpf2lwf data))
-                               (alert "Wrong file type."))))
+                               "m4" (read-string (tools/mpf2lwf data))
+                               (throw (IllegalArgumentException.)))))
 	        
 	        data (get-data f)]
 	    
-	    (Node. (apply str (drop-last 4 (last (str/split f #"/"))))
-	           (first data)
-	           f
-	           (vec (map
-                   #(Node.
-                      (:name %)
-                      (:proposition %))
-                   (rest data)))))
-   (catch java.io.FileNotFoundException e
-     (alert (str "Can not find file " f ".")))))
+      (case file-type
+        "m4" (Node. (apply str (drop-last 3 (last (str/split f #"/"))))
+                   (first data)
+                   f)
+        
+		    "mpf" (Node. (apply str (drop-last 4 (last (str/split f #"/"))))
+                   (first data)
+                   f
+                   (vec (map
+	                          #(Node.
+	                             (:name %)
+	                             (:proposition %))
+	                          (rest data))))))
+   (catch java.io.FileNotFoundException _
+     (alert (str "Can not find file " f ".")))
+   (catch IllegalArgumentException _
+     (alert (str "Wrong file type.")))))
 
 (defn node2lwf-structure
   "Only for project nodes!!!"
