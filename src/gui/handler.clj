@@ -17,7 +17,7 @@
     (when
       (when (>= c 2)
         (-> (dialog
-              :content "Are you sure you want to delete the project/proposition?"
+              :content "Are you sure you want to permanently delete the project/proposition/m4-file?"
               :option-type :ok-cancel
               :type :warning) pack! show!))
       (case c
@@ -176,8 +176,21 @@
   [_]
   (std-catch 
 	  (let [file (choose-file
-	               :filters [["MPA (*.mpf)"
+	               :filters [["MPA/LWB (*.mpf)"
 	                          ["mpf"]
+	                          ["Folders" #(.isDirectory %)]]]
+	               :success-fn (fn [fc file] (.getAbsolutePath file)))]
+	    (if (file-is-open? file)
+	      nil
+	      (add-node (list tree-of-projects) (file2node (tools/path-conformer file)))))
+  (catch Exception e nil)))
+
+(defn handler-open-m4
+  [_]
+  (std-catch 
+	  (let [file (choose-file
+	               :filters [["M4 (*.m4)"
+	                          ["m4"]
 	                          ["Folders" #(.isDirectory %)]]]
 	               :success-fn (fn [fc file] (.getAbsolutePath file)))]
 	    (if (file-is-open? file)
@@ -198,8 +211,8 @@
 	        file (if (and
 	                (= (last (str/split name #"\.")) "mpf")
 	                (< 1 (count (str/split name #"\."))))
-	            name
-	            (str name ".mpf"))
+                name
+		            (str name ".mpf"))
 	        new-node (Node.
 	                   (str/replace file #"\.mpf" "")
 	                   ""
@@ -212,7 +225,35 @@
           (do
             (add-node (list tree-of-projects) new-node)
             (save-project new-node)))))
-   (catch Exception e nil)))
+   (catch Exception _ nil)))
+
+(defn handler-create-new-m4
+  [_]
+  (std-catch
+	  (let [f (choose-file
+	            :type :save
+	            :filters [["M4 (*.m4)"
+	                       ["m4"]
+	                       ["Folders" #(.isDirectory %)]]])
+	        dir (tools/path-conformer(.getParent f))
+	        name (.getName f)
+	        file (if (and
+	                (= (last (str/split name #"\.")) "m4")
+	                (< 1 (count (str/split name #"\."))))
+                name
+		            (str name ".m4"))
+	        new-node (Node.
+	                   (str/replace file #"\.m4" "")
+	                   ""
+	                   (str dir "/" file))]
+	    (if (file-is-open? (str dir "/" file))
+	      nil
+        (if (std-catch (slurp (str dir "/" file)) (catch Exception e nil))
+          (alert "This file already exists.")
+          (do
+            (add-node (list tree-of-projects) new-node)
+            (save-project new-node)))))
+   (catch Exception _ nil)))
 
 (defn handler-add-new-proposition
   [_]

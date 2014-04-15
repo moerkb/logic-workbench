@@ -21,13 +21,15 @@
                           :icon (icon-path "rename_proposition.gif")
                           :handler handler-rename-proposition)
                         :separator
-;                        (action 
-;                          :tip "Create a new M4 file."
-;                          :icon (icon-path "new_m4file.gif"))
-;                        (action 
-;                          :tip "Open an existing M4 file."
-;                          :icon (icon-path "open_m4file.gif"))
-;                        :separator
+                        (action 
+                          :tip "Create a new M4 file."
+                          :icon (icon-path "new_m4file.gif")
+                          :handler handler-create-new-m4)
+                        (action 
+                          :tip "Open an existing M4 file."
+                          :icon (icon-path "open_m4file.gif")
+                          :handler handler-open-m4)
+                        :separator
                         (action
                           :tip "Move the project or proposition one step up."
                           :icon (icon-path "up.gif")
@@ -137,17 +139,19 @@
                               :icon (icon-path "rename_proposition.gif")
                               :handler handler-rename-proposition)
                             (separator)
-;                            (action 
-;                              :name "New M4 File"
-;                              :tip "Create a new M4 file."
-;                              :key "alt N"
-;                              :icon (icon-path "new_m4file.gif"))
-;                            (action 
-;                              :name "Open M4 File"
-;                              :tip "Open an existing M4 file."
-;                              :key "alt O"
-;                              :icon (icon-path "open_m4file.gif"))
-;                            (separator)
+                            (action 
+                              :name "New M4 File"
+                              :tip "Create a new M4 file."
+                              :key "alt N"
+                              :icon (icon-path "new_m4file.gif")
+                              :handler handler-create-new-m4)
+                            (action 
+                              :name "Open M4 File"
+                              :tip "Open an existing M4 file."
+                              :key "alt O"
+                              :icon (icon-path "open_m4file.gif")
+                              :handler handler-open-m4)
+                            (separator)
                             (action
                               :name "Up"
                               :tip "Move the project or proposition one step up."
