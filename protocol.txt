@@ -1,6 +1,5 @@
 OPEN TASKS
 
 - Beim Schließen: Projektbaum speichern
-- M4-Dateien öffnen (Sudoku) - wrong filetype
 
 QUESTIONS

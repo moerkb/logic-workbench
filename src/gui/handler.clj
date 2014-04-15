@@ -259,7 +259,7 @@
   [_]
   (let [node (second (selection project-tree))
         name (-> (dialog :content
-                           (vertical-panel :items ["Enter the proposition name" (text :id :name)])
+                           (vertical-panel :items ["Enter the proposition name" (text :id :name :multi-line? false)])
                            :option-type :ok-cancel
                            :type :question
                            :success-fn (fn [p] (text (select (to-root p) [:#name])))) pack! show!)]
