@@ -5,14 +5,30 @@
  
 (declare get-include-paths)
 
+(defn set-result! [result-widget]
+  "Clears the result area and sets the new widget."
+  (let [old (select results [:#res :*])]
+    (selection! bottom-tabs 0)
+    (apply remove! results old)
+    (add! results (scrollable 
+                    result-widget
+                    :preferred-size [690 :by 200]))))
+
+(defn set-text-result! [result-text]
+  "Takes a string and displays it in the result area."
+   (set-result! (text 
+                  :multi-line? true
+                  :editable? false
+                  :wrap-lines? true
+                  :text result-text)))
+
 (defmacro std-catch
   "Puts the argument in a try block and catches all exceptions for a standard message.
   Additional catch clauses are applied in order before a final clause catches all of type Exception."
   [code & catches]
   `(try ~code
      ~@catches
-     (catch IllegalStateException _# (set-text-result! "Please open a file before applying task."))
-     (catch Exception _# (set-text-result! "An error ocurred. Please check the entered formula."))))
+     (catch IllegalStateException _# (alert "Please open a formula before applying a task."))))
   
 (defmacro wait-msg
   "Shows a wait message and then executes the body (threading)."
@@ -25,10 +41,11 @@
   "Returns the currently selected editor (due to tabs). If no tab is open, it throws an
   IllegalStateException."
   []
-  (let [curr-edit (selection editor-tabs)]
-    (if (nil? curr-edit)
-      (throw (IllegalStateException. "No editor open."))
-      (first (select (:content (selection editor-tabs)) [:<org.fife.ui.rsyntaxtextarea.RSyntaxTextArea!>])))))
+  (std-catch
+    (let [curr-edit (selection editor-tabs)]
+      (if (nil? curr-edit)
+        (throw (IllegalStateException. "No editor open."))
+        (first (select (:content (selection editor-tabs)) [:<org.fife.ui.rsyntaxtextarea.RSyntaxTextArea!>]))))))
 
 (defn parse-editor []
   "Parses the text of the editor and returns the clojure formula."
@@ -36,28 +53,12 @@
                  (.getText (current-editor))
                  (get-include-paths))))
 
-(defn set-result! [result-widget]
-  "Clears the result area and sets the new widget."
-  (let [old (select results [:#res :*])]
-    (apply remove! results old)
-    (add! results (scrollable 
-                    result-widget
-                    :preferred-size [690 :by 200]))))
-
 (defn set-table-result! [table-model & {:keys [auto-resize]
                                         :or {auto-resize :off}}]
   "Takes a TableModel and sets it with a JTable in result area."
   (set-result! (table
                  :auto-resize auto-resize
                  :model table-model)))
-
-(defn set-text-result! [result-text]
-  "Takes a string and displays it in the result area."
-   (set-result! (text 
-                  :multi-line? true
-                  :editable? false
-                  :wrap-lines? true
-                  :text result-text)))
 
 (defn icon-path
   "Takes a file name and gives the file object with the relative path to the correct icon folder, e.g.

@@ -10,13 +10,18 @@
            [clojure.string :as str]
            [tools.main :as tools]
            [clojure.java.io :as io])
-  (import [java.io File]
-          [gui Node]
+  (import [java.io File PrintStream]
+          [gui Node JTextAreaOutputStream]
           [java.net URI]
           [java.awt Desktop]
           [gui FileLocator]
           [org.fife.ui.rsyntaxtextarea TokenMakerFactory DefaultTokenMakerFactory]))  
- 
+
+; reroute error output to window
+(def err-area (text :multi-line? true :editable? false))
+(. System setErr (PrintStream. (JTextAreaOutputStream. err-area)))
+
+; get current directory
 (def working-dir (FileLocator/getProgrammRoot))
 
 (def _ (native!))
@@ -46,6 +51,7 @@
 (declare project-tree)
 (declare editor-tabs)
 (declare save-project)
+(declare bottom-tabs)
 
 (load "tools")
 (load "project-tree")
@@ -72,18 +78,17 @@
 
 (def editor-tabs (tabbed-panel))
 
-;(def ver-panel (vertical-panel
-;                 :items [editor-tabs
-;                         results]))
+(def bottom-tabs (tabbed-panel :tabs [{:title "Result" :content results} 
+                                      {:title "Error-Log" :content (scrollable err-area 
+                                                                     :preferred-size [690 :by 200])}]))
 
 (def ver-panel (top-bottom-split
                  editor-tabs
-                 results
+                 bottom-tabs
                  :resize-weight 1))
 
-;(def hor-panel (horizontal-panel
-;                 :items [form-tree
-;                         ver-panel]))
+; Show error log on new error
+(listen err-area :document (fn [_] (selection! bottom-tabs 1)))
 
 (def hor-panel (left-right-split
                  form-tree
