@@ -1,1 +1,1 @@
-{:show-tt :all, :show-sat :all, :mmp-include-path "examples", :project-tree ["C:/Users/Daniel/Desktop/mpa-1.0-win32/Examples/Sudoku.mpf" "C:/Users/Daniel/Desktop/mpa-1.0-win32/Examples/vanDalen.mpf"]}
+{:show-tt :all, :show-sat :all, :mmp-include-path "examples", :project-tree []}
