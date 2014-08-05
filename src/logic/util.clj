@@ -2,7 +2,7 @@
   (:require [clojure.string :as cstr]
             ;[mpa.cst.parser.parser :as mpaParser]
             [clojure.repl :refer :all]
-            [clojure.math.combinatorics :refer (selections combinations)]
+            [clojure.math.combinatorics :refer (selections combinations)] 
             [clojure.walk :refer (postwalk)]
             [clojure.set :refer (union)]))
 
